@@ -1,0 +1,19 @@
+﻿  TimerMgr.cpp
+c:\users\arcco\desktop\work\engine\header\timermgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Timer.cpp
+c:\users\arcco\desktop\work\engine\header\timer.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  MyFont.cpp
+c:\users\arcco\desktop\work\engine\header\myfont.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  KeyMgr.cpp
+c:\users\arcco\desktop\work\engine\header\keymgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  InputDev.cpp
+c:\users\arcco\desktop\work\engine\header\inputdev.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  GraphicDev.cpp
+c:\users\arcco\desktop\work\engine\header\graphicdev.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  FrameMgr.cpp
+c:\users\arcco\desktop\work\engine\header\framemgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Frame.cpp
+c:\users\arcco\desktop\work\engine\header\frame.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  FontMgr.cpp
+c:\users\arcco\desktop\work\engine\header\fontmgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  코드를 생성하고 있습니다...

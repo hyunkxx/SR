@@ -1,0 +1,41 @@
+﻿  VIBuffer.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  TriCol.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Transform.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Texture.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  TerrainTex.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Scene.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\scene.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Renderer.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\gameobject.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  RcTex.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  RcCol.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Pipeline.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\include.h(5): fatal error C1083: 포함 파일을 열 수 없습니다. 'd3dx9.h': No such file or directory
+  Management.cpp
+c:\users\arcco\downloads\srgame-main\engine\utility\code\management.cpp(1): fatal error C1083: 포함 파일을 열 수 없습니다. 'Export_Utility.h': No such file or directory
+  LightMgr.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\lightmgr.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Light.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\light.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Layer.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\layer.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  GameObject.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\gameobject.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  CubeTex.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  ComponentMgr.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\componentmgr.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Component.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Camera.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\gameobject.h(3): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  Calculator.cpp
+c:\users\arcco\downloads\srgame-main\engine\header\component.h(2): fatal error C1083: 포함 파일을 열 수 없습니다. 'Base.h': No such file or directory
+  코드를 생성하고 있습니다...

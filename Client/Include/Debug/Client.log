@@ -1,0 +1,59 @@
+﻿  stdafx.cpp
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  imgui.cpp
+  코드를 생성하고 있습니다...
+  Client.cpp
+  UI_World_HP_Back.cpp
+  UI_World_HP.cpp
+  UI_World_Bubble.cpp
+  UI_Player_Hp_Front.cpp
+  UI_Player_Hp_Back.cpp
+  UI_Player_Hp.cpp
+  UI_Log_Back.cpp
+  UI_FontMgr.cpp
+  UI_BlueTeam_Kill_Back.cpp
+  TestBox.cpp
+  Terrain.cpp
+  Tank_01.cpp
+  TankSet.cpp
+  TankCamera.cpp
+  StaticCamera.cpp
+  Stage.cpp
+  SkyBox.cpp
+  SimpleCamera.cpp
+  RightTopLocation.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  RightLocation.cpp
+  Posin_UI.cpp
+  Player_Chatting.cpp
+  PlayerManager.cpp
+  ObjectMesh.cpp
+  MainMenu.cpp
+  MainApp.cpp
+  M3.cpp
+  Logo.cpp
+  Loading.cpp
+  LeftTopLocation.cpp
+  LeftLocation.cpp
+  Humvee.cpp
+  DynamicCamera.cpp
+  Default_Enermy.cpp
+  Default_Ally.cpp
+  Building.cpp
+  BottomDirEnermy.cpp
+  BackGround.cpp
+  Aim_UI.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  AimCamera.cpp
+  ImguiManager.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Repo\SRGame\Client\Include\../Bin\Client.exe
+  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
