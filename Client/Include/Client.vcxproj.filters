@@ -74,26 +74,11 @@
     <Filter Include="02. GameObject\00. Tank">
       <UniqueIdentifier>{2cdd3ee2-a879-422d-9f42-97a38ddbf6f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. Tank\Enermy">
-      <UniqueIdentifier>{2897ffd8-ca1c-45a4-b1db-bbd8bdf32295}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Tank\Tank_01">
-      <UniqueIdentifier>{6b427554-00bd-4094-8a64-016fb306c771}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Tank\Humvee">
-      <UniqueIdentifier>{11b13a53-c6fe-4d1e-8ed2-85c6f1e0a8e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Tank\Ally">
-      <UniqueIdentifier>{781bc3aa-383c-4ea1-a420-242443e6e3c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="_config\utility">
       <UniqueIdentifier>{a8ceb465-8300-48a4-83f1-45f7be4d2b9c}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\04.Camera\00. SimpleCamera">
       <UniqueIdentifier>{cefec0ba-6ab1-4c03-98e2-96420665bf0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Tank\Enermy\BottomDirEnermy">
-      <UniqueIdentifier>{59935591-9279-4467-ae7e-c4ba5344e9c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\00. Loading">
       <UniqueIdentifier>{1661db6f-b609-4a95-9410-efeda77e432a}</UniqueIdentifier>
@@ -109,9 +94,6 @@
     </Filter>
     <Filter Include="01. Scene\02. MainMenu\ObjectMesh">
       <UniqueIdentifier>{837fa4f2-2c9d-4eb1-872a-2cc759f7485c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Tank\M3">
-      <UniqueIdentifier>{5d403d3d-4e91-400e-927d-908109f58a27}</UniqueIdentifier>
     </Filter>
     <Filter Include="99. Manager">
       <UniqueIdentifier>{dac47d43-ceac-41c5-8b9f-e2bc85714c89}</UniqueIdentifier>
@@ -230,6 +212,39 @@
     <Filter Include="02. GameObject\08.Effect\ShootEffect">
       <UniqueIdentifier>{ade2390e-f5a9-45c4-9c39-f4c3851a3e36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\00.base">
+      <UniqueIdentifier>{de8ae730-2311-4c78-91ea-385f38443f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI">
+      <UniqueIdentifier>{cc912ac5-5860-431f-8c90-9251f02e7a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\Ally">
+      <UniqueIdentifier>{781bc3aa-383c-4ea1-a420-242443e6e3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\Enermy">
+      <UniqueIdentifier>{2897ffd8-ca1c-45a4-b1db-bbd8bdf32295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy">
+      <UniqueIdentifier>{59935591-9279-4467-ae7e-c4ba5344e9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle">
+      <UniqueIdentifier>{1ec58633-3f2d-4caf-a0ed-c7f63924f933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\01. SmallTank">
+      <UniqueIdentifier>{f5269698-2b4e-482d-8731-3ded400592e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\00. Humvee">
+      <UniqueIdentifier>{11b13a53-c6fe-4d1e-8ed2-85c6f1e0a8e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\02. MiddleTank">
+      <UniqueIdentifier>{dea67738-7bfa-4f2a-8988-8d8c2106237b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\03. BigTank">
+      <UniqueIdentifier>{d359439e-afb3-4b6c-97e8-8234a37b9860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\04. LongTank">
+      <UniqueIdentifier>{3dc69949-5ab9-424e-837a-10c1cdc0fc4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -299,7 +314,7 @@
       <Filter>_config\ImGui\manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Default_Enermy.h">
-      <Filter>02. GameObject\00. Tank\Enermy</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Enermy</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LeftLocation.h">
       <Filter>02. GameObject\03. Terrain\Location\LeftLocation</Filter>
@@ -316,20 +331,14 @@
     <ClInclude Include="..\Header\TestBox.h">
       <Filter>02. GameObject\06.TestBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\TankSet.h">
-      <Filter>02. GameObject\00. Tank</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Tank_01.h">
-      <Filter>02. GameObject\00. Tank\Tank_01</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\AimCamera.h">
       <Filter>02. GameObject\04.Camera\07.AimCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Humvee.h">
-      <Filter>02. GameObject\00. Tank\Humvee</Filter>
+      <Filter>02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Default_Ally.h">
-      <Filter>02. GameObject\00. Tank\Ally</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MainMenu.h">
       <Filter>01. Scene\02. MainMenu</Filter>
@@ -341,7 +350,7 @@
       <Filter>02. GameObject\04.Camera\00. SimpleCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BottomDirEnermy.h">
-      <Filter>02. GameObject\00. Tank\Enermy\BottomDirEnermy</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_BlueTeam_Kill_Back.h">
       <Filter>02. GameObject\93.UI\93.ETC</Filter>
@@ -376,12 +385,6 @@
     <ClInclude Include="..\Header\Loading.h">
       <Filter>01. Scene\00. Loading</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\M3.h">
-      <Filter>02. GameObject\00. Tank\M3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerManager.h">
-      <Filter>99. Manager\PlayerManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_World_Bubble.h">
       <Filter>02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
     </ClInclude>
@@ -396,6 +399,24 @@
     </ClInclude>
     <ClInclude Include="..\Header\Aim_UI_Pers.h">
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TankManager.h">
+      <Filter>99. Manager\PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TankSet.h">
+      <Filter>02. GameObject\00. Tank\00.base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SmallTank.h">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleTank.h">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BigTank.h">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LongTank.h">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -457,7 +478,7 @@
       <Filter>_config\ImGui\manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Default_Enermy.cpp">
-      <Filter>02. GameObject\00. Tank\Enermy</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Enermy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LeftLocation.cpp">
       <Filter>02. GameObject\03. Terrain\Location\LeftLocation</Filter>
@@ -474,20 +495,14 @@
     <ClCompile Include="..\Code\TestBox.cpp">
       <Filter>02. GameObject\06.TestBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\TankSet.cpp">
-      <Filter>02. GameObject\00. Tank</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Tank_01.cpp">
-      <Filter>02. GameObject\00. Tank\Tank_01</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\AimCamera.cpp">
       <Filter>02. GameObject\04.Camera\07.AimCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Humvee.cpp">
-      <Filter>02. GameObject\00. Tank\Humvee</Filter>
+      <Filter>02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Default_Ally.cpp">
-      <Filter>02. GameObject\00. Tank\Ally</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainMenu.cpp">
       <Filter>01. Scene\02. MainMenu</Filter>
@@ -499,7 +514,7 @@
       <Filter>02. GameObject\04.Camera\00. SimpleCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BottomDirEnermy.cpp">
-      <Filter>02. GameObject\00. Tank\Enermy\BottomDirEnermy</Filter>
+      <Filter>02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_BlueTeam_Kill_Back.cpp">
       <Filter>02. GameObject\93.UI\93.ETC</Filter>
@@ -534,12 +549,6 @@
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>01. Scene\00. Loading</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\M3.cpp">
-      <Filter>02. GameObject\00. Tank\M3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PlayerManager.cpp">
-      <Filter>99. Manager\PlayerManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_World_Bubble.cpp">
       <Filter>02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
     </ClCompile>
@@ -554,6 +563,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\Aim_UI_Pers.cpp">
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TankManager.cpp">
+      <Filter>99. Manager\PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TankSet.cpp">
+      <Filter>02. GameObject\00. Tank\00.base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SmallTank.cpp">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiddleTank.cpp">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigTank.cpp">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LongTank.cpp">
+      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

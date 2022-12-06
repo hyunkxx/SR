@@ -72,14 +72,16 @@ void CTank_01::RenderGUI(void)
 	ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
 	ImGui::Begin("MainTank State");
 
-	string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
+	string speed = "SPEED " + to_string(m_stInfo.fReload);
 	string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
+
+	/*m_stInfo.fPosinDist = 6.f;
+	m_stInfo.fReload = 3.f;
+	m_stInfo.fReloadTime = 1.f;
+	m_stInfo.iCannonSpeed = 500;*/
+
 	ImGui::Text(speed.c_str());
 	ImGui::Text(reload.c_str());
-	string usingPoolSize = " ExplosionPool size " + to_string(m_pEffectPool->m_ExplosionPool.size());
-	string usingPoolCapacity = " FirePool size   " + to_string(m_pEffectPool->m_FirePool.size());
-	ImGui::Text(usingPoolSize.c_str());
-	ImGui::Text(usingPoolCapacity.c_str());
 
 	ImGui::End();
 }
@@ -121,17 +123,17 @@ HRESULT CTank_01::Add_Component(void)
 
 HRESULT CTank_01::Ready_Object(void)
 {
-	m_stInfo.fAccel_Ad = 4.f;
-	m_stInfo.fAccel_Back = 2.f;
+	m_stInfo.fAccel_Ad = 6.f;
+	m_stInfo.fAccel_Back = 4.f;
 
 	//최고속도 제한
-	m_stInfo.fAccel_top_speed = 20.f;
-	m_stInfo.fBack_top_speed = -10.f;
+	m_stInfo.fAccel_top_speed = 15.f;
+	m_stInfo.fBack_top_speed = -7.5f;
 
 	m_stInfo.fPosinDist = 6.f;
 	m_stInfo.fReload = 3.f;
 	m_stInfo.fReloadTime = 1.f;
-	m_stInfo.iCannonSpeed = 500;
+	m_stInfo.iCannonSpeed = 480;
 	m_fScale = 1.f;
 	m_stInfo.RotSpeed = 30.f;
 

@@ -58,6 +58,7 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
+	pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 		iter->Render_Object();
 }

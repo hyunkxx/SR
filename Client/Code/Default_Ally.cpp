@@ -483,15 +483,15 @@ HRESULT CDefault_Ally::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	//≈ ≈© ∏ˆ≈Î
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Tank_01_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Tank_01_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_head");
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Tank_01_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_posin");
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 

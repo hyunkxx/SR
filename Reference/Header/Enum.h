@@ -46,7 +46,10 @@ namespace Engine
 
 	enum BULLET_ID { MASHINE_BULLET, CANNONBALL, BULLET_END };
 
-	enum class VEHICLE { TANK1, TANK2, TANK3, GBC, M3, HUMVEE, PANZER, MAX };
+	enum class VEHICLE
+	{
+		HUMVEE, SMALL_TANK, MIDDLE_TANK, BIG_TANK, LONG_TANK, MAX //GBC, M3, PANZER, MAX 
+	};
 
 	enum OBB_ID { x, y, z, OBB_END };
 }

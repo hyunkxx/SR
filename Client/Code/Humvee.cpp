@@ -2,6 +2,7 @@
 #include "..\Header\Humvee.h"
 
 #include "Export_Function.h"
+#include "TankManager.h"
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
@@ -83,15 +84,15 @@ HRESULT CHumvee::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	/* Voxel Mesh */
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_head");
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_posin");
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 
@@ -110,22 +111,24 @@ HRESULT CHumvee::Add_Component(void)
 
 HRESULT CHumvee::Ready_Object(void)
 {
-	m_stInfo.fAccel_Ad = 6.f;
-	m_stInfo.fAccel_Back = 3.f;
+	const TANK_STATE& tankData = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
+
+	m_stInfo.fAccel_Ad = tankData.fAccel_Ad;
+	m_stInfo.fAccel_Back = tankData.fAccel_Back;
 
 	//최고속도 제한
-	m_stInfo.fAccel_top_speed = 30.f;
-	m_stInfo.fBack_top_speed = -15.f;
+	m_stInfo.fAccel_top_speed = tankData.fAccel_top_speed;
+	m_stInfo.fBack_top_speed = tankData.fBack_top_speed;
 
-	m_stInfo.fPosinDist = 2.f;
-	m_stInfo.fReload = 0.5f;
-	m_stInfo.fReloadTime = 0.5f;
-	m_stInfo.iCannonSpeed = 400;
+	m_stInfo.fPosinDist = tankData.fPosinDist;
+	m_stInfo.fReload = tankData.fReload;
+	m_stInfo.fReloadTime = tankData.fReloadTime;
+	m_stInfo.iCannonSpeed = tankData.iCannonSpeed;
 	m_fScale = 1.f;
-	m_stInfo.RotSpeed = 30.f;
+	m_stInfo.RotSpeed = tankData.RotSpeed;
 
-	m_stInfo.fLowAngle = D3DXToRadian(10.f);
-	m_stInfo.TopAngle = D3DXToRadian(-30.f);
+	m_stInfo.fLowAngle = tankData.fLowAngle;
+	m_stInfo.TopAngle = tankData.TopAngle;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	return S_OK;
@@ -141,6 +144,7 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"m3_fire.mp3", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)

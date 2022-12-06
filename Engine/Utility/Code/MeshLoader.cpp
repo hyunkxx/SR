@@ -28,50 +28,50 @@ void CMeshLoader::Initalize()
 	//기본적으로 ../Bin/Resource/Mesh/ 로 설정됨
 	//Add Mesh... [파일명(경로)] [키값]
 
-	//LoadMesh(L"Main_body.bin", L"body");
-	LoadMesh(L"Main_body.bin", L"Main_body");
-	LoadMesh(L"Main_head.bin", L"Main_head");
-	LoadMesh(L"Main_head.bin", L"Main_posin");
+	//Humvee 
+	LoadMesh(L"Humvee_ally_body.bin", L"Humvee_ally_body");
+	LoadMesh(L"Humvee_ally_head.bin", L"Humvee_ally_head");
+	LoadMesh(L"Humvee_ally_posin.bin", L"Humvee_ally_posin");
+	LoadMesh(L"Humvee_enemy_body.bin", L"Humvee_enemy_body");
+	LoadMesh(L"Humvee_enemy_head.bin", L"Humvee_enemy_head");
+	LoadMesh(L"Humvee_enemy_posin.bin", L"Humvee_enemy_posin");
 
-	// Tank_01 
-	LoadMesh(L"Tank_01_body.bin", L"Tank_01_body");
-	LoadMesh(L"Tank_01_head.bin", L"Tank_01_head");
-	LoadMesh(L"Tank_01_posin.bin", L"Tank_01_posin");
+	//Small
+	LoadMesh(L"Small_ally_body.bin", L"Small_ally_body");
+	LoadMesh(L"Small_ally_head.bin", L"Small_ally_head");
+	LoadMesh(L"Small_ally_posin.bin", L"Small_ally_posin");
+	LoadMesh(L"Small_enemy_body.bin", L"Small_enemy_body");
+	LoadMesh(L"Small_enemy_head.bin", L"Small_enemy_head");
+	LoadMesh(L"Small_enemy_posin.bin", L"Small_enemy_posin");
 
-	// Tank_02 
-	LoadMesh(L"Tank_02_body.bin", L"Tank_02_body");
-	LoadMesh(L"Tank_02_head.bin", L"Tank_02_head");
-	LoadMesh(L"Tank_02_posin.bin", L"Tank_02_posin");
+	//Middle
+	LoadMesh(L"Middle_ally_body.bin", L"Middle_ally_body");
+	LoadMesh(L"Middle_ally_head.bin", L"Middle_ally_head");
+	LoadMesh(L"Middle_ally_posin.bin", L"Middle_ally_posin");
+	LoadMesh(L"Middle_enemy_body.bin", L"Middle_enemy_body");
+	LoadMesh(L"Middle_enemy_head.bin", L"Middle_enemy_head");
+	LoadMesh(L"Middle_enemy_posin.bin", L"Middle_enemy_posin");
 
-	// Tank_03 
-	LoadMesh(L"Tank_03_body.bin", L"Tank_03_body");
-	LoadMesh(L"Tank_03_head.bin", L"Tank_03_head");
-	LoadMesh(L"Tank_03_posin.bin", L"Tank_03_posin");
+	//Big
+	LoadMesh(L"Big_ally_body.bin", L"Big_ally_body");
+	LoadMesh(L"Big_ally_head.bin", L"Big_ally_head");
+	LoadMesh(L"Big_ally_posin.bin", L"Big_ally_posin");
+	LoadMesh(L"Big_enemy_body.bin", L"Big_enemy_body");
+	LoadMesh(L"Big_enemy_head.bin", L"Big_enemy_head");
+	LoadMesh(L"Big_enemy_posin.bin", L"Big_enemy_posin");
 
-	//Humvee
-	LoadMesh(L"Humvee_body.bin", L"Humvee_body");
-	LoadMesh(L"Humvee_head.bin", L"Humvee_head");
-	LoadMesh(L"Humvee_Posin.bin", L"Humvee_posin");
-
-	//Garbage_Car
-	LoadMesh(L"Garbage_Car_body.bin", L"Garbage_Car_body");
-	LoadMesh(L"Garbage_Car_head.bin", L"Garbage_Car_head");
-	LoadMesh(L"Garbage_Car_posin.bin", L"Garbage_Car_posin");
-
+	//Long
+	LoadMesh(L"Long_ally_body.bin", L"Long_ally_body");
+	LoadMesh(L"Long_ally_head.bin", L"Long_ally_head");
+	LoadMesh(L"Long_ally_posin.bin", L"Long_ally_posin");
+	LoadMesh(L"Long_enemy_body.bin", L"Long_enemy_body");
+	LoadMesh(L"Long_enemy_head.bin", L"Long_enemy_head");
+	LoadMesh(L"Long_enemy_posin.bin", L"Long_enemy_posin");
+	
 	//Turret
 	LoadMesh(L"Turret_body.bin", L"Turret_body");
 	LoadMesh(L"Turret_head.bin", L"Turret_head");
 	LoadMesh(L"Turret_posin.bin", L"Turret_posin");
-
-	//M3
-	LoadMesh(L"M3_body.bin", L"M3_body");
-	LoadMesh(L"M3_head.bin", L"M3_head");
-	LoadMesh(L"M3_posin.bin", L"M3_posin");
-
-	//Panzer
-	LoadMesh(L"Panzer_01_body.bin", L"Panzer_01_body");
-	LoadMesh(L"Panzer_01_head.bin", L"Panzer_01_head");
-	LoadMesh(L"Panzer_01_posin.bin", L"Panzer_01_posin");
 
 	/* Building */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
@@ -87,12 +87,6 @@ void CMeshLoader::LoadMesh(wstring strFileName, wstring key)
 		MSG_BOX("이름으로 된 매쉬파일이 없데 INVALI HANDLE VALUE");
 		return;
 	}
-
-	//if(KeyConflictCheack(key))
-	//{
-	//	MSG_BOX("다른 매쉬 키값을 쓰세여");
-	//	return;
-	//}
 
 	char buf[100];
 	ZeroMemory(&buf, sizeof(buf));

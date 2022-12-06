@@ -8,7 +8,7 @@
 #include "ObjectMesh.h"
 #include "SimpleCamera.h"
 #include "DefaultUI.h"
-#include "PlayerManager.h"
+#include "TankManager.h"
 #include "UI_FontMgr.h"
 
 CMainMenu::CMainMenu(LPDIRECT3DDEVICE9 pGraphic)
@@ -56,7 +56,7 @@ _int CMainMenu::Update_Scene(const _float & fTimeDelta)
 	KeyInput();
 	UpdateCam(fTimeDelta);
 
-	//static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->Rotation(fTimeDelta);
+	//static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Rotation(fTimeDelta);
 
 	if (Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
 	{
@@ -101,42 +101,32 @@ HRESULT CMainMenu::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SimpleCamera", pGameObject), E_FAIL);
 
-	m_pCar[(UINT)VEHICLE::TANK1] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Tank_01");
+	m_pVehicle[(UINT)VEHICLE::HUMVEE] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Humvee");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	pLayer->Add_GameObject(L"Tank_01", pGameObject);
+	pLayer->Add_GameObject(L"Humvee", pGameObject);
 	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ -10.f,0.f,0.f });
 
-	m_pCar[(UINT)VEHICLE::TANK2] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Tank_02");
+	m_pVehicle[(UINT)VEHICLE::SMALL_TANK] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Small");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	pLayer->Add_GameObject(L"Tank_02", pGameObject);
+	pLayer->Add_GameObject(L"Small", pGameObject);
 	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ -5.f,0.f,0.f });
 
-	m_pCar[(UINT)VEHICLE::TANK3] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Tank_03");
+	m_pVehicle[(UINT)VEHICLE::MIDDLE_TANK] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Middle");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	pLayer->Add_GameObject(L"Tank_03", pGameObject);
-	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 0.0f,0.f,0.f });
+	pLayer->Add_GameObject(L"Middle", pGameObject);
+	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 0.f,0.f,0.f });
 
-	m_pCar[(UINT)VEHICLE::GBC] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Garbage_Car");
+	m_pVehicle[(UINT)VEHICLE::BIG_TANK] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Big");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Garbage_Car", pGameObject), E_FAIL);
+	pLayer->Add_GameObject(L"Big", pGameObject);
 	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 5.f,0.f,0.f });
 
-	m_pCar[(UINT)VEHICLE::M3] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"M3");
+	m_pVehicle[(UINT)VEHICLE::LONG_TANK] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Long");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M3", pGameObject), E_FAIL);
+	pLayer->Add_GameObject(L"Long", pGameObject);
 	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 10.f,0.f,0.f });
 
-	m_pCar[(UINT)VEHICLE::HUMVEE] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Humvee");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Humvee", pGameObject), E_FAIL);
-	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 15.f,0.f,0.f });
-
-	m_pCar[(UINT)VEHICLE::PANZER] = pGameObject = CObjectMesh::Create(m_pGraphicDev, L"Panzer_01");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Panzer_01", pGameObject), E_FAIL);
-	static_cast<CObjectMesh*>(pGameObject)->SetPosition({ 20.f,0.f,0.f });
-
-	static_cast<CObjectMesh*>(m_pCar[(UINT)m_nCurrentIndex])->Selected();
+	static_cast<CObjectMesh*>(m_pVehicle[(UINT)m_nCurrentIndex])->Selected();
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
@@ -186,35 +176,31 @@ void CMainMenu::CreateVehicle()
 {
 	switch (m_nCurrentIndex)
 	{
-	case (UINT)VEHICLE::TANK1:
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::TANK1);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"TANK1");
-		break;
-	case (UINT)VEHICLE::TANK2:
-	case (UINT)VEHICLE::TANK3:
-	case (UINT)VEHICLE::GBC:
-		MSG_BOX("해당 차량은 미구현상태 입니다. TANK_01로 생성합니다.");
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::TANK1);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"TANK1");
-		break;
-	case (UINT)VEHICLE::M3:
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::M3);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"M3");
-		break;
 	case (UINT)VEHICLE::HUMVEE:
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"HUMVEE");
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+		CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::HUMVEE));
 		break;
-	case (UINT)VEHICLE::PANZER:
-		MSG_BOX("해당 차량은 미구현상태 입니다. TANK_01로 생성합니다.");
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::TANK1);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"TANK1");
+	case (UINT)VEHICLE::SMALL_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+		CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::SMALL_TANK));
+		break;
+	case (UINT)VEHICLE::MIDDLE_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+		CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::MIDDLE_TANK));
+		break;
+	case (UINT)VEHICLE::BIG_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::BIG_TANK);
+		CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::BIG_TANK));
+		break;
+	case (UINT)VEHICLE::LONG_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::LONG_TANK);
+		CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::LONG_TANK));
 		break;
 	case (UINT)VEHICLE::MAX:
 	default:
-		MSG_BOX("해당 차량은 미구현상태 입니다. TANK_01로 생성합니다.");
-		CPlayerManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::TANK1);
-		CUI_FontMgr::GetInstance()->SavePlayerName(L"TANK1");
+		MSG_BOX("해당 차량은 미구현상태 입니다. Humvee로 생성합니다.");
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+		CUI_FontMgr::GetInstance()->SavePlayerName(L"Humvee");
 		break;
 	}
 }
@@ -227,9 +213,9 @@ void CMainMenu::KeyInput()
 		{
 			Engine::StopSound(PASS_SOUND);
 			Engine::PlaySound_SR(L"pass.mp3", PASS_SOUND, m_fSound);
-			static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->UnSelect();
+			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->UnSelect();
 			m_nCurrentIndex++;
-			static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->Selected();
+			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Selected();
 		}
 	}
 	if (Get_DIKeyState_Custom(DIK_LEFT) == KEY_STATE::TAP)
@@ -238,9 +224,9 @@ void CMainMenu::KeyInput()
 		{
 			Engine::StopSound(PASS_SOUND);
 			Engine::PlaySound_SR(L"pass.mp3", PASS_SOUND, m_fSound);
-			static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->UnSelect();
+			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->UnSelect();
 			m_nCurrentIndex--;
-			static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->Selected();
+			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Selected();
 		}
 	}
 }
@@ -248,7 +234,7 @@ void CMainMenu::KeyInput()
 void CMainMenu::UpdateCam(const _float & fTimeDelta)
 {
 
-	float x = Utility::Lerp(static_cast<CSimpleCamera*>(m_pCamera)->Get_Info().x, static_cast<CObjectMesh*>(m_pCar[m_nCurrentIndex])->Get_Info().x, 2.f * fTimeDelta);
+	float x = Utility::Lerp(static_cast<CSimpleCamera*>(m_pCamera)->Get_Info().x, static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Get_Info().x, 2.f * fTimeDelta);
 
 	static_cast<CSimpleCamera*>(m_pCamera)->SetEye({ x, 3.f , -13.f });
 	static_cast<CSimpleCamera*>(m_pCamera)->SetLookAt({ x, 0.f, -8.f });

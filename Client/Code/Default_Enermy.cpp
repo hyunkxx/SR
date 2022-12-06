@@ -547,15 +547,15 @@ HRESULT CDefault_Enermy::Add_Component(void)
 
 	//攀农 个烹
 
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_head");
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_posin");
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelPosin", pComponent });
 	//攀农 框流烙

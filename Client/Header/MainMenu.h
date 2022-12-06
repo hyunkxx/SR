@@ -32,7 +32,7 @@ private:
 	float m_fSound = 1.0;
 	int m_nCurrentIndex;
 
-	CGameObject* m_pCar[(UINT)VEHICLE::MAX];
+	CGameObject* m_pVehicle[(UINT)VEHICLE::MAX];
 	CGameObject* m_pCamera;
 
 	_vec3 m_vCamPosition;

@@ -170,6 +170,7 @@
     <ClInclude Include="..\Header\Aim_UI.h" />
     <ClInclude Include="..\Header\Aim_UI_Pers.h" />
     <ClInclude Include="..\Header\BackGround.h" />
+    <ClInclude Include="..\Header\BigTank.h" />
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
     <ClInclude Include="..\Header\Building.h" />
     <ClInclude Include="..\Header\Default_Ally.h" />
@@ -180,11 +181,13 @@
     <ClInclude Include="..\Header\LeftTopLocation.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
-    <ClInclude Include="..\Header\M3.h" />
+    <ClInclude Include="..\Header\LongTank.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainMenu.h" />
+    <ClInclude Include="..\Header\MiddleTank.h" />
     <ClInclude Include="..\Header\ObjectMesh.h" />
-    <ClInclude Include="..\Header\PlayerManager.h" />
+    <ClInclude Include="..\Header\SmallTank.h" />
+    <ClInclude Include="..\Header\TankManager.h" />
     <ClInclude Include="..\Header\Player_Chatting.h" />
     <ClInclude Include="..\Header\Posin_UI.h" />
     <ClInclude Include="..\Header\RightLocation.h" />
@@ -196,7 +199,6 @@
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\TankCamera.h" />
     <ClInclude Include="..\Header\TankSet.h" />
-    <ClInclude Include="..\Header\Tank_01.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestBox.h" />
     <ClInclude Include="..\Header\UI_BlueTeam_Kill_Back.h" />
@@ -240,6 +242,7 @@
     <ClCompile Include="..\Code\Aim_UI.cpp" />
     <ClCompile Include="..\Code\Aim_UI_Pers.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\BigTank.cpp" />
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
     <ClCompile Include="..\Code\Building.cpp" />
     <ClCompile Include="..\Code\Default_Ally.cpp" />
@@ -250,11 +253,13 @@
     <ClCompile Include="..\Code\LeftTopLocation.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
-    <ClCompile Include="..\Code\M3.cpp" />
+    <ClCompile Include="..\Code\LongTank.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainMenu.cpp" />
+    <ClCompile Include="..\Code\MiddleTank.cpp" />
     <ClCompile Include="..\Code\ObjectMesh.cpp" />
-    <ClCompile Include="..\Code\PlayerManager.cpp" />
+    <ClCompile Include="..\Code\SmallTank.cpp" />
+    <ClCompile Include="..\Code\TankManager.cpp" />
     <ClCompile Include="..\Code\Player_Chatting.cpp" />
     <ClCompile Include="..\Code\Posin_UI.cpp" />
     <ClCompile Include="..\Code\RightLocation.cpp" />
@@ -266,7 +271,6 @@
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\TankCamera.cpp" />
     <ClCompile Include="..\Code\TankSet.cpp" />
-    <ClCompile Include="..\Code\Tank_01.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestBox.cpp" />
     <ClCompile Include="..\Code\UI_BlueTeam_Kill_Back.cpp" />

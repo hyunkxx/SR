@@ -50,7 +50,6 @@ _int CObjectMesh::Update_Object(const _float & fTimeDelta)
 		m_vPosition.x = Utility::Lerp(m_vPosition.x, m_vOriginPosition.x, 5.f * fTimeDelta);
 		m_vPosition.y = Utility::Lerp(m_vPosition.y, m_vOriginPosition.y, 5.f * fTimeDelta);
 		m_vPosition.z = Utility::Lerp(m_vPosition.z, m_vOriginPosition.z, fTimeDelta);
-
 	}
 
 	if (m_bSeleted)
@@ -97,15 +96,15 @@ void CObjectMesh::RenderGUI(void)
 
 HRESULT CObjectMesh::Add_Component(void)
 {
-	wstring bodyKey = m_strMeshName + L"_body";
+	wstring bodyKey = m_strMeshName + L"_ally_body";
 	m_pBodyMesh = CVoxel::Create(m_pGraphicDev, bodyKey.c_str());
 	m_mapComponent[ID_DYNAMIC].insert({ bodyKey.c_str(), m_pBodyMesh });
 
-	wstring headKey = m_strMeshName + L"_head";
+	wstring headKey = m_strMeshName + L"_ally_head";
 	m_pHeadMesh = CVoxel::Create(m_pGraphicDev, headKey.c_str());
 	m_mapComponent[ID_DYNAMIC].insert({ headKey.c_str(), m_pHeadMesh });
 
-	wstring posinKey = m_strMeshName + L"_posin";
+	wstring posinKey = m_strMeshName + L"_ally_posin";
 	m_PosinMesh = CVoxel::Create(m_pGraphicDev, posinKey.c_str());
 	m_mapComponent[ID_DYNAMIC].insert({ posinKey.c_str(), m_PosinMesh });
 

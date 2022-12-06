@@ -39,7 +39,7 @@
 #include "ShootEffect.h"
 
 #include "Building.h"
-#include "PlayerManager.h"
+#include "TankManager.h"
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -237,13 +237,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = *CPlayerManager::GetInstance()->GetVehicle();
+	pGameObject = *CTankManager::GetInstance()->GetVehicle();
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerVehicle", pGameObject), E_FAIL);
-
-	/*pGameObject = CHumvee::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tank_01", pGameObject), E_FAIL);*/
 
 	for (_int i = 0; 200 > i; i++)
 	{

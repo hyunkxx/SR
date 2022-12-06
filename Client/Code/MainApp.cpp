@@ -3,7 +3,7 @@
 #include "ImguiManager.h"
 #include "Export_Function.h"
 #include "Stage.h"
-#include "PlayerManager.h"
+#include "TankManager.h"
 
 CMainApp::CMainApp()
 	: m_pGraphicDev(nullptr)
@@ -127,7 +127,7 @@ CMainApp * CMainApp::Create(void)
 void CMainApp::Free(void)
 {
 	ImguiManager::DestroyInstance();
-	CPlayerManager::DestroyInstance();
+	CTankManager::DestroyInstance();
 
 	Safe_Release(m_pGraphicDev);
 

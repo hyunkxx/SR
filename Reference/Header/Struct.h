@@ -103,6 +103,10 @@ typedef struct RayINFO
 
 typedef struct TANK_STATE
 {
+	//HP
+	_float				fMaxHP;
+	_float				fCurHP;
+
 	_float				fSpeed = 0.f;;
 	_float				fAccum = 0.f;
 	_bool				bAdvance = false;
@@ -124,6 +128,7 @@ typedef struct TANK_STATE
 	_float				fReloadTime;
 	_int				iCannonSpeed;
 
+	std::wstring		strName;
 	VEHICLE				eID;
 }Tank_State;
 
