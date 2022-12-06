@@ -35,6 +35,7 @@
 #include "UI_World_HP.h"
 #include "UI_World_Bubble.h"
 #include "Aim_UI.h"
+#include "Aim_UI_Pers.h"
 
 #include "Building.h"
 #include "PlayerManager.h"
@@ -325,6 +326,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI", pGameObject), E_FAIL);
+
+	pGameObject = CAim_UI_Pers::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 

@@ -218,6 +218,12 @@
     <Filter Include="02. GameObject\04.Camera\07.AimCamera">
       <UniqueIdentifier>{38fde110-f223-43b0-9f4a-2a5949afd01a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho">
+      <UniqueIdentifier>{71cc8dda-1dfb-45ff-b475-56ad7b7b8ef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers">
+      <UniqueIdentifier>{b12c8642-d0d9-408a-9cdb-ae9e5c8416e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -377,8 +383,9 @@
       <Filter>02. GameObject\07. Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Aim_UI.h">
-      <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI</Filter>
+      <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Aim_UI_Pers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -529,8 +536,9 @@
       <Filter>02. GameObject\07. Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Aim_UI.cpp">
-      <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI</Filter>
+      <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Aim_UI_Pers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

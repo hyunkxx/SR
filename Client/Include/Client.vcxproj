@@ -168,6 +168,7 @@
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h" />
     <ClInclude Include="..\Header\AimCamera.h" />
     <ClInclude Include="..\Header\Aim_UI.h" />
+    <ClInclude Include="..\Header\Aim_UI_Pers.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
     <ClInclude Include="..\Header\Building.h" />
@@ -236,6 +237,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\AimCamera.cpp" />
     <ClCompile Include="..\Code\Aim_UI.cpp" />
+    <ClCompile Include="..\Code\Aim_UI_Pers.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
     <ClCompile Include="..\Code\Building.cpp" />
