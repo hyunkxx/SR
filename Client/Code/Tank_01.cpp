@@ -501,7 +501,8 @@ void CTank_01::Expect_Hit_Point(const _float & fTimeDelta)
 
 	CComponent* AimTrans = Engine::Get_Component(L"UI", L"Aim_UI", L"Proto_Transform", ID_DYNAMIC);
 	dynamic_cast<CTransform*>(AimTrans)->Set_Pos(HitPos.x - WINCX * 0.5f, -HitPos.y + WINCY * 0.5f, 0.f);
-
+	//주석처리
+	_int i = 0;
 }
 
 _vec3 CTank_01::PickUp_OnTerrain(void)
