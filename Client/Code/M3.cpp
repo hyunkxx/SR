@@ -151,17 +151,18 @@ void CM3::Key_Input(const _float & fTimeDelta)
 	if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
 		Rotation_Body(ROT_Y, (_float)-m_stInfo.RotSpeed * fTimeDelta);
 
+	_long dwMouseMove = 0;
 
-	if (Get_DIKeyState_Custom(DIK_E) == KEY_STATE::HOLD)
+	if (dwMouseMove = Get_DIMouseMove(DIMS_Y))
 	{
-		if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
-			Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
-	}
-
-	if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::HOLD)
-	{
-		if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
-			Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+		if (dwMouseMove < 0)
+		{
+			if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
+				Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+		}
+		else
+			if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
+				Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)

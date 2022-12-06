@@ -17,7 +17,7 @@ CMainApp::~CMainApp()
 HRESULT CMainApp::Ready_MainApp(void)
 {
 	srand((_uint)time(nullptr));
-
+	ShowCursor(false);
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
