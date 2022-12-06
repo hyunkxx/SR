@@ -28,6 +28,8 @@ public:
 	virtual			void		RenderGUI(void);
 	//충돌처리 용도
 	virtual         _bool		Get_Dead(void) { return m_bDead; }
+	void						Set_Dead(_bool bDead) { m_bDead = bDead; }
+
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	void				Set_CollisionDist(void);

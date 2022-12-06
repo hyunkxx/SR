@@ -178,6 +178,7 @@ void CTank_01::Key_Input(const _float & fTimeDelta)
 
 		_float fShootSound = 1.f;
 		Engine::PlaySound_SR(L"m3_fire.mp3", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)

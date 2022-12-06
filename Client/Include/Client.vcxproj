@@ -189,6 +189,7 @@
     <ClInclude Include="..\Header\Posin_UI.h" />
     <ClInclude Include="..\Header\RightLocation.h" />
     <ClInclude Include="..\Header\RightTopLocation.h" />
+    <ClInclude Include="..\Header\ShootEffect.h" />
     <ClInclude Include="..\Header\SimpleCamera.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="..\Code\Posin_UI.cpp" />
     <ClCompile Include="..\Code\RightLocation.cpp" />
     <ClCompile Include="..\Code\RightTopLocation.cpp" />
+    <ClCompile Include="..\Code\ShootEffect.cpp" />
     <ClCompile Include="..\Code\SimpleCamera.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

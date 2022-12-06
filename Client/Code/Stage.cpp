@@ -36,6 +36,7 @@
 #include "UI_World_Bubble.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
+#include "ShootEffect.h"
 
 #include "Building.h"
 #include "PlayerManager.h"
@@ -269,6 +270,11 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CBottomDirEnermy::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BottomDirEnermy", pGameObject), E_FAIL);
+
+	pGameObject = CShootEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShootEffect", pGameObject), E_FAIL);
+
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
