@@ -80,9 +80,6 @@
     <Filter Include="02. GameObject\00. Tank\Tank_01">
       <UniqueIdentifier>{6b427554-00bd-4094-8a64-016fb306c771}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\04.Camera\07.AimCamera">
-      <UniqueIdentifier>{38fde110-f223-43b0-9f4a-2a5949afd01a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\93.UI">
       <UniqueIdentifier>{e5350554-cbf9-428a-81f8-827ef349513c}</UniqueIdentifier>
     </Filter>
@@ -217,6 +214,9 @@
     </Filter>
     <Filter Include="02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI">
       <UniqueIdentifier>{ed90980a-2602-4dc6-b313-820f8d1132d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04.Camera\07.AimCamera">
+      <UniqueIdentifier>{38fde110-f223-43b0-9f4a-2a5949afd01a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
