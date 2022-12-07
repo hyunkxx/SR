@@ -38,5 +38,6 @@ private:
 	_vec3 m_vCamPosition;
 
 	CGameObject* m_pBackground;
-	CGameObject* m_pGameStartMenu;
+	CGameObject* m_pInfoBackground;
+	CGameObject* m_pVehicleInfo;
 };

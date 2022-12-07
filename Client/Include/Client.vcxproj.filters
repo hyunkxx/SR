@@ -248,6 +248,9 @@
     <Filter Include="02. GameObject\03. Terrain\Location\OccupationScore">
       <UniqueIdentifier>{90411c91-8b4f-4be7-8520-57e786906352}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\10. VehicleInfoUI">
+      <UniqueIdentifier>{76948a32-7736-4d0d-8661-30abd00be911}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -424,6 +427,9 @@
     <ClInclude Include="..\Header\TempOccupationScore.h">
       <Filter>02. GameObject\03. Terrain\Location\OccupationScore</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\VehicleInfoUI.h">
+      <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -590,6 +596,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TempOccupationScore.cpp">
       <Filter>02. GameObject\03. Terrain\Location\OccupationScore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VehicleInfoUI.cpp">
+      <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

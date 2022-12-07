@@ -10,6 +10,7 @@
 #include "DefaultUI.h"
 #include "TankManager.h"
 #include "UI_FontMgr.h"
+#include "VehicleInfoUI.h"
 
 CMainMenu::CMainMenu(LPDIRECT3DDEVICE9 pGraphic)
 	: CScene(pGraphic)
@@ -149,14 +150,14 @@ HRESULT CMainMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	CGameObject* pGameObject = nullptr;
 
-	m_pGameStartMenu = pGameObject = CDefaultUI::Create(m_pGraphicDev,
-		L"StartMenu",
-		L"../Bin/Resource/Texture/Ui/Posin_UI.png");
+	m_pInfoBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
+		L"black",
+		L"../Bin/Resource/Texture/Ui/black.png");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StartMenu", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"black", pGameObject), E_FAIL);
 
-	static_cast<CDefaultUI*>(m_pGameStartMenu)->SetPosition({ 25.f,5.f,0.1f });
-	static_cast<CDefaultUI*>(m_pGameStartMenu)->SetScale({ 50.f,10.f,0.f });
+	static_cast<CDefaultUI*>(m_pInfoBackground)->SetPosition({ WINCX - 230.f, WINCY - 190.f, 0.1f });
+	static_cast<CDefaultUI*>(m_pInfoBackground)->SetScale({ 140.f ,135.f,0.f });
 
 	m_pBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
 		L"SeletMenuBackground",
@@ -166,6 +167,10 @@ HRESULT CMainMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	static_cast<CDefaultUI*>(m_pBackground)->SetPosition({ 400.f,300.f, 1.f });
 	static_cast<CDefaultUI*>(m_pBackground)->SetScale({ 390.f,290.f,0.f });
+
+	m_pVehicleInfo = pGameObject = CVehicleInfoUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"VehicleInfo", pGameObject), E_FAIL);
 
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
@@ -216,6 +221,8 @@ void CMainMenu::KeyInput()
 			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->UnSelect();
 			m_nCurrentIndex++;
 			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Selected();
+
+			static_cast<CVehicleInfoUI*>(m_pVehicleInfo)->SetIndex(m_nCurrentIndex);
 		}
 	}
 	if (Get_DIKeyState_Custom(DIK_LEFT) == KEY_STATE::TAP)
@@ -227,6 +234,8 @@ void CMainMenu::KeyInput()
 			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->UnSelect();
 			m_nCurrentIndex--;
 			static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Selected();
+
+			static_cast<CVehicleInfoUI*>(m_pVehicleInfo)->SetIndex(m_nCurrentIndex);
 		}
 	}
 }

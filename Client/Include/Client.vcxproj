@@ -211,6 +211,7 @@
     <ClInclude Include="..\Header\UI_World_Bubble.h" />
     <ClInclude Include="..\Header\UI_World_HP.h" />
     <ClInclude Include="..\Header\UI_World_HP_Back.h" />
+    <ClInclude Include="..\Header\VehicleInfoUI.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="..\Code\UI_World_Bubble.cpp" />
     <ClCompile Include="..\Code\UI_World_HP.cpp" />
     <ClCompile Include="..\Code\UI_World_HP_Back.cpp" />
+    <ClCompile Include="..\Code\VehicleInfoUI.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
