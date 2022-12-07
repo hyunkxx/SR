@@ -38,6 +38,8 @@ public:
 	void				CheckObject(_int _ObjID);
 	void				Occupation(_int _ObjID);
 	_bool               m_Test = false;
+	_float				Get_AllyOccupation() { return m_AllyOccupation; }
+	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
 public:
 	static CLeftLocation*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

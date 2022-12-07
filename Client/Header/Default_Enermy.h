@@ -23,6 +23,7 @@ private:
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	HRESULT Ready_Object(void* pArg);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
@@ -55,7 +56,7 @@ public:
 
 private:
 	HRESULT		Add_Component(void);
-
+	EData*      m_EData;
 private:
 	CCalculator*		m_pCalculatorCom = nullptr;
 	//ÅÊÅ©ÇüÅÂ
@@ -87,6 +88,7 @@ private:
 	_float Test = 0.f;
 public:
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
 private:
 	virtual void Free(void) override;
 

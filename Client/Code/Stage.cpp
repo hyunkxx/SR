@@ -37,7 +37,7 @@
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
-
+#include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
 
@@ -72,6 +72,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, m_fSound);
 
 	Engine::Update_BulletMgr(fTimeDelta);
+	Engine::Update_EnermyMgr(fTimeDelta);
 	__super::Update_Scene(fTimeDelta);
 	return S_OK;
 }
@@ -80,6 +81,7 @@ void CStage::LateUpdate_Scene(void)
 {
 	Collison_Object();
 	Engine::LateUpdate_BulletMgr();
+	Engine::LateUpdate_EnermyMgr();
 	__super::LateUpdate_Scene();
 }
 
@@ -255,6 +257,42 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Bullet_Supply(pBullet, BULLET_ID::MASHINE_BULLET);
 	}
 
+/*	for (_int i = 0; 15 > i; i++)
+	{
+		m_eData.eID = OBJID::OBJID_BDENERMY;
+		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
+
+		CGameObject* pEnermy = CBottomDirEnermy::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);
+	}
+	//Default_Enermy
+	for (_int i = 0; 15 > i; i++)
+	{
+		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
+		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 250;
+
+		CGameObject* pEnermy = CDefault_Enermy::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
+	}
+	//Ally
+	for (_int i = 0; 30 > i; i++)
+	{
+		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
+		m_eData.vPos.x = (float)(rand() % 250);
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z = (float)(rand() % 180);
+
+		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
+	}
+	*/
 	pGameObject = CDefault_Enermy::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Default_Enermy", pGameObject), E_FAIL);
@@ -287,6 +325,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev, 450.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
+
+	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
 
 	pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

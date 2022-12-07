@@ -144,10 +144,26 @@ void SetChannelVolume(SoundType eID, _float fVolume)
 	return SoundMgr::GetInstance()->SetChannelVolume(eID, fVolume);
 }
 
+//Enermy
+inline void Enermy_Add(CGameObject * pBullet, OBJID eID)
+{
+	CEnermyMgr::GetInstance()->Enermy_Add(pBullet, eID);
+}
+
+inline void Update_EnermyMgr(const _float & fTimeDelta)
+{
+	CEnermyMgr::GetInstance()->Update_EnermyMgr(fTimeDelta);
+}
+inline void LateUpdate_EnermyMgr(void)
+{
+	CEnermyMgr::GetInstance()->LateUpdate_EnermyMgr();
+}
+
 inline void			Release_System(void)
 {
 	SoundMgr::GetInstance()->DestroyInstance();
 	CBulletMgr::GetInstance()->DestroyInstance();
+	CEnermyMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CInputDev::GetInstance()->DestroyInstance();
 	CFontMgr::GetInstance()->DestroyInstance();

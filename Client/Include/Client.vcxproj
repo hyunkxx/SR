@@ -199,6 +199,7 @@
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\TankCamera.h" />
     <ClInclude Include="..\Header\TankSet.h" />
+    <ClInclude Include="..\Header\TempOccupationScore.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestBox.h" />
     <ClInclude Include="..\Header\UI_BlueTeam_Kill_Back.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\TankCamera.cpp" />
     <ClCompile Include="..\Code\TankSet.cpp" />
+    <ClCompile Include="..\Code\TempOccupationScore.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestBox.cpp" />
     <ClCompile Include="..\Code\UI_BlueTeam_Kill_Back.cpp" />

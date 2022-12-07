@@ -9,7 +9,7 @@
 #include "CollisionMgr.h"
 #include "BulletMgr.h"
 #include "SoundMgr.h"
-
+#include"EnermyMgr.h"
 BEGIN(Engine)
 
 // GraphicDev
@@ -61,6 +61,12 @@ inline void PlayBGM(_tchar* pSoundKey, _float fVolume);
 inline void StopSound(SoundType eID);
 inline void StopAll();
 inline void SetChannelVolume(SoundType eID, _float fVolume);
+
+//EnermyMgr
+
+inline void Enermy_Add(CGameObject* pBullet, OBJID eID);
+inline void Update_EnermyMgr(const _float & fTimeDelta);
+inline void LateUpdate_EnermyMgr(void);
 
 
 inline void			Release_System(void);

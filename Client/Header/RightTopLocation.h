@@ -36,7 +36,8 @@ public:
 	_int				Get_LocationState() { return m_LocationState; }
 	void				CheckObject(_int _ObjID);
 	void				Occupation(_int _ObjID);
-
+	_float				Get_AllyOccupation() { return m_AllyOccupation; }
+	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
 public:
 	static CRightTopLocation*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

@@ -140,6 +140,21 @@ typedef struct TAG_OBB
 }OBB;
 
 
+typedef struct EnermyData
+{
+	_vec3 vPos;
+	OBJID eID;
+}EData;
+
+
+typedef struct LocatioUi
+{
+	LOCATIONCHECK Loc;
+	_float fAllyScore;
+	_float fEnermyScore;
+
+}LU;
+
 END
 
 

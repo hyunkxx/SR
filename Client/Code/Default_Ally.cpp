@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Default_Ally.h"
 #include "Export_Function.h"
-#include"Management.h"
-#include"Layer.h"
-#include"TestPlayer.h"
+
 //Location
 #include"RightLocation.h"
 #include"LeftTopLocation.h"
@@ -11,6 +9,7 @@
 #include"RightTopLocation.h"
 CDefault_Ally::CDefault_Ally(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
+	, m_bRightLocationCount(false)
 {
 }
 
@@ -31,25 +30,44 @@ HRESULT CDefault_Ally::Ready_Object(void)
 	m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 
-	m_pTransformCom->Set_Pos(10.f, 0.f, 10.f);
-	m_pTransformHead->Set_Pos(10.f, 0.f, 10.f);
-	m_pTransformPosin->Set_Pos(10.f, 0.f, 10.f);
+	m_pTransformCom->Set_Pos(10.f, 1.f, 10.f);
+	m_pTransformHead->Set_Pos(10.f, 1.f, 10.f);
+	m_pTransformPosin->Set_Pos(10.f, 1.f, 10.f);
+
+	return S_OK;
+}
+
+HRESULT CDefault_Ally::Ready_Object(void * pArg)
+{
+	//memcpy(&m_EData, (EData*)&pArg, sizeof(EData));
+	m_EData = (EData*)pArg;
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransformCom->Set_Pos(m_EData->vPos.x, 1.f, m_EData->vPos.z);
+	m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransformHead->Set_Pos(m_EData->vPos.x, 1.f, m_EData->vPos.z);
+	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 1.f, m_EData->vPos.z);
+
+
 
 	return S_OK;
 }
 
 _int CDefault_Ally::Update_Object(const _float& fTimeDelta)
 {
+
 	__super::Update_Object(fTimeDelta);
 	StateCheck();
 	m_fReloadTime += fTimeDelta;
-	Detect(fTimeDelta);
+	//Detect(fTimeDelta);
 	Basic(fTimeDelta);
 
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
-	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y + 1.f, vTrans.z);
-	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y + 1.f, vTrans.z);
+	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
+	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 
 	return OBJ_NOEVENT;
 }
@@ -58,7 +76,7 @@ void CDefault_Ally::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CDefault_Ally::Render_Object(void)
@@ -77,14 +95,16 @@ void CDefault_Ally::Render_Object(void)
 void CDefault_Ally::StateCheck()
 {
 	_vec3	vPos;
-
+	srand((unsigned int)time(NULL));
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
 	//RightLocation
-	if (vPos.x > VTXCNTX / 2.f && vPos.z < VTXCNTZ / 2.f)
-	{
 
+	if (vPos.x >VTXITV* VTXCNTX / 2.f && vPos.z < VTXITV*VTXCNTZ / 2.f)
+	{
 		if (m_bRightLocationCount == false)
+		{
 			m_bRightLocationCount = true;
+		}
 		m_bRightTopLocationCount = false;
 		m_bLeftLocationCount = false;
 		m_bLeftTopLocationCount = false;
@@ -97,17 +117,17 @@ void CDefault_Ally::StateCheck()
 
 
 	}
+
 	//LeftLocation
-	else if (vPos.x < VTXCNTX / 2.f && vPos.z < VTXCNTZ / 2.f)
+	else if (vPos.x < (VTXITV*VTXCNTX) / 2.f && vPos.z < (VTXITV*VTXCNTZ) / 2.f)
 	{
+
 		if (m_bLeftLocationCount == false)
 		{
-			m_bLeftLocationCount = true;
-			srand((unsigned int)time(NULL));
-			m_vPatrol.x = (float)(VTXCNTX / 2.f - rand() % 24 - 30.f);
+			m_vPatrol.x = (float)((rand() % 220) + 30.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (float)(VTXCNTX / 2.f - rand() % 17);
-
+			m_vPatrol.z = (float)(rand() % 180 + 55.f);
+			m_bLeftLocationCount = true;
 		}
 		m_bRightTopLocationCount = false;
 		m_bRightLocationCount = false;
@@ -119,19 +139,16 @@ void CDefault_Ally::StateCheck()
 		m_iLocationState = LTemp->Get_LocationState();
 	}
 	//RightTopLocation
-	else if (vPos.x >VTXCNTX / 2.f && vPos.z >VTXCNTZ / 2.f)
+	else if (vPos.x >VTXITV*VTXCNTX / 2.f && vPos.z >VTXITV*VTXCNTZ / 2.f)
 	{
 		if (m_bRightTopLocationCount == false)
 		{
-			srand((unsigned int)time(NULL));
-			m_vPatrol.x = (rand() % 32 + VTXCNTX / 2.f);
+			m_vPatrol.x = (rand() % 32 + VTXITV* VTXCNTX / 2.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (rand() % 32 + VTXCNTZ / 2.f);
+			m_vPatrol.z = (rand() % 32 + VTXITV*VTXCNTZ / 2.f);
 
 			m_bRightTopLocationCount = true;
-
 		}
-
 		m_bRightLocationCount = false;
 		m_bLeftLocationCount = false;
 		m_bLeftTopLocationCount = false;
@@ -144,14 +161,13 @@ void CDefault_Ally::StateCheck()
 		m_iLocationState = LTemp->Get_LocationState();
 	}
 	//LeftTopLocation
-	else if (vPos.x < VTXCNTX / 2.f && vPos.z > VTXCNTZ / 2.f)
+	else if (vPos.x < VTXITV*VTXCNTX / 2.f && vPos.z > VTXITV*VTXCNTZ / 2.f)
 	{
 		if (m_bLeftTopLocationCount == false)
 		{
-			srand((unsigned int)time(NULL));
-			m_vPatrol.x = (VTXCNTX / 2.f - rand() % 13 + 5.f);
+			m_vPatrol.x = (VTXITV*VTXCNTX / 2.f - rand() % 13 + 5.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (rand() % 20 + VTXCNTZ / 2.f + 20.f);
+			m_vPatrol.z = (rand() % 20 + VTXITV*VTXCNTZ / 2.f + 20.f);
 
 			m_bLeftTopLocationCount = true;
 		}
@@ -178,7 +194,6 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 	vCol = vEPos - vPPos;
 	float Dist = D3DXVec3Length(&vCol);
 
-	//¡°∑… ¡ﬂ ¿œ ∂ß
 	if (Dist <= 60.f)
 	{
 		m_iAction = AIACTION::AIACTION_BATTLE;
@@ -233,6 +248,7 @@ void CDefault_Ally::Basic(_float fTimeDelta)
 	if (m_iAction != AIACTION::AIACTION_BATTLE)
 	{
 
+
 		switch (m_iAction)
 		{
 		case AIACTION::AIACTION_WAIT:
@@ -242,7 +258,7 @@ void CDefault_Ally::Basic(_float fTimeDelta)
 			Occupation(fTimeDelta);
 			break;
 		case AIACTION::AIACTION_ENERMY_IN_AREA:
-			Enermy_In_Area(fTimeDelta);
+			//Enermy_In_Area(fTimeDelta);
 			break;
 
 		}
@@ -354,7 +370,7 @@ void CDefault_Ally::Wait(_float fTimeDelta)
 			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
 			break;
 		case LOCATIONCHECK::LOCATIONCHECK_LEFTTOP:
-			vTemp = { VTXCNTX,0.f,m_vPatrol.z };
+			vTemp = { VTXITV*VTXCNTX,0.f,m_vPatrol.z };
 			m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 			vDir = vTemp - vSour;
@@ -386,7 +402,7 @@ void CDefault_Ally::Wait(_float fTimeDelta)
 			break;
 
 		case LOCATIONCHECK::LOCATIONCHECK_LEFT:
-			vTemp = { m_vPatrol.x,0.f,VTXCNTZ };
+			vTemp = { m_vPatrol.x,0.f,VTXITV*VTXCNTZ };
 			m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 			vDir = vTemp - vSour;
@@ -474,6 +490,19 @@ CDefault_Ally* CDefault_Ally::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+CDefault_Ally * CDefault_Ally::Create(LPDIRECT3DDEVICE9 pGraphicDev, void * pArg)
+{
+	CDefault_Ally*		pInstance = new CDefault_Ally(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Object(pArg)))
+	{
+		MSG_BOX("CDefault_Ally Create Failed");
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
 HRESULT CDefault_Ally::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
@@ -483,15 +512,15 @@ HRESULT CDefault_Ally::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	//≈ ≈© ∏ˆ≈Î
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Big_ally_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Big_ally_head");
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_ally_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Big_ally_posin");
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 

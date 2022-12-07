@@ -23,6 +23,7 @@ private:
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	HRESULT Ready_Object(void* pArg);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
@@ -61,7 +62,7 @@ private:
 	CTransform*			m_pTransformCom = nullptr;
 	CTransform*			m_pTransformPosin = nullptr;
 
-
+	EData*       m_EData;
 
 private:
 	_int  m_iLocationState;
@@ -75,10 +76,10 @@ private:
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
 	_float m_fReloadTime = 0.f, m_fReload = 1.f;
-	//Test
-	_float Test = 0.f;
+
 public:
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
 private:
 	virtual void Free(void) override;
 

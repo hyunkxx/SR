@@ -30,14 +30,15 @@ private:
 	CLocation*          m_pLocationCom = nullptr;
 	_int				m_LocationState;
 	_int				m_iAllyCount = 0, m_iEnermyCount = 0;
-	_float				m_EnermyOccupation = 100.f
+	_float				m_EnermyOccupation = 0.f
 		, m_AllyOccupation = 0.f;
 	_bool               m_Test = false;
 public:
 	_int				Get_LocationState() { return m_LocationState; }
 	void				CheckObject(_int _ObjID);
 	void				Occupation(_int _ObjID);
-
+	_float				Get_AllyOccupation() { return m_AllyOccupation; }
+	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
 public:
 	static CRightLocation*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

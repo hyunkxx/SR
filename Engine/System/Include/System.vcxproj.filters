@@ -37,6 +37,9 @@
     <Filter Include="93.SoundMgr">
       <UniqueIdentifier>{84f15279-ebb5-42e4-bab4-425b9c0b56d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07.EnermyMgr">
+      <UniqueIdentifier>{0a95d0bf-7a4c-4063-aa43-db9dc7d36ca8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Timer.h">
@@ -78,6 +81,9 @@
     <ClInclude Include="..\..\Header\BulletMgr.h">
       <Filter>06.BulletMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\EnermyMgr.h">
+      <Filter>07.EnermyMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Timer.cpp">
@@ -115,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SoundMgr.cpp">
       <Filter>93.SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnermyMgr.cpp">
+      <Filter>07.EnermyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

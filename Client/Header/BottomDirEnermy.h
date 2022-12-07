@@ -11,7 +11,8 @@ class CLocation;
 class CTank_Body;
 class CTank_Head;
 class CTankPosin;
-
+class CCalculator;
+class CVoxel;
 END
 class CBottomDirEnermy :public CGameObject
 {
@@ -23,6 +24,7 @@ private:
 
 public:
 	virtual HRESULT Ready_Object(void) override;
+	HRESULT Ready_Object(void* pArg);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
@@ -56,18 +58,22 @@ private:
 	HRESULT		Add_Component(void);
 
 private:
-	CCalculator*		m_pCalculatorCom = nullptr;
+	CVoxel*				m_pBody = nullptr;
+	CVoxel*				m_pHead = nullptr;
+	CVoxel*				m_pPosin = nullptr;
 	//≈ ≈©«¸≈¬
 	CTank_Body*			m_pBodyBuffer = nullptr;
 	CTank_Head*			m_pHeadBuffer = nullptr;
 	//≈ ≈© øÚ¡˜¿”
 	CTransform*			m_pTransformHead = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
+	CTransform*			m_pTransformPosin = nullptr;
 
+	EData*				m_EData;
+	CCalculator*		m_pCalculatorCom = nullptr;
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
-
 	_bool m_bRightLocationCount = false
 		, m_bRightTopLocationCount = false
 		, m_bLeftLocationCount = false
@@ -80,9 +86,10 @@ private:
 
 	_float m_fReloadTime = 0.f, m_fReload = 1.f;
 	//Test
-	_float Test = 0.f;
 public:
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
+
 private:
 	virtual void Free(void) override;
 

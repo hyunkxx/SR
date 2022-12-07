@@ -168,6 +168,7 @@ call CopySystem.bat</Command>
   <ItemGroup>
     <ClInclude Include="..\..\Header\BulletMgr.h" />
     <ClInclude Include="..\..\Header\CollisionMgr.h" />
+    <ClInclude Include="..\..\Header\EnermyMgr.h" />
     <ClInclude Include="..\..\Header\Export_System.h" />
     <ClInclude Include="..\..\Header\FontMgr.h" />
     <ClInclude Include="..\..\Header\Frame.h" />
@@ -183,6 +184,7 @@ call CopySystem.bat</Command>
   <ItemGroup>
     <ClCompile Include="..\Code\BulletMgr.cpp" />
     <ClCompile Include="..\Code\CollisionMgr.cpp" />
+    <ClCompile Include="..\Code\EnermyMgr.cpp" />
     <ClCompile Include="..\Code\FontMgr.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameMgr.cpp" />
