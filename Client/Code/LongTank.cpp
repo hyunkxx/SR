@@ -40,7 +40,8 @@ void CLongTank::LateUpdate_Object(void)
 	{
 		Shoot_Bullet(BULLET_ID::CANNONBALL_RELOAD);
 		_float fShootSound = 1.f;
-		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::StopSound(PLAYER_BULLET_EXIT_SOUND1);
+		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_BULLET_EXIT_SOUND1, fShootSound);
 		m_bReLoad = true;
 	}
 		
@@ -183,6 +184,7 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		Shoot_Bullet(BULLET_ID::CANNONBALL);
 
 		_float fShootSound = 1.f;
+		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, fShootSound);
 		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 		m_bReLoad = false;

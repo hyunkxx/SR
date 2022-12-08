@@ -41,9 +41,6 @@ void CHumvee::LateUpdate_Object(void)
 
 void CHumvee::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
 	CGameObject* pAimCamera = Engine::Get_Object(L"Environment", L"AimCamera");
 
 	if (!static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
@@ -57,9 +54,6 @@ void CHumvee::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 		m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
 	}
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CHumvee::RenderGUI(void)

@@ -40,7 +40,8 @@ void CSmallTank::LateUpdate_Object(void)
 	{
 		Shoot_Bullet(BULLET_ID::CANNONBALL_RELOAD);
 		_float fShootSound = 1.f;
-		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::StopSound(PLAYER_BULLET_EXIT_SOUND1);
+		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_BULLET_EXIT_SOUND1, fShootSound);
 		m_bReLoad = true;
 	}
 
@@ -142,6 +143,7 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 		Shoot_Bullet(BULLET_ID::CANNONBALL);
 
 		_float fShootSound = 1.f;
+		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, fShootSound);
 		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 		m_bReLoad = false;
@@ -523,7 +525,8 @@ void CSmallTank::Posin_Shake(const _float & fTimeDelta)
 		m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
 
 		D3DXVec3Normalize(&Dir, &Dir);
-		m_pTransformPosin->Move_Pos(&(Dir * sin(360.f * m_fPosinAccum * fTimeDelta) * m_fScale / 3.f));
+		m_pTransformPosin->Move_Pos(&(Dir * sinf(360.f * m_fPosinAccum * fTimeDelta) * m_fScale / 3.f));
+
 		if (m_fPosinAccum >= 0.1f)
 		{
 			m_fPosinAccum = 0.f;

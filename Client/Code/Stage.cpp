@@ -216,7 +216,7 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			vPos = { float(rand() % 800 - 100 * i) , 0.f , float(rand() % 800 - 100 * j) };
+			vPos = { float(rand() % 700 - 100 * i) , 0.f , float(rand() % 700 - 100 * j) };
 			vRot = { 0.f , (float)(rand() % 180) , 0.f };
 
 			pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos);
@@ -231,7 +231,7 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	{
 		for (int i = 0; i < 3; ++i)
 		{
-			vPos = { float(rand() % 800 - 100 * i) , 0.f , float(rand() % 800 - 100 * j) };
+			vPos = { float(rand() % 700 - 100 * i) , 0.f , float(rand() % 700 - 100 * j) };
 			vRot = { 0.f , (float)(rand() % 180) , 0.f };
 
 			pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos);
