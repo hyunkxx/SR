@@ -534,10 +534,12 @@ void CHumvee::Posin_Shake(const _float & fTimeDelta)
 		{
 			m_fPosinAccum = 0.f;
 			m_bPosinShake = false;
-			_vec3 Pos;
+			_vec3 Pos , Pos2;
+			
+			m_pTransformHead->Get_Info(INFO_POS, &Pos2);
 			m_pTransformBody->Get_Info(INFO_POS, &Pos);
-			m_pTransformHead->Set_Pos(Pos.x, Pos.y, Pos.z);
-			m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+			m_pTransformHead->Set_Pos(Pos.x, Pos2.y, Pos.z);
+			m_pTransformPosin->Set_Pos(Pos.x, Pos2.y, Pos.z);
 		}
 	}
 }
