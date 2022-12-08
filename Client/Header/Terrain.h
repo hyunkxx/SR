@@ -3,9 +3,10 @@
 
 BEGIN(Engine)
 
-class CTerrainTex;
-class CTransform;
 class CTexture;
+class CTerrainTex;
+class CFloorTex;
+class CTransform;
 
 END
 
@@ -30,10 +31,14 @@ private:
 
 
 private:
-	CTerrainTex*				m_pBufferCom = nullptr;
+	CTerrainTex*		m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	_float				m_fSpeed = 10.f;
+
+	CTexture*			m_pBackground = nullptr;
+	CFloorTex*			m_pBackgroundRect;
+	_matrix				m_matBackground;
 
 public:
 	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

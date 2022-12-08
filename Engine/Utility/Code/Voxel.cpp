@@ -24,6 +24,10 @@ CVoxel::~CVoxel()
 
 _int CVoxel::Update_Component(const _float & fTimeDelta)
 {
+	_vec3 vPos = { matWorld._41,matWorld._42,matWorld._43 };
+	if (Utility::Cuilling(m_pGraphicDev, vPos))
+		return 0;
+
 	auto iter = m_vecCube.begin();
 	for (; iter != m_vecCube.end(); ++iter)
 	{

@@ -140,7 +140,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	pGameObject = CTankCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 10.f, -5.f),
+		&_vec3(0.f, 15.f, -5.f),
 		&_vec3(0.f, 0.f, 1.f),
 		&_vec3(0.f, 1.f, 0.f));
 

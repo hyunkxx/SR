@@ -29,6 +29,7 @@ public:
 	LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer(_uint nIndex);
 	LPDIRECT3DINDEXBUFFER9  GetIndexBuffer(_uint nIndex);
 private:
+	_matrix matWorld; // ºÎ¸ð
 	vector<CCube*> m_vecCube;
 };
 

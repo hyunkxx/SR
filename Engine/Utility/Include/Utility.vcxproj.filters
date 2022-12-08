@@ -124,6 +124,9 @@
     <Filter Include="98 Utility">
       <UniqueIdentifier>{0cb86655-a6f1-4631-9aa9-27e85afe691a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\00. FloorTex">
+      <UniqueIdentifier>{a4045c38-6162-4ff3-aabf-f7da81cf3f06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Utility.cpp">
       <Filter>98 Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FloorTex.cpp">
+      <Filter>04. Component\00. VIBuffer\01. Custom\00. FloorTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\Utility.h">
       <Filter>98 Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\FloorTex.h">
+      <Filter>04. Component\00. VIBuffer\01. Custom\00. FloorTex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

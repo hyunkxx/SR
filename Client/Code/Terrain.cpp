@@ -2,6 +2,7 @@
 #include "..\Header\Terrain.h"
 
 #include "Export_Function.h"
+#include "FloorTex.h"
 
 CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -20,8 +21,15 @@ CTerrain::~CTerrain()
 
 HRESULT CTerrain::Ready_Object(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	_matrix matScale, matRot, matTrans;
+	D3DXMatrixIdentity(&m_matBackground);
 
+	D3DXMatrixScaling(&matScale, 1000.f, 1000.f, 0.f);
+	D3DXMatrixRotationX(&matRot, D3DXToRadian(90.f));
+	D3DXMatrixTranslation(&matTrans, 0.f, -0.1f, 0.f);
+	m_matBackground = matScale * matRot * matTrans;
+
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	return S_OK;
 }
@@ -46,15 +54,17 @@ void CTerrain::Render_Object(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-		
 	m_pTextureCom->Set_Texture(0);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matBackground);
+	m_pBackground->Set_Texture(0);
+	m_pBackgroundRect->Render_Buffer();
 }
 
 void CTerrain::Free(void)
@@ -87,10 +97,18 @@ HRESULT CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture", pComponent });
 	
+	pComponent = m_pBackground = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainTexture"));
+	NULL_CHECK_RETURN(m_pBackground, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_2", pComponent });
+
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	
+
+	pComponent = m_pBackgroundRect = CFloorTex::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pBackgroundRect, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"backgroundTex", pComponent });
+
 	return S_OK;
 }
 

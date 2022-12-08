@@ -75,6 +75,7 @@ void CMeshLoader::Initalize()
 
 	/* Building */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
+	LoadMesh(L"Building_02_object.bin", L"Building_02_object");
 }
 
 void CMeshLoader::LoadMesh(wstring strFileName, wstring key)
