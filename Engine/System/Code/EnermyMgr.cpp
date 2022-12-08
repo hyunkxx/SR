@@ -48,7 +48,7 @@ void CEnermyMgr::Free(void)
 
 
 
-	for (_int i = 0; BULLET_ID::BULLET_END > i; i++)
+	for (_int i = 0; OBJID::OBJID_END > i; i++)
 	{
 		for (auto&iter = m_lEnermy[i].begin(); iter != m_lEnermy[i].end();)
 		{
