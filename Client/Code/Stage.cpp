@@ -17,6 +17,7 @@
 #include "TestBox.h"
 #include"Default_Ally.h"
 #include"BottomDirEnermy.h"
+#include"BottomDirAlly.h"
 
 #include"RightLocation.h"
 #include"RightTopLocation.h"
@@ -272,7 +273,8 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL_RELOAD);
 	}
 
-/*	for (_int i = 0; 15 > i; i++)
+	//bottomdirenermy
+	for (_int i = 0; 10> i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_BDENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
@@ -284,7 +286,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);
 	}
 	//Default_Enermy
-	for (_int i = 0; 15 > i; i++)
+	for (_int i = 0; 10 > i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
@@ -296,29 +298,29 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
 	//Ally
-	for (_int i = 0; 30 > i; i++)
+	for (_int i = 0; 10> i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
-		m_eData.vPos.x = (float)(rand() % 250);
+		m_eData.vPos.x = (float)(rand() % 125);
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)(rand() % 180);
+		m_eData.vPos.z = (float)(rand() % 90);
 
 		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 	}
-	*/
-	pGameObject = CDefault_Enermy::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Default_Enermy", pGameObject), E_FAIL);
+	for (_int i = 0; 10 > i; i++)
+	{
+		m_eData.eID = OBJID::OBJID_BDALLY;
+		m_eData.vPos.x = (float)(rand() % 125) + 100;
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z = (float)(rand() % 150);
 
-	pGameObject = CDefault_Ally::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Default_Ally", pGameObject), E_FAIL);
+		CGameObject* pEnermy = CBottomDirAlly::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
+	}
 
-	pGameObject = CBottomDirEnermy::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BottomDirEnermy", pGameObject), E_FAIL);
 
 	pGameObject = CShootEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

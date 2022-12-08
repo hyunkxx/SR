@@ -254,6 +254,9 @@
     <Filter Include="02. GameObject\08.Effect\Gun_Shoot_Effect">
       <UniqueIdentifier>{4e4b1f4f-5290-4410-91be-fb5517c8491f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly">
+      <UniqueIdentifier>{9e0c3df1-dc06-43d7-ba63-151794cde965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -434,6 +437,9 @@
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
+    <ClInclude Include="..\Header\BottomDirAlly.h">
+      <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -605,6 +611,9 @@
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
+    <ClCompile Include="..\Code\BottomDirAlly.cpp">
+      <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

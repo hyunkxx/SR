@@ -22,6 +22,7 @@ CBottomDirEnermy::CBottomDirEnermy(const CBottomDirEnermy & rhs)
 
 CBottomDirEnermy::~CBottomDirEnermy()
 {
+	Free();
 }
 
 HRESULT CBottomDirEnermy::Ready_Object(void)
@@ -41,7 +42,6 @@ HRESULT CBottomDirEnermy::Ready_Object(void)
 
 HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 {
-	//memcpy(&m_EData, &pArg, sizeof(EData));
 	m_EData = (EData*)pArg;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -103,11 +103,11 @@ void CBottomDirEnermy::StateCheck()
 	{
 		if (m_bRightLocationCount == false)
 		{
-			m_bRightLocationCount = true;
 
 			m_vPatrol.x = (float)(VTXITV*VTXCNTX / 2.f + rand() % 100);
 			m_vPatrol.y = 0;
 			m_vPatrol.z = (float)(VTXITV*VTXCNTZ / 2.f - rand() % 180) - 30.f;
+			m_bRightLocationCount = true;
 
 		}
 		m_bRightTopLocationCount = false;
@@ -241,7 +241,7 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 					D3DXVec3Normalize(&Dir, &Dir);
 					D3DXVec3Normalize(&vLook, &vLook);
 					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 1.f)
+					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
 						if (m_fReloadTime > m_fReload)
 						{
@@ -290,7 +290,7 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 					D3DXVec3Normalize(&Dir, &Dir);
 					D3DXVec3Normalize(&vLook, &vLook);
 					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 1.f)
+					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
 						if (m_fReloadTime > m_fReload)
 						{
@@ -305,9 +305,62 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 		}
 
 	}
+
+	_float fPlayerCol = Dist(pPlayerTransform);
+	if (fPlayerCol <= 60.f)
+	{
+		m_iAction = AIACTION::AIACTION_BATTLE;
+		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+		pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+
+		Dir = TargetPos - vEHPos;
+
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&Dir, &Dir);
+
+		Left_RightCheck(Dir, vLook);
+
+		_float Dot = D3DXVec3Dot(&vLook, &Dir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+			Angle = 0;
+		}
+		if (LeftCheck == false)
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+		}
+		else
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+		}
+		m_pTransformHead->Get_Info(INFO_POS, &Pos);
+		m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+		Dir = TargetPos - Pos;
+		D3DXVec3Normalize(&Dir, &Dir);
+		D3DXVec3Normalize(&vLook, &vLook);
+		Pos += Dir* 3.f;
+		if (abs(D3DXToDegree(Angle)) < 4.f)
+		{
+			if (m_fReloadTime > m_fReload)
+			{
+				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				m_fReloadTime = 0.f;
+			}
+		}
+	}
+
 }
 void CBottomDirEnermy::Basic(_float fTimeDelta)
 {
+	if (GetKeyState('N') & 8000)
+	{
+		_int a = 10;
+	}
 	if (m_iAction != AIACTION::AIACTION_BATTLE)
 	{
 
@@ -358,7 +411,7 @@ void CBottomDirEnermy::Occupation(_float fTimeDelta)
 		_vec3  vPos, vLook;
 		m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		if (m_vPatrol.x + 3 <= vPos.x&&m_vPatrol.z + 3 <= vPos.z)
+		if (m_vPatrol.z + 3 <= vPos.z)
 		{
 			m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
@@ -459,21 +512,22 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 			}
 			if (LeftCheck == false)
 			{
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 			}
 			else
 			{
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 			}
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
 			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
 			break;
 
 		case LOCATIONCHECK::LOCATIONCHECK_RIGHT:
+		{
 			vTemp = { 0.f,0.f,m_vPatrol.z };
 			m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
@@ -491,22 +545,58 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 			}
 			if (LeftCheck == false)
 			{
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 
 			}
 			else
 			{
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-				m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+
+			}
+			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
+			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+
+			break;
+		}
+		case LOCATIONCHECK::LOCATIONCHECK_LEFT:
+			vTemp = { 0.f,0.f,m_vPatrol.z };
+			m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
+			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+			vDir = vTemp - vSour;
+
+			D3DXVec3Normalize(&vDir, &vDir);
+			D3DXVec3Normalize(&vLook, &vLook);
+
+			Left_RightCheck(vDir, vLook);
+			Dot = D3DXVec3Dot(&vDir, &vLook);
+			Angle = (float)acosf(Dot);
+			if (isnan(Angle))
+			{
+				Angle = 0;
+			}
+			if (LeftCheck == false)
+			{
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+
+			}
+			else
+			{
+				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
 
 			}
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
 			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
 			break;
 		}
+
 
 	}
 }
@@ -515,46 +605,94 @@ void CBottomDirEnermy::Enermy_In_Area(_float fTimeDelta)
 {
 	if (m_iAction == AIACTION::AIACTION_ENERMY_IN_AREA)
 	{
-		CManagement* Temp = CManagement::GetInstance();
-		CLayer*      Sour = Temp->Find_Layer(L"GameLogic");
-		CGameObject* Dest = Sour->Get_GameObject(L"Default_Ally");
-		CDefault_Ally* pAlly = dynamic_cast<CDefault_Ally*>(Dest);
 
+		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
+		vector<CGameObject*>Sours = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
 
-		if (m_iLocationCheck == pAlly->Get_LocationCheck())
+		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
 		{
-			_vec3 vTargetPos, vEnermyPos, vDir, vLook;
-			CTransform*		Target = dynamic_cast<CTransform*>(pAlly->Get_Component(L"Proto_Transform", ID_DYNAMIC));
-			Target->Get_Info(INFO::INFO_POS, &vTargetPos);
-			m_pTransformCom->Get_Info(INFO::INFO_POS, &vEnermyPos);
-			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 
-			vDir = vTargetPos - vEnermyPos;
-
-			D3DXVec3Normalize(&vDir, &vDir);
-			D3DXVec3Normalize(&vLook, &vLook);
-
-			Left_RightCheck(vDir, vLook);
-
-			_float Dot = D3DXVec3Dot(&vDir, &vLook);
-			_float Angle = (_float)acosf(Dot);
-			if (isnan(Angle))
+			CTransform*	pAllyTransform = static_cast<CTransform*> (static_cast<CDefault_Ally*>(*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
+			if (m_bOcne == false)
 			{
-				Angle = 0;
+				PreDist = Dist(pAllyTransform);
+				pTempTr = pAllyTransform;
+				m_bOcne = true;
 			}
-			if (LeftCheck == false)
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
 			else
-				m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+			{
+				_float nowDist = Dist(pAllyTransform);
 
-			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-			D3DXVec3Normalize(&vLook, &vLook);
-			m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*10.f));
+				if (PreDist > nowDist)//전꺼보다 더 가깝다면 가까운걸 전으로 넣기
+				{
+					PreDist = nowDist;
+					_vec3 vTargetPos, vLook;
+					pAllyTransform->Get_Info(INFO::INFO_POS, &vTargetPos);
+					m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+					_vec3 vDir = vTargetPos - vLook;
+					D3DXVec3Normalize(&vDir, &vDir);
+					D3DXVec3Normalize(&vLook, &vLook);
+					Left_RightCheck(vDir, vLook);
+					_float Dot = D3DXVec3Dot(&vDir, &vLook);
+					_float Angle = acosf(Dot);
+					if (isnan(Angle))
+					{
+						Angle = 0;
+					}
+					if (LeftCheck == false)
+					{
+						m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+					}
+					else
+					{
+						m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+					}
+					_vec3 vTrans2;
+					m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
+					m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+
+				}
+				else
+				{
+					_vec3 vTargetPos, vLook;
+					pTempTr->Get_Info(INFO::INFO_POS, &vTargetPos);
+					m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+					_vec3 vDir = vTargetPos - vLook;
+					D3DXVec3Normalize(&vDir, &vDir);
+					D3DXVec3Normalize(&vLook, &vLook);
+					Left_RightCheck(vDir, vLook);
+					_float Dot = D3DXVec3Dot(&vDir, &vLook);
+					_float Angle = acosf(Dot);
+					if (isnan(Angle))
+					{
+						Angle = 0;
+					}
+					if (LeftCheck == false)
+					{
+						m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 3);
+					}
+					else
+					{
+						m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
+					}
+					_vec3 vTrans2;
+					m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
+					m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+
+				}
+			}
+
 		}
 	}
-
 }
-
 CBottomDirEnermy* CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBottomDirEnermy*		pInstance = new CBottomDirEnermy(pGraphicDev);
@@ -626,4 +764,5 @@ HRESULT CBottomDirEnermy::Add_Component(void)
 void CBottomDirEnermy::Free(void)
 {
 	__super::Free();
+
 }

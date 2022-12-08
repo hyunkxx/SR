@@ -37,7 +37,9 @@ public:
 	_bool Get_LeftLocation() { return m_bLeftLocationCount; }
 	_bool Get_RightTopLocation() { return m_bRightTopLocationCount; }
 	_bool Get_LeftTopLocation() { return m_bLeftTopLocationCount; }
+	_int  Get_Targeted() { return Targeted; }
 
+	void  Set_Targeted(_int _Count) { Targeted += _Count; }
 	void  Set_SuccessOccupation(_int RecentSO) { m_iSuccessOccupation = RecentSO; }
 	_int  Get_LocationCheck() { return m_iLocationCheck; }
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
@@ -53,7 +55,9 @@ public:
 	void Detect(_float fTimeDelta);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	_float Dist(CTransform* _Target);
-
+	_float PreDist = 0.f;
+	_bool m_bOcne = false;
+	CTransform* pTempTr = nullptr;
 private:
 	HRESULT		Add_Component(void);
 
@@ -83,7 +87,7 @@ private:
 	_int m_PastLocation;
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
-
+	_int Targeted = 0;
 	_float m_fReloadTime = 0.f, m_fReload = 1.f;
 	//Test
 public:

@@ -15,7 +15,8 @@ class CVoxel;
 END
 class CDefault_Ally :public CGameObject
 {
-
+public:
+	enum TYPE { TYPE_DEFAULT_ALLY, TYPE_BDENERMY, TYPE_END };
 private:
 	explicit CDefault_Ally(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CDefault_Ally(const CDefault_Ally& rhs);
@@ -39,7 +40,7 @@ public:
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
 	void  Set_Action(_int _action) { m_iAction = _action; }
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
-
+	_float Dist(CTransform* _Target);
 public:
 
 	void Basic(_float fTimeDelta);
@@ -84,3 +85,4 @@ private:
 	virtual void Free(void) override;
 
 };
+	

@@ -38,7 +38,7 @@ private:
 	CTransform*				m_pTransformRightTopCom = nullptr;
 
 
-
+	_short					m_sLeftTop = 0, m_sLeft = 0, m_sRight = 0, m_sRightTop = 0;
 	CTexture*				m_pTextureCom = nullptr;
 private:
 	_matrix  m_matProj;

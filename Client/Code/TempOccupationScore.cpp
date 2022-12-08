@@ -76,7 +76,16 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	_float AllyOccupation = LLTTemp->Get_AllyOccupation();
 	_float EnermyOccupation = LLTTemp->Get_EnermyOccupation();
 
-	m_fSizeX = EnermyOccupation;
+	if (AllyOccupation > EnermyOccupation)
+	{
+		m_fSizeX = AllyOccupation;
+		m_sLeftTop = 2;
+	}
+	else if (AllyOccupation < EnermyOccupation)
+	{
+		m_fSizeX = EnermyOccupation;
+		m_sLeftTop = 1;
+	}
 	m_fX = m_fSizeX*0.5f + 20;
 	m_fY = 240.f;;
 	m_pTransformLeftTopCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
@@ -85,7 +94,16 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CLeftLocation* LLTemp = dynamic_cast<CLeftLocation*>(Dest = Sour->Get_GameObject(L"LeftLocation"));
 	AllyOccupation = LLTemp->Get_AllyOccupation();
 	EnermyOccupation = LLTemp->Get_EnermyOccupation();
-	m_fSizeX = EnermyOccupation;
+	if (AllyOccupation > EnermyOccupation)
+	{
+		m_fSizeX = AllyOccupation;
+		m_sLeft = 2;
+	}
+	else if (AllyOccupation < EnermyOccupation)
+	{
+		m_fSizeX = EnermyOccupation;
+		m_sLeft = 1;
+	}
 	m_fX = m_fSizeX*0.5f + 20;
 	m_fY = 200.f;;
 	m_pTransformLeftCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
@@ -94,7 +112,16 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CRightLocation* LRTemp = dynamic_cast<CRightLocation*>(Dest = Sour->Get_GameObject(L"RightLocation"));
 	AllyOccupation = LRTemp->Get_AllyOccupation();
 	EnermyOccupation = LRTemp->Get_EnermyOccupation();
-	m_fSizeX = EnermyOccupation;
+	if (AllyOccupation > EnermyOccupation)
+	{
+		m_fSizeX = AllyOccupation;
+		m_sRight = 2;
+	}
+	else if (AllyOccupation < EnermyOccupation)
+	{
+		m_fSizeX = EnermyOccupation;
+		m_sRight = 1;
+	}
 	m_fX = m_fSizeX*0.5f + 20;
 	m_fY = 220.f;;
 	m_pTransformRightCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
@@ -103,7 +130,16 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CRightTopLocation* LRTTemp = dynamic_cast<CRightTopLocation*>(Dest = Sour->Get_GameObject(L"RightTopLocation"));
 	AllyOccupation = LRTTemp->Get_AllyOccupation();
 	EnermyOccupation = LRTTemp->Get_EnermyOccupation();
-	m_fSizeX = EnermyOccupation;
+	if (AllyOccupation > EnermyOccupation)
+	{
+		m_fSizeX = AllyOccupation;
+		m_sRightTop = 2;
+	}
+	else if (AllyOccupation < EnermyOccupation)
+	{
+		m_fSizeX = EnermyOccupation;
+		m_sRightTop = 1;
+	}
 	m_fX = m_fSizeX*0.5f + 20;
 	m_fY = 260.f;;
 	m_pTransformRightTopCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
@@ -125,19 +161,19 @@ void CTempOccupationScore::LateUpdate_Object(void)
 void CTempOccupationScore::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_sLeft);
 	m_pBufferLeftCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_sRight);
 	m_pBufferRightCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightTopCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_sRightTop);
 	m_pBufferRighttopCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_sLeftTop);
 	m_pBufferLefttopCom->Render_Buffer();
 	_matrix	ViewMatrix;
 	D3DXMatrixIdentity(&ViewMatrix);
@@ -221,8 +257,8 @@ HRESULT CTempOccupationScore::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformRightTopCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RTTransform", pComponent });
 
-	pComponent = m_pTextureCom = static_cast<CTexture*>(Clone_Prototype(L"Proto_Player_Hp_Back_Tex"));
+	pComponent = m_pTextureCom = static_cast<CTexture*>(Clone_Prototype(L"Proto_OccupationColor"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Hp_Back_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_OccupationColor", pComponent });
 	return S_OK;
 }
