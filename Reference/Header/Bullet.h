@@ -24,7 +24,7 @@ public:
 	virtual void Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY);
 	
 	//Collisionable  ÇÔ¼öµé
-	virtual const   _vec3		Get_Info(void) { return _vec3(); }
+	virtual const   _vec3		Get_Info(void) { return m_stBody.vPos; }
 	virtual			void		Move_Info(_vec3 _Info) {}
 	virtual			void		OBB_Collision_EX(void) {}
 	virtual			void		Update_OBB(void);

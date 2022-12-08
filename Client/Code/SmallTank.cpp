@@ -493,11 +493,15 @@ void CSmallTank::Camera_Change(void)
 	{
 		static_cast<CStaticCamera*>(pStaticCamera)->Set_Camera(false);
 		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(true);
+		_float fChangeSound = 1.f;
+		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
 	}
 	else if (static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
 	{
 		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(false);
 		static_cast<CTankCamera*>(pTankCamera)->Set_Camera(true);
+		_float fChangeSound = 1.f;
+		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
 	}
 }
 

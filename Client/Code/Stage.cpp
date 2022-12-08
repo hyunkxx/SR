@@ -420,6 +420,28 @@ void CStage::Collison_Object(void)
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
 		}
 	}
+
+	//예시) 총알과 충돌처리 하고 싶은애들 이렇게 추가하면 됨
+	for (int i = 0; BULLET_ID::BULLET_END > i; i++)
+	{
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+					(*iter)->Set_Dead(true);
+
+			}
+			// 여기에 추가로 충돌처리 하도록
+		}
+	}
+
 }
 
 void CStage::Key_Input(const _float& fTimeDelta)

@@ -20,7 +20,7 @@ CBullet::~CBullet()
 HRESULT CBullet::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	CGameObject::Ready_Object();
 	return S_OK;
 }
 
