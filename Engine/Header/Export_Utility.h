@@ -21,6 +21,7 @@
 
 //Æ÷Åº ¸ð¾ç
 #include "VIBullet.h"
+#include "VIBullet_Re.h"
 
 #include "Transform.h"
 #include "Texture.h"
@@ -29,6 +30,7 @@
 #include "Camera.h"
 #include "Pipeline.h"
 #include "Bullet.h"
+
 
 #include "LightMgr.h"
 #include "MeshLoader.h"

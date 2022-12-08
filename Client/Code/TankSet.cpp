@@ -192,15 +192,33 @@ HRESULT CTankSet::Add_Component(void)
 
 void CTankSet::Shoot_Bullet(BULLET_ID eID)
 {
-	_vec3 Pos, Dir;
+	_vec3 Pos, Dir ,UP;
 
-	m_pTransformPosin->Get_Info(INFO_POS, &Pos);
-	m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
-	D3DXVec3Normalize(&Dir, &Dir);
-	Pos += Dir * m_stInfo.fPosinDist * m_fScale;
-	Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
-	m_stInfo.fReloadTime = 0.f;
+	
+	if (eID == BULLET_ID::CANNONBALL_RELOAD || eID == BULLET_ID::MASHINE_BULLET_RELOAD)
+	{
+		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
+		m_pTransformHead->Get_Info(INFO_RIGHT, &Dir);
+		m_pTransformHead->Get_Info(INFO_UP, &UP);
+		Dir += UP;
+		Pos.y += 1.f * m_fScale;
+		D3DXVec3Normalize(&Dir, &Dir);
+		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
+		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed/10.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
+		m_stInfo.fReloadTime = 0.f;
+	}
+	else
+	{
+		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
+		m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+		Pos.y += 1.5f * m_fScale;
+		D3DXVec3Normalize(&Dir, &Dir);
+		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
+		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
+		m_stInfo.fReloadTime = 0.f;
+	}
 }
+		
 
 void CTankSet::Posin_Setting(const _vec3 & _SetPos)
 {

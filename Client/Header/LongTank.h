@@ -42,6 +42,8 @@ private:
 	_float		m_fPosinAccum = 0.f;
 	_bool		m_bPosinShake = false;
 
+	_bool		m_bStart = false;
+	_bool		m_bReLoad = true;
 public:
 	static CLongTank*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

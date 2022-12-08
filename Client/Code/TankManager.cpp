@@ -79,8 +79,8 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::HUMVEE].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::HUMVEE].RotSpeed = 40.f;
 	// 장전 속도
-	tankData[(UINT)VEHICLE::HUMVEE].fReload = 0.2f;
-	tankData[(UINT)VEHICLE::HUMVEE].fReloadTime = 0.2f;
+	tankData[(UINT)VEHICLE::HUMVEE].fReload = 0.1f;
+	tankData[(UINT)VEHICLE::HUMVEE].fReloadTime = 0.05f;
 	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 400;
 
 

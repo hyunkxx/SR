@@ -39,6 +39,14 @@ private:
 	void		Expect_Hit_Point(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 	void		Camera_Change(void);
+	void		Posin_Shake(const _float& fTimeDelta);
+
+private:
+	_float		m_fPosinAccum = 0.f;
+	_bool		m_bPosinShake = false;
+	_bool		m_bStart = false;
+	_bool		m_bReLoad = true;
+
 public:
 	static CBigTank*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

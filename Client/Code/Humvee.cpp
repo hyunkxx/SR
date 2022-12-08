@@ -27,6 +27,7 @@ _int CHumvee::Update_Object(const _float & fTimeDelta)
 	Key_Input(fTimeDelta);
 	Head_Spin(fTimeDelta);
 	Expect_Hit_Point(fTimeDelta);
+	Posin_Shake(fTimeDelta);
 
 	return __super::Update_Object(fTimeDelta);
 }
@@ -138,13 +139,13 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 {
 	if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload)
 	{
+		m_bPosinShake = true;
 		Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
-
+		Shoot_Bullet(BULLET_ID::MASHINE_BULLET_RELOAD);
 		// 발사 사운드 예시
 		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"m3_fire.mp3", PLAYER_SHOT_SOUND1, fShootSound);
-		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+		Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, fShootSound);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
@@ -503,15 +504,39 @@ void CHumvee::Camera_Change(void)
 	{
 		static_cast<CStaticCamera*>(pStaticCamera)->Set_Camera(false);
 		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(true);
+
 		_float fChangeSound = 1.f;
 		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
+
 	}
 	else if (static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
 	{
 		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(false);
 		static_cast<CTankCamera*>(pTankCamera)->Set_Camera(true);
+
 		_float fChangeSound = 1.f;
 		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
+	}
+}
+
+void CHumvee::Posin_Shake(const _float & fTimeDelta)
+{
+	if (m_bPosinShake)
+	{
+		m_fPosinAccum += fTimeDelta;
+		_vec3 Dir;
+		m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+
+		D3DXVec3Normalize(&Dir, &Dir);
+		m_pTransformPosin->Move_Pos(&(Dir * sin(360.f * m_fPosinAccum * fTimeDelta) * m_fScale / 3.f));
+		if (m_fPosinAccum >= 0.05f)
+		{
+			m_fPosinAccum = 0.f;
+			m_bPosinShake = false;
+			_vec3 Pos;
+			m_pTransformHead->Get_Info(INFO_POS, &Pos);
+			m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+		}
 	}
 }
 

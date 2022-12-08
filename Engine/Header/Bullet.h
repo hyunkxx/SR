@@ -6,6 +6,7 @@ BEGIN(Engine)
 
 class CVIBullet;
 class CTransform;
+class CVIBullet_Re;
 
 class ENGINE_DLL CBullet :
 	public CGameObject , public ICollisionable
@@ -39,7 +40,7 @@ private:
 private:
 	CTransform* m_pTransform = nullptr;
 	CVIBullet* m_pBUlletBuffer = nullptr;
-
+	CVIBullet_Re* m_pBUllet_Re_Buffer = nullptr;
 protected:
 	_vec3	m_vPos;
 	_vec3	m_vDir;

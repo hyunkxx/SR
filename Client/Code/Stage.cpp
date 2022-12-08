@@ -257,6 +257,19 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Bullet_Supply(pBullet, BULLET_ID::MASHINE_BULLET);
 	}
 
+	for (_int i = 0; 1000 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::MASHINE_BULLET_RELOAD);
+	}
+	for (_int i = 0; 200 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL_RELOAD);
+	}
+
 /*	for (_int i = 0; 15 > i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_BDENERMY;

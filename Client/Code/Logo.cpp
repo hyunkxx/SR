@@ -91,6 +91,7 @@ HRESULT CLogo::Ready_Prototype(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TankPosin", Engine::CTankPosin::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TankHead", Engine::CTank_Head::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_VIBullet", Engine::CVIBullet::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_VIBullet_Re", Engine::CVIBullet_Re::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_HitPoint", Engine::CHitPoint::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Background.jpg", TEX_NORMAL)), E_FAIL);

@@ -127,6 +127,9 @@
     <Filter Include="04. Component\00. VIBuffer\01. Custom\00. FloorTex">
       <UniqueIdentifier>{a4045c38-6162-4ff3-aabf-f7da81cf3f06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re">
+      <UniqueIdentifier>{50d1f9f5-be76-40d0-b6ce-b5c6a3254b0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FloorTex.cpp">
       <Filter>04. Component\00. VIBuffer\01. Custom\00. FloorTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VIBullet_Re.cpp">
+      <Filter>04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\FloorTex.h">
       <Filter>04. Component\00. VIBuffer\01. Custom\00. FloorTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\VIBullet_Re.h">
+      <Filter>04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

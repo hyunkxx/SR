@@ -36,7 +36,14 @@ _int CLongTank::Update_Object(const _float & fTimeDelta)
 void CLongTank::LateUpdate_Object(void)
 {
 	SetUp_OnTerrain();
-
+	if (m_stInfo.fReloadTime > 2.f && !m_bReLoad)
+	{
+		Shoot_Bullet(BULLET_ID::CANNONBALL_RELOAD);
+		_float fShootSound = 1.f;
+		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		m_bReLoad = true;
+	}
+		
 	__super::LateUpdate_Object();
 }
 
@@ -146,6 +153,14 @@ HRESULT CLongTank::Ready_Object(void)
 
 void CLongTank::Key_Input(const _float & fTimeDelta)
 {
+	if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+	{
+		if (m_bStart)
+			m_bStart = false;
+		else
+			m_bStart = true;
+	}
+	
 	if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
 	{
 		_vec3 randPos = _vec3(50.f, 0.f, 30.f);
@@ -168,8 +183,9 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		Shoot_Bullet(BULLET_ID::CANNONBALL);
 
 		_float fShootSound = 1.f;
-		Engine::PlaySound_SR(L"m3_fire.mp3", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, fShootSound);
 		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+		m_bReLoad = false;
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
@@ -197,14 +213,14 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 
 	_vec3	vDir;
 	m_pTransformBody->Get_Info(INFO_LOOK, &vDir);
-	if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD)
+	if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD && m_bStart)
 	{
 		if (m_stInfo.bBack)
 			Plus_Back_AccelSpeed(fTimeDelta);
 		else
 			Plus_Advance_AccelSpeed(fTimeDelta);
 	}
-	else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD)
+	else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD && m_bStart)
 	{
 		if (m_stInfo.bAdvance)
 			Minus_Advance_AccelSpeed(fTimeDelta);

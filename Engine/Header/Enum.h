@@ -46,7 +46,7 @@ namespace Engine
 	// NONE : 아무것도 안한 상태(전프레임에도 안눌렀고 이번프레임에도 안눌렀다)
 	enum KEY_STATE { HOLD, TAP, AWAY, NONE };
 
-	enum BULLET_ID { MASHINE_BULLET, CANNONBALL, BULLET_END };
+	enum BULLET_ID { MASHINE_BULLET, CANNONBALL, MASHINE_BULLET_RELOAD, CANNONBALL_RELOAD, BULLET_END };
 
 	enum class VEHICLE
 	{

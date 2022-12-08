@@ -38,6 +38,13 @@ private:
 	void		Expect_Hit_Point(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 	void		Camera_Change(void);
+	void		Posin_Shake(const _float& fTimeDelta);
+private:
+	_float		m_fPosinAccum = 0.f;
+	_bool		m_bPosinShake = false;
+
+
+
 public:
 	static CHumvee*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

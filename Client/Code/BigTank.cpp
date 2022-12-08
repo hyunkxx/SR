@@ -27,6 +27,7 @@ _int CBigTank::Update_Object(const _float & fTimeDelta)
 	Key_Input(fTimeDelta);
 	Head_Spin(fTimeDelta);
 	Expect_Hit_Point(fTimeDelta);
+	Posin_Shake(fTimeDelta);
 
 	return __super::Update_Object(fTimeDelta);
 }
@@ -34,6 +35,13 @@ _int CBigTank::Update_Object(const _float & fTimeDelta)
 void CBigTank::LateUpdate_Object(void)
 {
 	SetUp_OnTerrain();
+	if (m_stInfo.fReloadTime > 2.f && !m_bReLoad)
+	{
+		Shoot_Bullet(BULLET_ID::CANNONBALL_RELOAD);
+		_float fShootSound = 1.f;
+		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		m_bReLoad = true;
+	}
 
 	__super::LateUpdate_Object();
 }
@@ -127,15 +135,23 @@ HRESULT CBigTank::Ready_Object(void)
 
 void CBigTank::Key_Input(const _float & fTimeDelta)
 {
+	if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+	{
+		if (m_bStart)
+			m_bStart = false;
+		else
+			m_bStart = true;
+	}
+
 	if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload)
 	{
-		Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
+		m_bPosinShake = true;
+		Shoot_Bullet(BULLET_ID::CANNONBALL);
 
-		// 발사 사운드 예시
 		_float fShootSound = 1.f;
-		Engine::StopSound(PLAYER_SHOT_M3_FIRE);
-		Engine::PlaySound_SR(L"m3_fire.mp3", PLAYER_SHOT_M3_FIRE, fShootSound);
+		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, fShootSound);
 		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+		m_bReLoad = false;
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
@@ -501,6 +517,27 @@ void CBigTank::Camera_Change(void)
 		static_cast<CTankCamera*>(pTankCamera)->Set_Camera(true);
 		_float fChangeSound = 1.f;
 		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
+	}
+}
+
+void CBigTank::Posin_Shake(const _float & fTimeDelta)
+{
+	if (m_bPosinShake)
+	{
+		m_fPosinAccum += fTimeDelta;
+		_vec3 Dir;
+		m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+
+		D3DXVec3Normalize(&Dir, &Dir);
+		m_pTransformPosin->Move_Pos(&(Dir * sin(360.f * m_fPosinAccum * fTimeDelta) * m_fScale / 3.f));
+		if (m_fPosinAccum >= 0.1f)
+		{
+			m_fPosinAccum = 0.f;
+			m_bPosinShake = false;
+			_vec3 Pos;
+			m_pTransformHead->Get_Info(INFO_POS, &Pos);
+			m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+		}
 	}
 }
 

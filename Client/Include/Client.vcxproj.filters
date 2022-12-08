@@ -10,9 +10,6 @@
     <Filter Include="02. GameObject">
       <UniqueIdentifier>{fc356117-903d-4074-91e0-d4cdbea5873a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. BackGround">
-      <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\03. Terrain">
       <UniqueIdentifier>{48dcb4b5-04b4-4b4f-a895-79f8193cdf71}</UniqueIdentifier>
     </Filter>
@@ -251,6 +248,9 @@
     <Filter Include="02. GameObject\93.UI\10. VehicleInfoUI">
       <UniqueIdentifier>{76948a32-7736-4d0d-8661-30abd00be911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround">
+      <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -260,7 +260,7 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
-      <Filter>02. GameObject\02. BackGround</Filter>
+      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Stage.h">
       <Filter>01. Scene\03. Stage</Filter>
@@ -439,7 +439,7 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
-      <Filter>02. GameObject\02. BackGround</Filter>
+      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Stage.cpp">
       <Filter>01. Scene\03. Stage</Filter>

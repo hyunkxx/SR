@@ -20,7 +20,13 @@ CBullet::~CBullet()
 HRESULT CBullet::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_stBody.fLen[x] = 0.1f * m_fScale;
+	m_stBody.fLen[y] = 0.1f * m_fScale;
+	m_stBody.fLen[z] = 1.f * m_fScale;
+
 	CGameObject::Ready_Object();
+
 	return S_OK;
 }
 
@@ -39,15 +45,19 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	D3DXVec3Normalize(&Dir1, &Dir1);
 	D3DXVec3Normalize(&Dir2, &Dir2);
 	_float Scalar = D3DXVec3Dot(&Dir2, &Dir1);
+	
 	Scalar = acosf(Scalar);
 	if (Dir2.y < Dir1.y)
 		Scalar *= -1;
 
-	m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
+	if(m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET)
+		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
+	else
+		m_pTransform->Rotation(ROT_X,D3DXToRadian(-1000.f *fTimeDelta));
 
 	m_pTransform->Move_Pos(&Move);
-	CGameObject::Update_Object(fTimeDelta);
-
+	__super::Update_Object(fTimeDelta);
+	
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return OBJ_NOEVENT;
@@ -69,7 +79,11 @@ void CBullet::Render_Object(void)
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
-	m_pBUlletBuffer->Render_Buffer();
+
+	if (m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET)
+		m_pBUlletBuffer->Render_Buffer();
+	else
+		m_pBUllet_Re_Buffer->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -101,6 +115,10 @@ HRESULT CBullet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBUlletBuffer, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_VIBullet", pComponent });
 
+	pComponent = m_pBUllet_Re_Buffer = static_cast<CVIBullet_Re*>(Clone_Prototype(L"Proto_VIBullet_Re"));
+	NULL_CHECK_RETURN(m_pBUlletBuffer, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_VIBullet_Re", pComponent });
+
 	return S_OK;
 }
 void CBullet::Update_OBB(void)
@@ -129,12 +147,22 @@ void CBullet::Set_ID(BULLET_ID eID)
 	if (eID == BULLET_ID::MASHINE_BULLET)
 	{
 		m_fHitRange = 0.f;
-		m_fScale = 4.f;
+		m_fScale = 2.f;
 	}
 	else if (eID == BULLET_ID::CANNONBALL)
 	{
 		m_fHitRange = 3.f;
 		m_fScale = 10.f;
+	}
+	else if (eID == BULLET_ID::MASHINE_BULLET_RELOAD)
+	{
+		m_fHitRange = 0.f;
+		m_fScale = 1.f;
+	}
+	else if (eID == BULLET_ID::CANNONBALL_RELOAD)
+	{
+		m_fHitRange = 3.f;
+		m_fScale = 3.f;
 	}
 }
 

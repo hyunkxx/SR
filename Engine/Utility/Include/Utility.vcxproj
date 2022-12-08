@@ -206,6 +206,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Utility.h" />
     <ClInclude Include="..\..\Header\VIBuffer.h" />
     <ClInclude Include="..\..\Header\VIBullet.h" />
+    <ClInclude Include="..\..\Header\VIBullet_Re.h" />
     <ClInclude Include="..\..\Header\Voxel.h" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +247,7 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\Utility.cpp" />
     <ClCompile Include="..\Code\VIBuffer.cpp" />
     <ClCompile Include="..\Code\VIBullet.cpp" />
+    <ClCompile Include="..\Code\VIBullet_Re.cpp" />
     <ClCompile Include="..\Code\Voxel.cpp" />
   </ItemGroup>
   <ItemGroup>
