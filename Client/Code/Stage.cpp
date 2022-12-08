@@ -37,6 +37,8 @@
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
+#include "Gun_Shoot_Effect.h"
+
 #include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
@@ -322,6 +324,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShootEffect", pGameObject), E_FAIL);
 
+	pGameObject = CGun_Shoot_Effect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gun_ShootEffect", pGameObject), E_FAIL);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 

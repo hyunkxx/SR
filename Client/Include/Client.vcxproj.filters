@@ -251,6 +251,9 @@
     <Filter Include="02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround">
       <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08.Effect\Gun_Shoot_Effect">
+      <UniqueIdentifier>{4e4b1f4f-5290-4410-91be-fb5517c8491f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -430,6 +433,7 @@
     <ClInclude Include="..\Header\VehicleInfoUI.h">
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -600,6 +604,7 @@
     <ClCompile Include="..\Code\VehicleInfoUI.cpp">
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

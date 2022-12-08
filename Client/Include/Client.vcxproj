@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\Default_Ally.h" />
     <ClInclude Include="..\Header\Default_Enermy.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
     <ClInclude Include="..\Header\Humvee.h" />
     <ClInclude Include="..\Header\LeftLocation.h" />
     <ClInclude Include="..\Header\LeftTopLocation.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="..\Code\Default_Ally.cpp" />
     <ClCompile Include="..\Code\Default_Enermy.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\Humvee.cpp" />
     <ClCompile Include="..\Code\LeftLocation.cpp" />
     <ClCompile Include="..\Code\LeftTopLocation.cpp" />

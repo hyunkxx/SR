@@ -146,6 +146,7 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::Get_Object(L"GameLogic", L"Gun_ShootEffect")->Set_Dead(false);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)

@@ -46,7 +46,7 @@ _int CShootEffect::Update_Object(const _float & fTimeDelta)
 
 	m_fFrame += 72.f * fTimeDelta;
 
-	if (m_fFrame >= 24.f)
+	if (m_fFrame > 24.f)
 	{
 		m_bDead = true;
 		m_fFrame = 0.f;
