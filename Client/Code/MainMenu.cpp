@@ -85,7 +85,6 @@ void CMainMenu::LateUpdate_Scene(void)
 
 void CMainMenu::Render_Scene(void)
 {
-
 }
 
 HRESULT CMainMenu::Ready_Layer_Environment(const _tchar * pLayerTag)
@@ -152,21 +151,21 @@ HRESULT CMainMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	m_pInfoBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
 		L"black",
-		L"../Bin/Resource/Texture/Ui/black.png");
+		L"../Bin/Resource/Texture/Ui/white.png");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"black", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"white", pGameObject), E_FAIL);
 
 	static_cast<CDefaultUI*>(m_pInfoBackground)->SetPosition({ WINCX - 230.f, WINCY - 190.f, 0.1f });
 	static_cast<CDefaultUI*>(m_pInfoBackground)->SetScale({ 140.f ,135.f,0.f });
 
 	m_pBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
 		L"SeletMenuBackground",
-		L"../Bin/Resource/Texture/Ui/TankGame.png");
+		L"../Bin/Resource/Texture/Ui/white.png");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SeletMenuBackground", pGameObject), E_FAIL);
 
 	static_cast<CDefaultUI*>(m_pBackground)->SetPosition({ 400.f,300.f, 1.f });
-	static_cast<CDefaultUI*>(m_pBackground)->SetScale({ 390.f,290.f,0.f });
+	static_cast<CDefaultUI*>(m_pBackground)->SetScale({ 400.f,300.f,0.f });
 
 	m_pVehicleInfo = pGameObject = CVehicleInfoUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

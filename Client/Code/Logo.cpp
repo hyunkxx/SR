@@ -94,7 +94,7 @@ HRESULT CLogo::Ready_Prototype(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_VIBullet_Re", Engine::CVIBullet_Re::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_HitPoint", Engine::CHitPoint::Create(m_pGraphicDev)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Background.jpg", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_LogoTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Back.jpg", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_ShootEffectTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Smoke/Smoke_%d.png", TEX_NORMAL, 24)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Gun_ShootEffectTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Gun_Smoke/Gun_Effect_0%d.png", TEX_NORMAL, 8)), E_FAIL);
 
