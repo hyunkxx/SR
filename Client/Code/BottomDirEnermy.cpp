@@ -60,6 +60,7 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
+
 	m_fReloadTime += fTimeDelta;
 	StateCheck();
 	Detect(fTimeDelta);
@@ -69,13 +70,13 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
 	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
+
 	return OBJ_NOEVENT;
 }
 
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-
 	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
@@ -723,9 +724,7 @@ CBottomDirEnermy * CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev, void 
 HRESULT CBottomDirEnermy::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
-
-
-
+	
 	//≈ ≈© ∏ˆ≈Î
 	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);

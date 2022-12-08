@@ -210,21 +210,38 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	for (int i = 0; i < 14; ++i)
+	_vec3 vPos, vRot;
+	/* µ¹ */
+	for (int j = 0; j < 3; ++j)
 	{
-		pGameObject = CBuilding::Create(m_pGraphicDev, { 40.f * i , 0.f, 0.f });
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
-			static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		for (int i = 0; i < 3; ++i)
+		{
+			vPos = { float(rand() % 800 - 100 * i) , 0.f , float(rand() % 800 - 100 * j) };
+			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+
+			pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+				static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		}
+	}
+	/* °Ç¹° */
+	for (int j = 0; j < 3; ++j)
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			vPos = { float(rand() % 800 - 100 * i) , 0.f , float(rand() % 800 - 100 * j) };
+			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+
+			pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+				static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		}
 	}
 
-	for (int i = 1; i < 14; ++i)
-	{
-		pGameObject = CBuilding::Create(m_pGraphicDev, { 0.f , 0.f,  40.f * i });
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
-			static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
-	}
 
 	pGameObject = CTestBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -274,7 +291,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	}
 
 	//bottomdirenermy
-	for (_int i = 0; 10> i; i++)
+	for (_int i = 0; 5> i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_BDENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
@@ -286,7 +303,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);
 	}
 	//Default_Enermy
-	for (_int i = 0; 10 > i; i++)
+	for (_int i = 0; 5 > i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
@@ -298,7 +315,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
 	//Ally
-	for (_int i = 0; 10> i; i++)
+	for (_int i = 0; 5> i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
 		m_eData.vPos.x = (float)(rand() % 125);
@@ -309,7 +326,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 	}
-	for (_int i = 0; 10 > i; i++)
+	for (_int i = 0; 5 > i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_BDALLY;
 		m_eData.vPos.x = (float)(rand() % 125) + 100;
@@ -320,7 +337,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
-
 
 	pGameObject = CShootEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

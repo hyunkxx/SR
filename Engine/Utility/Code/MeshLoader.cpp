@@ -6,6 +6,8 @@ USING(Engine)
 
 IMPLEMENT_SINGLETON(CMeshLoader)
 
+HWND g_hWnd;
+
 CMeshLoader::CMeshLoader()
 {
 	strFilePath = L"../Bin/Resource/Mesh/";
@@ -75,7 +77,9 @@ void CMeshLoader::Initalize()
 
 	/* Building */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
-	LoadMesh(L"Building_02_object.bin", L"Building_02_object");
+	LoadMesh(L"Building_001_object.bin", L"Building_001_object");
+	LoadMesh(L"Rock_object.bin", L"Rock_object");
+	LoadMesh(L"Building_object.bin", L"Building_object");
 }
 
 void CMeshLoader::LoadMesh(wstring strFileName, wstring key)
@@ -85,7 +89,8 @@ void CMeshLoader::LoadMesh(wstring strFileName, wstring key)
 
 	if (hRead == INVALID_HANDLE_VALUE)
 	{
-		MSG_BOX("이름으로 된 매쉬파일이 없데 INVALI HANDLE VALUE");
+		wstring msg = strFileName + L" 파일이 없습니다.";
+		MessageBox(g_hWnd, msg.c_str(), L"mesh", MB_OK);
 		return;
 	}
 

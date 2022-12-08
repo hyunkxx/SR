@@ -10,11 +10,11 @@ class CBuilding : public CGameObject
 {
 	static _int ID;
 public:
-	static CBuilding* Create(LPDIRECT3DDEVICE9 pGramphicDev, const _vec3& vPos);
+	static CBuilding* Create(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos);
 	virtual void Free(void);
 	virtual ~CBuilding();
 private:
-	explicit CBuilding(LPDIRECT3DDEVICE9 pGramphicDev, const _vec3& vPos);
+	explicit CBuilding(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos);
 	explicit CBuilding(const CBuilding& rhs);
 public:
 	virtual	HRESULT	Ready_Object(void) override;
@@ -24,16 +24,20 @@ public:
 	virtual	void	RenderGUI(void) override;
 	virtual _bool	Get_Dead(void) { return m_bDead; }
 public:
-	const _vec3& GetPosition() const { return m_vPosition; }
-	void SetPosition(const _vec3& vPos) { m_vPosition = vPos; }
 	wstring& GetID() { return m_ID; }
+	const _vec3& GetRotation() const { return m_vRotation; }
+	void SetRotation(const _vec3& vRot);
+	const _vec3& GetPosition() const { return m_vPosition; }
+	void SetPosition(const _vec3& vPos);
 private:
 	HRESULT AddComponent();
 private:
 	wstring m_ID;
 	_matrix m_matWorld;
 	_vec3	m_vPosition;
+	_vec3	m_vRotation;
 
+	wstring m_strMeshKey;
 	CVoxel* m_pMesh;
 	CComponent* m_pTransform;
 };

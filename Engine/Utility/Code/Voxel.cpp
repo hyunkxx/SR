@@ -24,9 +24,9 @@ CVoxel::~CVoxel()
 
 _int CVoxel::Update_Component(const _float & fTimeDelta)
 {
-	_vec3 vPos = { matWorld._41,matWorld._42,matWorld._43 };
-	if (Utility::Cuilling(m_pGraphicDev, vPos))
-		return 0;
+	//_vec3 pos = { m_matWorld._41, m_matWorld._42, m_matWorld._43 };
+	//if (Utility::Cuilling(m_pGraphicDev, pos))
+	//	return 0;
 
 	auto iter = m_vecCube.begin();
 	for (; iter != m_vecCube.end(); ++iter)
@@ -107,6 +107,8 @@ HRESULT CVoxel::Initalize(wstring key)
 
 void CVoxel::Render(const _matrix* matParent)
 {
+	m_matWorld = *matParent;
+
 	if (m_vecCube.empty())
 	{
 		MSG_BOX("Failed CVoxel::Render() :  mesh size 0 ");

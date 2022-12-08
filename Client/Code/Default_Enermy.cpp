@@ -63,32 +63,28 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-	m_fReloadTime += fTimeDelta;
-	StateCheck();
-	Detect(fTimeDelta);
-	Basic(fTimeDelta);
+
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
 	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
+	m_fReloadTime += fTimeDelta;
+	StateCheck();
+	Detect(fTimeDelta);
+	Basic(fTimeDelta);
+	
 	return OBJ_NOEVENT;
 }
 
 void CDefault_Enermy::LateUpdate_Object(void)
 {
-
 	__super::LateUpdate_Object();
-
-
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CDefault_Enermy::Render_Object(void)
 {
-
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
 
@@ -97,7 +93,6 @@ void CDefault_Enermy::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
-
 }
 
 void CDefault_Enermy::StateCheck()

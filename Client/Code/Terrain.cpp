@@ -52,16 +52,14 @@ void CTerrain::LateUpdate_Object(void)
 
 void CTerrain::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pTextureCom->Set_Texture(0);
 
-	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matBackground);
 	m_pBackground->Set_Texture(0);
 	m_pBackgroundRect->Render_Buffer();
@@ -95,8 +93,8 @@ HRESULT CTerrain::Add_Component(void)
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture", pComponent });
-	
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_1", pComponent });
+
 	pComponent = m_pBackground = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainTexture"));
 	NULL_CHECK_RETURN(m_pBackground, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_2", pComponent });
@@ -131,7 +129,7 @@ void CTerrain::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('Q') & 0x8000)
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	
+
 	if (GetAsyncKeyState('A') & 0x8000)
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
 
@@ -146,7 +144,7 @@ void CTerrain::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('D') & 0x8000)
 		m_pTransformCom->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
-	
+
 
 }
 

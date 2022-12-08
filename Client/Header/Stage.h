@@ -39,8 +39,8 @@ private:
 	wstring m_szOutput_Chatting = L"";
 	wstring m_szInput_Chatting = L"";
 	wstring m_szChatting = L"";
-	_tchar				m_PlayerChating[128] = L"";
-	_tchar				m_ChattingWin[128] = L"";
+	_tchar	m_PlayerChating[128] = L"";
+	_tchar	m_ChattingWin[128] = L"";
 
 };
 

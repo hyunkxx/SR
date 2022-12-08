@@ -62,12 +62,12 @@ _int CLeftLocation::Update_Object(const _float& fTimeDelta)
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
 			Occupation(OBJID::OBJID_DEFAULT_ALLY);
 		}
-		/*Dests= CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+		Dests= CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 		if (Dests.size() != 0)
 		{
 		CheckObject(OBJID::OBJID_BDALLY);
 		Occupation(OBJID::OBJID_BDALLY);
-		}*/
+		}
 
 
 	}

@@ -39,7 +39,6 @@ private:
 	CTexture*			m_pBackground = nullptr;
 	CFloorTex*			m_pBackgroundRect;
 	_matrix				m_matBackground;
-
 public:
 	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:
