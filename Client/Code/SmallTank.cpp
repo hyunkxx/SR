@@ -435,7 +435,7 @@ void CSmallTank::Expect_Hit_Point(const _float & fTimeDelta)
 	m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
 	_float fAngle = m_pTransformPosin->Get_Angle(ROT_X);
 	D3DXVec3Normalize(&Dir, &Dir);
-
+	Pos.y += 2.f * m_fScale;
 	_float fFlyTime = 0.f;
 	while (true)
 	{

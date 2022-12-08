@@ -211,7 +211,7 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 	{
 		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
 		m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
-		Pos.y += 1.5f * m_fScale;
+		Pos.y += 2.f * m_fScale;
 		D3DXVec3Normalize(&Dir, &Dir);
 		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
 		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
