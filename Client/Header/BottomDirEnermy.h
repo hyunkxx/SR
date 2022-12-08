@@ -97,5 +97,18 @@ public:
 private:
 	virtual void Free(void) override;
 
+	// HP UI
+	_matrix				UI_matViewF, m_UI_ProjMatrix;
+	CRcTex*				m_pRcTexF = nullptr;
+	CTexture*			m_pTextureF = nullptr;
+	CTransform*		m_pTransformHP_UI = nullptr;
+	_float					UI_Orgin_HP, UI_fHP;
+	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
+	_float					UI_fOrgin_ScaleX;
+	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+public:
+	void						 Update_UI(void);
+
 };
 

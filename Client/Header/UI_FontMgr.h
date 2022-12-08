@@ -54,8 +54,20 @@ public:
 
 	void				SavePlayerName(wstring PlayerName) { szPlayerName = PlayerName; }
 	wstring				Get_PlayerName(void) { return szPlayerName; }
+
+	_uint			iAllCount{ 0 }, iLiveCount{ 0 };
+	void				Set_AllCount(_uint _AllCount) { iLiveCount = iAllCount = _AllCount; }
+	void				Set_LiveCount(_uint DeathCount) { iLiveCount -= DeathCount; }
+
+	wstring check = L"NUM";
 	void				SendChatLog(wstring Name, wstring OriginChat) {
-		if ((OriginChat != L"") || (OriginChat != L" "))
+		if (OriginChat == check)
+		{
+			if (iLiveCount >= iAllCount) { iLiveCount = iAllCount; }
+			if (iLiveCount <= 0) { iLiveCount = 0; }
+			szFullChat_Log = (wstring(L" ÀûÆÀ ³²Àº Àû ÅÊÅ©\t")) + szColon + to_wstring(iLiveCount) + wstring(L"/") + to_wstring(iAllCount);
+		}
+		else if (!((OriginChat == L"") || (OriginChat == L" ") || (OriginChat == L"  ")))
 		{
 			szFullChat_Log = Name + szColon + OriginChat;
 		}

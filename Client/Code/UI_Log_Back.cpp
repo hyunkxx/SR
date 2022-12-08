@@ -118,24 +118,30 @@ CUI_Log_Back * CUI_Log_Back::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CUI_Log_Back::UpdateChatting(void)
 {
-	if (m_iPlayerTime == 182)
+	if (m_iPlayerTime == 183)
 	{
 		// 로그창에서 직접 띄우는~
+		m_szChattingLog[0] = L"시스템 : LOG .. Setting .. Loading";
+
+	}
+	if (m_iPlayerTime == 181)
+	{
 		m_szChattingLog[0] = L"시스템 : LOG .. Setting .. Loading";
 		m_szChattingLog[1] = L"단축키 확인";
 		m_szChattingLog[2] = L"자동 SAVE _ OFF";
 		m_szChattingLog[3] = L"환영합니다. 조종사님";
-		m_szChattingLog[4] = L"작전 1";
-
-
-		/*    다른 클래스에서 쓸 방식										기체 이름						원하는 문자열
-		CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"LOG .. Setting .. Loading"));
-		CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"단축키 확인"));
-		CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"자동 SAVE _ OFF"));
-		CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"환영합니다. 조종사님"));
-		CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"적들을 죽이고 살아 남으십시오."));
-		*/
+		m_szChattingLog[4] = CUI_FontMgr::GetInstance()->Get_PlayerName() + (wstring(L"  작전 1"));
 	}
+
+
+	/*    다른 클래스에서 쓸 방식										기체 이름						원하는 문자열
+	CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"LOG .. Setting .. Loading"));
+	CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"단축키 확인"));
+	CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"자동 SAVE _ OFF"));
+	CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"환영합니다. 조종사님"));
+	CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"시스템"), wstring(L"적들을 죽이고 살아 남으십시오."));
+	*/
+
 
 	if ((m_szChattingLog[4] != CUI_FontMgr::GetInstance()->Get_Chat_Log()))
 	{

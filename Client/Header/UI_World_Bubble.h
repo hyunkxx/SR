@@ -35,8 +35,10 @@ private:
 
 
 	CRcTex*						m_pRcTex = nullptr;
-	CTexture*					m_pTexture = nullptr;
-	CTransform*				m_pTransform = nullptr;
+	CTexture*					m_pTexture1 = nullptr;
+	CTexture*					m_pTexture2 = nullptr;
+	CTransform*				m_pTransform1 = nullptr;
+	CTransform*				m_pTransform2 = nullptr;
 
 	_matrix matView;
 	_matrix  m_matProj;

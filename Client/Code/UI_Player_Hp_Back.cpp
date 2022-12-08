@@ -37,8 +37,8 @@ HRESULT CUI_Player_Hp_Back::Ready_Object(void)
 	m_fScaleY = 9.5f;
 	m_fScaleZ = 1.f;
 
-	m_fPosX = 100.f;
-	m_fPosY = 20.f;
+	m_fPosX = 400.f;
+	m_fPosY = 590.f;
 	m_fPosZ = 0.03f;
 
 

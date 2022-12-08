@@ -20,6 +20,8 @@ public:
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
 	virtual void RenderGUI(void) override;
+
+	void				 Update_UI(void);
 public:
 	virtual	HRESULT		Add_Component(void);
 	virtual HRESULT		Ready_Object(void);

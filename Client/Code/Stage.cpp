@@ -25,16 +25,14 @@
 #include"LeftLocation.h"
 
 #include "Posin_UI.h"
-#include "UI_BlueTeam_Kill_Back.h"
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
 #include "UI_FontMgr.h"
 #include "UI_Player_Hp_Back.h"
 #include "UI_Player_Hp.h"
 #include "UI_Player_Hp_Front.h"
-#include "UI_World_HP_Back.h"
-#include "UI_World_HP.h"
 #include "UI_World_Bubble.h"
+#include "UI_Volume.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
@@ -72,6 +70,12 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
 	Key_Input(fTimeDelta);
 
+	CGameObject* pVolume = Engine::Get_Object(L"UI", L"Volume_UI");
+	if (static_cast<CUI_Volume*>(pVolume)->Get_Volume_Show())
+	{	ShowCursor(true);}
+	else
+	{	ShowCursor(false);}
+
 	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, m_fSound);
 
 	Engine::Update_BulletMgr(fTimeDelta);
@@ -106,11 +110,11 @@ void CStage::Render_Scene(void)
 		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
 
 		// 팀 킬 카운트
-		Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
-		Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
+		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
+		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
 		// 탱크 종류 or 이름
-		Render_Font(L"Font_AnSang3", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 8.f, PERCENTY * 5.f), CUI_FontMgr::GetInstance()->Get_Hecks_B());
+		Render_Font(L"Font_AnSang3", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(WINCX_HALF - PERCENTX * 10.f, WINCY - PERCENTY * 5.f), D3DXCOLOR(0.f, 0.64f, 0.f, 1.f));
 	}
 	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
 	{
@@ -302,8 +306,12 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);
 	}
+
 	//Default_Enermy
-	for (_int i = 0; 5 > i; i++)
+	_int iEnermy_Count = 5;
+	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count- 1);
+
+	for (_int i = 0; (iEnermy_Count) > i; i++)
 	{
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
@@ -362,11 +370,7 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
 
-	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
-
-	pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
+pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp1", pGameObject), E_FAIL);
 
@@ -374,17 +378,9 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp3", pGameObject), E_FAIL);
 
-	pGameObject = CUI_World_HP::Create(m_pGraphicDev, 300.f);
+	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"World_Hp2", pGameObject), E_FAIL);
-
-	pGameObject = CUI_World_HP_Back::Create(m_pGraphicDev, 300.f);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"World_Hp3", pGameObject), E_FAIL);
-
-	pGameObject = CUI_BlueTeam_Kill_Back::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BlueTeam_Kill_Back", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
 
 	pGameObject = CPlayer_Chatting::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -402,6 +398,9 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"World_Bubble", pGameObject), E_FAIL);
 
+	pGameObject = CUI_Volume::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Volume_UI", pGameObject), E_FAIL);
 
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -471,7 +470,12 @@ void CStage::Collison_Object(void)
 					continue;
 
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
 					(*iter)->Set_Dead(true);
+					// 채팅으로 남은 수 뜨도록 (겜에서 num 치면 됨)
+					//CUI_FontMgr::GetInstance()->Set_LiveCount(_uint(1));
+					//CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"적"), wstring(L"\t전차 파괴") + wstring( 죽인 숫자));
+				}
 
 			}
 			// 여기에 추가로 충돌처리 하도록
@@ -517,24 +521,6 @@ void CStage::Key_Input(const _float& fTimeDelta)
 	if (Get_DIKeyState_Custom(DIK_RIGHT) == KEY_STATE::HOLD)
 	{
 		static_cast<CUI_Player_Hp*>(pPlayerHp_UI)->Plus_HP_UI(3.f);
-	}
-
-#pragma endregion
-
-	// Test World HP UI ㅡㅡㅡㅡㅡㅡㅡㅡ 삭제 예정
-#pragma region
-	CGameObject* pWorldHp_UI = Engine::Get_Object(L"UI", L"World_Hp2");
-	CGameObject* pWorldHp_Back_UI = Engine::Get_Object(L"UI", L"World_Hp3");
-
-	if (Get_DIKeyState_Custom(DIK_9) == KEY_STATE::HOLD)
-	{
-		static_cast<CUI_World_HP*>(pWorldHp_UI)->Minus_HP_UI(3.f);
-		static_cast<CUI_World_HP_Back*>(pWorldHp_Back_UI)->Minus_HP_UI(3.f);
-	}
-	if (Get_DIKeyState_Custom(DIK_0) == KEY_STATE::HOLD)
-	{
-		static_cast<CUI_World_HP*>(pWorldHp_UI)->Plus_HP_UI(3.f);
-		static_cast<CUI_World_HP_Back*>(pWorldHp_Back_UI)->Plus_HP_UI(3.f);
 	}
 
 #pragma endregion

@@ -161,15 +161,6 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\01.World_UI">
       <UniqueIdentifier>{f0970058-44d1-4820-9a14-f66f88ebd418}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp">
-      <UniqueIdentifier>{b2e5188d-ec8b-4c3c-b40b-f2d0257305cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\00.Back">
-      <UniqueIdentifier>{c94dbb53-ed20-4960-b149-4d6fd2bebd79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\01.Mid">
-      <UniqueIdentifier>{5fba0803-df2f-456a-b98d-a8225694ad67}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI">
       <UniqueIdentifier>{0d14e78e-2813-4168-8717-7664f3029bc1}</UniqueIdentifier>
     </Filter>
@@ -364,9 +355,6 @@
     <ClInclude Include="..\Header\BottomDirEnermy.h">
       <Filter>02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_BlueTeam_Kill_Back.h">
-      <Filter>02. GameObject\93.UI\93.ETC</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Player_Chatting.h">
       <Filter>02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
     </ClInclude>
@@ -387,12 +375,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_Player_Hp_Front.h">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP\02.Front</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_World_HP_Back.h">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\00.Back</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_World_HP.h">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\01.Mid</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Loading.h">
       <Filter>01. Scene\00. Loading</Filter>
@@ -439,6 +421,9 @@
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h">
       <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Volume.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -538,9 +523,6 @@
     <ClCompile Include="..\Code\BottomDirEnermy.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_BlueTeam_Kill_Back.cpp">
-      <Filter>02. GameObject\93.UI\93.ETC</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Player_Chatting.cpp">
       <Filter>02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
     </ClCompile>
@@ -561,12 +543,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Player_Hp_Front.cpp">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP\02.Front</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_World_HP_Back.cpp">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\00.Back</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_World_HP.cpp">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\01.World_UI\00.Hp\01.Mid</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>01. Scene\00. Loading</Filter>
@@ -613,6 +589,9 @@
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Volume.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

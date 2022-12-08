@@ -41,6 +41,6 @@ private:
 	wstring m_szChatting = L"";
 	_tchar	m_PlayerChating[128] = L"";
 	_tchar	m_ChattingWin[128] = L"";
-
+	_uint				m_iKillCount = 0;
 };
 

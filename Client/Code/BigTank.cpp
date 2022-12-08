@@ -28,7 +28,7 @@ _int CBigTank::Update_Object(const _float & fTimeDelta)
 	Head_Spin(fTimeDelta);
 	Expect_Hit_Point(fTimeDelta);
 	Posin_Shake(fTimeDelta);
-
+	Update_UI();
 	return __super::Update_Object(fTimeDelta);
 }
 
@@ -61,6 +61,7 @@ void CBigTank::Render_Object(void)
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 		m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
+		__super::Render_Object();
 	}
 }
 
@@ -129,6 +130,12 @@ HRESULT CBigTank::Ready_Object(void)
 
 	m_stInfo.fLowAngle = data.fLowAngle;
 	m_stInfo.TopAngle = data.TopAngle;
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = data.fMaxHP;
+	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
+	UI_fScaleY = 0.2f;
+	UI_fScaleZ = 1.f;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	return S_OK;
@@ -558,4 +565,81 @@ CBigTank * CBigTank::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CBigTank::Free(void)
 {
 	CGameObject::Free();
+}
+
+void CBigTank::Update_UI(void)
+{
+
+	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
+	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
+	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
+	_vec3 vTankPos, vUI_HPF, vUI_HPB;
+
+
+	if (UI_fHP >= UI_Orgin_HP)
+	{
+		UI_fHP = UI_Orgin_HP;
+	}
+	if (UI_fHP <= 0.f)
+	{
+		UI_fHP = 0.f;
+	}
+
+	_float HP_Percent = (UI_fHP / UI_Orgin_HP);
+
+	if (HP_Percent > 1.f)
+	{
+		HP_Percent = 1.f;
+	}
+	if (HP_Percent < 0.f)
+	{
+		HP_Percent = 0.f;
+	}
+
+	UI_fScaleX = (UI_fOrgin_ScaleX * HP_Percent);
+
+
+	m_pTransformBody->Get_Info(INFO_POS, &vTankPos);
+
+
+
+	D3DXMatrixIdentity(&UI_matViewF);
+
+	pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+
+	memset(&UI_matViewF._41, 0, sizeof(_vec3));
+
+	D3DXMatrixInverse(&UI_matViewF, 0, &UI_matViewF);
+
+
+
+	_float fScale[ROT_END];
+	//중전차 높이
+	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	{
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
+		fScale[ROT_X] = UI_fScaleX;
+		fScale[ROT_Y] = UI_fScaleY;
+		fScale[ROT_Z] = UI_fScaleZ;
+	}
+	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	{
+		vUI_HPF = { vTankPos.x, vTankPos.y + 4.5f, vTankPos.z };
+		fScale[ROT_X] = UI_fScaleX;
+		fScale[ROT_Y] = UI_fScaleY + 0.3f;
+		fScale[ROT_Z] = UI_fScaleZ;
+	}
+
+	_vec3 BillPos = vUI_HPF;
+
+	memcpy(&UI_matViewF._41, &BillPos, sizeof(_vec3));
+
+	for (int i = 0; i < ROT_END; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			UI_matViewF(i, j) *= fScale[i];
+		}
+	}
+
 }

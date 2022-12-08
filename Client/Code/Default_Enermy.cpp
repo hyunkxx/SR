@@ -12,6 +12,9 @@
 #include"RightTopLocation.h"
 #include"Default_Ally.h"
 #include"BottomDirAlly.h"
+#include "TankCamera.h"
+#include "StaticCamera.h"
+#include "AimCamera.h"
 CDefault_Enermy::CDefault_Enermy(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -40,6 +43,13 @@ HRESULT CDefault_Enermy::Ready_Object(void)
 
 	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransformPosin->Set_Pos(550.f, 1.f, 550.f);
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = 300.f;    // tankData.fMaxHP;
+	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
+	UI_fScaleY = 0.2f;
+	UI_fScaleZ = 1.f;
+
 	return S_OK;
 }
 
@@ -57,6 +67,13 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = 300.f;    // tankData.fMaxHP;
+	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
+	UI_fScaleY = 0.2f;
+	UI_fScaleZ = 1.f;
+
 	return S_OK;
 }
 
@@ -73,14 +90,16 @@ _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 	StateCheck();
 	Detect(fTimeDelta);
 	Basic(fTimeDelta);
-	
+
+	Add_RenderGroup(RENDER_NONALPHA, this);
+
 	return OBJ_NOEVENT;
 }
 
 void CDefault_Enermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Update_UI();
 }
 
 void CDefault_Enermy::Render_Object(void)
@@ -93,6 +112,18 @@ void CDefault_Enermy::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
+
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+
+	m_pTextureF->Set_Texture(0);
+	m_pRcTexF->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CDefault_Enermy::StateCheck()
@@ -649,10 +680,108 @@ HRESULT CDefault_Enermy::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PosinTransform", pComponent });
 
+
+	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
+	NULL_CHECK_RETURN(m_pTextureF, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex", pComponent });
+
+	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
+
 	return S_OK;
 }
 
 void CDefault_Enermy::Free(void)
 {
 	__super::Free();
+}
+
+
+void CDefault_Enermy::Update_UI(void)
+{
+	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
+	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
+	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
+
+	if (UI_fHP >= UI_Orgin_HP)
+	{
+		UI_fHP = UI_Orgin_HP;
+	}
+	if (UI_fHP <= 0.f)
+	{
+		UI_fHP = 0.f;
+	}
+
+	_float HP_Percent = (UI_fHP / UI_Orgin_HP);
+
+	if (HP_Percent > 1.f)
+	{
+		HP_Percent = 1.f;
+	}
+	if (HP_Percent < 0.f)
+	{
+		HP_Percent = 0.f;
+	}
+
+	UI_fScaleX = (UI_fOrgin_ScaleX * HP_Percent);
+
+	_vec3 vTankPos, vUI_HPF;
+	// UI_ 높이 _ 키워드
+	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	{
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 2.5f, vTankPos.z };
+
+		pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	{
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
+
+		pStaticView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	{
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 1.5f, vTankPos.z };
+
+		pAimView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+
+	memset(&UI_matViewF._41, 0, sizeof(_vec3));
+
+	D3DXMatrixInverse(&UI_matViewF, 0, &UI_matViewF);
+
+	_vec3 BillPos = vUI_HPF;
+
+	_float fScale[ROT_END];
+
+	fScale[ROT_X] = UI_fScaleX;
+	fScale[ROT_Y] = UI_fScaleY;
+	fScale[ROT_Z] = UI_fScaleZ;
+
+	memcpy(&UI_matViewF._41, &BillPos, sizeof(_vec3));
+
+	for (int i = 0; i < ROT_END; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			UI_matViewF(i, j) *= fScale[i];
+		}
+	}
 }

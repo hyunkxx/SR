@@ -29,12 +29,12 @@ HRESULT CUI_Player_Hp::Ready_Object(_float fOrgin_HP)
 	m_fOrgin_HP = m_fHP = fOrgin_HP;
 
 	m_fOrgin_ScaleX = m_fScaleX = 100.f;
-	m_fOrgin_PosX = m_fPosX = 100.f;
+	m_fOrgin_PosX = m_fPosX = 400.f;
 
 	m_fScaleY = 9.5f;
 	m_fScaleZ = 1.f;
 
-	m_fPosY = 20.f;
+	m_fPosY = 590.f;
 	m_fPosZ = 0.02f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
@@ -140,5 +140,9 @@ void CUI_Player_Hp::Update_HP(void)
 	if (HP_Percent > 1.f) { HP_Percent = 1.f; }
 	if (HP_Percent < 0.f) { HP_Percent = 0.f; }
 	m_fScaleX = (m_fOrgin_ScaleX * HP_Percent);
-	m_fPosX = (m_fOrgin_PosX *HP_Percent);
+
+	_float fX = m_fOrgin_ScaleX - m_fScaleX;
+	//	m_fPosX = (m_fOrgin_PosX *HP_Percent);
+	m_fPosX = (m_fOrgin_PosX - fX);
+
 }

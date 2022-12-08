@@ -41,6 +41,16 @@ void CTankSet::LateUpdate_Object(void)
 
 void CTankSet::Render_Object(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+
+
+	m_pTextureF->Set_Texture(0);
+	m_pRcTexF->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	__super::Render_Object();
 }
 
@@ -186,6 +196,18 @@ HRESULT CTankSet::Add_Component(void)
 	pComponent = m_pTransformPosin = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformPosin", pComponent });
+
+	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
+	NULL_CHECK_RETURN(m_pTextureF, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex", pComponent });
+
+	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
 
 	return S_OK;
 }

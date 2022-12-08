@@ -32,8 +32,8 @@ HRESULT CUI_World_Bubble::Ready_Object()
 	m_fScaleY = 2.f;
 	m_fScaleZ = 1.f;
 
-	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
-
+	m_pTransform1->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
+	m_pTransform2->Set_Scale(m_fScaleX - 2.f, m_fScaleY - .1f, m_fScaleZ);
 	m_fPosX = 1.f;
 	m_fPosY = 1.f;
 	m_fPosZ = 1.f;
@@ -59,7 +59,8 @@ _int CUI_World_Bubble::Update_Object(const _float & fTimeDelta)
 	}
 
 	_vec3 vTemp;
-	m_pTransform->Get_Info(INFO_POS, &vTemp);
+	m_pTransform1->Get_Info(INFO_POS, &vTemp);
+	m_pTransform2->Get_Info(INFO_POS, &vTemp);
 	__super::Compute_ViewZ(&vTemp);
 
 	//Ä«¸Þ¶ó °´Ã¼
@@ -121,7 +122,10 @@ void CUI_World_Bubble::Render_Object(void)
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matView);
 
-		m_pTexture->Set_Texture(0);
+		m_pTexture1->Set_Texture(0);
+		m_pRcTex->Render_Buffer();
+
+		m_pTexture2->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
 
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -151,10 +155,13 @@ void CUI_World_Bubble::Update_Pos(void)
 	pPlayerTrans->Get_Info(INFO_POS, &vPlayerPos);
 
 	m_fPosX = vPlayerPos.x;
-	m_fPosY = vPlayerPos.y + 3.f;
+	m_fPosY = vPlayerPos.y + 5.f;
 	m_fPosZ = vPlayerPos.z;
 
-	m_pTransform->Set_Pos(m_fPosX, m_fPosY, m_fPosZ);
+	_float fz = m_fPosZ - 0.3f;
+
+	m_pTransform1->Set_Pos(m_fPosX, m_fPosY, m_fPosZ);
+	m_pTransform2->Set_Pos(m_fPosX, m_fPosY, m_fPosZ);
 }
 
 
@@ -169,13 +176,21 @@ HRESULT CUI_World_Bubble::Add_Component(void)
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Bubble_Tex"));
-	NULL_CHECK_RETURN(m_pTexture, E_FAIL);
+	pComponent = m_pTexture1 = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Bubble_Tex"));
+	NULL_CHECK_RETURN(m_pTexture1, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Bubble_Tex", pComponent });
 
-	pComponent = m_pTransform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
-	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	pComponent = m_pTexture2 = static_cast<CTexture*>(Clone_Prototype(L"Proto_Steam_Tex"));
+	NULL_CHECK_RETURN(m_pTexture2, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Steam_Tex", pComponent });
+
+	pComponent = m_pTransform1 = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransform1, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_B", pComponent });
+
+	pComponent = m_pTransform2 = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransform2, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_S", pComponent });
 
 
 	return S_OK;
