@@ -29,6 +29,7 @@ _int CHumvee::Update_Object(const _float & fTimeDelta)
 	Expect_Hit_Point(fTimeDelta);
 	Posin_Shake(fTimeDelta);
 	Update_UI();
+	Update_OBB();
 	return __super::Update_Object(fTimeDelta);
 }
 
@@ -133,7 +134,13 @@ HRESULT CHumvee::Ready_Object(void)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
+	m_stBody.fLen[x] = 1.f * m_fScale;
+	m_stBody.fLen[y] = 3.f * m_fScale;
+	m_stBody.fLen[z] = 2.5f * m_fScale;
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	CGameObject::Ready_Object();
 	return S_OK;
 }
 
