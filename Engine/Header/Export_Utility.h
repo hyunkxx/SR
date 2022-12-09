@@ -13,6 +13,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include"Location.h"
+
 // ÅÊÅ© ¸öÃ¼
 #include "Tank_Body.h"
 #include "Tank_Head.h"
@@ -22,6 +23,7 @@
 //Æ÷Åº ¸ð¾ç
 #include "VIBullet.h"
 #include "VIBullet_Re.h"
+#include "VISmoke.h"
 
 #include "Transform.h"
 #include "Texture.h"
@@ -30,7 +32,7 @@
 #include "Camera.h"
 #include "Pipeline.h"
 #include "Bullet.h"
-
+#include "Smoke_Bullet.h"
 
 #include "LightMgr.h"
 #include "MeshLoader.h"

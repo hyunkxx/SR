@@ -294,6 +294,13 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL_RELOAD);
 	}
 
+	for (_int i = 0; 5 > i; i++)
+	{
+		CGameObject* pBullet = CSmoke_Bullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::SMOKE_BULLET);
+	}
+
 	//bottomdirenermy
 	for (_int i = 0; 5> i; i++)
 	{

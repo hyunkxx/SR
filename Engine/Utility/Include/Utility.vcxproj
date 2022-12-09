@@ -196,6 +196,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\RcTex.h" />
     <ClInclude Include="..\..\Header\Renderer.h" />
     <ClInclude Include="..\..\Header\Scene.h" />
+    <ClInclude Include="..\..\Header\Smoke_Bullet.h" />
     <ClInclude Include="..\..\Header\TankPosin.h" />
     <ClInclude Include="..\..\Header\Tank_Body.h" />
     <ClInclude Include="..\..\Header\Tank_Head.h" />
@@ -207,6 +208,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\VIBuffer.h" />
     <ClInclude Include="..\..\Header\VIBullet.h" />
     <ClInclude Include="..\..\Header\VIBullet_Re.h" />
+    <ClInclude Include="..\..\Header\VISmoke.h" />
     <ClInclude Include="..\..\Header\Voxel.h" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +239,7 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Renderer.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
+    <ClCompile Include="..\Code\Smoke_Bullet.cpp" />
     <ClCompile Include="..\Code\TankPosin.cpp" />
     <ClCompile Include="..\Code\Tank_Body.cpp" />
     <ClCompile Include="..\Code\Tank_Head.cpp" />
@@ -248,6 +251,7 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\VIBuffer.cpp" />
     <ClCompile Include="..\Code\VIBullet.cpp" />
     <ClCompile Include="..\Code\VIBullet_Re.cpp" />
+    <ClCompile Include="..\Code\VISmoke.cpp" />
     <ClCompile Include="..\Code\Voxel.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -120,6 +120,7 @@ HRESULT CHumvee::Ready_Object(void)
 
 	m_stInfo.fPosinDist = tankData.fPosinDist;
 	m_stInfo.fReload = tankData.fReload;
+
 	m_stInfo.fReloadTime = tankData.fReloadTime;
 	m_stInfo.iCannonSpeed = tankData.iCannonSpeed;
 	m_fScale = 1.f;

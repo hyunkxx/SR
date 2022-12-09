@@ -418,12 +418,14 @@
     <ClInclude Include="..\Header\VehicleInfoUI.h">
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h">
       <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Volume.h">
       <Filter>02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Gun_Shoot_Effect.h">
+      <Filter>02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -586,12 +588,14 @@
     <ClCompile Include="..\Code\VehicleInfoUI.cpp">
       <Filter>02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Volume.cpp">
       <Filter>02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp">
+      <Filter>02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

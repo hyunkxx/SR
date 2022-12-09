@@ -70,24 +70,6 @@
     <Filter Include="04. Component\00. VIBuffer\00. Primitive\04. CubeTex">
       <UniqueIdentifier>{680e0695-aaaf-4608-a813-59803b8bf93e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom">
-      <UniqueIdentifier>{93f6ad37-ce12-4570-a0c8-19abda50892f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\05.Tank_Body">
-      <UniqueIdentifier>{6e31d288-e9de-42a1-9f00-78e57b15594f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\06.Tank_Head">
-      <UniqueIdentifier>{49bdab0d-470d-4578-95a7-c3d3946b802a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\07.Tank_Posin">
-      <UniqueIdentifier>{dab5bf99-4f34-4577-a542-9c513bd8d4dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\08,VIBullet">
-      <UniqueIdentifier>{ee8aca84-3cbd-48fd-9f70-b9579b19f5e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\09.HitPoint">
-      <UniqueIdentifier>{38a306be-6edc-4f17-a80a-2d714aeb13ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Component\00. VIBuffer\02. Voxel">
       <UniqueIdentifier>{39eb9ec1-7777-4914-b5cd-0af46f0b97a2}</UniqueIdentifier>
     </Filter>
@@ -124,11 +106,35 @@
     <Filter Include="98 Utility">
       <UniqueIdentifier>{0cb86655-a6f1-4631-9aa9-27e85afe691a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Component\00. VIBuffer\01. Custom\00. FloorTex">
-      <UniqueIdentifier>{a4045c38-6162-4ff3-aabf-f7da81cf3f06}</UniqueIdentifier>
+    <Filter Include="03. GameObject\Bullet\Smoke_Bullet">
+      <UniqueIdentifier>{a0375fed-40af-4e97-987f-e48c5defc07f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom">
+      <UniqueIdentifier>{93f6ad37-ce12-4570-a0c8-19abda50892f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\05.Tank_Body">
+      <UniqueIdentifier>{6e31d288-e9de-42a1-9f00-78e57b15594f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\06.Tank_Head">
+      <UniqueIdentifier>{49bdab0d-470d-4578-95a7-c3d3946b802a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\07.Tank_Posin">
+      <UniqueIdentifier>{dab5bf99-4f34-4577-a542-9c513bd8d4dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\08,VIBullet">
+      <UniqueIdentifier>{ee8aca84-3cbd-48fd-9f70-b9579b19f5e5}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re">
       <UniqueIdentifier>{50d1f9f5-be76-40d0-b6ce-b5c6a3254b0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\09.HitPoint">
+      <UniqueIdentifier>{38a306be-6edc-4f17-a80a-2d714aeb13ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\00. FloorTex">
+      <UniqueIdentifier>{a4045c38-6162-4ff3-aabf-f7da81cf3f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\00. VIBuffer\01. Custom\10.VISmoke">
+      <UniqueIdentifier>{d13ce88e-8f98-460c-9829-bb7031ba3412}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\VIBullet_Re.cpp">
       <Filter>04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Smoke_Bullet.cpp">
+      <Filter>03. GameObject\Bullet\Smoke_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VISmoke.cpp">
+      <Filter>04. Component\00. VIBuffer\01. Custom\10.VISmoke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,6 +382,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\VIBullet_Re.h">
       <Filter>04. Component\00. VIBuffer\01. Custom\08,VIBullet\VIBullet_Re</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\Smoke_Bullet.h">
+      <Filter>03. GameObject\Bullet\Smoke_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\VISmoke.h">
+      <Filter>04. Component\00. VIBuffer\01. Custom\10.VISmoke</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

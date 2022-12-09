@@ -197,6 +197,9 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		m_bReLoad = false;
 	}
 
+	if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+		Shoot_Smoke();
+
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 		Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
 
@@ -587,6 +590,42 @@ void CLongTank::Posin_Shake(const _float & fTimeDelta)
 			m_pTransformHead->Set_Pos(Pos.x, Pos2.y, Pos.z);
 			m_pTransformPosin->Set_Pos(Pos.x, Pos2.y, Pos.z);
 		}
+	}
+}
+
+void CLongTank::Shoot_Smoke(void)
+{
+	_vec3 Pos, Dir, UP, Right, Look;
+
+	for (int i = 0; 5 > i; i++)
+	{
+		m_pTransformBody->Get_Info(INFO_POS, &Pos);
+		m_pTransformBody->Get_Info(INFO_LOOK, &Look);
+		m_pTransformBody->Get_Info(INFO_RIGHT, &Right);
+		if (0 == i)
+		{
+			Dir = Look;
+		}
+		else if (1 == i)
+		{
+			Dir = Look + Right / 2;
+		}
+		else if (2 == i)
+		{
+			Dir = Look + Right;
+		}
+		else if (3 == i)
+		{
+			Dir = Look - Right / 2;
+		}
+		else if (4 == i)
+		{
+			Dir = Look - Right;
+		}
+		Pos.y += 2.f * m_fScale;
+		D3DXVec3Normalize(&Dir, &Dir);
+		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
+		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::SMOKE_BULLET);
 	}
 }
 

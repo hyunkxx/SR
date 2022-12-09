@@ -29,19 +29,17 @@ HRESULT CGun_Shoot_Effect::Ready_Object(void)
 _int CGun_Shoot_Effect::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
-	{
-		CTransform*		pPlayerTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformPosin", ID_DYNAMIC));
-		_vec3 Pos, Look;
-
-		pPlayerTransform->Get_Info(INFO_POS, &Pos);
-		pPlayerTransform->Get_Info(INFO_LOOK, &Look);
-		D3DXVec3Normalize(&Look, &Look);
-		Pos.y += 2.f;
-		Pos += Look * 4.f;
-		m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
 		return OBJ_NOEVENT;
-	}
 
+	CTransform*		pPlayerTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformPosin", ID_DYNAMIC));
+	_vec3 Pos, Look;
+
+	pPlayerTransform->Get_Info(INFO_POS, &Pos);
+	pPlayerTransform->Get_Info(INFO_LOOK, &Look);
+	D3DXVec3Normalize(&Look, &Look);
+	Pos.y += 2.f;
+	Pos += Look * 4.f;
+	m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
 
 
 	m_fFrame += 90.f * fTimeDelta;
