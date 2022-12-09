@@ -37,7 +37,7 @@ HRESULT CDynamicCamera::Ready_Object(const _vec3* pEye,
 
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
 	
-
+	m_eID = CAMERA_ID::DYNAMIC_CAMERA;
 
 	return S_OK;
 }

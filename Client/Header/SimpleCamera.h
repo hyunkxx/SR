@@ -36,6 +36,8 @@ private:
 	_vec3 m_vAt;
 	_vec3 m_vUp;
 
+	CAMERA_ID m_eID;
+	
 	_matrix m_matView;
 	_matrix m_matProj;
 

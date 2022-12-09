@@ -56,7 +56,7 @@ void CAim_UI_Pers::LateUpdate_Object(void)
 
 void CAim_UI_Pers::Render_Object(void)
 {
-	if (!static_cast<CCamera*>(Engine::Get_Object(L"Environment", L"AimCamera"))->Get_CameraOn())
+	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA)
 		return;
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);

@@ -28,15 +28,12 @@ HRESULT CTankCamera::Ready_Object(const _vec3 * pEye, const _vec3 * pAt, const _
 	m_fFar = fFar;
 	m_vLook = { 0.f,10.f,1.f };
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
-
+	m_eID = CAMERA_ID::TANK_CAMERA;
 	return S_OK;
 }
 
 _int CTankCamera::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bCameraOn)
-		return 0;
-
 	Key_Input(fTimeDelta);
 	
 	CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));

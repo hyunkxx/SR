@@ -50,6 +50,8 @@ HRESULT CSimpleCamera::Ready_Object(
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFOV, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
+	m_eID = CAMERA_ID::SIMPLE_CAMERA;
+	
 	return S_OK;
 }
 

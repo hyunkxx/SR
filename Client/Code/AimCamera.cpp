@@ -29,35 +29,33 @@ HRESULT CAimCamera::Ready_Object(const _vec3 * pEye, const _vec3 * pAt, const _v
 	m_fNear = fNear;
 	m_fFar = fFar;
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
+	m_eID = CAMERA_ID::AIM_CAMERA;
+
 	return S_OK;
 }
 
 _int CAimCamera::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bCameraOn)
-	{
-		CGameObject* pPlayer = (Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
-		NULL_CHECK_RETURN(pPlayer, E_FAIL);
-		CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
-		NULL_CHECK_RETURN(pPlayerTrans, E_FAIL);
 
-		_vec3 HitPos = static_cast<CTankSet*>(pPlayer)->Get_HitPos();
-		_vec3 playerPos;
-		pPlayerTrans->Get_Info(INFO_POS, &playerPos);
-		HitPos.y = playerPos.y = 2.4f;
-		_vec3 vLook = HitPos - playerPos;
-		m_vLook = *D3DXVec3Normalize(&vLook, &vLook);
-		m_vAt = playerPos + m_vLook;
-		_int	iExit = CCamera::Update_Object(fTimeDelta);
-		return iExit;
-	}
-	Mouse_Fix();
-	Mouse_Move(fTimeDelta);
-	Key_Input(fTimeDelta);
+	CGameObject* pPlayer = (Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
+	NULL_CHECK_RETURN(pPlayer, E_FAIL);
 	CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTrans, E_FAIL);
 
-	_vec3	PlyerPos , HitPos;
+	_vec3 HitPos = static_cast<CTankSet*>(pPlayer)->Get_HitPos();
+	_vec3 PlyerPos;
+	pPlayerTrans->Get_Info(INFO_POS, &PlyerPos);
+	HitPos.y = PlyerPos.y = 2.4f;
+	_vec3 vLook = HitPos - PlyerPos;
+	m_vLook = *D3DXVec3Normalize(&vLook, &vLook);
+	m_vAt = PlyerPos + m_vLook;
+
+	Mouse_Fix();
+	Mouse_Move(fTimeDelta);
+	Key_Input(fTimeDelta);
+
+	NULL_CHECK_RETURN(pPlayerTrans, E_FAIL);
+
 	_vec3 a = { 0.f,2.4f,0.f };
 	m_vEye = PlyerPos + a;
 	D3DXVec3Normalize(&m_vLook,&m_vLook);
@@ -67,14 +65,12 @@ _int CAimCamera::Update_Object(const _float & fTimeDelta)
 	m_vEye = PlyerPos + a;
 	m_vAt = m_vEye + m_vLook;
 	_int	iExit = CCamera::Update_Object(fTimeDelta);
+
 	return iExit;
 }
 
 void CAimCamera::LateUpdate_Object(void)
 {
-	if (!m_bCameraOn)
-		return;
-
 	CCamera::LateUpdate_Object();
 }
 

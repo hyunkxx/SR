@@ -64,12 +64,11 @@ _int CUI_World_Bubble::Update_Object(const _float & fTimeDelta)
 	__super::Compute_ViewZ(&vTemp);
 
 	//카메라 객체
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
 
 	D3DXMatrixIdentity(&matView);
 
 	// 카메라의 뷰 전체를 뜯어오기
-	pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+	Engine::Get_Camera(L"TankCamera")->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &matView);
 
 
 	// 위치값 날리기

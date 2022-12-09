@@ -809,9 +809,6 @@ void CBottomDirEnermy::Free(void)
 
 void CBottomDirEnermy::Update_UI(void)
 {
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
 	if (UI_fHP >= UI_Orgin_HP)
 	{
@@ -837,7 +834,7 @@ void CBottomDirEnermy::Update_UI(void)
 
 	_vec3 vTankPos, vUI_HPF;
 	// UI_ 높이 _ 키워드
-	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -845,9 +842,9 @@ void CBottomDirEnermy::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 2.5f, vTankPos.z };
 
-		pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -855,9 +852,9 @@ void CBottomDirEnermy::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
 
-		pStaticView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -865,7 +862,7 @@ void CBottomDirEnermy::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 1.5f, vTankPos.z };
 
-		pAimView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
 
 	memset(&UI_matViewF._41, 0, sizeof(_vec3));

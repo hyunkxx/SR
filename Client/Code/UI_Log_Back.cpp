@@ -69,7 +69,7 @@ void CUI_Log_Back::Render_Object(void)
 	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
 	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
-	if ((static_cast<CTankCamera*>(pTankView)->Get_CameraOn()) || static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA))
 	{
 
 		_float LogChat_PosX = m_fPosX - PERCENTX * 15.f;
@@ -96,7 +96,7 @@ void CUI_Log_Back::Render_Object(void)
 		m_pRcTex->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
-	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
 		m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransform->Set_Pos(1.f, 1.f, 1.f);

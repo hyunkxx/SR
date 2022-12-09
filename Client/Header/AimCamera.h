@@ -14,7 +14,6 @@ public:
 	virtual void LateUpdate_Object(void) override;
 	virtual const   _vec3		Get_Info(void) { return _vec3(0.f, 0.f, 0.f); };
 	virtual			void		Move_Info(_vec3 _Info) {};
-	virtual void	Set_Camera(_bool CameraOn) { m_bCameraOn = CameraOn; }
 private:
 	void		Mouse_Move(const _float & fTimeDelta);
 	void		Mouse_Fix(void);

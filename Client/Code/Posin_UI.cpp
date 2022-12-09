@@ -68,12 +68,12 @@ void CPosin_UI::Render_Object(void)
 	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
 	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
-	if (((static_cast<CTankCamera*>(pTankView)->Get_CameraOn()) || static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn()) || !m_bPosinOn)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA ||Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA || !m_bPosinOn)
 	{
 		m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransform->Set_Pos(1.f, 1.f, 1.f);
 	}
-	else if ((static_cast<CAimCamera*>(pAimView)->Get_CameraOn()) || m_bPosinOn)
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA || m_bPosinOn)
 	{
 		if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
 		{

@@ -32,8 +32,6 @@ HRESULT CCamera::Ready_Object(void)
 
 _int CCamera::Update_Object(const _float& fTimeDelta)
 {
-	if (!m_bCameraOn)
-		return 0;
 
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
@@ -60,9 +58,6 @@ void CCamera::LateUpdate_Object(void)
 
 void CCamera::Camera_Shake(const _float & fTimeDelta)
 {
-	if (!m_bCameraOn)
-		return;
-
 	if (!m_bShake)
 		return;
 

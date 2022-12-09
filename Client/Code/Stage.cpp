@@ -80,6 +80,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
+	Engine::Update_CameraMgr(fTimeDelta);
 	__super::Update_Scene(fTimeDelta);
 	return S_OK;
 }
@@ -89,6 +90,7 @@ void CStage::LateUpdate_Scene(void)
 	Collison_Object();
 	Engine::LateUpdate_BulletMgr();
 	Engine::LateUpdate_EnermyMgr();
+	Engine::LateUpdate_CameraMgr();
 	__super::LateUpdate_Scene();
 }
 
@@ -97,11 +99,7 @@ void CStage::Render_Scene(void)
 	// _DEBUG용 출력
 
 
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
-
-	if ((static_cast<CTankCamera*>(pTankView)->Get_CameraOn()) || static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() ==CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		// 스테이지 제한 시간
 		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
@@ -116,7 +114,7 @@ void CStage::Render_Scene(void)
 		// 탱크 종류 or 이름
 		Render_Font(L"Font_AnSang3", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(WINCX_HALF - PERCENTX * 10.f, WINCY - PERCENTY * 5.f), D3DXCOLOR(0.f, 0.64f, 0.f, 1.f));
 	}
-	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
 		// 에임 카메라에 확대 수치 폰트 추가 예정
 	}
@@ -146,33 +144,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CTankCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 15.f, -5.f),
-		&_vec3(0.f, 0.f, 1.f),
-		&_vec3(0.f, 1.f, 0.f));
-
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TankCamera", pGameObject), E_FAIL);
-	static_cast<CTankCamera*>(pGameObject)->Set_Camera(true);
-
-	pGameObject = CStaticCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 20.f, -5.f),
-		&_vec3(0.f, 1.f, 1.f),
-		&_vec3(0.f, 1.f, 0.f));
-
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
-	static_cast<CStaticCamera*>(pGameObject)->Set_Camera(false);
-
-	pGameObject = CAimCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 20.f, -5.f),
-		&_vec3(0.f, 1.f, 1.f),
-		&_vec3(0.f, 1.f, 0.f));
-
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AimCamera", pGameObject), E_FAIL);
-	static_cast<CAimCamera*>(pGameObject)->Set_Camera(false);
-
+	
 	// CTerrain
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -200,6 +172,33 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+
+
+	CCamera* pCameraObject = CTankCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 15.f, -5.f),
+		&_vec3(0.f, 0.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"TankCamera", pCameraObject), E_FAIL);
+	Engine::Camera_Change(L"TankCamera");
+
+	pCameraObject = CStaticCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 20.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"StaticCamera", pCameraObject), E_FAIL);
+
+	pCameraObject = CAimCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 20.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AimCamera", pCameraObject), E_FAIL);
 
 
 	m_umapLayer.insert({ pLayerTag, pLayer });

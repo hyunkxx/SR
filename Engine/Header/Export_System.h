@@ -10,6 +10,8 @@
 #include "BulletMgr.h"
 #include "SoundMgr.h"
 #include"EnermyMgr.h"
+#include "CameraMgr.h"
+
 BEGIN(Engine)
 
 // GraphicDev
@@ -68,6 +70,14 @@ inline void Enermy_Add(CGameObject* pBullet, OBJID eID);
 inline void Update_EnermyMgr(const _float & fTimeDelta);
 inline void LateUpdate_EnermyMgr(void);
 
+//CameraMgr
+inline HRESULT	Add_Camera(const _tchar* CameraTag, CCamera* pCamera);
+inline void	Update_CameraMgr(const _float& fTimeDelta);
+inline void	LateUpdate_CameraMgr(void);
+inline void	Camera_Change(const _tchar* CameraTag);
+inline CAMERA_ID	Get_Camera_ID(void);
+inline CCamera*	Get_Camera(void);
+inline CCamera*	Get_Camera(const _tchar* CameraTag);
 
 inline void			Release_System(void);
 

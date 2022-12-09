@@ -159,8 +159,39 @@ inline void LateUpdate_EnermyMgr(void)
 	CEnermyMgr::GetInstance()->LateUpdate_EnermyMgr();
 }
 
+//CameraMgr
+HRESULT	Add_Camera(const _tchar* CameraTag, CCamera* pCamera)
+{
+	return CCameraMgr::GetInstance()->Add_Camera(CameraTag, pCamera);
+}
+void	Update_CameraMgr(const _float& fTimeDelta)
+{
+	CCameraMgr::GetInstance()->Update_CameraMgr(fTimeDelta);
+}
+void	LateUpdate_CameraMgr(void)
+{
+	CCameraMgr::GetInstance()->LateUpdate_CameraMgr();
+}
+void	Camera_Change(const _tchar* CameraTag)
+{
+	CCameraMgr::GetInstance()->Camera_Change(CameraTag);
+}
+CAMERA_ID	Get_Camera_ID(void)
+{
+	return CCameraMgr::GetInstance()->Get_Camera_ID();
+}
+CCamera*	Get_Camera(void)
+{
+	return CCameraMgr::GetInstance()->Get_Camera();
+}
+CCamera*	Get_Camera(const _tchar* CameraTag)
+{
+	return CCameraMgr::GetInstance()->Get_Camera(CameraTag);
+}
+
 inline void			Release_System(void)
 {
+	CCameraMgr::GetInstance()->DestroyInstance();
 	SoundMgr::GetInstance()->DestroyInstance();
 	CBulletMgr::GetInstance()->DestroyInstance();
 	CEnermyMgr::GetInstance()->DestroyInstance();

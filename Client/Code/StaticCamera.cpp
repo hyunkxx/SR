@@ -41,13 +41,12 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
+	m_eID = CAMERA_ID::TOPVIEW_CAMERA;
 	return S_OK;
 }
 
 _int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
-	if (!m_bCameraOn)
-		return 0;
 
 	//Engine::Update_KeyMgr();
 	Key_Input(fTimeDelta);

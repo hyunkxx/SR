@@ -573,10 +573,6 @@ void CDefault_Ally::Free(void)
 
 void CDefault_Ally::Update_UI(void)
 {
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
-
 	if (UI_fHP >= UI_Orgin_HP)
 	{
 		UI_fHP = UI_Orgin_HP;
@@ -601,7 +597,7 @@ void CDefault_Ally::Update_UI(void)
 
 	_vec3 vTankPos, vUI_HPF;
 	// UI_ 높이 _ 키워드
-	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -609,9 +605,9 @@ void CDefault_Ally::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 2.5f, vTankPos.z };
 
-		pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY + 1.5f, UI_fScaleZ);
 
@@ -619,9 +615,9 @@ void CDefault_Ally::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
 
-		pStaticView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -629,7 +625,7 @@ void CDefault_Ally::Update_UI(void)
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 2.5f, vTankPos.z };
 
-		pAimView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
 
 	memset(&UI_matViewF._41, 0, sizeof(_vec3));
@@ -664,7 +660,7 @@ void CDefault_Ally::Update_UI(void)
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &UI_TankPos);
 	m_pTransformHP_UI->Set_Pos(UI_TankPos.x, UI_TankPos.y + 5.f, UI_TankPos.z);
 
-	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID==CAMERA_ID::TANK_CAMERA)
 	{
 	_matrix		matWorld, matView, matBill;
 	D3DXMatrixIdentity(&matWorld);
@@ -701,7 +697,7 @@ void CDefault_Ally::Update_UI(void)
 	m_pTransformHP_UI->Set_WorldMatrix(&(matBill * matWorld));
 	}
 
-	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID==CAMERA_ID::TOPVIEW_CAMERA)
 	{
 	_matrix		matWorld, matView, matBill;
 	m_pTransformHP_UI->Get_WorldMatrix(&matWorld);

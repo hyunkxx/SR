@@ -42,9 +42,7 @@ void CHumvee::LateUpdate_Object(void)
 
 void CHumvee::Render_Object(void)
 {
-	CGameObject* pAimCamera = Engine::Get_Object(L"Environment", L"AimCamera");
-
-	if (!static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA)
 	{
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformBody->Get_WorldMatrix());
 		m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
@@ -232,11 +230,7 @@ void CHumvee::SetUp_OnTerrain(void)
 
 void CHumvee::Head_Spin(const _float & fTimeDelta)
 {
-	CGameObject* pTankCamera = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticCamera = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimCamera = Engine::Get_Object(L"Environment", L"AimCamera");
-
-	if (static_cast<CTankCamera*>(pTankCamera)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		_vec3 MousePos = PickUp_OnTerrain();
 
@@ -304,7 +298,7 @@ void CHumvee::Head_Spin(const _float & fTimeDelta)
 			m_pTransformPosin->Rotation(ROT_Y, D3DXToRadian(50.f*fTimeDelta));
 		}
 	}
-	else if (static_cast<CStaticCamera*>(pStaticCamera)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		_vec3 MousePos = PickUp_OnTerrain();
 
@@ -372,7 +366,7 @@ void CHumvee::Head_Spin(const _float & fTimeDelta)
 			m_pTransformPosin->Rotation(ROT_Y, D3DXToRadian(50.f*fTimeDelta));
 		}
 	}
-	else if (static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
 
 		_vec3 pPlayerPos, pPlayerLook;
@@ -380,7 +374,7 @@ void CHumvee::Head_Spin(const _float & fTimeDelta)
 		m_pTransformHead->Get_Info(INFO_POS, &pPlayerPos);
 		m_pTransformHead->Get_Info(INFO_LOOK, &pPlayerLook);
 		pPlayerPos.y = 0.f;
-		_vec3 Dir = static_cast<CCamera*>(pAimCamera)->Get_Look();
+		_vec3 Dir = Engine::Get_Camera()->Get_Look();
 		// 와서 카메라 룩벡터 방향과 포신 방향 비교해서 움직이게 하기
 
 		D3DXVec3Normalize(&Dir, &Dir);
@@ -500,33 +494,12 @@ _vec3 CHumvee::PickUp_OnTerrain(void)
 }
 void CHumvee::Camera_Change(void)
 {
-	CGameObject* pTankCamera = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticCamera = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimCamera = Engine::Get_Object(L"Environment", L"AimCamera");
-	NULL_CHECK(pTankCamera);
-	NULL_CHECK(pStaticCamera);
-	NULL_CHECK(pAimCamera);
-	if (static_cast<CTankCamera*>(pTankCamera)->Get_CameraOn())
+	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
 	{
-		static_cast<CTankCamera*>(pTankCamera)->Set_Camera(false);
-		static_cast<CStaticCamera*>(pStaticCamera)->Set_Camera(true);
-	}
-	else if (static_cast<CStaticCamera*>(pStaticCamera)->Get_CameraOn())
-	{
-		static_cast<CStaticCamera*>(pStaticCamera)->Set_Camera(false);
-		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(true);
-
-		_float fChangeSound = 1.f;
-		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
-
-	}
-	else if (static_cast<CAimCamera*>(pAimCamera)->Get_CameraOn())
-	{
-		static_cast<CAimCamera*>(pAimCamera)->Set_Camera(false);
-		static_cast<CTankCamera*>(pTankCamera)->Set_Camera(true);
-
-		_float fChangeSound = 1.f;
-		Engine::PlaySound_SR(L"Aim_Sound.wav", PLAYER_SHOT_SOUND1, fChangeSound);
+		if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+			Engine::Camera_Change(L"AimCamera");
+		else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
+			Engine::Camera_Change(L"TankCamera");
 	}
 }
 
@@ -608,7 +581,7 @@ void CHumvee::Update_UI(void)
 
 	D3DXMatrixIdentity(&UI_matViewF);
 
-	pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	Engine::Get_Camera(L"TankCamera")->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 
 	memset(&UI_matViewF._41, 0, sizeof(_vec3));
 
@@ -618,14 +591,14 @@ void CHumvee::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//험비 높이
-	if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() ==CAMERA_ID::TANK_CAMERA)
 	{
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
 		fScale[ROT_X] = UI_fScaleX;
 		fScale[ROT_Y] = UI_fScaleY;
 		fScale[ROT_Z] = UI_fScaleZ;
 	}
-	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() ==CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		vUI_HPF = { vTankPos.x, vTankPos.y + 4.5f, vTankPos.z };
 		fScale[ROT_X] = UI_fScaleX;
