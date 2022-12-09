@@ -75,6 +75,11 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"Turret_head.bin", L"Turret_head");
 	LoadMesh(L"Turret_posin.bin", L"Turret_posin");
 
+	//Bomber
+	LoadMesh(L"air_ally_body.bin", L"air_ally_body");
+	//Boom
+	LoadMesh(L"Boom_ally_body.bin", L"Boom_ally_body");
+
 	/* Building */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
 	LoadMesh(L"Building_001_object.bin", L"Building_001_object");

@@ -248,6 +248,12 @@
     <Filter Include="02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly">
       <UniqueIdentifier>{9e0c3df1-dc06-43d7-ba63-151794cde965}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\09.Skill">
+      <UniqueIdentifier>{60863a86-adc1-4c57-a764-2ab76d533f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09.Skill\Bomber">
+      <UniqueIdentifier>{b9109e8d-41d0-457a-836e-a94f515ca7fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -427,6 +433,9 @@
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h">
       <Filter>02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Bomber.h">
+      <Filter>02. GameObject\09.Skill\Bomber</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -596,6 +605,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp">
       <Filter>02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bomber.cpp">
+      <Filter>02. GameObject\09.Skill\Bomber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

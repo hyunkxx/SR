@@ -171,6 +171,7 @@
     <ClInclude Include="..\Header\Aim_UI_Pers.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BigTank.h" />
+    <ClInclude Include="..\Header\Bomber.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h" />
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
     <ClInclude Include="..\Header\Building.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\Code\Aim_UI_Pers.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BigTank.cpp" />
+    <ClCompile Include="..\Code\Bomber.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp" />
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
     <ClCompile Include="..\Code\Building.cpp" />

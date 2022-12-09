@@ -37,6 +37,7 @@
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
 #include "Gun_Shoot_Effect.h"
+#include "Bomber.h"
 
 #include"TempOccupationScore.h"
 #include "Building.h"
@@ -265,6 +266,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = *CTankManager::GetInstance()->GetVehicle();
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerVehicle", pGameObject), E_FAIL);
+
+	pGameObject = CBomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Bomber", pGameObject), E_FAIL);
 
 	for (_int i = 0; 200 > i; i++)
 	{
