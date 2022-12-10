@@ -32,7 +32,6 @@ public:
 private:
 	virtual void	Free(void) override;
 	EData    m_eData;
-	_float m_fSound = 0.3f;
 
 	void Key_Input(const _float& fTimeDelta);
 

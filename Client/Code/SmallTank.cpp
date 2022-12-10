@@ -6,7 +6,7 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
-
+#include "UI_Volume.h"
 CSmallTank::CSmallTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -148,9 +148,8 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 		m_bPosinShake = true;
 		Shoot_Bullet(BULLET_ID::CANNONBALL);
 
-		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 		m_bReLoad = false;
 	}

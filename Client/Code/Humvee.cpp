@@ -7,7 +7,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
-
+#include "UI_Volume.h"
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -151,10 +151,9 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		m_bPosinShake = true;
 		Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
 		Shoot_Bullet(BULLET_ID::MASHINE_BULLET_RELOAD);
-		// 발사 사운드 예시
-		_float fShootSound = 1.f;
+
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 		Engine::Get_Object(L"GameLogic", L"Gun_ShootEffect")->Set_Dead(false);
 	}
 	if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)

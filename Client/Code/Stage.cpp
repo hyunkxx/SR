@@ -80,7 +80,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	else
 	{	ShowCursor(false);}
 
-	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, m_fSound);
+	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
@@ -520,30 +520,6 @@ void CStage::Collison_Object(void)
 
 void CStage::Key_Input(const _float& fTimeDelta)
 {
-	if (Get_DIKeyState_Custom(DIK_F1) == KEY_STATE::TAP)
-	{
-		if (m_fSound <= 0.f)
-		{
-			m_fSound = 0.f;
-		}
-		else
-		{
-			m_fSound -= 0.1f;
-		}
-
-	}
-	if (Get_DIKeyState_Custom(DIK_F2) == KEY_STATE::TAP)
-	{
-		if (m_fSound >= 1.f)
-		{
-			m_fSound = 1.f;
-		}
-		else
-		{
-			m_fSound += 0.1f;
-		}
-	}
-
 	// Test HP UI ㅡㅡㅡㅡㅡㅡ 삭제 예정
 #pragma region
 	CGameObject* pPlayerHp_UI = Engine::Get_Object(L"UI", L"Player_Hp2");

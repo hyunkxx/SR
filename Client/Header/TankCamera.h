@@ -23,6 +23,9 @@ private:
 	_bool		m_bCheck = false;
 	_vec3		m_vLook;
 public:
+	
+	void		Set_MouseFix(_bool _bFix) { m_bFix = _bFix; }
+
 	static	CTankCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,
 		const _vec3* pAt,
