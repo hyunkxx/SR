@@ -9,13 +9,13 @@ CBomber::CBomber(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CBomber::CBomber(const CBomber & rhs)
-	:CGameObject(rhs)
+	: CGameObject(rhs)
 {
 }
 
 CBomber::~CBomber()
 {
-	
+
 }
 
 _int CBomber::Update_Object(const _float & fTimeDelta)
@@ -23,11 +23,30 @@ _int CBomber::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 		return 0;
 
+	m_fScale = 10.f;
 	m_vMileage += m_vDir * m_fSpeed * fTimeDelta;
 	m_pTransformBody->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));
+
+	m_pTransformBody->Set_Scale(m_fScale, m_fScale, m_fScale);
+
+	m_FAngle_Accum += 90.f *fTimeDelta;
+
+	_vec3 Pos;
+	m_pTransformBody->Get_Info(INFO_POS, &Pos);
+
+	if (Pos.x > 0.f && Pos.z > 0.f && !m_bBoomShoot)
+	{
+		Engine::Reuse_Object(Pos, (m_vStrike_Pos - Pos), 200.f, 0.f, 0.f, BULLET_ID::BOOM_BULLET);
+		m_bBoomShoot = true;
+	}
+
+
+
+
 	if (sqrtf((m_vMileage.x*m_vMileage.x) + (m_vMileage.z*m_vMileage.z)) > 2000.f)
 		m_bDead = true;
 
+	//m_vStrike_Pos
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return CGameObject::Update_Object(fTimeDelta);
@@ -79,11 +98,12 @@ HRESULT CBomber::Ready_Object(void)
 CBomber * CBomber::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBomber* pInstance = new CBomber(pGraphicDev);
-	
+
 	if (FAILED(pInstance->Ready_Object()))
 		Safe_Release(pInstance);
 
 	return pInstance;
+
 }
 
 void CBomber::Free(void)
@@ -95,21 +115,20 @@ void CBomber::Strike(_vec3 _Strike_Pos)
 {
 	m_vStrike_Pos = _Strike_Pos;
 	m_pTransformBody->Reset_Trans();
-	m_pTransformBody->Set_Pos(-100.f, 1.f, -100.f);
-	m_vDir = _Strike_Pos - _vec3(-100.f, 1.f, -100.f);
+	m_pTransformBody->Set_Scale(m_fScale, m_fScale, m_fScale);
+	m_vDir = _Strike_Pos - m_vStart_Pos;
 	m_vDir.y = 0.f;
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
 	m_vMileage = _vec3(0.f, 0.f, 0.f);
-	_vec3 Right(1.f, 0.f, 0.f);
-	_float Scalar = D3DXVec3Dot(&m_vDir, &Right);
-	
-	Scalar = acosf(Scalar);
-
-	if (m_vDir.z < Right.z)
-		Scalar *= -1;
-
-	m_pTransformBody->Rotation(ROT_Y,Scalar);
+	m_FAngle_Accum = 0.f;
 	m_bDead = false;
-	m_fScale = 5.f;
-	m_pTransformBody->Set_Scale(m_fScale, m_fScale, m_fScale);
+	m_bBoomShoot = false;
+	_vec3 Look(0.f, 0.f, 1.f);
+	_float Radian = acosf(D3DXVec3Dot(&m_vDir, &Look));
+
+	if (m_vDir.x < Look.x)
+		Radian *= -1;
+
+	m_pTransformBody->Rotation(ROT_Y, Radian);
+	m_pTransformBody->Set_Pos(m_vStart_Pos.x, m_vStart_Pos.y, m_vStart_Pos.z);
 }

@@ -45,6 +45,8 @@ void CBulletMgr::Bullet_Supply(CGameObject * pBullet, BULLET_ID eID)
 		static_cast<CBullet*>(pBullet)->Set_ID(eID);
 	else if (dynamic_cast<CSmoke_Bullet*>(pBullet))
 		static_cast<CSmoke_Bullet*>(pBullet)->Set_ID(eID);
+	else if (dynamic_cast<CBoom_Bullet*>(pBullet))
+		static_cast<CBoom_Bullet*>(pBullet)->Set_ID(eID);
 
 	m_qBullet_Ammunition_Depot[eID].push(pBullet);
 }
@@ -79,6 +81,8 @@ void CBulletMgr::Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _floa
 		static_cast<CBullet*>(pBullet)->Bullet_Setting(vPos, vDir, fSpeed, fAngleX, fAngleY);
 	else if (dynamic_cast<CSmoke_Bullet*>(pBullet))
 		static_cast<CSmoke_Bullet*>(pBullet)->Bullet_Setting(vPos, vDir, fSpeed, fAngleX, fAngleY);
+	else if (dynamic_cast<CBoom_Bullet*>(pBullet))
+		static_cast<CBoom_Bullet*>(pBullet)->Bullet_Setting(vPos, vDir, fSpeed, fAngleX, fAngleY);
 
 	m_vBullet_War[eID].push_back(pBullet);
 	m_qBullet_Ammunition_Depot[eID].pop();

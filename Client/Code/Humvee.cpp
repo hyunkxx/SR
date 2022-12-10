@@ -6,6 +6,7 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "Boom_Support.h"
 
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
@@ -155,6 +156,13 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, fShootSound);
 		Engine::Get_Object(L"GameLogic", L"Gun_ShootEffect")->Set_Dead(false);
+	}
+	if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+	{
+		_vec3 Pos;
+		m_pTransformBody->Get_Info(INFO_POS, &Pos);
+		if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
+			dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
 	}
 
 	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)

@@ -136,6 +136,9 @@
     <Filter Include="04. Component\00. VIBuffer\01. Custom\10.VISmoke">
       <UniqueIdentifier>{d13ce88e-8f98-460c-9829-bb7031ba3412}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\Bullet\Boom_Bullet">
+      <UniqueIdentifier>{a31daac8-eef3-436a-9690-902656852e83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\VISmoke.cpp">
       <Filter>04. Component\00. VIBuffer\01. Custom\10.VISmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boom_Bullet.cpp">
+      <Filter>03. GameObject\Bullet\Boom_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\VISmoke.h">
       <Filter>04. Component\00. VIBuffer\01. Custom\10.VISmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\Boom_Bullet.h">
+      <Filter>03. GameObject\Bullet\Boom_Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

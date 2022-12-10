@@ -33,6 +33,7 @@
 #include "Pipeline.h"
 #include "Bullet.h"
 #include "Smoke_Bullet.h"
+#include "Boom_Bullet.h"
 
 #include "LightMgr.h"
 #include "MeshLoader.h"

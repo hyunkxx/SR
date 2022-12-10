@@ -254,6 +254,12 @@
     <Filter Include="02. GameObject\09.Skill\Bomber">
       <UniqueIdentifier>{b9109e8d-41d0-457a-836e-a94f515ca7fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\09.Skill\Boom_Support">
+      <UniqueIdentifier>{5ce7a8c3-ac5b-4efe-871a-a55a95372fb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04.Camera\08.DroneCamera">
+      <UniqueIdentifier>{0856b73d-430b-43a2-9f92-164e7f9c8df4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -436,6 +442,12 @@
     <ClInclude Include="..\Header\Bomber.h">
       <Filter>02. GameObject\09.Skill\Bomber</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Boom_Support.h">
+      <Filter>02. GameObject\09.Skill\Boom_Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DroneCamera.h">
+      <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -608,6 +620,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bomber.cpp">
       <Filter>02. GameObject\09.Skill\Bomber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boom_Support.cpp">
+      <Filter>02. GameObject\09.Skill\Boom_Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DroneCamera.cpp">
+      <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

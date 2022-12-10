@@ -12,6 +12,9 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "DroneCamera.h"
+
+#include "Boom_Support.h"
 
 #include"Default_Enermy.h"
 #include "TestBox.h"
@@ -201,6 +204,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AimCamera", pCameraObject), E_FAIL);
 
+	pCameraObject = CDroneCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"DroneCamera", pCameraObject), E_FAIL);
+
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
@@ -271,6 +282,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Bomber", pGameObject), E_FAIL);
 
+
 	for (_int i = 0; 200 > i; i++)
 	{
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
@@ -304,6 +316,17 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::SMOKE_BULLET);
 	}
+
+	for (_int i = 0; 5 > i; i++)
+	{
+		CGameObject* pBullet = CBoom_Bullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::BOOM_BULLET);
+	}
+	// Skill
+	pGameObject = CBoom_Support::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boom_Support", pGameObject), E_FAIL);
 
 	//bottomdirenermy
 	for (_int i = 0; 5> i; i++)
