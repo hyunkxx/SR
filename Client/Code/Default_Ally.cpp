@@ -37,6 +37,14 @@ HRESULT CDefault_Ally::Ready_Object(void)
 	m_pTransformHead->Set_Pos(10.f, 1.f, 10.f);
 	m_pTransformPosin->Set_Pos(10.f, 1.f, 10.f);
 
+
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = 300.f;     //tankData.fMaxHP;
+	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
+	UI_fScaleY = 0.2f;
+	UI_fScaleZ = 1.f;
+
 	return S_OK;
 }
 
@@ -138,6 +146,15 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 	m_stHead.fLen[y] = 1.f;
 	m_stHead.fLen[z] = 1.9f;
 
+
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = 300.f;     //tankData.fMaxHP;
+	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
+	UI_fScaleY = 0.2f;
+	UI_fScaleZ = 1.f;
+
+
 	__super::Ready_Object();
 	return S_OK;
 }
@@ -159,14 +176,15 @@ _int CDefault_Ally::Update_Object(const _float& fTimeDelta)
 	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	Update_OBB();
 	CGameObject::Ready_Object();
+	Add_RenderGroup(RENDER_NONALPHA, this);
 	return OBJ_NOEVENT;
 }
 
 void CDefault_Ally::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
+	Update_UI();
 
-	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CDefault_Ally::Render_Object(void)
@@ -180,6 +198,20 @@ void CDefault_Ally::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+	// 수업 코드 적용 m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHP_UI->Get_WorldMatrix());
+
+	m_pTextureF->Set_Texture(0);
+	m_pRcTexF->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+
 }
 
 const _vec3 CDefault_Ally::Get_Info(void)
@@ -796,10 +828,242 @@ HRESULT CDefault_Ally::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PosinTransform", pComponent });
 
+
+	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
+	NULL_CHECK_RETURN(m_pTextureF, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex", pComponent });
+
+	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
+
+
+
+
+
+
 	return S_OK;
 }
 
 void CDefault_Ally::Free(void)
 {
 	__super::Free();
+}
+
+
+void CDefault_Ally::Update_UI(void)
+{
+	if (UI_fHP >= UI_Orgin_HP)
+	{
+		UI_fHP = UI_Orgin_HP;
+	}
+	if (UI_fHP <= 0.f)
+	{
+		UI_fHP = 0.f;
+	}
+
+	_float HP_Percent = (UI_fHP / UI_Orgin_HP);
+
+	if (HP_Percent > 1.f)
+	{
+		HP_Percent = 1.f;
+	}
+	if (HP_Percent < 0.f)
+	{
+		HP_Percent = 0.f;
+	}
+
+	UI_fScaleX = (UI_fOrgin_ScaleX * HP_Percent);
+
+	_vec3 vTankPos, vUI_HPF;
+	// UI_ 높이 _ 키워드
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
+	{
+		UI_fScaleX = 3.f;
+		UI_fScaleY = 0.4f;
+
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY + 1.5f, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
+	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
+
+	memset(&UI_matViewF._41, 0, sizeof(_vec3));
+
+	D3DXMatrixInverse(&UI_matViewF, 0, &UI_matViewF);
+
+	_vec3 BillPos = vUI_HPF;
+
+	_float fScale[ROT_END];
+
+	fScale[ROT_X] = UI_fScaleX;
+	fScale[ROT_Y] = UI_fScaleY;
+	fScale[ROT_Z] = UI_fScaleZ;
+
+	memcpy(&UI_matViewF._41, &BillPos, sizeof(_vec3));
+
+	for (int i = 0; i < ROT_END; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			UI_matViewF(i, j) *= fScale[i];
+		}
+	}
+
+	// 정말 혹시나 만약에 정말 만약을 위한 [[수업코드]]		( bool 변수로 키눌러서 축 바꾸기 가능)
+#pragma region 
+	/*
+	UI_fScaleX = (UI_fOrgin_ScaleX * HP_Percent);
+	m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+	_vec3 UI_TankPos;
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &UI_TankPos);
+	m_pTransformHP_UI->Set_Pos(UI_TankPos.x, UI_TankPos.y + 5.f, UI_TankPos.z);
+
+	if (Engine::Get_Camera_ID==CAMERA_ID::TANK_CAMERA)
+	{
+	_matrix		matWorld, matView, matBill;
+	D3DXMatrixIdentity(&matWorld);
+	m_pTransformHP_UI->Get_WorldMatrix(&matWorld);
+
+	//pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixIdentity(&matBill);
+
+	if (bXYZ[0])					// X
+	{
+	matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	matBill._32 = matView._32;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[1])						// Y
+	{
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[2])							// Z
+	{
+	matBill._11 = matView._11;
+	matBill._12 = matView._12;
+	matBill._21 = matView._21;
+	matBill._22 = matView._22;
+	}
+	D3DXMatrixInverse(&matBill, 0, &matBill);
+
+	m_pTransformHP_UI->Set_WorldMatrix(&(matBill * matWorld));
+	}
+
+	else if (Engine::Get_Camera_ID==CAMERA_ID::TOPVIEW_CAMERA)
+	{
+	_matrix		matWorld, matView, matBill;
+	m_pTransformHP_UI->Get_WorldMatrix(&matWorld);
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixIdentity(&matBill);
+	if (bXYZ[0])					// X
+	{
+	matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	matBill._32 = matView._32;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[1])						// Y
+	{
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[2])							// Z
+	{
+	matBill._11 = matView._11;
+	matBill._12 = matView._12;
+	matBill._21 = matView._21;
+	matBill._22 = matView._22;
+	}
+	D3DXMatrixInverse(&matBill, 0, &matBill);
+
+	m_pTransformHP_UI->Set_WorldMatrix(&(matBill * matWorld));
+
+	}
+
+	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	{
+	_matrix		matWorld, matView, matBill;
+	m_pTransformHP_UI->Get_WorldMatrix(&matWorld);
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	D3DXMatrixIdentity(&matBill);
+	if (bXYZ[0])					// X
+	{
+	matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	matBill._32 = matView._32;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[1])						// Y
+	{
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+	}
+	if (bXYZ[2])							// Z
+	{
+	matBill._11 = matView._11;
+	matBill._12 = matView._12;
+	matBill._21 = matView._21;
+	matBill._22 = matView._22;
+	}
+
+	D3DXMatrixInverse(&matBill, 0, &matBill);
+
+	m_pTransformHP_UI->Set_WorldMatrix(&(matBill * matWorld));
+
+
+
+	}
+
+	*/
+#pragma endregion
+
 }

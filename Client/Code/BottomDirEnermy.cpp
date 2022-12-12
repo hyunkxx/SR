@@ -105,7 +105,7 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	//Update_UI();
+	Update_UI();
 	if (m_fPreHp != UI_fHP)
 	{
 
@@ -912,9 +912,6 @@ void CBottomDirEnermy::Free(void)
 
 void CBottomDirEnermy::Update_UI(void)
 {
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
 	if (UI_fHP >= UI_Orgin_HP)
 	{
@@ -940,35 +937,45 @@ void CBottomDirEnermy::Update_UI(void)
 
 	_vec3 vTankPos, vUI_HPF;
 	// UI_ 높이 _ 키워드
-	/*if (static_cast<CTankCamera*>(pTankView)->Get_CameraOn())
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 2.5f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
 
-		pTankView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CStaticCamera*>(pStaticView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
+		UI_fScaleX = 3.f;
+		UI_fScaleY = 0.4f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
 
-		pStaticView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (static_cast<CAimCamera*>(pAimView)->Get_CameraOn())
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 1.5f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
 
-		pAimView->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
 
 	memset(&UI_matViewF._41, 0, sizeof(_vec3));
@@ -991,5 +998,5 @@ void CBottomDirEnermy::Update_UI(void)
 		{
 			UI_matViewF(i, j) *= fScale[i];
 		}
-	}*/
+	}
 }

@@ -38,9 +38,9 @@ void CBigTank::LateUpdate_Object(void)
 	if (m_stInfo.fReloadTime > 2.f && !m_bReLoad)
 	{
 		Shoot_Bullet(BULLET_ID::CANNONBALL_RELOAD);
-		_float fShootSound = 1.f;
+
 		Engine::StopSound(PLAYER_BULLET_EXIT_SOUND1);
-		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_BULLET_EXIT_SOUND1, fShootSound);
+		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_BULLET_EXIT_SOUND1, CUI_Volume::s_fAllSound);
 		m_bReLoad = true;
 	}
 
