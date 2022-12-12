@@ -24,9 +24,15 @@ CVoxel::~CVoxel()
 
 _int CVoxel::Update_Component(const _float & fTimeDelta)
 {
-	//_vec3 pos = { m_matWorld._41, m_matWorld._42, m_matWorld._43 };
-	//if (Utility::Cuilling(m_pGraphicDev, pos))
-	//	return 0;
+
+	return _int();
+}
+
+void CVoxel::LateUpdate_Component(void)
+{
+	_vec3 pos = { m_matWorld._41, m_matWorld._42, m_matWorld._43 };
+	if (Utility::Cuilling(m_pGraphicDev, pos))
+		return;
 
 	auto iter = m_vecCube.begin();
 	for (; iter != m_vecCube.end(); ++iter)
@@ -54,11 +60,6 @@ _int CVoxel::Update_Component(const _float & fTimeDelta)
 
 		(*iter)->SetWorldMatrix(matWorld);
 	}
-	return _int();
-}
-
-void CVoxel::LateUpdate_Component(void)
-{
 }
 
 CComponent * CVoxel::Clone(void)

@@ -103,6 +103,7 @@ typedef struct RayINFO
 
 typedef struct TANK_STATE
 {
+	_float				fDamage;
 	//HP
 	_float				fMaxHP;
 	_float				fCurHP;

@@ -36,7 +36,7 @@ bool Utility::Cuilling(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	D3DXVec3Normalize(&vTargetDir, &vTargetDir);
 	float value = D3DXVec3Dot(&vCamDir, &vTargetDir);
 
-	if (value < 0.7f)
+	if (value < 0.8f)
 		return true;
 	else
 		return false;

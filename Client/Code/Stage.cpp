@@ -226,37 +226,11 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	_vec3 vPos, vRot;
-	/* 돌 */
-	for (int j = 0; j < 3; ++j)
-	{
-		for (int i = 0; i < 3; ++i)
-		{
-			vPos = { float(rand() % 700 - 100 * i) , 0.f , float(rand() % 700 - 100 * j) };
-			vRot = { 0.f , (float)(rand() % 180) , 0.f };
 
-			pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
-			FAILED_CHECK_RETURN(pLayer->Add_GameObject(
-				static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
-		}
-	}
-	/* 건물 */
-	for (int j = 0; j < 3; ++j)
-	{
-		for (int i = 0; i < 3; ++i)
-		{
-			vPos = { float(rand() % 700 - 100 * i) , 0.f , float(rand() % 700 - 100 * j) };
-			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+	vPos = {100.f ,0.f, 100.f };
+	vRot = { 0.f , (float)(rand() % 180) , 0.f };
 
-			pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
-			FAILED_CHECK_RETURN(pLayer->Add_GameObject(
-				static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
-		}
-	}
-
+	CreateMap(pLayer);
 
 	pGameObject = CTestBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -533,4 +507,68 @@ void CStage::Key_Input(const _float& fTimeDelta)
 
 #pragma endregion
 
+}
+
+
+HRESULT CStage::CreateMap(CLayer* pLayer)
+{
+	CGameObject*		pGameObject = nullptr;
+
+	_vec3 vPos, vRot;
+
+	/* 돌 */
+	for (int j = 0 ; j < 9 ; ++j)
+	{
+		for (int i = -1 ; i < 8 ; ++i)
+		{
+			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::MAX + 2;
+
+			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
+			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+			
+			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
+				continue;
+
+			switch ((CBuilding::TYPE)ObjectNumber)
+			{
+			case CBuilding::TYPE::ROCK:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos, CBuilding::TYPE::ROCK);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			case CBuilding::TYPE::PLANT_1:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_1", vPos, CBuilding::TYPE::PLANT_1);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			case CBuilding::TYPE::PLANT_2:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_2", vPos, CBuilding::TYPE::PLANT_2);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			case CBuilding::TYPE::PLANT_3:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_3", vPos, CBuilding::TYPE::PLANT_3);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			default:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos, CBuilding::TYPE::BUILDING);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			}
+		}
+	}
+
+	return S_OK;
 }

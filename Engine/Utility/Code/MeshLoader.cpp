@@ -80,6 +80,11 @@ void CMeshLoader::Initalize()
 	//Boom
 	LoadMesh(L"Boom_ally_body.bin", L"Boom_ally_body");
 
+	/* Plant */
+	LoadMesh(L"Cactus_body.bin", L"Plant_1");
+	LoadMesh(L"Eucalyptus_body.bin", L"Plant_2");
+	LoadMesh(L"WhiteCactus_body.bin", L"Plant_3");
+
 	/* Building */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
 	LoadMesh(L"Building_001_object.bin", L"Building_001_object");

@@ -11,10 +11,10 @@ USING(Engine)
 
 _int CBuilding::ID = -1;
 
-CBuilding* CBuilding::Create(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos)
+CBuilding* CBuilding::Create(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos, TYPE eType)
 {
 	ID++;
-	CBuilding* pInstance = new CBuilding(pGramphicDev, strMeshKey, vPos);
+	CBuilding* pInstance = new CBuilding(pGramphicDev, strMeshKey, vPos, eType);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{
@@ -34,10 +34,11 @@ CBuilding::~CBuilding()
 {
 }
 
-CBuilding::CBuilding(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos)
+CBuilding::CBuilding(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos, TYPE eType)
 	: CGameObject(pGramphicDev)
 	, m_vPosition(vPos)
 	, m_strMeshKey(strMeshKey)
+	, m_eType(eType)
 {
 }
 
@@ -45,6 +46,7 @@ CBuilding::CBuilding(const CBuilding& rhs)
 	: CGameObject(rhs)
 	, m_vPosition(rhs.m_vPosition)
 	, m_strMeshKey(rhs.m_strMeshKey)
+	, m_eType(rhs.m_eType)
 {
 }
 
@@ -60,6 +62,12 @@ HRESULT CBuilding::Ready_Object(void)
 	D3DXMatrixTranslation(&matTrans, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
 	m_matWorld = matRot *  matTrans;
+
+	CollisionSetting();
+
+	static_cast<CTransform*>(m_pTransform)->Set_Pos(m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	CGameObject::Ready_Object();
+	Update_OBB();
 
 	return S_OK;
 }
@@ -88,8 +96,10 @@ void CBuilding::SetPosition(const _vec3& vPos)
 
 _int CBuilding::Update_Object(const _float & fTimeDelta)
 {
-	//if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-	//	return 0;
+	Update_OBB();
+
+	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
+		return 0;
 
 	__super::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
@@ -99,16 +109,13 @@ _int CBuilding::Update_Object(const _float & fTimeDelta)
 
 void CBuilding::LateUpdate_Object(void)
 {
-	//if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-	//	return;
-
 	__super::LateUpdate_Object();
 }
 
 void CBuilding::Render_Object(void)
 {
-	//if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-	//	return;
+	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
+		return;
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pMesh->Render(&m_matWorld);
@@ -116,7 +123,6 @@ void CBuilding::Render_Object(void)
 
 void CBuilding::RenderGUI(void)
 {
-
 }
 
 HRESULT CBuilding::AddComponent()
@@ -126,11 +132,66 @@ HRESULT CBuilding::AddComponent()
 	pComponent = m_pTransform = Clone_Prototype(L"Proto_Transform");
 	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
 	wstring key = L"transform_" + to_wstring(ID);
-	m_mapComponent[ID_STATIC].insert({ key.c_str(), pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ key.c_str(), pComponent });
 
 	pComponent = m_pMesh = CVoxel::Create(m_pGraphicDev, m_strMeshKey.c_str());
 	NULL_CHECK_RETURN(m_pMesh, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Building_object", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"mesh_component", pComponent });
 
 	return S_OK;
+}
+
+void CBuilding::CollisionSetting()
+{
+	switch (m_eType)
+	{
+	case TYPE::BUILDING:
+		m_stBody.fLen[x] = 18.f;
+		m_stBody.fLen[y] = 8.f;
+		m_stBody.fLen[z] = 11.f;
+		break;
+	case TYPE::ROCK:
+		m_stBody.fLen[x] = 10.f;
+		m_stBody.fLen[y] = 8.f;
+		m_stBody.fLen[z] = 2.f;
+		break;
+	default:
+		m_stBody.fLen[x] = 1.f;
+		m_stBody.fLen[y] = 3.f;
+		m_stBody.fLen[z] = 1.f;
+		break;
+	}
+}
+
+/* ICollisionable */
+const   _vec3 CBuilding::Get_Info(void)
+{
+	return m_vPosition;
+}
+
+void  CBuilding::Move_Info(_vec3 _Info)
+{
+
+}
+
+void  CBuilding::OBB_Collision_EX(void)
+{
+}
+
+void  CBuilding::Update_OBB(void)
+{
+	_vec3 Pos, Right, Up, Look;
+
+	static_cast<CTransform*>(m_pTransform)->Get_Info(INFO_POS, &m_stBody.vPos);
+	static_cast<CTransform*>(m_pTransform)->Get_Info(INFO_RIGHT, &m_stBody.vDir[x]);
+	static_cast<CTransform*>(m_pTransform)->Get_Info(INFO_UP, &m_stBody.vDir[y]);
+	static_cast<CTransform*>(m_pTransform)->Get_Info(INFO_LOOK, &m_stBody.vDir[z]);
+
+	for (_int i = 0; i < 3; i++)
+		D3DXVec3Normalize(&m_stBody.vDir[i], &m_stBody.vDir[i]);
+}
+
+OBB* CBuilding::Get_OBB()
+{
+	return &m_stBody;
 }

@@ -73,7 +73,6 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 
 _int CDefault_Ally::Update_Object(const _float& fTimeDelta)
 {
-
 	__super::Update_Object(fTimeDelta);
 	StateCheck();
 	m_fReloadTime += fTimeDelta;
@@ -92,7 +91,6 @@ void CDefault_Ally::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 	Update_UI();
-
 }
 
 void CDefault_Ally::Render_Object(void)

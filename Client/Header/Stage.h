@@ -28,9 +28,10 @@ private:
 	virtual		void		Collison_Object(void);
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
 private:
 	virtual void	Free(void) override;
+	HRESULT CreateMap(CLayer* pLayer);
+private:
 	EData    m_eData;
 
 	void Key_Input(const _float& fTimeDelta);
