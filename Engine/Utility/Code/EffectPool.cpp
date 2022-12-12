@@ -114,12 +114,12 @@ void CEffectPool::Free(void)
 	__super::Free();
 }
 
-void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos, D3DXCOLOR color[])
+void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos)
 {
 	switch (eType)
 	{
 	case EFFECT_TYPE::EXPLOSION:
-		AddExplosionPool(vPos, color);
+		AddExplosionPool(vPos);
 		break;
 	case EFFECT_TYPE::FIRE:
 		AddFirePool(vPos);
@@ -140,7 +140,7 @@ void CEffectPool::RenderEffect(EFFECT_TYPE eType)
 	}
 }
 
-void CEffectPool::AddExplosionPool(_vec3 vPos, D3DXCOLOR color[])
+void CEffectPool::AddExplosionPool(_vec3 vPos)
 {
 	if (m_ExplosionPool.size() >= nMaxPoolSize - 1)
 		return;
@@ -155,7 +155,6 @@ void CEffectPool::AddExplosionPool(_vec3 vPos, D3DXCOLOR color[])
 		}
 	}
 
-	(*Effect)->SetColor(color);
 	(*Effect)->SetPosition(vPos);
 	(*Effect)->SetRunning(true);
 }

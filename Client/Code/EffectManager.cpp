@@ -36,7 +36,6 @@ _int CEffectManager::Update_Object(const _float & fTimeDelta)
 void CEffectManager::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-
 }
 
 void CEffectManager::Render_Object(void)

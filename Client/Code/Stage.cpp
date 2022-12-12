@@ -64,7 +64,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	float Start = 100.f;
+	float Start = 80.f;
 	float End = 300.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 230, 210, 0));
@@ -249,10 +249,6 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	_vec3 vPos, vRot;
-
-	vPos = {100.f ,0.f, 100.f };
-	vRot = { 0.f , (float)(rand() % 180) , 0.f };
-
 	CreateMap(pLayer);
 
 	pGameObject = CTestBox::Create(m_pGraphicDev);
@@ -717,19 +713,12 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-
-					D3DXCOLOR color[3];
-					color[0] = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-					color[1] = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-					color[2] = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
-
-					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos, color);
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
 					(*iter)->Set_Dead(true);
 				}
-			}
 
-			// 여기에 추가로 충돌처리
+			}
 
 			//총알 vs 게임 오브젝트 충돌
 			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
@@ -743,12 +732,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-					D3DXCOLOR color[3];
-					color[0] = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-					color[1] = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-					color[2] = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
-
-					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos, color);
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
 					(*iter)->Set_Dead(true);
 				}
@@ -900,6 +884,15 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 	_vec3 vPos;
 	float fRot;
 
+	vPos = { 315.f, 0.f,  315.f };
+
+	pGameObject = CBuilding::Create(m_pGraphicDev, L"Oasis", vPos, CBuilding::TYPE::BUILDING);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	static_cast<CBuilding*>(pGameObject)->SetRotation(0.f);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+		static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+
+
 	for (int j = 0 ; j < 9 ; ++j)
 	{
 		for (int i = -1 ; i < 8 ; ++i)
@@ -945,7 +938,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			default:
-				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos, CBuilding::TYPE::BUILDING);
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_000_object", vPos, CBuilding::TYPE::BUILDING);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(

@@ -9,11 +9,11 @@ USING(Engine)
 CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 	: CEffector(pGraphicDevice, vPos)
 {
-	m_fDuration = 0.5f;
+	m_fDuration = 0.2f;
 
 	m_color[0] = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	m_color[1] = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.f);
-	m_color[2] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.f);
+	m_color[1] = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.f);
+	m_color[2] = D3DXCOLOR(0.1f, 0.1f, 0.0f, 1.f);
 
 	for (int i = 0; i < MaxObjectCount; ++i)
 	{
@@ -30,7 +30,7 @@ CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)
 	{
-		(*iter)->SetScale(_vec3(float(rand() % 3 + 1 * 0.5f), float(rand() % 3 + 1 * 0.5f), float(rand() % 3 + 1 * 0.5f)));
+		(*iter)->SetScale({ 0.5f,0.5f,0.5f });
 		(*iter)->SetRotation({ (float)(rand() % 90) ,(float)(rand() % 90),(float)(rand() % 90) });
 	}
 }

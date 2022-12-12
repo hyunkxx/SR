@@ -66,13 +66,6 @@ _int CExplosionEffect::Update_Component(const _float & fTimeDelta)
 	if (!m_bRunning)
 		return 0;
 
-	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-	{
-		m_bRunning = false;
-		Reset();
-		return 0;
-	}
-
 	m_fLocalTime += fTimeDelta;
 	m_fGravityLocal += fTimeDelta * 6.f;
 

@@ -86,6 +86,12 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"WhiteCactus_body.bin", L"Plant_3");
 
 	/* Building */
+	LoadMesh(L"Oasis_body.bin", L"Oasis");
+
+	LoadMesh(L"Building_000_object.bin", L"Building_000_object"); //정상
+	LoadMesh(L"Building_100_object.bin", L"Building_100_object"); //파괴
+	
+	/* 기존 건물 */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
 	LoadMesh(L"Building_001_object.bin", L"Building_001_object");
 	LoadMesh(L"Rock_object.bin", L"Rock_object");

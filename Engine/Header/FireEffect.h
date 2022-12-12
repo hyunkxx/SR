@@ -19,7 +19,7 @@ public:
 public:
 	static CFireEffect*	Create(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPosition);
 private:
-	float m_fSpeed = 50.f;
+	float m_fSpeed = 150.f;
 	vector<_vec3> m_vDir;
 };
 
