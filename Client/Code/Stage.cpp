@@ -59,7 +59,6 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 
 CStage::~CStage()
 {
-	
 }
 
 HRESULT CStage::Ready_Scene(void)

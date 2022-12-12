@@ -146,5 +146,4 @@ void CBomber::Strike(_vec3 _Strike_Pos)
 	Engine::Camera_Change(L"BoomCamera");
 	dynamic_cast<CBoomCamera*>(Engine::Get_Camera())->Reset_Pos();
 	dynamic_cast<CBoomCamera*>(Engine::Get_Camera())->Set_Target(m_pTransformBody);
-
 }

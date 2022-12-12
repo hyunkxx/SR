@@ -29,8 +29,10 @@ void CTankManager::Free(void)
 
 void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 {
-	//null일때만 Create사용
-	assert(!m_pVehicle);
+	if (m_pVehicle)
+	{
+		Safe_Release(m_pVehicle);
+	}
 
 	switch (eType)
 	{

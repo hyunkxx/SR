@@ -4,6 +4,7 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "TankManager.h"
 
 _float CUI_Volume:: s_fAllSound;
 _float CUI_Volume::s_fShotSound;
@@ -113,6 +114,9 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 		{
 			m_bShow = !m_bShow;
 			ShowCursor(m_bShow);
+
+			CTankManager::GetInstance()->MouseLBTLock(m_bShow);
+
 			static_cast<CTankCamera*>(Engine::Get_Camera(L"TankCamera"))->Set_MouseFix(m_bShow);
 		}
 
