@@ -314,10 +314,32 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	//bottomdirenermy
 	for (_int i = 0; 5> i; i++)
 	{
+		_int tanktype = rand() % 4;
+		switch (tanktype)
+		{
+		case 0:
+			m_eData.TankType = TANKTYPE::HUMVEE;
+			break;
+		case 1:
+			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			break;
+		case 2:
+			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			break;
+		case 3:
+			m_eData.TankType = TANKTYPE::BIG_TANK;
+			break;
+		case 4:
+			m_eData.TankType = TANKTYPE::LONG_TANK;
+			break;
+		default:
+			return NULL;
+			break;
+		}
 		m_eData.eID = OBJID::OBJID_BDENERMY;
-		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 300;
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
+		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 200;
 
 		CGameObject* pEnermy = CBottomDirEnermy::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
@@ -326,10 +348,31 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	//Default_Enermy
 	_int iEnermy_Count = 5;
-	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count- 1);
-
+	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count - 1);
 	for (_int i = 0; (iEnermy_Count) > i; i++)
 	{
+		_int tanktype = rand() % 4;
+		switch (tanktype)
+		{
+		case 0:
+			m_eData.TankType = TANKTYPE::HUMVEE;
+			break;
+		case 1:
+			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			break;
+		case 2:
+			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			break;
+		case 3:
+			m_eData.TankType = TANKTYPE::BIG_TANK;
+			break;
+		case 4:
+			m_eData.TankType = TANKTYPE::LONG_TANK;
+			break;
+		default:
+			return NULL;
+			break;
+		}
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
 		m_eData.vPos.y = 0;
@@ -342,10 +385,32 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	//Ally
 	for (_int i = 0; 5> i; i++)
 	{
+		_int tanktype = rand() % 5;
+		switch (tanktype)
+		{
+		case 0:
+			m_eData.TankType = TANKTYPE::HUMVEE;
+			break;
+		case 1:
+			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			break;
+		case 2:
+			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			break;
+		case 3:
+			m_eData.TankType = TANKTYPE::BIG_TANK;
+			break;
+		case 4:
+			m_eData.TankType = TANKTYPE::LONG_TANK;
+			break;
+		default:
+			return NULL;
+			break;
+		}
 		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
-		m_eData.vPos.x = (float)(rand() % 125);
+		m_eData.vPos.x = (float)(rand() % 300);
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)(rand() % 90);
+		m_eData.vPos.z = (float)(rand() % 300);
 
 		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
@@ -353,10 +418,32 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	}
 	for (_int i = 0; 5 > i; i++)
 	{
+		_int tanktype = rand() % 5;
+		switch (tanktype)
+		{
+		case 0:
+			m_eData.TankType = TANKTYPE::HUMVEE;
+			break;
+		case 1:
+			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			break;
+		case 2:
+			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			break;
+		case 3:
+			m_eData.TankType = TANKTYPE::BIG_TANK;
+			break;
+		case 4:
+			m_eData.TankType = TANKTYPE::LONG_TANK;
+			break;
+		default:
+			return NULL;
+			break;
+		}
 		m_eData.eID = OBJID::OBJID_BDALLY;
-		m_eData.vPos.x = (float)(rand() % 125) + 100;
+		m_eData.vPos.x = (float)(rand() % 300);
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)(rand() % 150);
+		m_eData.vPos.z = (float)(rand() % 300);
 
 		CGameObject* pEnermy = CBottomDirAlly::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
@@ -462,6 +549,10 @@ void CStage::Collison_Object(void)
 	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
 	CLayer* pGameLogic = Get_Layer(L"GameLogic");
 
+	vector<CGameObject*> DAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
+	vector<CGameObject*> BDAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
+	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
 	for (auto&iter = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != iter; iter++)
 	{
 		for (auto&Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
@@ -474,7 +565,17 @@ void CStage::Collison_Object(void)
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
-			CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"부사수"), wstring(L"벽과 부딪혔습니다!"));
+		}
+		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>(iter->second) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), iter->second->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
 		}
 	}
 
@@ -494,13 +595,72 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+					// 채팅으로 남은 수 뜨도록 (겜에서 num 치면 됨)
+					//CUI_FontMgr::GetInstance()->Set_LiveCount(_uint(1));
+					//CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"적"), wstring(L"\t전차 파괴") + wstring( 죽인 숫자));
 				}
 
 			}
-			// 여기에 추가로 충돌처리 하도록
+			// 여기에 추가로 충돌처리
+			for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+					(*iters)->Set_Dead(true);
+
+					dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+					/*m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
+					m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+					m_eData.vPos.y = 0;
+					m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
+
+					CGameObject* pEnermy = CDefault_Enermy::Create(m_pGraphicDev, &m_eData);
+					NULL_CHECK(pEnermy);
+					Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);*/
+				}
+			}
+			for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+					(*iters)->Set_Dead(true);
+					dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+					
+				}
+			}
 		}
 	}
 
+	for (auto& iter = DAlly.begin(); iter < DAlly.end(); ++iter)
+	{
+		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{//dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
+			}
+		}
+
+	}
 }
 
 void CStage::Key_Input(const _float& fTimeDelta)
@@ -527,8 +687,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 {
 	CGameObject*		pGameObject = nullptr;
 
-	_vec3 vPos;
-	float fRot;
+	_vec3 vPos, vRot;
 
 	for (int j = 0 ; j < 9 ; ++j)
 	{
@@ -537,7 +696,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::MAX + 2;
 
 			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
-			fRot = (float)(rand() % 180);
+			vRot = { 0.f , (float)(rand() % 180) , 0.f };
 			
 			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
 				continue;
@@ -547,7 +706,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			case CBuilding::TYPE::ROCK:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos, CBuilding::TYPE::ROCK);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -555,14 +714,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_1", vPos, CBuilding::TYPE::PLANT_1);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			case CBuilding::TYPE::PLANT_2:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_2", vPos, CBuilding::TYPE::PLANT_2);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -570,14 +729,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_3", vPos, CBuilding::TYPE::PLANT_3);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			default:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos, CBuilding::TYPE::BUILDING);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;

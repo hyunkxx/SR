@@ -40,13 +40,21 @@ void CEnermyMgr::LateUpdate_EnermyMgr(void)
 	{
 		for (auto& iter : m_lEnermy[i])
 			iter->LateUpdate_Object();
+
+		for (auto& iter = m_lEnermy[i].begin(); iter != m_lEnermy[i].end();)
+		{
+			if ((*iter)->Get_Dead())
+			{
+				iter = m_lEnermy[i].erase(iter);
+			}
+			else
+				iter++;
+		}
 	}
 }
 
 void CEnermyMgr::Free(void)
 {
-
-
 
 	for (_int i = 0; OBJID::OBJID_END > i; i++)
 	{

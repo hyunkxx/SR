@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include"TankSet.h"
+#include "Collisionable.h"
+#include"TankManager.h"
 BEGIN(Engine)
 
 class CTransform;
@@ -13,7 +15,7 @@ class CTank_Head;
 class CTankPosin;
 class CVoxel;
 END
-class CDefault_Ally :public CGameObject
+class CDefault_Ally :public CGameObject, public ICollisionable
 {
 public:
 	enum TYPE { TYPE_DEFAULT_ALLY, TYPE_BDENERMY, TYPE_END };
@@ -28,6 +30,12 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+	virtual const   _vec3		Get_Info(void)			override;
+	virtual			void		Move_Info(_vec3 _Info)	override;
+	virtual			void		OBB_Collision_EX(void)	override;
+	virtual			void		Update_OBB(void)		override;
+	virtual			OBB*        Get_OBB(void)			override;
 public:
 
 	void	StateCheck();
@@ -41,6 +49,7 @@ public:
 	void  Set_Action(_int _action) { m_iAction = _action; }
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	_float Dist(CTransform* _Target);
+
 public:
 
 	void Basic(_float fTimeDelta);
@@ -76,8 +85,9 @@ private:
 	_int m_PastLocation = LOCATIONCHECK::LOCATIONCHECK_END;
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
-	_float m_fReloadTime = 0.f, m_fReload = 1.f;
-
+	_vec3 vPatrolRange = {};
+	_bool m_bPatrol = false;
+	_bool m_bOnce = false;
 public:
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
@@ -94,8 +104,12 @@ private:
 	_float					UI_fOrgin_ScaleX;
 	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
 	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	//≈ ≈© ¡§∫∏
+	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
+	_float m_fReloadTime, m_fReload;
+	_int   m_iCannonSpeed, TempBullet;
+
 public:
 	void						 Update_UI(void);
 
 };
-	

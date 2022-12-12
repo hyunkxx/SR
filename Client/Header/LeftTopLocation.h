@@ -20,7 +20,6 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
 	virtual void Render_Object(void) override;
-
 private:
 	HRESULT		Add_Component(void);
 
@@ -39,7 +38,8 @@ public:
 	void				Occupation(_int _ObjID);
 	_float				Get_AllyOccupation() { return m_AllyOccupation; }
 	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
-
+	void				Set_EnermyCount() { m_iEnermyCount -= 1; }
+	void                Set_AllyCount() { m_iAllyCount -= 1; }
 public:
 	static CLeftTopLocation*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include"TankSet.h"
+#include "Collisionable.h"
+#include"TankManager.h"
 BEGIN(Engine)
 
 class CTransform;
@@ -13,7 +15,7 @@ class CTank_Head;
 class CTankPosin;
 class CVoxel;
 END
-class CBottomDirAlly :public CGameObject
+class CBottomDirAlly :public CGameObject, public ICollisionable
 {
 
 private:
@@ -27,6 +29,12 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+	virtual const   _vec3		Get_Info(void)			override;
+	virtual			void		Move_Info(_vec3 _Info)	override;
+	virtual			void		OBB_Collision_EX(void)	override;
+	virtual			void		Update_OBB(void)		override;
+	virtual			OBB*        Get_OBB(void)			override;
 public:
 
 	void	StateCheck();
@@ -77,10 +85,14 @@ private:
 	_int m_PastLocation = LOCATIONCHECK::LOCATIONCHECK_END;
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
-	_float m_fReloadTime = 0.f, m_fReload = 1.f;
+
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
-
+	_int  TempBullet = 0;
+	//≈ ≈© ¡§∫∏
+	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
+	_float m_fReloadTime, m_fReload;
+	_int   m_iCannonSpeed;
 public:
 	static CBottomDirAlly*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CBottomDirAlly*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

@@ -67,9 +67,9 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 			}
 		}
 		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-			m_EnermyOccupation += 0.005f*m_iEnermyCount;
+			m_EnermyOccupation += 0.00005f*m_iEnermyCount;
 		if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-			m_AllyOccupation += 0.5f*m_iAllyCount;
+			m_AllyOccupation += 0.000005f*m_iAllyCount;
 		if (m_EnermyOccupation >= 100.f)
 		{
 			m_EnermyOccupation = 100.f;
@@ -170,15 +170,16 @@ void CRightLocation::Occupation(_int _ObjID)
 					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
 						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
 				}
-				else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-				{
-					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-				}
+
 				else if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
 				{
 					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
 						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
+				}
+				else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
+				{
+					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
+						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
 				}
 			}
 		}

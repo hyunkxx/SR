@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Collisionable.h"
 BEGIN(Engine)
 
 class CTransform;
@@ -13,7 +13,7 @@ class CTank_Head;
 class CTankPosin;
 class CVoxel;
 END
-class CDefault_Enermy :public CGameObject
+class CDefault_Enermy :public CGameObject, public ICollisionable
 {
 
 private:
@@ -27,6 +27,12 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+	virtual const   _vec3		Get_Info(void)			override;
+	virtual			void		Move_Info(_vec3 _Info)	override;
+	virtual			void		OBB_Collision_EX(void)	override;
+	virtual			void		Update_OBB(void)		override;
+	virtual			OBB*        Get_OBB(void)			override;
 public:
 
 
@@ -45,7 +51,7 @@ public:
 	void  Set_Action(_int _action) { m_iAction = _action; }
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	_int Get_Action() { return m_iAction; }
-
+	void  Set_DisCountLocation();
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -86,8 +92,8 @@ private:
 	_bool LeftCheck = false;
 	_int Targeted = 0;
 	_float m_fReloadTime = 0.f, m_fReload = 0.1f;
-	//Test
-	_float Test = 0.f;
+	_vec3 vPatrolRange = {};
+	_bool m_bPatrol = false;
 public:
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

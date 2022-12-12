@@ -62,11 +62,11 @@ _int CLeftLocation::Update_Object(const _float& fTimeDelta)
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
 			Occupation(OBJID::OBJID_DEFAULT_ALLY);
 		}
-		Dests= CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+		Dests = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 		if (Dests.size() != 0)
 		{
-		CheckObject(OBJID::OBJID_BDALLY);
-		Occupation(OBJID::OBJID_BDALLY);
+			CheckObject(OBJID::OBJID_BDALLY);
+			Occupation(OBJID::OBJID_BDALLY);
 		}
 
 
@@ -316,6 +316,14 @@ HRESULT CLeftLocation::Add_Component(void)
 	pComponent = m_pLocationCom = dynamic_cast<CLocation*>(Clone_Prototype(L"Proto_Location"));
 	NULL_CHECK_RETURN(m_pLocationCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Location", pComponent });
+
+	/*pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Plag", pComponent });
+
+	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_Flag"));
+	NULL_CHECK_RETURN(m_pTexture, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_FlagTex", pComponent });*/
 
 
 

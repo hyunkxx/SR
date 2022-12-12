@@ -38,6 +38,8 @@ public:
 	void				Occupation(_int _ObjID);
 	_float				Get_AllyOccupation() { return m_AllyOccupation; }
 	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
+	void				Set_EnermyCount() { m_iEnermyCount -= 1; }
+	void                Set_AllyCount() { m_iAllyCount -= 1; }
 public:
 	static CRightTopLocation*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

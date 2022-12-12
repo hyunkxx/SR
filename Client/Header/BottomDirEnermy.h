@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Collisionable.h"
 BEGIN(Engine)
 
 class CTransform;
@@ -14,7 +14,7 @@ class CTankPosin;
 class CCalculator;
 class CVoxel;
 END
-class CBottomDirEnermy :public CGameObject
+class CBottomDirEnermy :public CGameObject, public ICollisionable
 {
 
 private:
@@ -28,6 +28,13 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+
+	virtual const   _vec3		Get_Info(void)			override;
+	virtual			void		Move_Info(_vec3 _Info)	override;
+	virtual			void		OBB_Collision_EX(void)	override;
+	virtual			void		Update_OBB(void)		override;
+	virtual			OBB*        Get_OBB(void)			override;
 public:
 
 
@@ -45,7 +52,10 @@ public:
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
 	void  Set_Action(_int _action) { m_iAction = _action; }
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
-
+	void  Set_DisCountLocation();
+	float  Get_Hp() { return UI_fHP; };
+	void					Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void					Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -58,6 +68,7 @@ public:
 	_float PreDist = 0.f;
 	_bool m_bOcne = false;
 	CTransform* pTempTr = nullptr;
+
 private:
 	HRESULT		Add_Component(void);
 
@@ -89,7 +100,9 @@ private:
 	_bool LeftCheck = false;
 	_int Targeted = 0;
 	_float m_fReloadTime = 0.f, m_fReload = 1.f;
-	//Test
+	_vec3 vPatrolRange = {};
+	_bool m_bPatrol = false;
+	_float  m_fPreHp = 0.f;
 public:
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
@@ -105,8 +118,7 @@ private:
 	_float					UI_Orgin_HP, UI_fHP;
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
-	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+
 public:
 	void						 Update_UI(void);
 

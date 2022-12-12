@@ -145,6 +145,7 @@ typedef struct EnermyData
 {
 	_vec3 vPos;
 	OBJID eID;
+	TANKTYPE TankType;
 }EData;
 
 
