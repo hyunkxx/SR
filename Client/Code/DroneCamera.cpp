@@ -39,7 +39,7 @@ _int CDroneCamera::Update_Object(const _float & fTimeDelta)
 	_vec3 TargetPos;
 	CGameObject* pTarget = (Engine::Get_Object(L"GameLogic", L"Boom_Support"));
 	NULL_CHECK_RETURN(pTarget, E_FAIL);
-	static_cast<CTransform*>(pTarget->Get_Component(L"Proto_Transform", ID_DYNAMIC))->Get_Info(INFO_POS,&TargetPos);
+	static_cast<CTransform*>(pTarget->Get_Component(L"Proto_Transform", ID_DYNAMIC))->Get_Info(INFO_POS, &TargetPos);
 	m_vEye.x = TargetPos.x;
 	m_vEye.z = TargetPos.z - 5;
 	m_vAt = TargetPos;

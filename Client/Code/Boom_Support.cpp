@@ -4,6 +4,9 @@
 #include "Export_Function.h"
 #include "Bomber.h"
 #include "DroneCamera.h"
+#include "BoomCamera.h"
+#include "TankSet.h"
+
 CBoom_Support::CBoom_Support(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -26,7 +29,7 @@ HRESULT CBoom_Support::Ready_Object(void)
 	m_bStrike = true;
 	m_fScale = 5.f;
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
-	
+
 	return S_OK;
 }
 
@@ -38,10 +41,14 @@ _int CBoom_Support::Update_Object(const _float & fTimeDelta)
 	if (m_bStrike)
 	{
 		m_fDaedCount += fTimeDelta;
-		if (0.3f < m_fDaedCount)
+		if (6.f < m_fDaedCount)
+		{
+			m_fDaedCount = 0.f;
 			m_bDead = true;
+		}
+
 	}
-	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200* fTimeDelta));
+	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200 * fTimeDelta));
 	Key_Input(fTimeDelta);
 
 
@@ -65,7 +72,7 @@ void CBoom_Support::Render_Object(void)
 
 	if (m_bDead)
 		return;
-	
+
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pTextureCom->Set_Texture();
@@ -81,42 +88,46 @@ void CBoom_Support::Air_Rain(_vec3	_vPos)
 {
 	m_bStrike = false;
 	m_bDead = false;
+	m_bRock = false;
 	m_fDaedCount = 0.f;
 	m_pTransformCom->Reset_Trans();
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
-	m_pTransformCom->Set_Pos(_vPos.x, 2.f, _vPos.z);
+	m_pTransformCom->Set_Pos(_vPos.x, 0.1f, _vPos.z);
 	// 여기에 카메라 체인지로 폭격 카메라 넣어주기
 	Engine::Camera_Change(L"DroneCamera");
 	if (dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
 		dynamic_cast<CDroneCamera*>(Engine::Get_Camera())->Reset_Pos();
-
+	static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Set_Rock(true);
 }
 
 void CBoom_Support::Key_Input(const _float & fTimeDelta)
 {
+	if (m_bRock)
+		return;
+
 	_vec3 Move = { 0.f, 0.f, 0.f };
 
 	if (Engine::Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD)
 		Move.z += 100.f * fTimeDelta;
-	if (Engine::Get_DIKeyState_Custom(DIK_S)==KEY_STATE::HOLD)
+	if (Engine::Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD)
 		Move.z -= 100.f * fTimeDelta;
 	if (Engine::Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
 		Move.x -= 100.f * fTimeDelta;
 	if (Engine::Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 		Move.x += 100.f * fTimeDelta;
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80  && !m_bStrike)
+	if (Engine::Get_DIMouseState(DIM_LB) & 0x80 && !m_bStrike)
 	{
 		_vec3 Pos;
 		m_pTransformCom->Get_Info(INFO_POS, &Pos);
 		static_cast<CBomber*>(Engine::Get_Object(L"GameLogic", L"Bomber"))->Strike(Pos);
-		Engine::Camera_Change(L"TankCamera");
 		m_bStrike = true;
+		m_bRock = true;
 	}
 
 	m_pTransformCom->Move_Pos(&Move);
-	
+
 }
 
 HRESULT CBoom_Support::Add_Component(void)

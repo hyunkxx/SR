@@ -53,6 +53,7 @@ inline _bool OBB_Collision(OBB* First, OBB* Second);
 inline void Update_BulletMgr(const _float & fTimeDelta);
 inline void LateUpdate_BulletMgr(void);
 inline void Bullet_Supply(CGameObject* pBullet, BULLET_ID eID);
+inline list<CGameObject*>* Get_Bullet_List(BULLET_ID eID);
 inline void Collect_Object(void);
 inline void Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID);
 

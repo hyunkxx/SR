@@ -141,63 +141,77 @@ HRESULT CBigTank::Ready_Object(void)
 
 void CBigTank::Key_Input(const _float & fTimeDelta)
 {
-	if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
-	{
-		if (m_bStart)
-			m_bStart = false;
-		else
-			m_bStart = true;
-	}
-
-	if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload)
-	{
-		m_bPosinShake = true;
-		Shoot_Bullet(BULLET_ID::CANNONBALL);
-
-		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
-		m_bReLoad = false;
-	}
-
-	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
-		Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
-
-	if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
-		Rotation_Body(ROT_Y, (_float)-m_stInfo.RotSpeed * fTimeDelta);
-
-	_long dwMouseMove = 0;
-
-	if (dwMouseMove = Get_DIMouseMove(DIMS_Y))
-	{
-		if (dwMouseMove < 0)
-		{
-			if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
-				Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
-		}
-		else
-			if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
-				Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
-	}
-
-	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
-		Camera_Change();
-
 	_vec3	vDir;
 	m_pTransformBody->Get_Info(INFO_LOOK, &vDir);
-	if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD)
+
+	if (!m_bRock)
 	{
-		if (m_stInfo.bBack)
-			Plus_Back_AccelSpeed(fTimeDelta);
+		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		{
+			if (m_bStart)
+				m_bStart = false;
+			else
+				m_bStart = true;
+		}
+
+		if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload)
+		{
+			m_bPosinShake = true;
+			Shoot_Bullet(BULLET_ID::CANNONBALL);
+
+			Engine::StopSound(PLAYER_SHOT_SOUND1);
+			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+			m_bReLoad = false;
+		}
+
+		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
+			Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
+
+		if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
+			Rotation_Body(ROT_Y, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+
+		_long dwMouseMove = 0;
+
+		if (dwMouseMove = Get_DIMouseMove(DIMS_Y))
+		{
+			if (dwMouseMove < 0)
+			{
+				if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
+					Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+			}
+			else
+				if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
+					Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
+		}
+
+		if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
+			Camera_Change();
+
+
+		if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD)
+		{
+			if (m_stInfo.bBack)
+				Plus_Back_AccelSpeed(fTimeDelta);
+			else
+				Plus_Advance_AccelSpeed(fTimeDelta);
+		}
+		else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD)
+		{
+			if (m_stInfo.bAdvance)
+				Minus_Advance_AccelSpeed(fTimeDelta);
+			else
+				Minus_Back_AccelSpeed(fTimeDelta);
+		}
 		else
-			Plus_Advance_AccelSpeed(fTimeDelta);
-	}
-	else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD)
-	{
-		if (m_stInfo.bAdvance)
-			Minus_Advance_AccelSpeed(fTimeDelta);
-		else
-			Minus_Back_AccelSpeed(fTimeDelta);
+		{
+			if (m_stInfo.fAccum == 0.f)
+				return;
+			else if (m_stInfo.fAccum > 0.f)
+				Minus_Advance_AccelSpeed(fTimeDelta);
+			else
+				Plus_Back_AccelSpeed(fTimeDelta);
+		}
 	}
 	else
 	{

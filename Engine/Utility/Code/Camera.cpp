@@ -38,14 +38,6 @@ _int CCamera::Update_Object(const _float& fTimeDelta)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
-	// ui 때문에 임의로 주석처리
-	//if (m_bSetProj)
-	//{
-	//	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
-	//	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-	//	m_bSetProj = false;
-	//}
-
 	return 0;
 }
 
@@ -63,25 +55,25 @@ void CCamera::Camera_Shake(const _float & fTimeDelta)
 
 	if (m_bxRand)
 	{
-		m_vEye.x -= sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
-		m_vAt.x -= sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
+		m_vEye.x -= sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
+		m_vAt.x -= sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
 		m_bxRand = false;
 	}
 	else
 	{
-		m_vEye.x += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
-		m_vAt.x += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
+		m_vEye.x += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
+		m_vAt.x += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
 		m_bxRand = true;
 	}
-		
+
 	m_fAccum += fTimeDelta;
-	m_vEye.y += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
-	m_vEye.z += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
+	m_vEye.y += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
+	m_vEye.z += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
 
-	m_vAt.y += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
-	m_vAt.z += sin(m_fAccum*40.0f) * powf(0.5f, m_fAccum);
+	m_vAt.y += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
+	m_vAt.z += sin(m_fAccum*m_fShake_Power) * powf(0.5f, m_fAccum);
 
-	if (m_fAccum >= 0.5f)
+	if (m_fAccum >= m_fShake_Time)
 	{
 		m_fAccum = 0.f;
 		m_bShake = false;

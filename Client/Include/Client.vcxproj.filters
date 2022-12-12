@@ -260,6 +260,15 @@
     <Filter Include="02. GameObject\04.Camera\08.DroneCamera">
       <UniqueIdentifier>{0856b73d-430b-43a2-9f92-164e7f9c8df4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04.Camera\09.BoomCamera">
+      <UniqueIdentifier>{2fb5ce0e-9729-40be-89ba-1b8949077ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04.Camera\10.MonnWalk_Camera">
+      <UniqueIdentifier>{e5a81ef7-2c95-417a-9e2c-6503f2a2212f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08.Effect\Boom_Effect">
+      <UniqueIdentifier>{e1a87847-9635-4d49-bb69-c821e990dfd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -448,6 +457,15 @@
     <ClInclude Include="..\Header\DroneCamera.h">
       <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BoomCamera.h">
+      <Filter>02. GameObject\04.Camera\09.BoomCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MoonWalkCamera.h">
+      <Filter>02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BoomEffect.h">
+      <Filter>02. GameObject\08.Effect\Boom_Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -626,6 +644,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\DroneCamera.cpp">
       <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BoomEffect.cpp">
+      <Filter>02. GameObject\08.Effect\Boom_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BoomCamera.cpp">
+      <Filter>02. GameObject\04.Camera\09.BoomCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MoonWalkCamera.cpp">
+      <Filter>02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

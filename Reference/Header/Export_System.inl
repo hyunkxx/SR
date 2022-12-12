@@ -115,7 +115,10 @@ inline void Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAn
 {
 	CBulletMgr::GetInstance()->Reuse_Object(vPos, vDir, fSpeed, fAngleX, fAngleY, eID);
 }
-
+inline list<CGameObject*>* Get_Bullet_List(BULLET_ID eID)
+{
+	return CBulletMgr::GetInstance()->Get_Bullet_List(eID);
+}
 // SoundMgr
 inline void Ready_Sound(void)
 {

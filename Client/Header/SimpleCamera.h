@@ -24,6 +24,7 @@ public:
 	virtual		  void		Render_Object(void);
 	virtual		  void		RenderGUI(void);
 	virtual		  void		Free() override;
+	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
 public:
 	virtual       _bool		Get_Dead(void) { return m_bDead; }
 	const _vec3				Get_Info(void) { return m_vEye; };

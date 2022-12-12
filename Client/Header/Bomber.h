@@ -36,10 +36,13 @@ protected:
 	CVoxel*				m_pBody = nullptr;
 
 	_float				m_fSpeed = 200.f;
-	_vec3				m_vStart_Pos = { 0.f, 50.f, 0.f };
+	_vec3				m_vStart_Pos = { -400.f, 200.f, -400.f };
 	_vec3				m_vStrike_Pos;
 	_vec3				m_vDir;
 	_vec3				m_vMileage;
 	_float				m_FAngle_Accum;
 	_bool				m_bBoomShoot = false;;
+
+	_float				m_fStrike_Count = 0.f;
 };
+

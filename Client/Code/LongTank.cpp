@@ -159,82 +159,95 @@ HRESULT CLongTank::Ready_Object(void)
 
 void CLongTank::Key_Input(const _float & fTimeDelta)
 {
-	if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
-	{
-		if (m_bStart)
-			m_bStart = false;
-		else
-			m_bStart = true;
-	}
-	
-	if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
-	{
-		_vec3 randPos = _vec3(50.f, 0.f, 30.f);
-		m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
-	}
-	if (Get_DIKeyState_Custom(DIK_I) == KEY_STATE::TAP)
-	{
-		_vec3 randPos = _vec3(50.f, 0.f, 50.f);
-		m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
-	}
-	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP)
-	{
-		_vec3 randPos = _vec3(50.f, 0.f, 70.f);
-		m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, randPos);
-	}
-
-	if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload && m_stInfo.fSpeed == 0.f)
-	{
-		m_bPosinShake = true;
-		Shoot_Bullet(BULLET_ID::CANNONBALL);
-
-		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-		Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
-		m_bReLoad = false;
-	}
-
-	if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
-		Shoot_Smoke();
-
-	if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
-		Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
-
-	if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
-		Rotation_Body(ROT_Y, (_float)-m_stInfo.RotSpeed * fTimeDelta);
-
-	_long dwMouseMove = 0;
-
-	if (dwMouseMove = Get_DIMouseMove(DIMS_Y))
-	{
-		if (dwMouseMove < 0)
-		{
-			if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
-				Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
-		}
-		else
-			if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
-				Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
-	}
-
-	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
-		Camera_Change();
 
 	_vec3	vDir;
 	m_pTransformBody->Get_Info(INFO_LOOK, &vDir);
-	if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD && m_bStart)
+	if (!m_bRock)
 	{
-		if (m_stInfo.bBack)
-			Plus_Back_AccelSpeed(fTimeDelta);
+		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		{
+			if (m_bStart)
+				m_bStart = false;
+			else
+				m_bStart = true;
+		}
+
+		if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
+		{
+			_vec3 randPos = _vec3(50.f, 0.f, 30.f);
+			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
+		}
+		if (Get_DIKeyState_Custom(DIK_I) == KEY_STATE::TAP)
+		{
+			_vec3 randPos = _vec3(50.f, 0.f, 50.f);
+			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
+		}
+		if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP)
+		{
+			_vec3 randPos = _vec3(50.f, 0.f, 70.f);
+			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, randPos);
+		}
+
+		if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload && m_stInfo.fSpeed == 0.f)
+		{
+			m_bPosinShake = true;
+			Shoot_Bullet(BULLET_ID::CANNONBALL);
+
+			Engine::StopSound(PLAYER_SHOT_SOUND1);
+			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+			m_bReLoad = false;
+		}
+
+		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+			Shoot_Smoke();
+
+		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
+			Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
+
+		if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)
+			Rotation_Body(ROT_Y, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+
+		_long dwMouseMove = 0;
+
+		if (dwMouseMove = Get_DIMouseMove(DIMS_Y))
+		{
+			if (dwMouseMove < 0)
+			{
+				if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
+					Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+			}
+			else
+				if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
+					Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
+		}
+
+		if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
+			Camera_Change();
+
+		if (Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD && m_bStart)
+		{
+			if (m_stInfo.bBack)
+				Plus_Back_AccelSpeed(fTimeDelta);
+			else
+				Plus_Advance_AccelSpeed(fTimeDelta);
+		}
+		else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD && m_bStart)
+		{
+			if (m_stInfo.bAdvance)
+				Minus_Advance_AccelSpeed(fTimeDelta);
+			else
+				Minus_Back_AccelSpeed(fTimeDelta);
+		}
 		else
-			Plus_Advance_AccelSpeed(fTimeDelta);
-	}
-	else if (Get_DIKeyState_Custom(DIK_S) == KEY_STATE::HOLD && m_bStart)
-	{
-		if (m_stInfo.bAdvance)
-			Minus_Advance_AccelSpeed(fTimeDelta);
-		else
-			Minus_Back_AccelSpeed(fTimeDelta);
+		{
+			if (m_stInfo.fAccum == 0.f)
+				return;
+			else if (m_stInfo.fAccum > 0.f)
+				Minus_Advance_AccelSpeed(fTimeDelta);
+			else
+				Plus_Back_AccelSpeed(fTimeDelta);
+		}
 	}
 	else
 	{
@@ -245,6 +258,7 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		else
 			Plus_Back_AccelSpeed(fTimeDelta);
 	}
+	
 
 	D3DXVec3Normalize(&vDir, &vDir);
 	Move_Info(vDir * m_stInfo.fSpeed * fTimeDelta);

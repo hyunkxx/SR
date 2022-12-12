@@ -33,11 +33,13 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	_bool				m_bStrike = false;
-	_float				m_fDaedCount  = 0.f;
+	_float				m_fDaedCount = 0.f;
+	_bool				m_bRock = false;
 public:
 	static CBoom_Support*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:
 	virtual void Free(void) override;
 
 };
+
 

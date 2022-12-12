@@ -172,6 +172,8 @@
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BigTank.h" />
     <ClInclude Include="..\Header\Bomber.h" />
+    <ClInclude Include="..\Header\BoomCamera.h" />
+    <ClInclude Include="..\Header\BoomEffect.h" />
     <ClInclude Include="..\Header\Boom_Support.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h" />
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
@@ -190,6 +192,7 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MainMenu.h" />
     <ClInclude Include="..\Header\MiddleTank.h" />
+    <ClInclude Include="..\Header\MoonWalkCamera.h" />
     <ClInclude Include="..\Header\ObjectMesh.h" />
     <ClInclude Include="..\Header\SmallTank.h" />
     <ClInclude Include="..\Header\TankManager.h" />
@@ -249,6 +252,8 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BigTank.cpp" />
     <ClCompile Include="..\Code\Bomber.cpp" />
+    <ClCompile Include="..\Code\BoomCamera.cpp" />
+    <ClCompile Include="..\Code\BoomEffect.cpp" />
     <ClCompile Include="..\Code\Boom_Support.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp" />
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
@@ -267,6 +272,7 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MainMenu.cpp" />
     <ClCompile Include="..\Code\MiddleTank.cpp" />
+    <ClCompile Include="..\Code\MoonWalkCamera.cpp" />
     <ClCompile Include="..\Code\ObjectMesh.cpp" />
     <ClCompile Include="..\Code\SmallTank.cpp" />
     <ClCompile Include="..\Code\TankManager.cpp" />

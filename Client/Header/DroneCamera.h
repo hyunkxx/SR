@@ -15,6 +15,7 @@ public:
 	virtual const   _vec3		Get_Info(void) { return _vec3(0.f, 0.f, 0.f); };
 	virtual			void		Move_Info(_vec3 _Info) {};
 	void			Reset_Pos(void);
+	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
 public:
 	static	CDroneCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,

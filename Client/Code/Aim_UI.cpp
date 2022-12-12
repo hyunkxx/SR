@@ -56,6 +56,11 @@ void CAim_UI::LateUpdate_Object(void)
 
 void CAim_UI::Render_Object(void)
 {
+
+	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA && Engine::Get_Camera_ID() != CAMERA_ID::TANK_CAMERA)
+		return;
+
+
 	_matrix OldViewMatrix, OldProjMatrix;
 
 

@@ -13,6 +13,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "DroneCamera.h"
+#include "BoomCamera.h"
 
 #include "Boom_Support.h"
 
@@ -39,6 +40,7 @@
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
+#include "BoomEffect.h"
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
 
@@ -212,6 +214,13 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"DroneCamera", pCameraObject), E_FAIL);
 
+	pCameraObject = CBoomCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"BoomCamera", pCameraObject), E_FAIL);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
@@ -357,6 +366,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CShootEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShootEffect", pGameObject), E_FAIL);
+
+	pGameObject = CBoomEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BoomEffect", pGameObject), E_FAIL);
 
 	pGameObject = CGun_Shoot_Effect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -516,7 +529,6 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 
 	_vec3 vPos, vRot;
 
-	/* µ¹ */
 	for (int j = 0 ; j < 9 ; ++j)
 	{
 		for (int i = -1 ; i < 8 ; ++i)
@@ -539,6 +551,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			case CBuilding::TYPE::PLANT_1:
+				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_1", vPos, CBuilding::TYPE::PLANT_1);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
@@ -553,6 +566,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			case CBuilding::TYPE::PLANT_3:
+				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_3", vPos, CBuilding::TYPE::PLANT_3);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);

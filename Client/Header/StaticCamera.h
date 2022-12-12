@@ -13,6 +13,7 @@ public:
 	virtual void LateUpdate_Object(void) override;
 	virtual const   _vec3		Get_Info(void) { return _vec3(); }
 	virtual			void		Move_Info(_vec3 _Info) {}
+	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Target_Renewal(const _float& fTimeDelta);

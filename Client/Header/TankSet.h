@@ -52,6 +52,7 @@ public:
 	_float				Minus_Back_AccelSpeed(const _float& fTimeDelta);
 
 	const _vec3				Get_HitPos(void) { return m_fHitPos; }
+	void				Set_Rock(_bool Rock) { m_bRock = Rock; }
 protected:
 	CTransform*			m_pTransformBody = nullptr;
 	CTransform*			m_pTransformHead = nullptr;
@@ -59,6 +60,7 @@ protected:
 
 	Tank_State			m_stInfo;
 
+	_bool				m_bRock = false;
 	//Voxel Ãß°¡
 	CVoxel*				m_pBody = nullptr;
 	CVoxel*				m_pHead = nullptr;

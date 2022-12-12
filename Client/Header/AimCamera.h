@@ -12,12 +12,11 @@ public:
 	HRESULT Ready_Object(const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar);
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
-	virtual const   _vec3		Get_Info(void) { return _vec3(0.f, 0.f, 0.f); };
-	virtual			void		Move_Info(_vec3 _Info) {};
 private:
 	void		Mouse_Move(const _float & fTimeDelta);
 	void		Mouse_Fix(void);
 	void		Key_Input(const _float & fTimeDelta);
+	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
 public:
 	static	CAimCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,

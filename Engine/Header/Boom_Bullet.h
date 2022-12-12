@@ -21,7 +21,7 @@ public:
 	virtual void Render_Object(void) override;
 private:
 	HRESULT		Add_Component(void);
-	
+
 private:
 	CVoxel*				m_pBody = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
