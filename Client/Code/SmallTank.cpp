@@ -68,15 +68,15 @@ void CSmallTank::Render_Object(void)
 
 void CSmallTank::RenderGUI(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
-	ImGui::Begin("MainTank State");
+	//ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
+	//ImGui::Begin("MainTank State");
 
-	string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
-	string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
-	ImGui::Text(speed.c_str());
-	ImGui::Text(reload.c_str());
+	//string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
+	//string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
+	//ImGui::Text(speed.c_str());
+	//ImGui::Text(reload.c_str());
 
-	ImGui::End();
+	//ImGui::End();
 }
 
 HRESULT CSmallTank::Add_Component(void)
@@ -497,7 +497,6 @@ void CSmallTank::Expect_Hit_Point(const _float & fTimeDelta)
 
 	AimTrans = Engine::Get_Component(L"UI", L"Aim_UI_Pers", L"Proto_Transform", ID_DYNAMIC);
 	dynamic_cast<CTransform*>(AimTrans)->Set_Pos(m_fHitPos.x, m_fHitPos.y, m_fHitPos.z);
-
 }
 
 _vec3 CSmallTank::PickUp_OnTerrain(void)

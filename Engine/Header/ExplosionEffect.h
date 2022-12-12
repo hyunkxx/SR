@@ -8,7 +8,7 @@ class ENGINE_DLL CExplosionEffect : public CEffector
 {
 	const int MaxObjectCount = 10;
 protected:
-	explicit CExplosionEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPosition);
+	explicit CExplosionEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos);
 	explicit CExplosionEffect(const CExplosionEffect& rhs);
 	virtual ~CExplosionEffect();
 public:
@@ -20,6 +20,7 @@ public:
 	virtual void Reset() override;
 public:
 	static CExplosionEffect*	Create(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPosition);
+	void SetColor(D3DXCOLOR color[]);
 private:
 	float m_fSpeed = 40.f;
 	vector<_vec3> m_vecDir;

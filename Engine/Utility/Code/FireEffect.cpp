@@ -11,15 +11,14 @@ CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 {
 	m_fDuration = 0.5f;
 
-	D3DXCOLOR color[3];
-	color[0] = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	color[1] = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.f);
-	color[2] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.f);
+	m_color[0] = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	m_color[1] = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.f);
+	m_color[2] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.f);
 
 	for (int i = 0; i < MaxObjectCount; ++i)
 	{
 		CCube* pCube = CCube::Create(pGraphicDevice);
-		CCube::SetColor(pCube, color[rand() % 3]);
+		CCube::SetColor(pCube, m_color[rand() % 3]);
 		m_vecEffect.push_back(pCube);
 	}
 

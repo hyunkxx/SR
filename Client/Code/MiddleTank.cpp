@@ -68,7 +68,7 @@ void CMiddleTank::Render_Object(void)
 
 void CMiddleTank::RenderGUI(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
+	/*ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
 	ImGui::Begin("MainTank State");
 
 	string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
@@ -76,7 +76,7 @@ void CMiddleTank::RenderGUI(void)
 	ImGui::Text(speed.c_str());
 	ImGui::Text(reload.c_str());
 
-	ImGui::End();
+	ImGui::End();*/
 }
 
 HRESULT CMiddleTank::Add_Component(void)

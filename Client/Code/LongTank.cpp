@@ -73,16 +73,16 @@ void CLongTank::Render_Object(void)
 
 void CLongTank::RenderGUI(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
-	ImGui::Begin("MainTank State");
+	//ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
+	//ImGui::Begin("MainTank State");
 
-	string speed = "SPEED " + to_string(m_stInfo.fReload);
-	string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
+	//string speed = "SPEED " + to_string(m_stInfo.fReload);
+	//string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
 
-	ImGui::Text(speed.c_str());
-	ImGui::Text(reload.c_str());
+	//ImGui::Text(speed.c_str());
+	//ImGui::Text(reload.c_str());
 
-	ImGui::End();
+	//ImGui::End();
 }
 
 void CLongTank::Sound_Setting(const _float & fTimeDelta)
@@ -205,21 +205,6 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 			m_pTransformBody->Get_Info(INFO_POS, &Pos);
 			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
 				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
-		}
-		if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
-		{
-			_vec3 randPos = _vec3(50.f, 0.f, 30.f);
-			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
-		}
-		if (Get_DIKeyState_Custom(DIK_I) == KEY_STATE::TAP)
-		{
-			_vec3 randPos = _vec3(50.f, 0.f, 50.f);
-			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, randPos);
-		}
-		if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP)
-		{
-			_vec3 randPos = _vec3(50.f, 0.f, 70.f);
-			m_pEffectPool->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, randPos);
 		}
 
 		if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload && m_stInfo.fSpeed == 0.f)

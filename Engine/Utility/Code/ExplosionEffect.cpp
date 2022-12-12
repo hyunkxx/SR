@@ -11,17 +11,16 @@ CExplosionEffect::CExplosionEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 {
 	m_vecDir.reserve(MaxObjectCount);
 
-	D3DXCOLOR color[3];
-	color[0] = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.f);
-	color[1] = D3DXCOLOR(0.0f, 0.7f, 0.0f, 1.f);
-	color[2] = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
+	m_color[0] = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.f);
+	m_color[1] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.f);
+	m_color[2] = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
 
 	for (int i = 0; i < MaxObjectCount; ++i)
 	{
 		CCube* pCube = CCube::Create(pGraphicDevice);
 		/* ·£´ý»ö */
 		//CCube::SetColor(pCube, D3DXCOLOR(rand() % 10 * 0.1f, rand() % 10 * 0.1f, rand() % 10 * 0.1f, 1.f));
-		CCube::SetColor(pCube, color[i % 3]);
+		CCube::SetColor(pCube, m_color[i % 3]);
 		m_vecEffect.push_back(pCube);
 	}
 
@@ -32,7 +31,7 @@ CExplosionEffect::CExplosionEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)
 	{
-		(*iter)->SetScale(_vec3((float(rand() % 3 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f));
+		(*iter)->SetScale(_vec3((float(rand() % 4 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f));
 		(*iter)->SetRotation({ (float)(rand() % 90) ,(float)(rand() % 90),(float)(rand() % 90) });
 	}
 }
@@ -67,13 +66,19 @@ _int CExplosionEffect::Update_Component(const _float & fTimeDelta)
 	if (!m_bRunning)
 		return 0;
 
+	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
+	{
+		m_bRunning = false;
+		Reset();
+		return 0;
+	}
+
 	m_fLocalTime += fTimeDelta;
 	m_fGravityLocal += fTimeDelta * 6.f;
 
 	if (m_fLocalTime > m_fDuration)
 	{
 		Reset();
-		m_fGravityLocal = -2.f;
 	}
 
 	_matrix matScale, matAxis[3], matRot, matTrans;
@@ -83,6 +88,8 @@ _int CExplosionEffect::Update_Component(const _float & fTimeDelta)
 	int i = 0;
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)
 	{
+		_matrix matWorld = (*iter)->GetWorldMatix();
+
 		D3DXMatrixScaling(
 			&matScale,
 			(*iter)->GetScale().x,
@@ -94,7 +101,7 @@ _int CExplosionEffect::Update_Component(const _float & fTimeDelta)
 		D3DXMatrixRotationZ(&matAxis[2], (*iter)->GetRotation().z);
 		matRot = matAxis[0] * matAxis[1] * matAxis[2];
 
-		if ((*iter)->GetPosition().y < 0.f)
+		if ((*iter)->GetPosition().y + m_vPosition.y < 0.f)
 		{
 			D3DXMatrixTranslation(
 				&matTrans,
@@ -132,6 +139,7 @@ void CExplosionEffect::RenderEffect()
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)
 	{
 		_matrix matWorld = (*iter)->GetWorldMatix();
+
 		_vec3 vPos = { matWorld._41, matWorld._42, matWorld._43 };
 		if (Utility::Cuilling(m_pGraphicDev, vPos))
 			continue;
@@ -145,6 +153,7 @@ void CExplosionEffect::Reset()
 {
 	m_bRunning = false;
 	m_fLocalTime = 0.0f;
+	m_fGravityLocal = -2.f;
 
 	_matrix matWorld;
 	_matrix matOrigin;
@@ -175,5 +184,21 @@ CExplosionEffect* CExplosionEffect::Create(LPDIRECT3DDEVICE9 pGraphicDevice, _ve
 	}
 
 	return pInstance;
+}
+
+void CExplosionEffect::SetColor(D3DXCOLOR color[])
+{
+	m_color[0] = color[0];
+	m_color[1] = color[1];
+	m_color[2] = color[2];
+
+	for (int i = 0; i < MaxObjectCount; ++i)
+	{
+		CCube* pCube = CCube::Create(m_pGraphicDev);
+		/* ·£´ý»ö */
+		//CCube::SetColor(pCube, D3DXCOLOR(rand() % 10 * 0.1f, rand() % 10 * 0.1f, rand() % 10 * 0.1f, 1.f));
+		CCube::SetColor(pCube, m_color[i % 3]);
+		m_vecEffect.push_back(pCube);
+	}
 }
 

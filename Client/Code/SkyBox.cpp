@@ -22,7 +22,7 @@ HRESULT CSkyBox::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale(500.f, 500.f, 500.f);
+	m_pTransformCom->Set_Scale(300.f, 100.f, 300.f);
 
 	return S_OK;
 }
@@ -35,7 +35,7 @@ _int CSkyBox::Update_Object(const _float& fTimeDelta)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 
 	D3DXMatrixInverse(&matView, NULL, &matView);
-	m_pTransformCom->Set_Pos(matView._41, matView._42 + 50.f, matView._43);
+	m_pTransformCom->Set_Pos(matView._41, matView._42, matView._43);
 
 
 	Add_RenderGroup(RENDER_PRIORITY, this);
@@ -53,12 +53,17 @@ void CSkyBox::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

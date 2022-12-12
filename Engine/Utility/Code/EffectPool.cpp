@@ -9,7 +9,7 @@ USING(Engine)
 
 CEffectPool::CEffectPool(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
-	, nMaxPoolSize(20)
+	, nMaxPoolSize(200)
 {
 	for (_uint i = 0; i < nMaxPoolSize; ++i)
 	{
@@ -26,7 +26,7 @@ CEffectPool::CEffectPool(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CEffectPool::CEffectPool(const CEffectPool & rhs)
 	: CComponent(rhs.m_pGraphicDev)
-	, nMaxPoolSize(20)
+	, nMaxPoolSize(200)
 {
 	for (_uint i = 0; i < nMaxPoolSize; ++i)
 	{
@@ -114,12 +114,12 @@ void CEffectPool::Free(void)
 	__super::Free();
 }
 
-void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos)
+void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos, D3DXCOLOR color[])
 {
 	switch (eType)
 	{
 	case EFFECT_TYPE::EXPLOSION:
-		AddExplosionPool(vPos);
+		AddExplosionPool(vPos, color);
 		break;
 	case EFFECT_TYPE::FIRE:
 		AddFirePool(vPos);
@@ -140,7 +140,7 @@ void CEffectPool::RenderEffect(EFFECT_TYPE eType)
 	}
 }
 
-void CEffectPool::AddExplosionPool(_vec3 vPos)
+void CEffectPool::AddExplosionPool(_vec3 vPos, D3DXCOLOR color[])
 {
 	if (m_ExplosionPool.size() >= nMaxPoolSize - 1)
 		return;
@@ -155,6 +155,7 @@ void CEffectPool::AddExplosionPool(_vec3 vPos)
 		}
 	}
 
+	(*Effect)->SetColor(color);
 	(*Effect)->SetPosition(vPos);
 	(*Effect)->SetRunning(true);
 }
@@ -173,7 +174,7 @@ void CEffectPool::AddFirePool(_vec3 vPos)
 			break;
 		}
 	}
-
+	
 	(*Effect)->SetPosition(vPos);
 	(*Effect)->SetRunning(true);
 }

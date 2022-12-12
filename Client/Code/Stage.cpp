@@ -44,6 +44,8 @@
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
 
+#include "EffectPool.h"
+#include "EffectManager.h"
 #include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
@@ -60,8 +62,17 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	Engine::StopSound(SELECT_MENU_BGM);
+	float Start = 100.f;
+	float End = 300.f;
+	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 230, 210, 0));
 
+	m_pGraphicDev->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+	m_pGraphicDev->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
+	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
+	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
+
+	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment_Object(L"Environment_Object"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
@@ -244,6 +255,11 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	pGameObject = CTestBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestBox", pGameObject), E_FAIL);
+
+	pGameObject = m_pEffectManager = CEffectManager::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EffectManager", pGameObject), E_FAIL);
+
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
@@ -589,6 +605,7 @@ void CStage::Collison_Object(void)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 		{
+			// 총알 vs 환경 오브젝트 충돌
 			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -599,11 +616,45 @@ void CStage::Collison_Object(void)
 
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+
+					D3DXCOLOR color[3];
+					color[0] = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+					color[1] = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+					color[2] = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos, color);
+
 					(*iter)->Set_Dead(true);
 				}
-
 			}
+
 			// 여기에 추가로 충돌처리
+
+			//총알 vs 게임 오브젝트 충돌
+			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					D3DXCOLOR color[3];
+					color[0] = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+					color[1] = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+					color[2] = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos, color);
+
+					(*iter)->Set_Dead(true);
+				}
+			}
+
+
 			for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
@@ -689,7 +740,8 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 {
 	CGameObject*		pGameObject = nullptr;
 
-	_vec3 vPos, vRot;
+	_vec3 vPos;
+	float fRot;
 
 	for (int j = 0 ; j < 9 ; ++j)
 	{
@@ -698,7 +750,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::MAX + 2;
 
 			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
-			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+			fRot = (float)(rand() % 180);
 			
 			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
 				continue;
@@ -708,7 +760,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			case CBuilding::TYPE::ROCK:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos, CBuilding::TYPE::ROCK);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -716,14 +768,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_1", vPos, CBuilding::TYPE::PLANT_1);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			case CBuilding::TYPE::PLANT_2:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_2", vPos, CBuilding::TYPE::PLANT_2);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -731,14 +783,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_3", vPos, CBuilding::TYPE::PLANT_3);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			default:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos, CBuilding::TYPE::BUILDING);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;

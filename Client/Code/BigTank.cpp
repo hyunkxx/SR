@@ -66,15 +66,15 @@ void CBigTank::Render_Object(void)
 
 void CBigTank::RenderGUI(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
-	ImGui::Begin("MainTank State");
+	//ImGui::SetNextWindowSize(ImVec2(200.f, 100.f));
+	//ImGui::Begin("MainTank State");
 
-	string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
-	string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
-	ImGui::Text(speed.c_str());
-	ImGui::Text(reload.c_str());
+	//string speed = "m_fSpeed     " + to_string(m_stInfo.fSpeed);
+	//string reload = "m_fReloadTime" + to_string(m_stInfo.fReloadTime);
+	//ImGui::Text(speed.c_str());
+	//ImGui::Text(reload.c_str());
 
-	ImGui::End();
+	//ImGui::End();
 }
 
 HRESULT CBigTank::Add_Component(void)

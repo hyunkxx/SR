@@ -46,7 +46,6 @@ void CTankSet::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
 
-
 	m_pTextureF->Set_Texture(0);
 	m_pRcTexF->Render_Buffer();
 
@@ -156,7 +155,7 @@ void CTankSet::OBB_Collision_EX(void)
 	D3DXVec3Normalize(&Look, &Look);
 	Reset_Speed();
 
-	Move_Info(-Look * m_stInfo.fSpeed * m_fDT);
+	Move_Info(-Look * (m_stInfo.fSpeed * 1.1f) * m_fDT);
 
 }
 

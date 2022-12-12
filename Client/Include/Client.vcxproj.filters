@@ -269,6 +269,9 @@
     <Filter Include="02. GameObject\08.Effect\Boom_Effect">
       <UniqueIdentifier>{e1a87847-9635-4d49-bb69-c821e990dfd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08.Effect\EffectManager">
+      <UniqueIdentifier>{bec1f1b8-ba87-4fd1-8d82-97cd95530f89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -466,6 +469,9 @@
     <ClInclude Include="..\Header\BoomEffect.h">
       <Filter>02. GameObject\08.Effect\Boom_Effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\EffectManager.h">
+      <Filter>02. GameObject\08.Effect\EffectManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -653,6 +659,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MoonWalkCamera.cpp">
       <Filter>02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EffectManager.cpp">
+      <Filter>02. GameObject\08.Effect\EffectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

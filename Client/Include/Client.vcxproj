@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\Default_Enermy.h" />
     <ClInclude Include="..\Header\DroneCamera.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\EffectManager.h" />
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
     <ClInclude Include="..\Header\Humvee.h" />
     <ClInclude Include="..\Header\LeftLocation.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="..\Code\Default_Enermy.cpp" />
     <ClCompile Include="..\Code\DroneCamera.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\EffectManager.cpp" />
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\Humvee.cpp" />
     <ClCompile Include="..\Code\LeftLocation.cpp" />

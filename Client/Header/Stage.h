@@ -33,6 +33,7 @@ private:
 	HRESULT CreateMap(CLayer* pLayer);
 private:
 	EData    m_eData;
+	CGameObject* m_pEffectManager;
 
 	void Key_Input(const _float& fTimeDelta);
 

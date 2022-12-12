@@ -22,10 +22,10 @@ public:
 	virtual CComponent*	Clone(void)	override;
 	virtual void		Free(void)	override;
 public:
-	void UseEffect(EFFECT_TYPE eType, _vec3 vPos);
+	void UseEffect(EFFECT_TYPE eType, _vec3 vPos, D3DXCOLOR color[]);
 	void RenderEffect(EFFECT_TYPE eType);
 private:
-	void AddExplosionPool(_vec3 vPos);
+	void AddExplosionPool(_vec3 vPos, D3DXCOLOR color[]);
 	void AddFirePool(_vec3 vPos);
 private:
 
