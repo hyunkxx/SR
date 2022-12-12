@@ -55,7 +55,7 @@ public:
 	void Wait(_float fTimeDelta);
 	void Enermy_In_Area(_float fTimeDelta);
 	void Detect(_float fTimeDelta);
-
+	void		ObjectCol(_bool m_Left);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 private:
 	HRESULT		Add_Component(void);
@@ -74,6 +74,7 @@ private:
 	EData*       m_EData;
 	_float       preDist;
 	_bool		m_bonce = false;
+	_float     Range = 0.f;
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
@@ -89,6 +90,9 @@ private:
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_int  TempBullet = 0;
+	_bool m_bOnce = false;
+	_bool ColBuild = false;
+	_int  ColBuildCount = 0;
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

@@ -87,12 +87,26 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 {
 	m_fPreHp = UI_fHP;
 	__super::Update_Object(fTimeDelta);
-
 	m_fReloadTime += fTimeDelta;
-	StateCheck();
-	Detect(fTimeDelta);
-	Basic(fTimeDelta);
 
+	if (ColBuild != true)
+	{
+		StateCheck();
+		Detect(fTimeDelta);
+		Basic(fTimeDelta);
+	}
+	else
+	{
+		++ColBuildCount;
+		_vec3 vLook;
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*10.f*fTimeDelta));
+		if (ColBuildCount >= 140)
+		{
+			ColBuildCount = 0;
+			ColBuild = false;
+		}
+	}
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
 	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
@@ -105,11 +119,8 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	Update_UI();
-	if (m_fPreHp != UI_fHP)
-	{
+	//Update_UI();
 
-	}
 }
 
 void CBottomDirEnermy::Render_Object(void)
@@ -154,38 +165,7 @@ void CBottomDirEnermy::Move_Info(_vec3 _Info)
 
 void CBottomDirEnermy::OBB_Collision_EX(void)
 {
-
-	_vec3  vTemp, vSour, vLook, vDir;
-	m_pTransformCom->Get_Info(INFO::INFO_RIGHT, &vTemp);
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-	vDir = vTemp - vSour;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-	D3DXVec3Normalize(&vLook, &vLook);
-
-	Left_RightCheck(vDir, vLook);
-	_float Dot = D3DXVec3Dot(&vDir, &vLook);
-	_float Angle = (float)acosf(Dot);
-	if (isnan(Angle))
-	{
-		Angle = 0;
-	}
-	if (LeftCheck == false)
-	{
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-	}
-	else
-	{
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-	}
-	_vec3 vTrans2;
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-	m_pTransformCom->Move_Pos(&(vTrans2*0.2f));
+	//건물 충돌
 }
 
 void CBottomDirEnermy::Update_OBB(void)
@@ -468,7 +448,7 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 		{
 			if (m_fReloadTime > m_fReload)
 			{
-				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
 				m_fReloadTime = 0.f;
 			}
 		}
@@ -850,6 +830,26 @@ CBottomDirEnermy * CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev, void 
 
 	return pInstance;
 
+}
+
+void CBottomDirEnermy::ObjectCol(_bool m_Left)
+{
+	_bool bLeft = m_Left;
+
+	if (bLeft)
+	{
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		ColBuild = true;
+	}
+	else
+	{
+		ColBuild = true;
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+	}
 }
 
 HRESULT CBottomDirEnermy::Add_Component(void)

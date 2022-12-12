@@ -358,9 +358,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			break;
 		}
 		m_eData.eID = OBJID::OBJID_BDENERMY;
-		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 300;
+		m_eData.vPos.x = (float)(VTXITV*VTXCNTX - rand() % 130 - 20.f);
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 200;
+		m_eData.vPos.z = (float)(VTXITV*VTXCNTZ - rand() % 110 - 40.f);
 
 		CGameObject* pEnermy = CBottomDirEnermy::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
@@ -370,7 +370,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	//Default_Enermy
 	_int iEnermy_Count = 5;
 	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count  + iBottomDir_Count - 2);
-	for (_int i = 0; (iEnermy_Count) > i; i++)
+	for (_int i = 0; iEnermy_Count > i; i++)
 	{
 		_int tanktype = rand() % 4;
 		switch (tanktype)
@@ -395,9 +395,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			break;
 		}
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
-		m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+		m_eData.vPos.x = (float)(VTXITV*VTXCNTX - rand() % 110 - 40.f);
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 250;
+		m_eData.vPos.z = (float)(VTXITV*VTXCNTZ - rand() % 120 - 30.f);
 
 		CGameObject* pEnermy = CDefault_Enermy::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
@@ -406,70 +406,81 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	//Ally
 	for (_int i = 0; 5> i; i++)
 	{
-		_int tanktype = rand() % 5;
+		_int tanktype = rand() % 4;
 		switch (tanktype)
 		{
 		case 0:
 			m_eData.TankType = TANKTYPE::HUMVEE;
+			m_eData.vPos.x = (float)(rand() % 30 + 120.f);
+			m_eData.vPos.y = 0;
 			break;
 		case 1:
 			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			m_eData.vPos.x = (float)(rand() % 30 + 90.f);
+			m_eData.vPos.y = 0;
 			break;
 		case 2:
 			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			m_eData.vPos.x = (float)(rand() % 30 + 60.f);
+			m_eData.vPos.y = 0;
+
 			break;
 		case 3:
 			m_eData.TankType = TANKTYPE::BIG_TANK;
-			break;
-		case 4:
-			m_eData.TankType = TANKTYPE::LONG_TANK;
+			m_eData.vPos.x = (float)(rand() % 30 + 30.f);
+			m_eData.vPos.y = 0;
+
 			break;
 		default:
 			return NULL;
 			break;
 		}
 		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
-		m_eData.vPos.x = (float)(rand() % 300);
-		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)(rand() % 300);
-
+		m_eData.vPos.z = (float)(rand() % 150);
 		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 	}
 	for (_int i = 0; 5 > i; i++)
 	{
-		_int tanktype = rand() % 5;
+		_int tanktype = rand() % 4;
 		switch (tanktype)
 		{
 		case 0:
 			m_eData.TankType = TANKTYPE::HUMVEE;
+
+			m_eData.vPos.y = 0;
+			m_eData.vPos.z = (float)(rand() % 30 + 120.f);
 			break;
 		case 1:
 			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			m_eData.vPos.y = 0;
+			m_eData.vPos.z = (float)(rand() % 30 + 90.f);
 			break;
 		case 2:
 			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			m_eData.vPos.y = 0;
+			m_eData.vPos.z = (float)(rand() % 30 + 60.f);
 			break;
 		case 3:
 			m_eData.TankType = TANKTYPE::BIG_TANK;
+
+			m_eData.vPos.y = 0;
+			m_eData.vPos.z = (float)(rand() % 30 + 30.f);
 			break;
-		case 4:
-			m_eData.TankType = TANKTYPE::LONG_TANK;
-			break;
+
 		default:
 			return NULL;
 			break;
 		}
 		m_eData.eID = OBJID::OBJID_BDALLY;
-		m_eData.vPos.x = (float)(rand() % 300);
-		m_eData.vPos.y = 0;
-		m_eData.vPos.z = (float)(rand() % 300);
+		m_eData.vPos.x = (float)(rand() % 150);
 
 		CGameObject* pEnermy = CBottomDirAlly::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
+
 
 	pGameObject = CShootEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -607,7 +618,85 @@ void CStage::Collison_Object(void)
 				continue;
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-				dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
+			{
+				OBB* A = dynamic_cast<ICollisionable*>(iter->second)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>(iter->second) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), iter->second->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>(iter->second)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+		for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>(iter->second) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), iter->second->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>(iter->second)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+		for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+		{
+
+			if (!dynamic_cast<ICollisionable*>(iter->second) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), iter->second->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>(iter->second)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(false);
+				}
+			}
 		}
 	}
 
@@ -679,12 +768,12 @@ void CStage::Collison_Object(void)
 					(*iter)->Set_Dead(true);
 					//(*iters)->Set_Dead(true);
 
-					dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
-					/*m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
+					/*dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+					m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 					m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
 					m_eData.vPos.y = 0;
 					m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
-
+					m_eData.TankType = TANKTYPE::HUMVEE;
 					CGameObject* pEnermy = CDefault_Enermy::Create(m_pGraphicDev, &m_eData);
 					NULL_CHECK(pEnermy);
 					Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);*/
@@ -702,7 +791,15 @@ void CStage::Collison_Object(void)
 				{
 					(*iter)->Set_Dead(true);
 					//(*iters)->Set_Dead(true);
-					dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+					/*dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+					m_eData.eID = OBJID::OBJID_BDENERMY;
+					m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
+					m_eData.vPos.y = 0;
+					m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
+
+					CGameObject* pEnermy = CBottomDirEnermy::Create(m_pGraphicDev, &m_eData);
+					NULL_CHECK(pEnermy);
+					Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);*/
 					
 				}
 			}
@@ -724,6 +821,55 @@ void CStage::Collison_Object(void)
 			}
 		}
 
+	}
+
+
+	for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+	{
+		for (auto& iter = iters + 1; iter <BDAlly.end(); ++iter)
+		{
+			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{//앞에있는거 비교한다음 뒤에있는거만 ex부르기
+				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
+				}
+				else
+					dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
+			}
+		}
+	}
+
+	for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+	{
+		for (auto& iter = iters + 1; iter <DAlly.end(); ++iter)
+		{
+			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{//앞에있는거 비교한다음 뒤에있는거만 ex부르기
+				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+				if (A->vPos.z > B->vPos.z)
+				{
+					dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
+				}
+				else
+					dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
+			}
+		}
 	}
 }
 

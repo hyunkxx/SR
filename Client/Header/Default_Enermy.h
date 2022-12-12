@@ -33,6 +33,7 @@ public:
 	virtual			void		OBB_Collision_EX(void)	override;
 	virtual			void		Update_OBB(void)		override;
 	virtual			OBB*        Get_OBB(void)			override;
+
 public:
 
 
@@ -61,7 +62,9 @@ public:
 	void Detect(_float fTimeDelta);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	_float Dist(CTransform* _Target);
-
+	void		ObjectCol(_bool m_Left);
+	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
 private:
 	HRESULT		Add_Component(void);
 	EData*      m_EData;
@@ -80,7 +83,7 @@ private:
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
-
+	_float PreHp = 0.f;
 	_bool m_bRightLocationCount = false
 		, m_bRightTopLocationCount = false
 		, m_bLeftLocationCount = false
@@ -90,10 +93,14 @@ private:
 	_int m_PastLocation;
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
+	_bool m_bDef = false;
 	_int Targeted = 0;
 	_float m_fReloadTime = 0.f, m_fReload = 0.1f;
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
+	_bool ColBuild = false;
+	_int  ColBuildCount = 0;
+
 public:
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
@@ -108,8 +115,7 @@ private:
 	_float					UI_Orgin_HP, UI_fHP;
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
-	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+
 public:
 	void						 Update_UI(void);
 };

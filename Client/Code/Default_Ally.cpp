@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Default_Ally.h"
 #include "Export_Function.h"
-
 //Location
 #include"RightLocation.h"
 #include"LeftTopLocation.h"
@@ -37,14 +36,6 @@ HRESULT CDefault_Ally::Ready_Object(void)
 	m_pTransformHead->Set_Pos(10.f, 1.f, 10.f);
 	m_pTransformPosin->Set_Pos(10.f, 1.f, 10.f);
 
-
-
-	//UI_HP
-	UI_Orgin_HP = UI_fHP = 300.f;     //tankData.fMaxHP;
-	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
-	UI_fScaleY = 0.2f;
-	UI_fScaleZ = 1.f;
-
 	return S_OK;
 }
 
@@ -68,6 +59,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 50.f;
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
@@ -82,6 +74,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 65.f;
 		break;
 	}
 	case TANKTYPE::MIDDLE_TANK:
@@ -96,6 +89,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 75.f;
 		break;
 	}
 	case TANKTYPE::BIG_TANK:
@@ -110,6 +104,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 85.f;
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -146,15 +141,6 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 	m_stHead.fLen[y] = 1.f;
 	m_stHead.fLen[z] = 1.9f;
 
-
-
-	//UI_HP
-	UI_Orgin_HP = UI_fHP = 300.f;     //tankData.fMaxHP;
-	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
-	UI_fScaleY = 0.2f;
-	UI_fScaleZ = 1.f;
-
-
 	__super::Ready_Object();
 	return S_OK;
 }
@@ -164,10 +150,24 @@ _int CDefault_Ally::Update_Object(const _float& fTimeDelta)
 
 	__super::Update_Object(fTimeDelta);
 
-	StateCheck();
-	Detect(fTimeDelta);
-	Basic(fTimeDelta);
-
+	if (ColBuild != true)
+	{
+		StateCheck();
+		Detect(fTimeDelta);
+		Basic(fTimeDelta);
+	}
+	else
+	{
+		++ColBuildCount;
+		_vec3 vLook;
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta));
+		if (ColBuildCount >= 140)
+		{
+			ColBuildCount = 0;
+			ColBuild = false;
+		}
+	}
 	m_fReloadTime += fTimeDelta;
 
 	_vec3 vTrans;
@@ -176,42 +176,33 @@ _int CDefault_Ally::Update_Object(const _float& fTimeDelta)
 	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	Update_OBB();
 	CGameObject::Ready_Object();
-	Add_RenderGroup(RENDER_NONALPHA, this);
 	return OBJ_NOEVENT;
 }
 
 void CDefault_Ally::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	Update_UI();
 
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CDefault_Ally::Render_Object(void)
 {
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	}
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHead->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHead->Get_WorldMatrix());
+	}
 	m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
+	}
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
-	// 수업 코드 적용 m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHP_UI->Get_WorldMatrix());
-
-	m_pTextureF->Set_Texture(0);
-	m_pRcTexF->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
-
 }
 
 const _vec3 CDefault_Ally::Get_Info(void)
@@ -231,7 +222,21 @@ void CDefault_Ally::Move_Info(_vec3 _Info)
 
 void CDefault_Ally::OBB_Collision_EX(void)
 {
-	//건물 충돌 처리
+	/*_vec3 Look;
+	m_pTransformCom->Get_Info(INFO_LOOK, &Look);
+	D3DXVec3Normalize(&Look, &Look);
+
+	Move_Info(-Look * fAccel_top_speed*0.244);*/
+	if (m_bOnce == false)
+	{
+		m_bOnce = true;
+	}
+	else
+	{
+		m_iAction = AIACTION::AIACTION_DEFENSE;
+
+	}
+
 }
 
 void CDefault_Ally::Update_OBB(void)
@@ -258,6 +263,26 @@ void CDefault_Ally::Update_OBB(void)
 OBB * CDefault_Ally::Get_OBB(void)
 {
 	return &m_stBody;
+}
+
+void CDefault_Ally::ObjectCol(_bool m_Left)
+{
+	_bool bLeft = m_Left;
+	if (bLeft)
+	{
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		ColBuild = true;
+	}
+	else
+	{
+		ColBuild = true;
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+	}
+
 }
 
 void CDefault_Ally::StateCheck()
@@ -361,7 +386,7 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 			CTransform*	pEnermyTransform = static_cast<CTransform*> (static_cast<CDefault_Enermy* > (*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 			_float fEnemyCol = Dist(pEnermyTransform);
 
-			if (fEnemyCol <= 60.f)
+			if (fEnemyCol <= Range)
 			{
 				m_iAction = AIACTION::AIACTION_BATTLE;
 				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
@@ -423,7 +448,7 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 			CTransform*	pEnermyTransform = static_cast<CTransform*> (static_cast<CBottomDirEnermy*>(*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 			_float fEnemyCol = Dist(pEnermyTransform);
 
-			if (fEnemyCol <= 60.f)
+			if (fEnemyCol <= Range)
 			{
 				m_iAction = AIACTION::AIACTION_BATTLE;
 				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
@@ -828,32 +853,8 @@ HRESULT CDefault_Ally::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PosinTransform", pComponent });
 
-
-	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
-	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RcTex", pComponent });
-
-	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
-	NULL_CHECK_RETURN(m_pTextureF, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex", pComponent });
-
-	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
-	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
-
-
-
-
-
-
 	return S_OK;
 }
-
-void CDefault_Ally::Free(void)
-{
-	__super::Free();
-}
-
 
 void CDefault_Ally::Update_UI(void)
 {
@@ -1066,4 +1067,10 @@ void CDefault_Ally::Update_UI(void)
 	*/
 #pragma endregion
 
+}
+
+
+void CDefault_Ally::Free(void)
+{
+	__super::Free();
 }

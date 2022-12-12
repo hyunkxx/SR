@@ -68,6 +68,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 50.f;
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
@@ -82,6 +83,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 65.f;
 		break;
 	}
 	case TANKTYPE::MIDDLE_TANK:
@@ -96,6 +98,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 75.f;
 		break;
 	}
 	case TANKTYPE::BIG_TANK:
@@ -110,6 +113,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 85.f;
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -157,13 +161,27 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 
 _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 {
-
 	__super::Update_Object(fTimeDelta);
-	StateCheck();
 	m_fReloadTime += fTimeDelta;
-	Detect(fTimeDelta);
-	Basic(fTimeDelta);
 
+	if (ColBuild != true)
+	{
+		StateCheck();
+		Detect(fTimeDelta);
+		Basic(fTimeDelta);
+	}
+	else
+	{
+		++ColBuildCount;
+		_vec3 vLook;
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta*0.5f));
+		if (ColBuildCount >= 140)
+		{
+			ColBuildCount = 0;
+			ColBuild = false;
+		}
+	}
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
 	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
@@ -176,19 +194,25 @@ _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 void CBottomDirAlly::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	Update_UI();
+	//Update_UI();
 }
 
 void CBottomDirAlly::Render_Object(void)
 {
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	}
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHead->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformHead->Get_WorldMatrix());
+	}
 	m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
+	if (m_iAction != AIACTION::AIACTION_DEFENSE)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
+	}
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -315,7 +339,19 @@ void CBottomDirAlly::Move_Info(_vec3 _Info)
 
 void CBottomDirAlly::OBB_Collision_EX(void)
 {
-	//건물 충돌 처리
+	if (m_bOnce == false)
+	{
+		m_bOnce = true;
+	}
+	else
+	{
+		m_iAction = AIACTION::AIACTION_DEFENSE;
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(40.f));
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(40.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(40.f));
+
+	}
+
 }
 
 void CBottomDirAlly::Update_OBB(void)
@@ -356,7 +392,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 			CTransform*	pEnermyTransform = static_cast<CTransform*> (static_cast<CBottomDirEnermy*>(*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 			_float fEnemyCol = Dist(pEnermyTransform);
 
-			if (fEnemyCol <= 60.f)
+			if (fEnemyCol <= Range)
 			{
 				m_iAction = AIACTION::AIACTION_BATTLE;
 				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
@@ -416,7 +452,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 			CTransform*	pEnermyTransform = static_cast<CTransform*> (static_cast<CDefault_Enermy*>(*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 			_float fEnemyCol = Dist(pEnermyTransform);
 
-			if (fEnemyCol <= 60.f)
+			if (fEnemyCol <= Range)
 			{
 				m_iAction = AIACTION::AIACTION_BATTLE;
 				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
@@ -471,6 +507,25 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 		}
 	}
 
+}
+
+void CBottomDirAlly::ObjectCol(_bool m_Left)
+{
+	_bool bLeft = m_Left;
+	if (bLeft)
+	{
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		ColBuild = true;
+	}
+	else
+	{
+		ColBuild = true;
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+	}
 }
 
 _float CBottomDirAlly::Dist(CTransform * _Target)

@@ -45,6 +45,7 @@ void CEnermyMgr::LateUpdate_EnermyMgr(void)
 		{
 			if ((*iter)->Get_Dead())
 			{
+				//(*iter)->Release();
 				iter = m_lEnermy[i].erase(iter);
 			}
 			else

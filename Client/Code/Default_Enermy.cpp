@@ -78,6 +78,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	m_stHead.fLen[z] = 1.9f;
 	//UI_HP
 	UI_Orgin_HP = UI_fHP = 300.f;    // tankData.fMaxHP;
+	PreHp = UI_fHP;
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -88,13 +89,27 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-
-
-
 	m_fReloadTime += fTimeDelta;
-	StateCheck();
-	Detect(fTimeDelta);
-	Basic(fTimeDelta);
+
+	PreHp = UI_fHP;
+	if (ColBuild != true)
+	{
+		StateCheck();
+		Detect(fTimeDelta);
+		Basic(fTimeDelta);
+	}
+	else
+	{
+		++ColBuildCount;
+		_vec3 vLook;
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*10.f*fTimeDelta));
+		if (ColBuildCount >= 140)
+		{
+			ColBuildCount = 0;
+			ColBuild = false;
+		}
+	}
 
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
@@ -110,8 +125,11 @@ void CDefault_Enermy::LateUpdate_Object(void)
 {
 
 	__super::LateUpdate_Object();
-
-	Update_UI();
+	if (PreHp != UI_fHP)
+	{
+		m_iAction = AIACTION::AIACTION_DEFENSE;
+	}
+	//Update_UI();
 
 }
 
@@ -156,39 +174,7 @@ void CDefault_Enermy::Move_Info(_vec3 _Info)
 
 void CDefault_Enermy::OBB_Collision_EX(void)
 {
-	//여기 들어가면 액션으로 상태 지정해준다음 그 상태일 떄 동안 안 움직이게한다음 여기서 ok사인 떨어지면 움직이게 가능하게 만든다
-	//m_iAction = AIACTION::AIATCTION_OBB;
-	_vec3  vTemp, vSour, vLook, vDir;
-	m_pTransformCom->Get_Info(INFO::INFO_RIGHT, &vTemp);
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-	vDir = vTemp - vSour;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-	D3DXVec3Normalize(&vLook, &vLook);
-
-	Left_RightCheck(vDir, vLook);
-	_float Dot = D3DXVec3Dot(&vDir, &vLook);
-	_float Angle = (float)acosf(Dot);
-	if (isnan(Angle))
-	{
-		Angle = 0;
-	}
-	if (LeftCheck == false)
-	{
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle* 0.07f);
-	}
-	else
-	{
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle *0.07f);
-	}
-	_vec3 vTrans2;
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-	m_pTransformCom->Move_Pos(&(vTrans2*0.2f));
+	//건물 충돌
 }
 
 void CDefault_Enermy::Update_OBB(void)
@@ -360,14 +346,13 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 					D3DXVec3Normalize(&Dir, &Dir);
 					D3DXVec3Normalize(&vLook, &vLook);
 					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 4.f)
+
+					if (m_fReloadTime > m_fReload)
 					{
-						if (m_fReloadTime > m_fReload)
-						{
-							Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-							m_fReloadTime = 0.f;
-						}
+						Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+						m_fReloadTime = 0.f;
 					}
+
 				}
 			}
 			else
@@ -408,14 +393,12 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 					D3DXVec3Normalize(&Dir, &Dir);
 					D3DXVec3Normalize(&vLook, &vLook);
 					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 5.f)
+					if (m_fReloadTime > m_fReload)
 					{
-						if (m_fReloadTime > m_fReload)
-						{
-							Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-							m_fReloadTime = 0.f;
-						}
+						Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+						m_fReloadTime = 0.f;
 					}
+
 
 				}
 			}
@@ -465,7 +448,7 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 		{
 			if (m_fReloadTime > m_fReload)
 			{
-				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
 				m_fReloadTime = 0.f;
 			}
 		}
@@ -550,6 +533,25 @@ _float CDefault_Enermy::Dist(CTransform * _Target)
 	vCol = vPos - vTargetPos;
 	_float Dist = D3DXVec3Length(&vCol);
 	return Dist;
+}
+
+void CDefault_Enermy::ObjectCol(_bool m_Left)
+{
+	_bool bLeft = m_Left;
+	if (bLeft)
+	{
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
+		ColBuild = true;
+	}
+	else
+	{
+		ColBuild = true;
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+	}
 }
 
 void CDefault_Enermy::Occupation(_float fTimeDelta)//이거 케이스별로나구기
@@ -851,9 +853,6 @@ HRESULT CDefault_Enermy::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
 
-
-
-
 	return S_OK;
 }
 
@@ -861,8 +860,6 @@ void CDefault_Enermy::Free(void)
 {
 	__super::Free();
 }
-
-
 void CDefault_Enermy::Update_UI(void)
 {
 	if (UI_fHP >= UI_Orgin_HP)

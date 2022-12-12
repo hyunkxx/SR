@@ -68,7 +68,7 @@ public:
 	_float PreDist = 0.f;
 	_bool m_bOcne = false;
 	CTransform* pTempTr = nullptr;
-
+	void		ObjectCol(_bool m_Left);
 private:
 	HRESULT		Add_Component(void);
 
@@ -103,6 +103,9 @@ private:
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_float  m_fPreHp = 0.f;
+	_bool ColBuild = false;
+	_int  ColBuildCount = 0;
+
 public:
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

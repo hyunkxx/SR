@@ -36,6 +36,8 @@ public:
 	virtual			void		OBB_Collision_EX(void)	override;
 	virtual			void		Update_OBB(void)		override;
 	virtual			OBB*        Get_OBB(void)			override;
+
+	void		ObjectCol(_bool m_Left);
 public:
 
 	void	StateCheck();
@@ -88,6 +90,10 @@ private:
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_bool m_bOnce = false;
+	_bool ColBuild = false;
+	_int  ColBuildCount = 0;
+	_float Range = 0.f;
+
 public:
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
