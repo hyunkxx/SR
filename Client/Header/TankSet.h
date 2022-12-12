@@ -32,6 +32,7 @@ public:
 protected:
 	virtual	HRESULT		Add_Component(void);
 	virtual HRESULT		Ready_Object(void)PURE;
+	virtual void		Sound_Setting(const _float & fTimeDelta)PURE;
 	virtual void        Shoot_Bullet(BULLET_ID eID);
 	void				Posin_Setting(const _vec3& _SetPos);
 	void				Head_Setting(const _vec3& _SetPos);
@@ -60,7 +61,12 @@ protected:
 
 	Tank_State			m_stInfo;
 
+	_bool				m_bStart = false;
 	_bool				m_bRock = false;
+	_bool				m_bMove = false;
+	_float				m_fMoveCount = 0.f;
+	_float				m_fEngineCount = 0;
+	_int				m_iSound_Count = 0;
 	//Voxel Ãß°¡
 	CVoxel*				m_pBody = nullptr;
 	CVoxel*				m_pHead = nullptr;

@@ -31,6 +31,7 @@ _int CHumvee::Update_Object(const _float & fTimeDelta)
 	Head_Spin(fTimeDelta);
 	Expect_Hit_Point(fTimeDelta);
 	Posin_Shake(fTimeDelta);
+	Sound_Setting(fTimeDelta);
 	Update_UI();
 	Update_OBB();
 	return __super::Update_Object(fTimeDelta);
@@ -71,6 +72,26 @@ void CHumvee::RenderGUI(void)
 	ImGui::Text(reload.c_str());
 
 	ImGui::End();
+}
+
+void CHumvee::Sound_Setting(const _float & fTimeDelta)
+{
+	if (m_bStart)
+	{
+		m_fEngineCount += fTimeDelta;
+		if (0.7f  < m_fEngineCount && 5.f > m_fEngineCount)
+		{
+
+			Engine::StopSound(PLAYER_ENGINE_BGM);
+			Engine::PlaySound_SR(L"Humvee_Engine.wav", PLAYER_ENGINE_BGM, CUI_Volume::s_fBGMSound);
+			m_fEngineCount = -4.f;
+		}
+	}
+	else
+	{
+		Engine::StopSound(PLAYER_ENGINE_BGM);
+		m_fEngineCount = 0.f;
+	}
 }
 
 HRESULT CHumvee::Add_Component(void)
@@ -163,8 +184,19 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 			Engine::Get_Object(L"GameLogic", L"Gun_ShootEffect")->Set_Dead(false);
 		}
+		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		{
+			if (!m_bStart)
+			{
+				m_bStart = true;
+				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
+			}
+
+		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{
+			m_bStart = false;
+			m_fEngineCount = 0.f;
 			_vec3 Pos;
 			m_pTransformBody->Get_Info(INFO_POS, &Pos);
 			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))

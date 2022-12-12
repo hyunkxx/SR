@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "BoomCamera.h"
+#include "UI_Volume.h"
 
 CBomber::CBomber(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -137,7 +138,9 @@ void CBomber::Strike(_vec3 _Strike_Pos)
 
 	if (m_vDir.x < Look.x)
 		Radian *= -1;
-
+	Engine::StopSound(AIRPLANE_SOUND);
+	Engine::PlaySound_SR(L"airplane.wav", AIRPLANE_SOUND, CUI_Volume::s_fBGMSound);
+	
 	m_pTransformBody->Rotation(ROT_Y, Radian);
 	m_pTransformBody->Set_Pos(m_vStart_Pos.x, m_vStart_Pos.y, m_vStart_Pos.z);
 	Engine::Camera_Change(L"BoomCamera");

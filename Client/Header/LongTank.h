@@ -20,7 +20,7 @@ public:
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
 	virtual void RenderGUI(void) override;
-
+	virtual void		Sound_Setting(const _float & fTimeDelta)override;
 	void				 Update_UI(void);
 public:
 	virtual	HRESULT		Add_Component(void);

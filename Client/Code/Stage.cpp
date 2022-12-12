@@ -585,7 +585,7 @@ void CStage::Collison_Object(void)
 	}
 
 	//예시) 총알과 충돌처리 하고 싶은애들 이렇게 추가하면 됨
-	for (int i = 0; BULLET_ID::BULLET_END > i; i++)
+	for (int i = 0; BULLET_ID::MASHINE_BULLET_RELOAD > i; i++)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 		{

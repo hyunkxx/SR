@@ -79,6 +79,9 @@ _int CSmoke_Bullet::Update_Object(const _float & fTimeDelta)
 
 		if (0.2f <= m_fAccum)
 		{
+			_float fSound = 1.f;
+			Engine::StopSound(PLAYER_SHOT_SOUND2);
+			Engine::PlaySound_SR(L"Smoke_Shell.wav", PLAYER_SHOT_SOUND2, fSound);
 			_vec3 Pos;
 			m_pTransformCom->Get_Info(INFO_POS, &Pos);
 			m_pTransformCom->Reset_Trans();

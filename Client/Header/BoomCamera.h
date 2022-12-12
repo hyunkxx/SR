@@ -19,7 +19,7 @@ public:
 	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
 public:
 	void		Set_Target(CTransform* Target);
-	void		Reset_Pos(void) { m_vPos = { 0.f, 100.f, 0.f }; }
+	void		Reset_Pos(void) { m_vPos = { -200.f, 100.f, 0.f }; }
 private:
 	void		Mouse_Fix(void);
 	void		Target_Renewal(const _float& fTimeDelta);

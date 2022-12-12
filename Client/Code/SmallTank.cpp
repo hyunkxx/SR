@@ -6,6 +6,7 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "Boom_Support.h"
 #include "UI_Volume.h"
 CSmallTank::CSmallTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
@@ -158,7 +159,15 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 			m_bReLoad = false;
 		}
-
+		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+		{
+			m_bStart = false;
+			m_fEngineCount = 0.f;
+			_vec3 Pos;
+			m_pTransformBody->Get_Info(INFO_POS, &Pos);
+			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
+				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
+		}
 		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 			Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);
 

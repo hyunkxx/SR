@@ -7,7 +7,9 @@
 #include "AimCamera.h"
 #include "TankManager.h"
 #include "EffectPool.h"
+#include "Boom_Support.h"
 #include "UI_Volume.h"
+
 CLongTank::CLongTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -29,6 +31,7 @@ _int CLongTank::Update_Object(const _float & fTimeDelta)
 	Head_Spin(fTimeDelta);
 	Expect_Hit_Point(fTimeDelta);
 	Posin_Shake(fTimeDelta);
+	Sound_Setting(fTimeDelta);
 	Update_UI();
 	return __super::Update_Object(fTimeDelta);
 }
@@ -80,6 +83,26 @@ void CLongTank::RenderGUI(void)
 	ImGui::Text(reload.c_str());
 
 	ImGui::End();
+}
+
+void CLongTank::Sound_Setting(const _float & fTimeDelta)
+{
+	if (m_bStart)
+	{
+		m_fEngineCount += fTimeDelta;
+		if (0.7f  < m_fEngineCount && 5.f > m_fEngineCount)
+		{
+
+			Engine::StopSound(PLAYER_ENGINE_BGM);
+			Engine::PlaySound_SR(L"Tank_Engine.wav", PLAYER_ENGINE_BGM, CUI_Volume::s_fBGMSound);
+			m_fEngineCount = -4.f;
+		}
+	}
+	else
+	{
+		Engine::StopSound(PLAYER_ENGINE_BGM);
+		m_fEngineCount = 0.f;
+	}
 }
 
 HRESULT CLongTank::Add_Component(void)
@@ -166,12 +189,23 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 	{
 		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
 		{
-			if (m_bStart)
-				m_bStart = false;
-			else
+			if (!m_bStart)
+			{
 				m_bStart = true;
-		}
+				Engine::StopSound(PLAYER_MOVE_SOUND2);
+				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
+			}
 
+		}
+		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+		{
+			m_bStart = false;
+			m_fEngineCount = 0.f;
+			_vec3 Pos;
+			m_pTransformBody->Get_Info(INFO_POS, &Pos);
+			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
+				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
+		}
 		if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
 		{
 			_vec3 randPos = _vec3(50.f, 0.f, 30.f);
@@ -192,7 +226,8 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
-
+		
+				Engine::PlaySound_SR(L"	Aim_Sound.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
@@ -551,6 +586,8 @@ void CLongTank::Camera_Change(void)
 {
 	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
 	{
+		AIMCHANGE_SOUND,
+			Engine::PlaySound_SR(L"Aim_Sound.wav", AIRPLANE_SOUND, CUI_Volume::s_fShotSound);
 		if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 			Engine::Camera_Change(L"AimCamera");
 		else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
