@@ -599,6 +599,9 @@ void CDefault_Ally::Update_UI(void)
 	// UI_ 높이 _ 키워드
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
@@ -607,18 +610,24 @@ void CDefault_Ally::Update_UI(void)
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
-	else if (Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
+		UI_fScaleX = 3.f;
+		UI_fScaleY = 0.4f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY + 1.5f, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);

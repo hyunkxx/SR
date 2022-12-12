@@ -487,6 +487,7 @@ void CStage::Collison_Object(void)
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
+			CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"부사수"), wstring(L"벽과 부딪혔습니다!"));
 		}
 	}
 
@@ -506,9 +507,6 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
-					// 채팅으로 남은 수 뜨도록 (겜에서 num 치면 됨)
-					//CUI_FontMgr::GetInstance()->Set_LiveCount(_uint(1));
-					//CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"적"), wstring(L"\t전차 파괴") + wstring( 죽인 숫자));
 				}
 
 			}

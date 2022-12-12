@@ -31,7 +31,7 @@ HRESULT CPosin_UI::Ready_Object(void)
 	m_fScaleZ = 1.f;
 
 	m_fPosX = 400.f;
-	m_fPosY = 300.f;
+	m_fPosY = 330.f;
 	m_fPosZ = 0.01f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
@@ -68,7 +68,7 @@ void CPosin_UI::Render_Object(void)
 	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
 	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA ||Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA || !m_bPosinOn)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA || !m_bPosinOn/* ||Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA || !m_bPosinOn*/)
 	{
 		m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransform->Set_Pos(1.f, 1.f, 1.f);
@@ -77,21 +77,22 @@ void CPosin_UI::Render_Object(void)
 	{
 		if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
 		{
-			m_fScaleX += 2.f;
-			m_fScaleY += 1.5f;
+			m_fScaleX += 1.5f;
+			m_fScaleY += 1.f;
 
-			if (m_fScaleX >= 640.f ){m_fScaleX = 640.f;}
-			if (m_fScaleY >= 530.f) {m_fScaleY = 530.f;}
+			if (m_fScaleX >= 520.f) { m_fScaleX = 520.f; }
+			if (m_fScaleY >= 430.f) { m_fScaleY = 430.f; }
 
 		}
 		if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
 		{
-			m_fScaleX -= 2.f;
-			m_fScaleY -= 1.5f;
+			m_fScaleX -= 1.5f;
+			m_fScaleY -= 1.f;
 
-			if (m_fScaleX <= 400.f)	{m_fScaleX = 400.f;}
-			if (m_fScaleY <= 350.f)	{m_fScaleY = 350.f;}
+			if (m_fScaleX <= 400.f) { m_fScaleX = 400.f; }
+			if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
 		}
+
 
 
 

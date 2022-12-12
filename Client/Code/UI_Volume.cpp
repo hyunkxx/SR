@@ -107,25 +107,27 @@ HRESULT CUI_Volume::Ready_Object()
 _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 {
 
-
-	if (Get_DIKeyState_Custom(DIK_F3) == KEY_STATE::TAP)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
-		m_bShow = !m_bShow;
-		ShowCursor(m_bShow);
-		static_cast<CTankCamera*>(Engine::Get_Camera(L"TankCamera"))->Set_MouseFix(m_bShow);
-	}
+		if (Get_DIKeyState_Custom(DIK_F3) == KEY_STATE::TAP)
+		{
+			m_bShow = !m_bShow;
+			ShowCursor(m_bShow);
+			static_cast<CTankCamera*>(Engine::Get_Camera(L"TankCamera"))->Set_MouseFix(m_bShow);
+		}
 
-	// f3을 눌러서 on이 되면
-	if (m_bShow)
-	{
-		GetCursorPos(&ptMouse);
-		ScreenToClient(g_hWnd, &ptMouse);
-		Update_Pos();
-		Move_Pos();
-		Sound_Volume_Control();
-	}
+		// f3을 눌러서 on이 되면
+		if (m_bShow)
+		{
+			GetCursorPos(&ptMouse);
+			ScreenToClient(g_hWnd, &ptMouse);
+			Update_Pos();
+			Move_Pos();
+			Sound_Volume_Control();
+		}
 
-	__super::Update_Object(fTimeDelta);
+		__super::Update_Object(fTimeDelta);
+	}
 	return 0;
 }
 
@@ -138,6 +140,13 @@ void CUI_Volume::LateUpdate_Object(void)
 
 void CUI_Volume::Render_Object(void)
 {
+	_matrix OldViewMatrix, OldProjMatrix;
+
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+
+
 	if (m_bShow)
 	{
 		Render_Font(L"Font_Retro", szVolumeOption, &_vec2(m_fPosX - ( PERCENTX * 6.f) , m_fPosY - (PERCENTY * 30.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
@@ -185,6 +194,9 @@ void CUI_Volume::Render_Object(void)
 		}
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 }
 
 CUI_Volume * CUI_Volume::Create(LPDIRECT3DDEVICE9 pGraphicDev)

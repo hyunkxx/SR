@@ -588,16 +588,24 @@ void CSmallTank::Update_UI(void)
 	//경전차 높이
 	if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z };
+
 		fScale[ROT_X] = UI_fScaleX;
 		fScale[ROT_Y] = UI_fScaleY;
 		fScale[ROT_Z] = UI_fScaleZ;
 	}
-	else if (Engine::Get_Camera_ID()  ==CAMERA_ID::TOPVIEW_CAMERA)
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
-		vUI_HPF = { vTankPos.x, vTankPos.y + 4.5f, vTankPos.z };
+		UI_fScaleX = 3.f;
+		UI_fScaleY = 0.4f;
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+
 		fScale[ROT_X] = UI_fScaleX;
-		fScale[ROT_Y] = UI_fScaleY + 0.3f;
+		fScale[ROT_Y] = UI_fScaleY;
 		fScale[ROT_Z] = UI_fScaleZ;
 	}
 
