@@ -48,7 +48,8 @@ void CMainApp::LateUpdate_MainApp(void)
 void CMainApp::Render_MainApp(void)
 {
 	Engine::Get_GraphicDev()->SetRenderState(D3DRS_LIGHTING, FALSE);
-	Engine::RenderGUI();
+	//UI 확인 때문에 잠시 꺼뒀습니다.
+	//Engine::RenderGUI();
 	ImguiManager::GetInstance()->EndFrame();
 	Engine::Render_Begin(D3DXCOLOR(.2f, 0.2f, 0.2f, 1.f));
 
@@ -78,8 +79,12 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang3", L"안상수2006가는", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang4", L"안상수2006가는", 15, 20, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang5", L"안상수2006가는", 20, 25, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang7", L"안상수2006가는", 30, 35, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang6", L"안상수2006가는", 50, 65, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro2", L"Galmuri6 Regular", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro", L"Galmuri9 Regular", 15, 25, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro3", L"Galmuri9 Regular", 10, 15, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro1", L"Galmuri9 Regular", 25, 35, FW_HEAVY);
 
 	//(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, TRUE);		// 조명에 의한 반사 연산 수행 여부
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);			// z버퍼에 무조건 깊이 값을 기록하되 정렬을 수행하지 말지 판다하는 옵션

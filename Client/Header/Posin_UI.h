@@ -26,6 +26,10 @@ public:
 	static CPosin_UI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
+
+	_int				m_iTankType;
+	wstring		m_szTankType;
+
 	HRESULT		Add_Component(void);
 
 	virtual void Free(void) override;

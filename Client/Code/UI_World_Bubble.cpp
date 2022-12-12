@@ -101,7 +101,7 @@ _int CUI_World_Bubble::Update_Object(const _float & fTimeDelta)
 	}
 
 	__super::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_WORLD_UI, this);
+	Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 
@@ -114,9 +114,7 @@ void CUI_World_Bubble::Render_Object(void)
 {
 	if (m_bShow)
 	{
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 		//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matView);
@@ -127,7 +125,6 @@ void CUI_World_Bubble::Render_Object(void)
 		m_pTexture2->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
 
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	}
 }

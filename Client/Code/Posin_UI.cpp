@@ -6,6 +6,13 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "TankManager.h"
+#include "UI_FontMgr.h"
+#include "Humvee.h"
+#include "SmallTank.h"
+#include "MiddleTank.h"
+#include "BigTank.h"
+#include "LongTank.h"
 CPosin_UI::CPosin_UI(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -37,6 +44,28 @@ HRESULT CPosin_UI::Ready_Object(void)
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
+	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
+
+	if (m_szTankType == L"Humvee")
+	{
+		m_iTankType = 0;
+	}
+	else if (m_szTankType == L"CV90 경전차")
+	{
+		m_iTankType = 1;
+	}
+	else if (m_szTankType == L"T62 중형전차")
+	{
+		m_iTankType = 2;
+	}
+	else if (m_szTankType == L"Tiger 중전차")
+	{
+		m_iTankType = 3;
+	}
+	else if (m_szTankType == L"K-9 자주곡사포")
+	{
+		m_iTankType = 4;
+	}
 	return S_OK;
 }
 
@@ -64,11 +93,9 @@ void CPosin_UI::LateUpdate_Object(void)
 
 void CPosin_UI::Render_Object(void)
 {
-	//CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	//CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	//CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
-	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)&& !m_bPosinOn/* ||Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA || !m_bPosinOn*/)
+
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) && !m_bPosinOn)
 	{
 		m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransform->Set_Pos(1.f, 1.f, 1.f);
@@ -93,13 +120,56 @@ void CPosin_UI::Render_Object(void)
 			if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
 		}
 
+		//	const TANK_STATE& tankData = CTankManager::GetInstance()->GetData((VEHICLE)m_iTankType);
+		CGameObject* pTank = Engine::Get_Object(L"GameLogic", L"PlayerVehicle");
 
+		Tank_State	TankInfo;
+
+		//_float fSpeed;
+
+		if (m_szTankType == L"Humvee")
+		{
+			TankInfo = static_cast<CHumvee*>(pTank)->Get_TankInfo();
+
+			//	fSpeed = static_cast<CHumvee*>(pTank)->Get_Speed();
+		}
+		else if (m_szTankType == L"CV90 경전차")
+		{
+			TankInfo = static_cast<CSmallTank*>(pTank)->Get_TankInfo();
+			//fSpeed = static_cast<CSmallTank*>(pTank)->Get_Speed();
+		}
+		else if (m_szTankType == L"T62 중형전차")
+		{
+			TankInfo = static_cast<CMiddleTank*>(pTank)->Get_TankInfo();
+			//fSpeed = static_cast<CMiddleTank*>(pTank)->Get_Speed();
+		}
+		else if (m_szTankType == L"Tiger 중전차")
+		{
+			TankInfo = static_cast<CBigTank*>(pTank)->Get_TankInfo();
+			//fSpeed = static_cast<CBigTank*>(pTank)->Get_Speed();
+		}
+		else if (m_szTankType == L"K-9 자주곡사포")
+		{
+			TankInfo = static_cast<CLongTank*>(pTank)->Get_TankInfo();
+			//fSpeed = static_cast<CLongTank*>(pTank)->Get_Speed();
+		}
+
+
+
+
+		_float fAimCamera_FOV = static_cast<CAimCamera*>(Engine::Get_Camera(L"AimCamera"))->Get_FOV();
+		wstring szAimCamera_FOV = to_wstring(fAimCamera_FOV);
+		Render_Font(L"Font_Sitka4", (wstring(L"N")).c_str(), &_vec2(WINCX - PERCENTX * 10.f, WINCY - PERCENTY * 26.f), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+
+		Render_Font(L"Font_Retro", szAimCamera_FOV.c_str(), &_vec2(WINCX - PERCENTX * 12.f, WINCY - PERCENTY * 35.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", (to_wstring((m_fScaleY))).c_str(), &_vec2(WINCX - PERCENTX * 12.f, WINCY - PERCENTY * 40.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", (to_wstring(m_fScaleX)).c_str(), &_vec2(WINCX - PERCENTX * 12.f, WINCY - PERCENTY * 45.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", (to_wstring(TankInfo.fSpeed)).c_str(), &_vec2(WINCX - PERCENTX * 12.f, WINCY - PERCENTY * 50.f), D3DXCOLOR(0.f, 1.f, 0.f, 1.f));
 
 
 		m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
 		_matrix	ViewMatrix;
@@ -111,7 +181,6 @@ void CPosin_UI::Render_Object(void)
 		m_pTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
 
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
 
 }

@@ -51,7 +51,7 @@ _int CPlayer_Chatting::Update_Object(const _float & fTimeDelta)
 	CGameObject*		pTankView = pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
 	CGameObject*		pStaticView = pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
 
-	if ((Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA) || Engine::Get_Camera_ID()  ==CAMERA_ID::TOPVIEW_CAMERA)
+	if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
 	{
 		if (m_bChatting == true)
 		{
@@ -83,13 +83,7 @@ void CPlayer_Chatting::LateUpdate_Object(void)
 
 void CPlayer_Chatting::Render_Object(void)
 {
-
-
-	CGameObject*		pTankView = pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject*		pStaticView = pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject*		pAimView = pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
-
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		if (m_bChatting)
 		{
@@ -98,7 +92,6 @@ void CPlayer_Chatting::Render_Object(void)
 			m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 			m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
-			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 			_matrix	ViewMatrix;
 			D3DXMatrixIdentity(&ViewMatrix);
@@ -108,7 +101,6 @@ void CPlayer_Chatting::Render_Object(void)
 
 			m_pTexture->Set_Texture(0);
 			m_pRcTex->Render_Buffer();
-			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		}
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)

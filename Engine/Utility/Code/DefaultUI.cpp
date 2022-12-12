@@ -61,7 +61,6 @@ void CDefaultUI::LateUpdate_Object(void)
 
 void CDefaultUI::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	m_pTransform->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	m_pTransform->Set_Pos(m_vPos.x - (WINCX * 0.5f), (WINCY * 0.5f) - m_vPos.y, m_vPos.z);
@@ -76,9 +75,6 @@ void CDefaultUI::Render_Object(void)
 
 	m_pTexture->Set_Texture(0);
 	m_pRectTexture->Render_Buffer();
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CDefaultUI::RenderGUI(void)

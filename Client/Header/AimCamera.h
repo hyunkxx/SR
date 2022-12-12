@@ -26,6 +26,9 @@ public:
 		const _float& fAspect = (_float)(WINCX) / WINCY,
 		const _float& fNear = 0.1f,
 		const _float& fFar = 1000.f);
+
+	const _float Get_FOV(void) { return CAimCamera::m_fFov; }
+
 private:
 	_vec3	m_vLook;
 private:

@@ -472,6 +472,12 @@
     <ClInclude Include="..\Header\EffectManager.h">
       <Filter>02. GameObject\08.Effect\EffectManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UI_Start.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Compass.h">
+      <Filter>02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -662,6 +668,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\EffectManager.cpp">
       <Filter>02. GameObject\08.Effect\EffectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Start.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Compass.cpp">
+      <Filter>02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #include "..\Header\Aim_UI.h"
 
 #include  "Export_Function.h"
-
+#include "UI_Start.h"
 CAim_UI::CAim_UI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -60,13 +60,18 @@ void CAim_UI::Render_Object(void)
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA && Engine::Get_Camera_ID() != CAMERA_ID::TANK_CAMERA)
 		return;
 
+	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
+
+	if (showF1Win)
+		return;
 
 	_matrix OldViewMatrix, OldProjMatrix;
 
 
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
 
 	_matrix			ViewMatrix;
 	D3DXMatrixIdentity(&ViewMatrix);
@@ -86,8 +91,6 @@ void CAim_UI::Render_Object(void)
 
 	m_pBufferCom->Render_Buffer();
 
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 }

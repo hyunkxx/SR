@@ -161,7 +161,6 @@ void CUI_Volume::Render_Object(void)
 		Render_Font(L"Font_Retro", (szShotSoundCount).c_str(), &_vec2(m_fPosX + (PERCENTX * 12.f), m_fPosY + (PERCENTY * 13.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 		_matrix			ViewMatrix[7];
 
@@ -192,7 +191,6 @@ void CUI_Volume::Render_Object(void)
 				m_pRcTex->Render_Buffer();
 			}
 		}
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);

@@ -7,6 +7,7 @@
 #include"LeftTopLocation.h"
 #include"RightLocation.h"
 #include"RightTopLocation.h"
+#include "UI_Start.h"
 CTempOccupationScore::CTempOccupationScore(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -160,28 +161,34 @@ void CTempOccupationScore::LateUpdate_Object(void)
 
 void CTempOccupationScore::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(m_sLeft);
-	m_pBufferLeftCom->Render_Buffer();
+	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(m_sRight);
-	m_pBufferRightCom->Render_Buffer();
+	if (!showF1Win)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftCom->Get_WorldMatrix());
+		m_pTextureCom->Set_Texture(m_sLeft);
+		m_pBufferLeftCom->Render_Buffer();
+	
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightCom->Get_WorldMatrix());
+		m_pTextureCom->Set_Texture(m_sRight);
+		m_pBufferRightCom->Render_Buffer();
+	
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightTopCom->Get_WorldMatrix());
+		m_pTextureCom->Set_Texture(m_sRightTop);
+		m_pBufferRighttopCom->Render_Buffer();
+	
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
+		m_pTextureCom->Set_Texture(m_sLeftTop);
+		m_pBufferLefttopCom->Render_Buffer();
+		_matrix	ViewMatrix;
+		D3DXMatrixIdentity(&ViewMatrix);
+	
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightTopCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(m_sRightTop);
-	m_pBufferRighttopCom->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
-	m_pTextureCom->Set_Texture(m_sLeftTop);
-	m_pBufferLefttopCom->Render_Buffer();
-	_matrix	ViewMatrix;
-	D3DXMatrixIdentity(&ViewMatrix);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-
+	}
 
 
 }

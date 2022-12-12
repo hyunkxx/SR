@@ -37,6 +37,8 @@
 #include "UI_Player_Hp_Front.h"
 #include "UI_World_Bubble.h"
 #include "UI_Volume.h"
+#include "UI_Compass.h"
+#include "UI_Start.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include "ShootEffect.h"
@@ -114,9 +116,11 @@ void CStage::LateUpdate_Scene(void)
 void CStage::Render_Scene(void)
 {
 	// _DEBUG용 출력
+	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
 
-	if (Engine::Get_Camera_ID() ==CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		// 스테이지 제한 시간
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
@@ -124,16 +128,15 @@ void CStage::Render_Scene(void)
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 
-		// 팀 킬 카운트
+		// 팀 킬 카운트								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
-		// 탱크 종류 or 이름
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX, WINCY_HALF + PERCENTY * 25.f), D3DXCOLOR(0.f, 0.9608f, 1.f, 1.f));
-	}
-	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
-	{
-		// 에임 카메라에 확대 수치 폰트 추가 예정
+		// 탱크 종류 or 이름								27.45% 빨강, 28.63% 녹색 및 39.22%
+		if (!showF1Win)
+		{
+			Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX, WINCY_HALF + PERCENTY * 20.f), D3DXCOLOR(0.2745f, 0.2863f, .3922f, 1.f));
+		}
 	}
 }
 
@@ -527,6 +530,14 @@ pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
 	pGameObject = CUI_Volume::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Volume_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Compass::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Compass_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Start::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Start_UI", pGameObject), E_FAIL);
 
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

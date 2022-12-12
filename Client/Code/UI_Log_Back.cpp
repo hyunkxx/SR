@@ -5,7 +5,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "UI_FontMgr.h"
-
+#include "UI_Start.h"
 
 CUI_Log_Back::CUI_Log_Back(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -27,12 +27,12 @@ HRESULT CUI_Log_Back::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
-	m_fScaleX = 125.f;
+	m_fScaleX = 100.f;
 	m_fScaleY = 75.f;
 	m_fScaleZ = 1.f;
 
-	m_fPosX = 125.f;
-	m_fPosY = 540.f;
+	m_fPosX = 100.f;
+	m_fPosY = 555.f;
 	m_fPosZ = 0.01f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
@@ -65,26 +65,27 @@ void CUI_Log_Back::LateUpdate_Object(void)
 
 void CUI_Log_Back::Render_Object(void)
 {
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
-
-	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA))
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 
-		_float LogChat_PosX = m_fPosX - PERCENTX * 15.f;
-		_float LogChat_PosY = m_fPosY - PERCENTY * 2.5f;
+		_float LogChat_PosX = m_fPosX - PERCENTX * 10.5f;
+		_float LogChat_PosY = m_fPosY - PERCENTY * 6.f;
 
-		for (_int i = 0; i < 5; ++i)
+
+		CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+		_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
+
+		if (!showF1Win)
 		{
-			Render_Font(L"Font_Sitka1_1", m_szChattingLog[i].c_str(), &_vec2(LogChat_PosX, LogChat_PosY + (i * 15.f)), CUI_FontMgr::GetInstance()->Get_Hecks_B());
+			for (_int i = 0; i < 5; ++i)
+			{
+				Render_Font(L"Font_Retro3", m_szChattingLog[i].c_str(), &_vec2(LogChat_PosX, LogChat_PosY + (i * 15.f)), CUI_FontMgr::GetInstance()->Get_Hecks_B());
+			}
 		}
-
 
 		m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 		_matrix	ViewMatrix;
 		D3DXMatrixIdentity(&ViewMatrix);
@@ -94,7 +95,6 @@ void CUI_Log_Back::Render_Object(void)
 
 		m_pTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{

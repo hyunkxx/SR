@@ -33,12 +33,13 @@ HRESULT CUI_Player_Hp_Back::Ready_Object(void)
 	//m_fPosY = 30.f;
 	//m_fPosZ = 0.01f;
 
+
 	m_fScaleX = 100.f;
 	m_fScaleY = 9.5f;
 	m_fScaleZ = 1.f;
 
-	m_fPosX = 400.f;
-	m_fPosY = 590.f;
+	m_fPosX = 100.f;
+	m_fPosY = 470.f;
 	m_fPosZ = 0.03f;
 
 
@@ -67,11 +68,8 @@ void CUI_Player_Hp_Back::LateUpdate_Object(void)
 
 void CUI_Player_Hp_Back::Render_Object(void)
 {
-	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA )
 	{
 		m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
