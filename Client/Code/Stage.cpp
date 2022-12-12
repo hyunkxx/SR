@@ -76,11 +76,11 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
 	Key_Input(fTimeDelta);
 
-	CGameObject* pVolume = Engine::Get_Object(L"UI", L"Volume_UI");
-	if (static_cast<CUI_Volume*>(pVolume)->Get_Volume_Show())
-	{	ShowCursor(true);}
-	else
-	{	ShowCursor(false);}
+	//CGameObject* pVolume = Engine::Get_Object(L"UI", L"Volume_UI");
+	//if (static_cast<CUI_Volume*>(pVolume)->Get_Volume_Show())
+	//{	ShowCursor(true);}
+	//else
+	//{	ShowCursor(false);}
 
 	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
@@ -108,17 +108,17 @@ void CStage::Render_Scene(void)
 	if (Engine::Get_Camera_ID() ==CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::TOPVIEW_CAMERA)
 	{
 		// 스테이지 제한 시간
-		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
-		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
-		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
-		Render_Font(L"Font_AnSang5", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_White());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 
 		// 팀 킬 카운트
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
 		// 탱크 종류 or 이름
-		Render_Font(L"Font_AnSang3", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(WINCX_HALF - PERCENTX * 10.f, WINCY - PERCENTY * 5.f), D3DXCOLOR(0.f, 0.64f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX, WINCY_HALF + PERCENTY * 25.f), D3DXCOLOR(0.f, 0.9608f, 1.f, 1.f));
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
@@ -312,7 +312,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boom_Support", pGameObject), E_FAIL);
 
 	//bottomdirenermy
-	for (_int i = 0; 5> i; i++)
+	_int iBottomDir_Count = 5;
+
+	for (_int i = 0; iBottomDir_Count> i; i++)
 	{
 		_int tanktype = rand() % 4;
 		switch (tanktype)
@@ -348,7 +350,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	//Default_Enermy
 	_int iEnermy_Count = 5;
-	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count - 1);
+	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count  + iBottomDir_Count - 2);
 	for (_int i = 0; (iEnermy_Count) > i; i++)
 	{
 		_int tanktype = rand() % 4;
@@ -564,7 +566,10 @@ void CStage::Collison_Object(void)
 				continue;
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+			{
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
+				CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"부사수"), wstring(L"벽과 부딪혔습니다!"));
+			}
 		}
 		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
 		{
@@ -595,9 +600,6 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
-					// 채팅으로 남은 수 뜨도록 (겜에서 num 치면 됨)
-					//CUI_FontMgr::GetInstance()->Set_LiveCount(_uint(1));
-					//CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"적"), wstring(L"\t전차 파괴") + wstring( 죽인 숫자));
 				}
 
 			}
