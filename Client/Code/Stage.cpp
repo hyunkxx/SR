@@ -613,7 +613,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
-					(*iters)->Set_Dead(true);
+					//(*iters)->Set_Dead(true);
 
 					dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
 					/*m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
@@ -637,7 +637,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
-					(*iters)->Set_Dead(true);
+					//(*iters)->Set_Dead(true);
 					dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
 					
 				}
