@@ -103,9 +103,9 @@ void CUI_Start::Render_Object(void)
 */
 
 
-		Render_Font(L"Font_AnSang7", (HelpWinFont1).c_str(), &_vec2(50.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro1", (HelpWinFont1).c_str(), &_vec2(50.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		
-		Render_Font(L"Font_AnSang7", (HelpWinFont2).c_str(), &_vec2(400.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro1", (HelpWinFont2).c_str(), &_vec2(400.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 

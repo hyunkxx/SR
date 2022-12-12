@@ -62,7 +62,7 @@ void CLogo::LateUpdate_Scene(void)
 void CLogo::Render_Scene(void)
 {
 	// _DEBUG¿ë Ãâ·Â
-	Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(PERCENTX, PERCENTY + WINCY - 30.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Font_Retro", m_pLoading->Get_String(), &_vec2(PERCENTX, WINCY - 32.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -87,7 +87,7 @@ void CPlayer_Chatting::Render_Object(void)
 	{
 		if (m_bChatting)
 		{
-			Render_Font(L"Font_Sitka1", m_PlayerChating, &_vec2(m_fPosX - PERCENTX * 15.f, m_fPosY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
+			Render_Font(L"Font_Retro3", m_PlayerChating, &_vec2(m_fPosX - PERCENTX * 15.f, m_fPosY - 5.f), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 
 			m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 			m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);

@@ -104,17 +104,17 @@ void CPosin_UI::Render_Object(void)
 	{
 		if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
 		{
-			m_fScaleX += 1.5f;
-			m_fScaleY += 1.f;
+			m_fScaleX += 3.f;
+			m_fScaleY += 2.f;
 
-			if (m_fScaleX >= 520.f) { m_fScaleX = 520.f; }
-			if (m_fScaleY >= 430.f) { m_fScaleY = 430.f; }
+			if (m_fScaleX >= 550.f) { m_fScaleX = 550.f; }
+			if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
 
 		}
 		if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
 		{
-			m_fScaleX -= 1.5f;
-			m_fScaleY -= 1.f;
+			m_fScaleX -= 3.f;
+			m_fScaleY -= 2.f;
 
 			if (m_fScaleX <= 400.f) { m_fScaleX = 400.f; }
 			if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
