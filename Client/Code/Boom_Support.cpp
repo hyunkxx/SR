@@ -6,6 +6,7 @@
 #include "DroneCamera.h"
 #include "BoomCamera.h"
 #include "TankSet.h"
+#include "TankManager.h"
 
 CBoom_Support::CBoom_Support(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -45,9 +46,11 @@ _int CBoom_Support::Update_Object(const _float & fTimeDelta)
 		{
 			m_fDaedCount = 0.f;
 			m_bDead = true;
+			CTankManager::GetInstance()->MouseLBTLock(false);
 		}
-
 	}
+
+
 	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200 * fTimeDelta));
 	Key_Input(fTimeDelta);
 

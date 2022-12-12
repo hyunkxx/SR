@@ -174,7 +174,9 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 
 	if (!m_bRock)
 	{
-		if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload)
+		if (Get_DIMouseState(DIM_LB) & 0x80 
+			&& !CTankManager::GetInstance()->IsLock() 
+			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
@@ -195,6 +197,8 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{
+			CTankManager::GetInstance()->MouseLBTLock(true);
+
 			m_bStart = false;
 			m_fEngineCount = 0.f;
 			_vec3 Pos;

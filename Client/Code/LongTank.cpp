@@ -199,6 +199,9 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{
+			CTankManager::GetInstance()->MouseLBTLock(true);
+
+
 			m_bStart = false;
 			m_fEngineCount = 0.f;
 			_vec3 Pos;
@@ -207,7 +210,11 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
 		}
 
-		if (Get_DIMouseState(DIM_LB) & 0x80 && m_stInfo.fReloadTime > m_stInfo.fReload && m_stInfo.fSpeed == 0.f)
+
+		if (Get_DIMouseState(DIM_LB) & 0x80
+			&& !CTankManager::GetInstance()->IsLock()
+			&& m_stInfo.fReloadTime > m_stInfo.fReload
+			&& m_stInfo.fSpeed < 0.001f)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
