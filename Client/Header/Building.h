@@ -33,8 +33,8 @@ public:
 	virtual			OBB*  Get_OBB(void) override;
 public:
 	wstring& GetID() { return m_ID; }
-	const _vec3& GetRotation() const { return m_vRotation; }
-	void SetRotation(const _vec3& vRot);
+	_float GetRotation() const { return m_fRotation; }
+	void SetRotation(const _float& vRot);
 	const _vec3& GetPosition() const { return m_vPosition; }
 	void SetPosition(const _vec3& vPos);
 private:
@@ -45,7 +45,7 @@ private:
 	wstring m_ID;
 	_matrix m_matWorld;
 	_vec3	m_vPosition;
-	_vec3	m_vRotation;
+	_float	m_fRotation;
 
 	wstring m_strMeshKey;
 	CVoxel* m_pMesh;

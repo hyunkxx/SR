@@ -156,8 +156,7 @@ void CTankSet::OBB_Collision_EX(void)
 	D3DXVec3Normalize(&Look, &Look);
 	Reset_Speed();
 
-	Move_Info(-Look * m_stInfo.fSpeed * m_fDT);
-
+	Move_Info(-Look * (m_stInfo.fSpeed + 0.5f)  * m_fDT);
 }
 
 void CTankSet::Update_OBB(void)

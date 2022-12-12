@@ -72,33 +72,23 @@ HRESULT CBuilding::Ready_Object(void)
 	return S_OK;
 }
 
-void CBuilding::SetRotation(const _vec3& vRotation)
+void CBuilding::SetRotation(const _float& fRotation)
 {
-	m_vRotation = vRotation;
-	_matrix matRot[3], matTrans;
-	D3DXMatrixRotationX(&matRot[0], m_vRotation.x);
-	D3DXMatrixRotationY(&matRot[1], m_vRotation.y);
-	D3DXMatrixRotationZ(&matRot[2], m_vRotation.z);
-	D3DXMatrixTranslation(&matTrans, m_vPosition.x, m_vPosition.y, m_vPosition.z);
-	m_matWorld = matRot[0] * matRot[1] * matRot[2] * matTrans;
+	static_cast<CTransform*>(m_pTransform)->Set_Pos(m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	static_cast<CTransform*>(m_pTransform)->Rotation(ROTATION::ROT_Y, m_fRotation);
 }
 
 void CBuilding::SetPosition(const _vec3& vPos)
 {
-	m_vPosition = vPos;
-	_matrix matRot[3], matTrans;
-	D3DXMatrixRotationX(&matRot[0], m_vRotation.x);
-	D3DXMatrixRotationY(&matRot[1], m_vRotation.y);
-	D3DXMatrixRotationZ(&matRot[2], m_vRotation.z);
-	D3DXMatrixTranslation(&matTrans, m_vPosition.x, m_vPosition.y, m_vPosition.z);
-	m_matWorld = matRot[0] * matRot[1] * matRot[2] * matTrans;
+	static_cast<CTransform*>(m_pTransform)->Set_Pos(m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	static_cast<CTransform*>(m_pTransform)->Rotation(ROTATION::ROT_Y, m_fRotation);
 }
 
 _int CBuilding::Update_Object(const _float & fTimeDelta)
 {
-	Update_OBB();
-
 	__super::Update_Object(fTimeDelta);
+
+	Update_OBB();
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
@@ -140,7 +130,7 @@ void CBuilding::CollisionSetting()
 	switch (m_eType)
 	{
 	case TYPE::BUILDING:
-		m_stBody.fLen[x] = 17.f;
+		m_stBody.fLen[x] = 15.f;
 		m_stBody.fLen[y] = 7.5f;
 		m_stBody.fLen[z] = 10.5;
 		break;

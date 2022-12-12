@@ -527,7 +527,8 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 {
 	CGameObject*		pGameObject = nullptr;
 
-	_vec3 vPos, vRot;
+	_vec3 vPos;
+	float fRot;
 
 	for (int j = 0 ; j < 9 ; ++j)
 	{
@@ -536,7 +537,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::MAX + 2;
 
 			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
-			vRot = { 0.f , (float)(rand() % 180) , 0.f };
+			fRot = (float)(rand() % 180);
 			
 			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
 				continue;
@@ -546,7 +547,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			case CBuilding::TYPE::ROCK:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos, CBuilding::TYPE::ROCK);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -554,14 +555,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_1", vPos, CBuilding::TYPE::PLANT_1);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			case CBuilding::TYPE::PLANT_2:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_2", vPos, CBuilding::TYPE::PLANT_2);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
@@ -569,14 +570,14 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 				vPos.y += 3.f;
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Plant_3", vPos, CBuilding::TYPE::PLANT_3);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			default:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_object", vPos, CBuilding::TYPE::BUILDING);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(vRot);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
