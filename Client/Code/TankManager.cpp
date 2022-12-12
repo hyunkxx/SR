@@ -109,7 +109,6 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::SMALL_TANK].fReloadTime = 2.f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].iCannonSpeed = 500;
 
-
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].strName = L"T62 중형전차";
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fMaxHP = 1000.f;
@@ -157,7 +156,6 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::BIG_TANK].fReload = 5.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fReloadTime = 3.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].iCannonSpeed = 800;
-
 
 	tankData[(UINT)VEHICLE::LONG_TANK].strName = L"K-9 자주곡사포";
 	tankData[(UINT)VEHICLE::LONG_TANK].fDamage = 100.f;

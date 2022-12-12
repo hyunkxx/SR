@@ -122,7 +122,7 @@ HRESULT CHumvee::Ready_Object(void)
 
 	m_stInfo.fReloadTime = tankData.fReloadTime;
 	m_stInfo.iCannonSpeed = tankData.iCannonSpeed;
-	m_fScale = 1.f;
+	m_fScale = 0.8f;
 	m_stInfo.RotSpeed = tankData.RotSpeed;
 
 	m_stInfo.fLowAngle = tankData.fLowAngle;
@@ -134,9 +134,9 @@ HRESULT CHumvee::Ready_Object(void)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
-	m_stBody.fLen[x] = 1.f * m_fScale;
-	m_stBody.fLen[y] = 3.f * m_fScale;
-	m_stBody.fLen[z] = 2.5f * m_fScale;
+	m_stBody.fLen[x] = 2.f  * m_fScale;
+	m_stBody.fLen[y] = 3.f  * m_fScale;
+	m_stBody.fLen[z] = 4.5f * m_fScale;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 

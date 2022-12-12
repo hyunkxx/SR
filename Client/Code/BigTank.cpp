@@ -123,7 +123,7 @@ HRESULT CBigTank::Ready_Object(void)
 	m_stInfo.fReload = data.fReload;
 	m_stInfo.fReloadTime = data.fReloadTime;
 	m_stInfo.iCannonSpeed = data.iCannonSpeed;
-	m_fScale = 1.f;
+	m_fScale = 1.5f;
 	m_stInfo.RotSpeed = data.RotSpeed;
 
 	m_stInfo.fLowAngle = data.fLowAngle;

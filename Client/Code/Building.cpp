@@ -98,9 +98,6 @@ _int CBuilding::Update_Object(const _float & fTimeDelta)
 {
 	Update_OBB();
 
-	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-		return 0;
-
 	__super::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -114,9 +111,6 @@ void CBuilding::LateUpdate_Object(void)
 
 void CBuilding::Render_Object(void)
 {
-	if (Utility::Cuilling(m_pGraphicDev, m_vPosition))
-		return;
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pMesh->Render(&m_matWorld);
 }
@@ -146,19 +140,19 @@ void CBuilding::CollisionSetting()
 	switch (m_eType)
 	{
 	case TYPE::BUILDING:
-		m_stBody.fLen[x] = 18.f;
-		m_stBody.fLen[y] = 8.f;
-		m_stBody.fLen[z] = 11.f;
+		m_stBody.fLen[x] = 17.f;
+		m_stBody.fLen[y] = 7.5f;
+		m_stBody.fLen[z] = 10.5;
 		break;
 	case TYPE::ROCK:
 		m_stBody.fLen[x] = 10.f;
-		m_stBody.fLen[y] = 8.f;
-		m_stBody.fLen[z] = 2.f;
+		m_stBody.fLen[y] = 4.f;
+		m_stBody.fLen[z] = 6.f;
 		break;
 	default:
-		m_stBody.fLen[x] = 1.f;
+		m_stBody.fLen[x] = 2.f;
 		m_stBody.fLen[y] = 3.f;
-		m_stBody.fLen[z] = 1.f;
+		m_stBody.fLen[z] = 2.f;
 		break;
 	}
 }
