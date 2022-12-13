@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "Voxel.h"
+#include "EffectManager.h"
 
 CTankSet::CTankSet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -254,6 +255,41 @@ void CTankSet::Head_Setting(const _vec3 & _SetPos)
 void CTankSet::Body_Setting(const _vec3 & _SetPos)
 {
 	m_pTransformBody->Set_Pos(_SetPos.x, _SetPos.y, _SetPos.z);
+}
+
+void CTankSet::Dead_Motion(const _float & fTimeDelta)
+{
+	_vec3 Pos;
+	m_pTransformHead->Get_Info(INFO_POS, &Pos);
+
+	if (m_bDeadTime == 0)
+	{
+		m_bRock = true;
+		m_stInfo.fAccum = 0.f;	Engine::StopSound(PLAYER_SHOT_SOUND1);
+		Engine::PlaySound_SR(L"Tank_Died.wav", PLAYER_SHOT_SOUND1, 0.5f);
+		CGameObject* m_pEffectManager = Engine::Get_Object(L"Environment_Object", L"EffectManager");
+		static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, Pos);
+	}
+	m_bDeadTime += fTimeDelta;
+	m_stInfo.fAccum += fTimeDelta;
+
+	if (0.4f < Pos.y && 0 == m_iMotionCount)
+	{
+		_float x = 5.f * fTimeDelta;
+		_float y = (100.f * fTimeDelta) - (0.5f * 9.8f * (m_stInfo.fAccum * m_stInfo.fAccum));
+		_vec3 Move = { x , y ,0.f };
+		m_pTransformHead->Move_Pos(&Move);
+		m_pTransformPosin->Move_Pos(&Move);
+		m_pTransformHead->Rotation(ROT_X, 500 * fTimeDelta);
+		m_pTransformPosin->Rotation(ROT_X, 500 * fTimeDelta);
+	}
+	else
+	{
+		m_iMotionCount++;
+		Pos.y = 0.8f;
+		m_pTransformHead->Set_Pos(Pos.x, Pos.y, Pos.z);
+		m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+	}
 }
 
 

@@ -71,6 +71,14 @@ void CCube::SetColor(D3DXCOLOR color)
 	m_pVB->Unlock();
 }
 
+void CCube::Get_Color(D3DXCOLOR * color)
+{
+	Vertex*	pVertex = nullptr;
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+	*color = pVertex[1].color;
+	m_pVB->Unlock();
+}
+
 void CCube::Initalize(CUBE_DATA refData)
 {
 	m_tagData.scale = refData.scale;

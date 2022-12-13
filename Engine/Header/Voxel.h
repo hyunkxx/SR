@@ -21,6 +21,8 @@ public://Component
 	virtual void		Free(void)	override;
 
 	void SetColor(D3DXCOLOR color);
+	void	Change_Color_Dead(void);
+	void	Return_Color(void);
 public:
 	static CVoxel*		Create(LPDIRECT3DDEVICE9 pDevice, wstring key);
 public:
@@ -31,6 +33,7 @@ public:
 private:
 	_matrix m_matWorld; // ºÎ¸ð
 	vector<CCube*> m_vecCube;
+	vector<D3DXCOLOR*> m_vecColorSet;
 };
 
 END

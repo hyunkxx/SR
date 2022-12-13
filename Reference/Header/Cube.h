@@ -20,6 +20,7 @@ public:
 	static CCube* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static void	  SetColor(CCube* pCube, D3DXCOLOR color);
 	void		  SetColor(D3DXCOLOR color);
+	void		  Get_Color(D3DXCOLOR* color);
 public:
 	void Initalize(CUBE_DATA refData);
 public:

@@ -38,6 +38,7 @@ protected:
 	void				Head_Setting(const _vec3& _SetPos);
 	void				Body_Setting(const _vec3& _SetPos);
 
+	virtual void		Dead_Motion(const _float& fTimeDelta);
 private:
 	void				Reset_Speed(void) { m_stInfo.fAccum = 0.f; }
 
@@ -79,7 +80,7 @@ protected:
 
 	_vec3				m_fHitPos;
 //
-
+	_int				m_iMotionCount = 0;
 protected:
 	virtual void Free(void) override;
 

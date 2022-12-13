@@ -11,6 +11,7 @@
 CBigTank::CBigTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
+	m_bDead = false;
 	//	m_stInfo.eID = VEHICLE::M3;
 }
 
@@ -25,11 +26,20 @@ CBigTank::~CBigTank()
 
 _int CBigTank::Update_Object(const _float & fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-	Head_Spin(fTimeDelta);
-	Expect_Hit_Point(fTimeDelta);
-	Posin_Shake(fTimeDelta);
-	Update_UI();
+	if (m_bDead)
+	{
+		Dead_Motion(fTimeDelta);
+	}
+	else
+	{
+		Key_Input(fTimeDelta);
+		Head_Spin(fTimeDelta);
+		Expect_Hit_Point(fTimeDelta);
+		Posin_Shake(fTimeDelta);
+		Sound_Setting(fTimeDelta);
+		Update_UI();
+	}
+
 	return __super::Update_Object(fTimeDelta);
 }
 
@@ -52,6 +62,12 @@ void CBigTank::Render_Object(void)
 {
 	if (Engine::Get_Camera_ID()!=CAMERA_ID::AIM_CAMERA) 
 	{
+		if (m_bDead)
+		{
+			m_pHead->Change_Color_Dead();
+			m_pBody->Change_Color_Dead();
+			m_pPosin->Change_Color_Dead();
+		}
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformBody->Get_WorldMatrix());
 		m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
 
@@ -60,6 +76,12 @@ void CBigTank::Render_Object(void)
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 		m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
+		if (m_bDead)
+		{
+			m_pHead->Return_Color();
+			m_pBody->Return_Color();
+			m_pPosin->Return_Color();
+		}
 		__super::Render_Object();
 	}
 }

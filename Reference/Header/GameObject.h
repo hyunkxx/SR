@@ -41,6 +41,7 @@ public:
 protected:
 	_float						m_fViewZ;
 	_bool	m_bDead = false;
+	_float	m_bDeadTime = 0.f;
 	// 월드상태 스케일값 조정용
 	_float  m_fScale;
 	// 충돌 처리 거리 설정용

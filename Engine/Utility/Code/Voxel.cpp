@@ -69,6 +69,14 @@ CComponent * CVoxel::Clone(void)
 
 void CVoxel::Free(void)
 {
+	auto& iter = m_vecColorSet.begin();
+
+	for (; iter != m_vecColorSet.end(); iter++)
+	{
+		Safe_Delete(*iter);
+	}
+	m_vecColorSet.clear();
+
 	__super::Free();
 }
 
@@ -78,6 +86,31 @@ void CVoxel::SetColor(D3DXCOLOR color)
 	for (; iter != m_vecCube.end(); ++iter)
 	{
 		(*iter)->SetColor(color);
+	}
+}
+
+void CVoxel::Change_Color_Dead(void)
+{
+	D3DXCOLOR Dead_Color = { 0.3f, 0.3f, 0.3f,0.f };
+
+	auto iter = m_vecCube.begin();
+	for (; iter != m_vecCube.end(); ++iter)
+	{
+		(*iter)->SetColor(Dead_Color);
+	}
+}
+
+void CVoxel::Return_Color(void)
+{
+	auto& iter = m_vecColorSet.begin();
+	auto Dest = m_vecCube.begin();
+	for (; iter != m_vecColorSet.end(); ++iter)
+	{
+		(*Dest)->SetColor(*(*iter));
+		if (Dest == m_vecCube.end())
+			break;
+
+		Dest++;
 	}
 }
 
@@ -103,6 +136,16 @@ HRESULT CVoxel::Initalize(wstring key)
 		MSG_BOX("Mesh Empty");
 		return E_FAIL;
 	}
+
+	auto iter = m_vecCube.begin();
+
+	for (; iter != m_vecCube.end(); ++iter)
+	{
+		D3DXCOLOR* pColor = new D3DXCOLOR;
+		(*iter)->Get_Color(pColor);
+		m_vecColorSet.push_back(pColor);
+	}
+
 	return S_OK;
 }
 

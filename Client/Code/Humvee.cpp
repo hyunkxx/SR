@@ -13,6 +13,7 @@
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
+	m_bDead = false;
 	m_stInfo.eID = VEHICLE::HUMVEE;
 }
 
@@ -27,13 +28,20 @@ CHumvee::~CHumvee()
 
 _int CHumvee::Update_Object(const _float & fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-	Head_Spin(fTimeDelta);
-	Expect_Hit_Point(fTimeDelta);
-	Posin_Shake(fTimeDelta);
-	Sound_Setting(fTimeDelta);
-	Update_UI();
-	Update_OBB();
+	if (m_bDead)
+	{
+		Dead_Motion(fTimeDelta);
+	}
+	else
+	{
+		Key_Input(fTimeDelta);
+		Head_Spin(fTimeDelta);
+		Expect_Hit_Point(fTimeDelta);
+		Posin_Shake(fTimeDelta);
+		Sound_Setting(fTimeDelta);
+		Update_UI();
+		Update_OBB();
+	}
 	return __super::Update_Object(fTimeDelta);
 }
 
@@ -48,6 +56,13 @@ void CHumvee::Render_Object(void)
 {
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA)
 	{
+		if (m_bDead)
+		{
+			m_pHead->Change_Color_Dead();
+			m_pBody->Change_Color_Dead();
+			m_pPosin->Change_Color_Dead();
+		}
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformBody->Get_WorldMatrix());
 		m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
 
@@ -57,6 +72,12 @@ void CHumvee::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 		m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
 
+		if (m_bDead)
+		{
+			m_pHead->Change_Color_Dead();
+			m_pBody->Change_Color_Dead();
+			m_pPosin->Change_Color_Dead();
+		}
 		__super::Render_Object();
 	}
 }
@@ -174,6 +195,12 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 
 	if (!m_bRock)
 	{
+		//ÀÓ½Ã »ç¸Á Å° 
+		if (Get_DIKeyState_Custom(DIK_M) == KEY_STATE::TAP)
+		{
+			if (!m_bDead)
+				m_bDead = true;
+		}
 		if (Get_DIMouseState(DIM_LB) & 0x80 
 			&& !CTankManager::GetInstance()->IsLock() 
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
