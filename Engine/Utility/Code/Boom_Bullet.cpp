@@ -29,7 +29,8 @@ HRESULT CBoom_Bullet::Ready_Object(void)
 
 _int CBoom_Bullet::Update_Object(const _float & fTimeDelta)
 {
-
+	if (m_bDead)
+		return OBJ_DEAD;
 
 	_vec3 Move, Dir1, Dir2, Dir3;
 	Move.x = m_vDir.x * m_fSpeed * fTimeDelta;
@@ -79,6 +80,8 @@ _int CBoom_Bullet::Update_Object(const _float & fTimeDelta)
 
 void CBoom_Bullet::LateUpdate_Object(void)
 {
+	if (m_bDead)
+		return;
 
 	if (0.f > m_vPos.y)
 	{
@@ -140,6 +143,12 @@ void CBoom_Bullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _
 	m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	//m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
 
+}
+
+void CBoom_Bullet::Reset_Trans(void)
+{
+	m_pTransformCom->Reset_Trans();
+	m_stBody.vPos = { -100.f,-100.f,-100.f };
 }
 
 CBoom_Bullet * CBoom_Bullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

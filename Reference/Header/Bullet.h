@@ -33,7 +33,7 @@ public:
 public:
 	void Set_ID(BULLET_ID eID);
 	BULLET_ID	Get_ID(void) { return m_eID; }
-
+	void		Reset_Trans(void);
 private:
 	HRESULT		Add_Component(void);
 
