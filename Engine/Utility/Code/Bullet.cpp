@@ -169,12 +169,6 @@ void CBullet::Reset_Trans(void)
 {
 	m_pTransform->Reset_Trans();
 	m_stBody.vPos = { -100.f,-100.f ,-100.f };
-	m_vPos = {-100.f, -100.f, -100.f};
-	m_vDir = { -100.f, -100.f, -100.f };
-	m_fSpeed = 0.f;
-	m_fAccum = 0.f;
-	m_fAngleX = 0.f;
-	m_fAngleY = 0.f;
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

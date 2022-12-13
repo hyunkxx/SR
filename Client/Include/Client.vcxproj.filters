@@ -239,9 +239,6 @@
     <Filter Include="02. GameObject\93.UI\10. VehicleInfoUI">
       <UniqueIdentifier>{76948a32-7736-4d0d-8661-30abd00be911}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround">
-      <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\08.Effect\Gun_Shoot_Effect">
       <UniqueIdentifier>{4e4b1f4f-5290-4410-91be-fb5517c8491f}</UniqueIdentifier>
     </Filter>
@@ -272,6 +269,9 @@
     <Filter Include="02. GameObject\08.Effect\EffectManager">
       <UniqueIdentifier>{bec1f1b8-ba87-4fd1-8d82-97cd95530f89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. BackGround">
+      <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -281,7 +281,7 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
-      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround</Filter>
+      <Filter>02. GameObject\02. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Stage.h">
       <Filter>01. Scene\03. Stage</Filter>
@@ -487,7 +487,7 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
-      <Filter>02. GameObject\00. Tank\02. Vehicle\04. LongTank\02. BackGround</Filter>
+      <Filter>02. GameObject\02. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Stage.cpp">
       <Filter>01. Scene\03. Stage</Filter>
