@@ -538,6 +538,10 @@ _float CDefault_Enermy::Dist(CTransform * _Target)
 void CDefault_Enermy::ObjectCol(_bool m_Left)
 {
 	_bool bLeft = m_Left;
+	_vec3 vLook;
+	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+	D3DXVec3Normalize(&vLook, &vLook);
+	m_pTransformCom->Move_Pos(&(-vLook*7.f));
 	if (bLeft)
 	{
 		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
