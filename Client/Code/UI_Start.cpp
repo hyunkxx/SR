@@ -47,11 +47,11 @@ _int CUI_Start::Update_Object(const _float & fTimeDelta)
 {
 	_int iPlayTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
 
-	if (iPlayTime >= 180)
+	if (iPlayTime >= 183)
 	{
 		m_bHelp = true;
 	}
-	if (iPlayTime == 179)
+	if (iPlayTime == 182)
 	{
 		m_bHelp = false;
 	}
@@ -80,32 +80,20 @@ void CUI_Start::Render_Object(void)
 	{
 		wstring HelpWinFont1 , HelpWinFont2;
 
-		HelpWinFont1 = L"G: 탱크 시동 ON	 \n\nW S A D : 이동 \n\n좌클릭: 포탄 공격 \n\nV : 시점 변환\n\nK : 공중 폭격 지원 \n\nENTER : 채팅		\n\nENTER + NUM : 적 탱크 숫자";
+		HelpWinFont1 = L"G: 탱크 시동 ON	 \n\nW S A D : 이동 \n\n좌클릭: 포탄 공격 \n\nV : 시점 변환\n\nK : 공중 폭격 지원 \n\nENTER : 채팅		\n\nENTER + NUM : 적 탱크 숫자\n\n";
 															
-		HelpWinFont2 = L"숫자 1  : 시야 줌 인	 \n\n숫자 2  : 시야 줌 아웃	 \n\nG : (자주포) 연막탄 \n\nC : 이모티콘 \n\nF1 : 도움말		\n\nF3 : 볼륨 옵션";
+		HelpWinFont2 = L"숫자 1  : 시야 줌 인	 \n\n숫자 2  : 시야 줌 아웃	 \n\nG : (자주포) 연막탄 \n\nC : 이모티콘 \n\nF1 : 도움말\n\nF3 : 볼륨 옵션";
 			
-		/*	1인칭 카메라때 숫자 1번 2번으로 시야 줌인 줌 아웃
-			K키 : 폭격기 )드론 카메라로 변경됨)
-				 wsad 이동 좌클 공격
+		// 임시 설정 -> 삭제 ( 보여줄 땐, 밑에 걸로)
+		wstring HelpWinFont3{ L" 임시 설정\n좌우 화살표 : 플레이어 체력 감소.\t\t F11 포신UI 제거\n험비,롱탱 : 죽는키->m" };
+		Render_Font(L"Font_Retro", (HelpWinFont1).c_str(), &_vec2(25.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", (HelpWinFont2).c_str(), &_vec2(400.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro", (HelpWinFont3).c_str(), &_vec2(25, 400.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
-			Long_tank 한정 G키 : 연막탄
-			조작키는 이정도 있는 것 같아요
-
-			0% 빨강, 58.82% 녹색 및 77.65% 파랑
-			D3DXCOLOR(0.f, 0.5882f, 0.7765f, 1.f) 별로
-
-			92.94% 빨강, 67.45% 녹색 및 69.41% 파랑
-			D3DXCOLOR(0.9294f, 0.6745f, 0.6941f, 1.f) 진짜 개별로
-
-			40% 빨강, 0% 녹색 및 60% 파랑		끔찍
-
-			0% 빨강, 20.39% 녹색 및 34.51% 파랑.			어우 전부 별로네
-*/
-
-
-		Render_Font(L"Font_Retro1", (HelpWinFont1).c_str(), &_vec2(50.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		// 나중에 고정 될 원본 위치
+	/*	Render_Font(L"Font_Retro1", (HelpWinFont1).c_str(), &_vec2(50.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		
-		Render_Font(L"Font_Retro1", (HelpWinFont2).c_str(), &_vec2(400.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_Retro1", (HelpWinFont2).c_str(), &_vec2(400.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));*/
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
@@ -138,9 +126,9 @@ HRESULT CUI_Start::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_Posin_UI_RcTex"));
+	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Posin_UI_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_UI_Start_Tex"));
 	NULL_CHECK_RETURN(m_pTexture, E_FAIL);

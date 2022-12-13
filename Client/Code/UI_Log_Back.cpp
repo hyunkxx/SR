@@ -33,7 +33,7 @@ HRESULT CUI_Log_Back::Ready_Object(void)
 
 	m_fPosX = 100.f;
 	m_fPosY = 555.f;
-	m_fPosZ = 0.01f;
+	m_fPosZ = 0.05f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
@@ -157,9 +157,9 @@ HRESULT CUI_Log_Back::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_Log_Back_RcTex"));
+	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Log_Back_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_Log_Back_Tex"));
 	NULL_CHECK_RETURN(m_pTexture, E_FAIL);

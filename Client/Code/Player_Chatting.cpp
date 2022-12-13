@@ -127,9 +127,9 @@ HRESULT CPlayer_Chatting::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_Player_Chat_RcTex"));
+	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Chat_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_Player_Chat_Tex"));
 	NULL_CHECK_RETURN(m_pTexture, E_FAIL);

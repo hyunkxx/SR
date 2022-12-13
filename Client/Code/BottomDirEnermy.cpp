@@ -119,8 +119,11 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	//Update_UI();
 
+	//Ready_Object			UI 추가
+	//Render_object			UI 추가
+	//Add_Component			UI 추가
+	Update_UI();
 }
 
 void CBottomDirEnermy::Render_Object(void)

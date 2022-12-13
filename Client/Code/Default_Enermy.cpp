@@ -129,7 +129,10 @@ void CDefault_Enermy::LateUpdate_Object(void)
 	{
 		m_iAction = AIACTION::AIACTION_DEFENSE;
 	}
-	//Update_UI();
+	//Ready_Object			UI 추가
+	//Render_object			UI 추가
+	//Add_Component			UI 추가
+	Update_UI();
 
 }
 

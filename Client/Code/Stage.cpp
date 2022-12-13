@@ -4,9 +4,10 @@
 
 #include "Tank_01.h"
 #include "Humvee.h"
-
 #include "BackGround.h"
 #include "Terrain.h"
+#include "Building.h"
+#include "TankManager.h"
 
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -14,8 +15,6 @@
 #include "AimCamera.h"
 #include "DroneCamera.h"
 #include "BoomCamera.h"
-
-#include "Boom_Support.h"
 
 #include"Default_Enermy.h"
 #include "TestBox.h"
@@ -32,25 +31,26 @@
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
 #include "UI_FontMgr.h"
-#include "UI_Player_Hp_Back.h"
 #include "UI_Player_Hp.h"
-#include "UI_Player_Hp_Front.h"
 #include "UI_World_Bubble.h"
 #include "UI_Volume.h"
 #include "UI_Compass.h"
 #include "UI_Start.h"
+#include "UI_MiniMap.h"
+#include "UI_Fuel.h"
+#include "UI_Speed.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
+#include"TempOccupationScore.h"
+
 #include "ShootEffect.h"
 #include "BoomEffect.h"
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
-
+#include "Boom_Support.h"
 #include "EffectPool.h"
 #include "EffectManager.h"
-#include"TempOccupationScore.h"
-#include "Building.h"
-#include "TankManager.h"
+
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -505,14 +505,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
 
-pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp1", pGameObject), E_FAIL);
-
-	pGameObject = CUI_Player_Hp_Back::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp3", pGameObject), E_FAIL);
-
 	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
@@ -544,6 +536,18 @@ pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
 	pGameObject = CUI_Start::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Start_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Speed::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Speed_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_MiniMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MiniMap_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Fuel::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fuel_UI", pGameObject), E_FAIL);
 
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

@@ -146,6 +146,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
+
 	//충돌
 	m_stBody.fLen[x] = 1.5f;
 	m_stBody.fLen[y] = 0.7f;
@@ -194,7 +195,11 @@ _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 void CBottomDirAlly::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	//Update_UI();
+
+	//Ready_Object			UI 추가
+	//Render_object			UI 추가
+	//Add_Component			UI 추가
+	Update_UI();
 }
 
 void CBottomDirAlly::Render_Object(void)
@@ -743,6 +748,7 @@ void CBottomDirAlly::Wait(_float fTimeDelta)
 		break;
 	}
 }
+
 void CBottomDirAlly::Enermy_In_Area(_float fTimeDelta)
 {
 	_bool test = false;
@@ -920,7 +926,7 @@ HRESULT CBottomDirAlly::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PosinTransform", pComponent });
 
-
+	// UI
 	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RcTex", pComponent });
@@ -944,10 +950,6 @@ void CBottomDirAlly::Free(void)
 
 void CBottomDirAlly::Update_UI(void)
 {
-	//CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	//CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
-	//CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
-
 	if (UI_fHP >= UI_Orgin_HP)
 	{
 		UI_fHP = UI_Orgin_HP;

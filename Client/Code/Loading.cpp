@@ -81,19 +81,6 @@ _uint CLoading::Loading_ForStage(void)
 {
 	lstrcpy(m_szString, L"Loading Component");
 
-	// ui
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Back_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Front_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Back_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Chat_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Log_Back_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_BlueTeam_Kill_Back_RcTex", Engine::CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	Engine::Ready_Sound();
 
 
@@ -104,33 +91,30 @@ _uint CLoading::Loading_ForStage(void)
 
 
 	// component
+
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create(m_pGraphicDev)), E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Sand.jpg", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Location", Engine::CLocation::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_CubeTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/desert.dds", TEX_CUBE)), E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Terrain%d.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_PlayerTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Player/Ma.jpg", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 
 	// ui
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/last_Hp_Back.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Last_Hp_Mid.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Front_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/last_Hp_Front.png", TEX_NORMAL)), E_FAIL);
+	// HP
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/player_HP.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Player_HP_Bar.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/WHP.png", TEX_NORMAL)), E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/last_Hp_Back.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/last_WorldHpF.png", TEX_NORMAL)), E_FAIL);
+	// chatting 
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Steam_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Steam.png", TEX_NORMAL)), E_FAIL);
-
-
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Chat_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Chatting_Board1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Log_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Chatting_Board1.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Posin_UI.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Bubble_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Emoticon.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);
+
+	//option
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Volume_Set.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Down_Tex0", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Up_Tex0", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Up1.png", TEX_NORMAL)), E_FAIL);
@@ -138,11 +122,23 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Up_Tex1", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Up1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Down_Tex2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Up_Tex2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Up1.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Compass_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Compass.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Start_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/shutter door1.png", TEX_NORMAL)), E_FAIL);
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_BlueTeam_Kill_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Background.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_BlueTeam_Kill_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Ui_BlueScoreBlank.png", TEX_NORMAL)), E_FAIL);
+	// Aim camera UI
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Posin_UI.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Compass_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Compass.png", TEX_NORMAL)), E_FAIL);
+	
+	// Stage UI
+	// 점령
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);
+	// 미니맵
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_MiniMap_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Mini_map.png", TEX_NORMAL)), E_FAIL);
+	// 연료계
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Fuel_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/fuel2.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Fuel_Bar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Fuel3.png", TEX_NORMAL)), E_FAIL);
+	// 속도계
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Speed_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Speed1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_SpeedBar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/UI_SpeedBar.png", TEX_NORMAL)), E_FAIL);
 
 	lstrcpy(m_szString, L"Complete");
 
