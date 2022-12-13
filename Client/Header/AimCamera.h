@@ -16,7 +16,7 @@ private:
 	void		Mouse_Move(const _float & fTimeDelta);
 	void		Mouse_Fix(void);
 	void		Key_Input(const _float & fTimeDelta);
-	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
+	virtual void		 Camera_Setting(_vec3	Target_Pos = _vec3{ 0.f, 0.f, 0.f });
 public:
 	static	CAimCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,
