@@ -182,7 +182,6 @@ HRESULT CLongTank::Ready_Object(void)
 
 void CLongTank::Key_Input(const _float & fTimeDelta)
 {
-
 	_vec3	vDir;
 	m_pTransformBody->Get_Info(INFO_LOOK, &vDir);
 	if (!m_bRock)
@@ -195,7 +194,6 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 				Engine::StopSound(PLAYER_MOVE_SOUND2);
 				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
 			}
-
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{

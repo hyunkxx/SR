@@ -116,6 +116,9 @@ void CEffectPool::Free(void)
 
 void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos)
 {
+	if (Utility::Cuilling(m_pGraphicDev, vPos))
+		return;
+
 	switch (eType)
 	{
 	case EFFECT_TYPE::EXPLOSION:
