@@ -524,12 +524,12 @@ void CLongTank::Expect_Hit_Point(const _float & fTimeDelta)
 	_float fFlyTime = 0.f;
 	while (true)
 	{
-		fFlyTime += fTimeDelta;
+		fFlyTime += 0.01f;
 		_vec3 Move;
 
-		Move.x = Dir.x * m_stInfo.iCannonSpeed * fTimeDelta * cosf(-fAngle);
-		Move.z = Dir.z * m_stInfo.iCannonSpeed * fTimeDelta * cosf(-fAngle);
-		Move.y = ((Dir.y * m_stInfo.iCannonSpeed * fTimeDelta) * sinf(-fAngle) - (0.5f * 9.8f * (fFlyTime * fFlyTime)));
+		Move.x = Dir.x * m_stInfo.iCannonSpeed * 0.01f * cosf(-fAngle);
+		Move.z = Dir.z * m_stInfo.iCannonSpeed * 0.01f * cosf(-fAngle);
+		Move.y = ((Dir.y * m_stInfo.iCannonSpeed * 0.01f) * sinf(-fAngle) - (0.5f * 9.8f * (fFlyTime * fFlyTime)));
 		Pos.y += Move.y;
 		if (Pos.y <= 0.f)
 			break;

@@ -36,31 +36,17 @@ HRESULT CAimCamera::Ready_Object(const _vec3 * pEye, const _vec3 * pAt, const _v
 
 _int CAimCamera::Update_Object(const _float & fTimeDelta)
 {
-
-	CGameObject* pPlayer = (Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
-	NULL_CHECK_RETURN(pPlayer, E_FAIL);
-	CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTrans, E_FAIL);
-
-	_vec3 HitPos = static_cast<CTankSet*>(pPlayer)->Get_HitPos();
-	_vec3 PlyerPos;
-	pPlayerTrans->Get_Info(INFO_POS, &PlyerPos);
-	HitPos.y = PlyerPos.y = 2.4f;
-	_vec3 vLook = HitPos - PlyerPos;
-	m_vLook = *D3DXVec3Normalize(&vLook, &vLook);
-	m_vAt = PlyerPos + m_vLook;
-
 	Mouse_Fix();
 	Mouse_Move(fTimeDelta);
 	Key_Input(fTimeDelta);
-
+	CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTrans, E_FAIL);
 
+	_vec3 PlyerPos;
 	_vec3 a = { 0.f,2.4f,0.f };
-	m_vEye = PlyerPos + a;
-	D3DXVec3Normalize(&m_vLook,&m_vLook);
+	
 	pPlayerTrans->Get_Info(INFO_POS, &PlyerPos);
-
+	D3DXVec3Normalize(&m_vLook, &m_vLook);
 	
 	m_vEye = PlyerPos + a;
 	m_vAt = m_vEye + m_vLook;
@@ -132,4 +118,19 @@ CAimCamera * CAimCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pEy
 void CAimCamera::Free(void)
 {
 	CGameObject::Free();
+}
+void		 CAimCamera::Camera_Setting(_vec3	Target_Pos)
+{
+	CGameObject* pPlayer = (Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
+	NULL_CHECK(pPlayer);
+	CTransform* pPlayerTrans = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	NULL_CHECK(pPlayerTrans);
+
+	_vec3 HitPos = static_cast<CTankSet*>(pPlayer)->Get_HitPos();
+	_vec3 PlyerPos;
+	pPlayerTrans->Get_Info(INFO_POS, &PlyerPos);
+	HitPos.y = PlyerPos.y = 2.4f;
+	_vec3 vLook = HitPos - PlyerPos;
+	m_vLook = *D3DXVec3Normalize(&vLook, &vLook);
+	m_vAt = PlyerPos + m_vLook;
 }
