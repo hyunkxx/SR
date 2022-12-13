@@ -45,18 +45,18 @@ HRESULT CUI_Start::Ready_Object(void)
 
 _int CUI_Start::Update_Object(const _float & fTimeDelta)
 {
-	_int iPlayTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
+	//_int iPlayTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
 
-	if (iPlayTime >= 180)
-	{
-		m_bHelp = true;
-	}
-	if (iPlayTime == 179)
-	{
-		m_bHelp = false;
-	}
+	//if (iPlayTime >= 180)
+	//{
+	//	m_bHelp = true;
+	//}
+	//if (iPlayTime == 179)
+	//{
+	//	m_bHelp = false;
+	//}
 
-	if (Get_DIKeyState_Custom(DIK_F1) == KEY_STATE::TAP)
+	if (Get_DIKeyState_Custom(DIK_F7) == KEY_STATE::TAP)
 	{
 		m_bHelp = !m_bHelp;
 	}

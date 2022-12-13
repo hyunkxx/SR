@@ -193,7 +193,6 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 				m_bStart = true;
 				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
 			}
-
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{
