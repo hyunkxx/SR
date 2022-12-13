@@ -59,7 +59,14 @@ void CBulletMgr::Collect_Object(void)
 		{
 			if ((*iter)->Get_Dead())
 			{
-				m_qBullet_Ammunition_Depot[i].push((*iter));
+				if (dynamic_cast<CBullet*>(*iter))
+					static_cast<CBullet*>(*iter)->Reset_Trans();
+				else if (dynamic_cast<CSmoke_Bullet*>(*iter))
+					static_cast<CSmoke_Bullet*>(*iter)->Reset_Trans();
+				else if (dynamic_cast<CBoom_Bullet*>(*iter))
+					static_cast<CBoom_Bullet*>(*iter)->Reset_Trans();
+
+				m_qBullet_Ammunition_Depot[i].push(*iter);
 				iter = m_vBullet_War[i].erase(iter);
 			}
 			else

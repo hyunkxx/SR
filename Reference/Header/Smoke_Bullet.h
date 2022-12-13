@@ -36,7 +36,7 @@ public:
 	void Set_ID(BULLET_ID eID);
 	BULLET_ID	Get_ID(void) { return m_eID; }
 	void Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float AngleY);
-
+	void		Reset_Trans(void);
 private:
 	_bool			m_bPage = false;
 	_float			m_fFrame = 0.f;

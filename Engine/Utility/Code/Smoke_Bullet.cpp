@@ -30,6 +30,12 @@ HRESULT CSmoke_Bullet::Ready_Object(void)
 
 _int CSmoke_Bullet::Update_Object(const _float & fTimeDelta)
 {
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+		
+
 	m_fSpeed += 2000 * fTimeDelta;
 
 	if (m_bPage)
@@ -102,6 +108,9 @@ _int CSmoke_Bullet::Update_Object(const _float & fTimeDelta)
 
 void CSmoke_Bullet::LateUpdate_Object(void)
 {
+	if (m_bDead)
+		return;
+
 	if (m_bPage)
 	{
 		_vec3	vTemp;
@@ -218,6 +227,12 @@ void CSmoke_Bullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, 
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
 	m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransformCom->Rotation(ROT_Y, AngleY);
+}
+
+void CSmoke_Bullet::Reset_Trans(void)
+{
+	m_pTransformCom->Reset_Trans();
+	m_stBody.vPos = { -100.f,-100.f,-100.f };
 }
 
 CSmoke_Bullet * CSmoke_Bullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -700,6 +700,9 @@ void CStage::Collison_Object(void)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 		{
+			if ((*iter)->Get_Dead())
+				continue;
+
 			// 총알 vs 환경 오브젝트 충돌
 			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
 			{
@@ -715,6 +718,7 @@ void CStage::Collison_Object(void)
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
 					(*iter)->Set_Dead(true);
+					continue;
 				}
 
 			}
@@ -734,6 +738,7 @@ void CStage::Collison_Object(void)
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
 					(*iter)->Set_Dead(true);
+					continue;
 				}
 			}
 
@@ -749,6 +754,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+					continue;
 					//(*iters)->Set_Dead(true);
 
 					/*dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
@@ -773,6 +779,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+					continue;
 					//(*iters)->Set_Dead(true);
 					/*dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
 					m_eData.eID = OBJID::OBJID_BDENERMY;

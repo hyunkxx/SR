@@ -32,6 +32,9 @@ HRESULT CBullet::Ready_Object(void)
 
 _int CBullet::Update_Object(const _float & fTimeDelta)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	m_fAccum += fTimeDelta;
 	m_pTransform->Set_Scale(m_fScale, m_fScale, m_fScale);
 	Update_OBB();
@@ -65,6 +68,9 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 
 void CBullet::LateUpdate_Object(void)
 {
+	if (m_bDead)
+		return;
+
 	CGameObject::LateUpdate_Object();
 
 	m_pTransform->Get_Info(INFO_POS, &m_vPos);
@@ -92,6 +98,7 @@ void CBullet::Render_Object(void)
 void CBullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY)
 {
 	m_pTransform->Reset_Trans();
+	m_stBody.vPos = { -100.f,-100.f,-100.f };
 	m_vPos = vPos;
 	m_vDir = vDir;
 	m_fSpeed = fSpeed;
@@ -132,14 +139,6 @@ void CBullet::Update_OBB(void)
 
 	for (_int i = 0; i < 3; i++)
 		D3DXVec3Normalize(&m_stBody.vDir[i], &m_stBody.vDir[i]);
-
-	m_pTransform->Get_Info(INFO_POS, &m_stHead.vPos);
-	m_pTransform->Get_Info(INFO_RIGHT, &m_stHead.vDir[x]);
-	m_pTransform->Get_Info(INFO_UP, &m_stHead.vDir[y]);
-	m_pTransform->Get_Info(INFO_LOOK, &m_stHead.vDir[z]);
-
-	for (_int i = 0; i < 3; i++)
-		D3DXVec3Normalize(&m_stHead.vDir[i], &m_stHead.vDir[i]);
 }
 void CBullet::Set_ID(BULLET_ID eID)
 {
@@ -164,6 +163,18 @@ void CBullet::Set_ID(BULLET_ID eID)
 		m_fHitRange = 3.f;
 		m_fScale = 3.f;
 	}
+}
+
+void CBullet::Reset_Trans(void)
+{
+	m_pTransform->Reset_Trans();
+
+	m_vPos = {-100.f, -100.f, -100.f};
+	m_vDir = { -100.f, -100.f, -100.f };
+	m_fSpeed = 0.f;
+	m_fAccum = 0.f;
+	m_fAngleX = 0.f;
+	m_fAngleY = 0.f;
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)
