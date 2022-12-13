@@ -168,7 +168,7 @@ void CBullet::Set_ID(BULLET_ID eID)
 void CBullet::Reset_Trans(void)
 {
 	m_pTransform->Reset_Trans();
-
+	m_stBody.vPos = { -100.f,-100.f ,-100.f };
 	m_vPos = {-100.f, -100.f, -100.f};
 	m_vDir = { -100.f, -100.f, -100.f };
 	m_fSpeed = 0.f;
