@@ -481,7 +481,10 @@ void CBigTank::Camera_Change(void)
 	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
 	{
 		if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+		{
 			Engine::Camera_Change(L"AimCamera");
+			Engine::Get_Camera()->Camera_Setting(_vec3{ 0.f,0.f,0.f });
+		}
 		else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 			Engine::Camera_Change(L"TankCamera");
 	}
