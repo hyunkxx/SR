@@ -35,6 +35,8 @@ private:
 	_bool				m_bStrike = false;
 	_float				m_fDaedCount = 0.f;
 	_bool				m_bRock = false;
+
+	_bool				m_bSetting = false;
 public:
 	static CBoom_Support*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

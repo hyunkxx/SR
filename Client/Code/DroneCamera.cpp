@@ -58,6 +58,9 @@ void CDroneCamera::LateUpdate_Object(void)
 
 void CDroneCamera::Reset_Pos(void)
 {
+	Engine::StopSound(DRONE_SOUND);
+	Engine::PlaySound_SR(L"Drone.mp3", DRONE_SOUND, 0.2f);
+	
 	m_vEye.y = 0.f;
 }
 

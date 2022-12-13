@@ -216,8 +216,6 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
-		
-				Engine::PlaySound_SR(L"	Aim_Sound.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
@@ -515,6 +513,10 @@ void CLongTank::Camera_Change(void)
 		}
 		else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 			Engine::Camera_Change(L"TankCamera");
+
+		Engine::StopSound(CAMERA_CHANGE_SOUND);
+		Engine::PlaySound_SR(L"Aim_Sound.wav", CAMERA_CHANGE_SOUND, CUI_Volume::s_fBGMSound);
+	
 	}
 }
 

@@ -39,19 +39,46 @@ _int CBoom_Support::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 		return OBJ_NOEVENT;
 
+	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
+
 	if (m_bStrike)
 	{
 		m_fDaedCount += fTimeDelta;
+
+		if (0.1f > m_fDaedCount)
+		{
+			_vec3 Pos;
+			m_pTransformCom->Get_Info(INFO_POS, &Pos);
+			Pos.y = -0.5f;
+			m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
+
+		}
+		else if (0.2f > m_fDaedCount)
+		{
+			_vec3 Pos;
+			m_pTransformCom->Get_Info(INFO_POS, &Pos);
+			Pos.y = 0.1f;
+			m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
+		}
+
 		if (6.f < m_fDaedCount)
 		{
 			m_fDaedCount = 0.f;
 			m_bDead = true;
 			CTankManager::GetInstance()->MouseLBTLock(false);
 		}
+		if (1.f < m_fDaedCount && !m_bSetting)
+		{
+			Engine::StopSound(DRONE_SOUND);
+			m_bSetting = true;
+			_vec3 Pos;
+			m_pTransformCom->Get_Info(INFO_POS, &Pos);
+			static_cast<CBomber*>(Engine::Get_Object(L"GameLogic", L"Bomber"))->Strike(Pos);
+		}
 	}
+	else
+		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200 * fTimeDelta));
 
-
-	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200 * fTimeDelta));
 	Key_Input(fTimeDelta);
 
 
@@ -72,7 +99,6 @@ void CBoom_Support::LateUpdate_Object(void)
 
 void CBoom_Support::Render_Object(void)
 {
-
 	if (m_bDead)
 		return;
 
@@ -89,7 +115,9 @@ void CBoom_Support::RenderGUI(void)
 
 void CBoom_Support::Air_Rain(_vec3	_vPos)
 {
+	m_fScale = 5.f;
 	m_bStrike = false;
+	m_bSetting = false;
 	m_bDead = false;
 	m_bRock = false;
 	m_fDaedCount = 0.f;
@@ -122,11 +150,10 @@ void CBoom_Support::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Get_DIMouseState(DIM_LB) & 0x80 && !m_bStrike)
 	{
-		_vec3 Pos;
-		m_pTransformCom->Get_Info(INFO_POS, &Pos);
-		static_cast<CBomber*>(Engine::Get_Object(L"GameLogic", L"Bomber"))->Strike(Pos);
 		m_bStrike = true;
 		m_bRock = true;
+		Engine::StopSound(CAMERA_CHANGE_SOUND);
+		Engine::PlaySound_SR(L"bbibic.mp3", CAMERA_CHANGE_SOUND, 1.f);
 	}
 
 	m_pTransformCom->Move_Pos(&Move);
