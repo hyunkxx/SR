@@ -144,9 +144,11 @@ const _vec3 CTankSet::Get_Info(void)
 
 void CTankSet::Move_Info(_vec3 _Info)
 {
+	_vec3 Pos;
 	m_pTransformBody->Move_Pos(&_Info);
-	m_pTransformHead->Move_Pos(&_Info);
-	m_pTransformPosin->Move_Pos(&_Info);
+	m_pTransformBody->Get_Info(INFO_POS, &Pos);
+	m_pTransformHead->Set_Pos(Pos.x, Pos.y, Pos.z);
+	m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
 }
 
 void CTankSet::OBB_Collision_EX(void)
