@@ -92,12 +92,6 @@
     <Filter Include="01. Scene\02. MainMenu\ObjectMesh">
       <UniqueIdentifier>{837fa4f2-2c9d-4eb1-872a-2cc759f7485c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="99. Manager">
-      <UniqueIdentifier>{dac47d43-ceac-41c5-8b9f-e2bc85714c89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="99. Manager\PlayerManager">
-      <UniqueIdentifier>{72737a64-980e-4b76-8061-03ab78b20aef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. Building">
       <UniqueIdentifier>{2a388c38-b057-4880-a0db-73eec77a08ae}</UniqueIdentifier>
     </Filter>
@@ -277,6 +271,20 @@
     </Filter>
     <Filter Include="02. GameObject\09.Skill\BattleShip\BattleShip_Support">
       <UniqueIdentifier>{eb9d7680-4dff-4fdc-bef1-ad5ce4b6a899}</UniqueIdentifier>
+    <Filter Include="02. GameObject\93.UI\04. FactoryUI">
+      <UniqueIdentifier>{208b88f5-d068-4655-843e-ec16c7fdd178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10.GameSystem">
+      <UniqueIdentifier>{abf2afe4-4e33-47b9-bc56-2cbd4434b99e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10.GameSystem\00. Manager">
+      <UniqueIdentifier>{dac47d43-ceac-41c5-8b9f-e2bc85714c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10.GameSystem\00. Manager\TankManager">
+      <UniqueIdentifier>{72737a64-980e-4b76-8061-03ab78b20aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10.GameSystem\00. Manager\GameMode">
+      <UniqueIdentifier>{b18a4c7a-bfe1-47ee-8438-d8544e3b9b5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -425,7 +433,7 @@
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TankManager.h">
-      <Filter>99. Manager\PlayerManager</Filter>
+      <Filter>02. GameObject\10.GameSystem\00. Manager\TankManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TankSet.h">
       <Filter>02. GameObject\00. Tank\00.base</Filter>
@@ -489,6 +497,14 @@
     </ClInclude>
     <ClInclude Include="..\Header\BattleShip.h">
       <Filter>02. GameObject\09.Skill\BattleShip</Filter>
+    <ClInclude Include="..\Header\ButtonUI.h">
+      <Filter>02. GameObject\93.UI\04. FactoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\VehicleSelector.h">
+      <Filter>02. GameObject\10.GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GameMode.h">
+      <Filter>02. GameObject\10.GameSystem\00. Manager\GameMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -628,7 +644,7 @@
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TankManager.cpp">
-      <Filter>99. Manager\PlayerManager</Filter>
+      <Filter>02. GameObject\10.GameSystem\00. Manager\TankManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TankSet.cpp">
       <Filter>02. GameObject\00. Tank\00.base</Filter>
@@ -692,6 +708,14 @@
     </ClCompile>
     <ClCompile Include="..\Code\BattleShip.cpp">
       <Filter>02. GameObject\09.Skill\BattleShip</Filter>
+    <ClCompile Include="..\Code\ButtonUI.cpp">
+      <Filter>02. GameObject\93.UI\04. FactoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VehicleSelector.cpp">
+      <Filter>02. GameObject\10.GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameMode.cpp">
+      <Filter>02. GameObject\10.GameSystem\00. Manager\GameMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

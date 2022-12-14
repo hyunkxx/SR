@@ -46,14 +46,17 @@
 #include "Bomber.h"
 #include "BattleShip.h"
 
+#include "ButtonUI.h"
+
 #include "EffectPool.h"
 #include "EffectManager.h"
 #include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
+#include "GameMode.h"
 
-
-CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
+CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) 
+	: CScene(pGraphicDev)
 {
 }
 
@@ -72,6 +75,8 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
+
+	CGameMode::GetInstance()->InitGameMode(500, 20000, 800);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -114,24 +119,24 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
-	// _DEBUG¿ë Ãâ·Â
+	// _DEBUGï¿½ï¿½ ï¿½ï¿½ï¿½
 	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
-		// ½ºÅ×ÀÌÁö Á¦ÇÑ ½Ã°£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
 
-		// ÆÀ Å³ Ä«¿îÆ®								
+		// ï¿½ï¿½ Å³ Ä«ï¿½ï¿½Æ®								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
-		// ÅÊÅ© Á¾·ù or ÀÌ¸§								27.45% »¡°­, 28.63% ³ì»ö ¹× 39.22%
+		// ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ or ï¿½Ì¸ï¿½								27.45% ï¿½ï¿½ï¿½ï¿½, 28.63% ï¿½ï¿½ï¿½ ï¿½ï¿½ 39.22%
 		if (!showF1Win)
 		{
 			Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX, WINCY_HALF + PERCENTY * 20.f), D3DXCOLOR(0.2745f, 0.2863f, .3922f, 1.f));
@@ -160,6 +165,8 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 {
 	CLayer*		pLayer = CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	ShowCursor(false);
 
 	CGameObject*		pGameObject = nullptr;
 
@@ -242,6 +249,8 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 {
+	ShowCursor(false);
+
 	CLayer*		pLayer = CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
@@ -553,6 +562,48 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
 
+	/* Select Vehicle UI */
+	_vec3 vPos;
+	ZeroMemory(&vPos, sizeof(_vec3));
+
+	vPos = { 0.f, 0.f, 0.f };
+	pGameObject = m_pButton[0] = CButtonUI::Create(m_pGraphicDev, VEHICLE::HUMVEE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_00", pGameObject), E_FAIL);
+
+	vPos = { 80.f, 0.f, 0.f };
+	pGameObject = m_pButton[1] = CButtonUI::Create(m_pGraphicDev, VEHICLE::SMALL_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_01", pGameObject), E_FAIL);
+	vPos = { 160.f, 0.f, 0.f };
+	pGameObject = m_pButton[2] = CButtonUI::Create(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_02", pGameObject), E_FAIL);
+
+	vPos = { 240.f, 0.f, 0.f };
+	pGameObject = m_pButton[3] = CButtonUI::Create(m_pGraphicDev, VEHICLE::BIG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_03", pGameObject), E_FAIL);
+
+	vPos = { 320.f, 0.f, 0.f };
+	pGameObject = m_pButton[4] = CButtonUI::Create(m_pGraphicDev, VEHICLE::LONG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_04", pGameObject), E_FAIL);
+
+	for (int i = 0 ; i < 3 ; ++i)
+	{
+		vPos = { 200.f * (i + 1), 0.f, 0.f };
+		static_cast<CButtonUI*>(m_pButton[i])->Set_PosX(vPos.x);
+	}
+
+	vPos = { 290.f , 380.f, 0.f };
+	static_cast<CButtonUI*>(m_pButton[3])->Set_PosX(vPos.x);
+	static_cast<CButtonUI*>(m_pButton[3])->Set_PosY(vPos.y);
+
+	vPos = { 500.f , 380.f, 0.f };
+	static_cast<CButtonUI*>(m_pButton[4])->Set_PosX(vPos.x);
+	static_cast<CButtonUI*>(m_pButton[4])->Set_PosY(vPos.y);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -601,7 +652,7 @@ void CStage::Collison_Object(void)
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 			{
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
-				CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"ºÎ»ç¼ö"), wstring(L"º®°ú ºÎµúÇû½À´Ï´Ù!"));
+				CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"ï¿½Î»ï¿½ï¿½"), wstring(L"ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!"));
 			}
 		}
 		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
@@ -695,7 +746,6 @@ void CStage::Collison_Object(void)
 		}
 	}
 
-	//¿¹½Ã) ÃÑ¾Ë°ú Ãæµ¹Ã³¸® ÇÏ°í ½ÍÀº¾Öµé ÀÌ·¸°Ô Ãß°¡ÇÏ¸é µÊ
 	for (int i = 0; BULLET_ID::MASHINE_BULLET_RELOAD > i; i++)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
@@ -703,7 +753,7 @@ void CStage::Collison_Object(void)
 			if ((*iter)->Get_Dead())
 				continue;
 
-			// ÃÑ¾Ë vs È¯°æ ¿ÀºêÁ§Æ® Ãæµ¹
+			// ï¿½Ñ¾ï¿½ vs È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½æµ¹
 			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -715,15 +765,17 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
+					if(i == BULLET_ID::MASHINE_BULLET)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+					else if (i == BULLET_ID::CANNONBALL)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 					(*iter)->Set_Dead(true);
 					continue;
 				}
-
 			}
 
-			//ÃÑ¾Ë vs °ÔÀÓ ¿ÀºêÁ§Æ® Ãæµ¹
+			//ï¿½Ñ¾ï¿½ vs ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½æµ¹
 			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -825,7 +877,7 @@ void CStage::Collison_Object(void)
 				continue;
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-			{//¾Õ¿¡ÀÖ´Â°Å ºñ±³ÇÑ´ÙÀ½ µÚ¿¡ÀÖ´Â°Å¸¸ exºÎ¸£±â
+			{//ï¿½Õ¿ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½Ö´Â°Å¸ï¿½ exï¿½Î¸ï¿½ï¿½ï¿½
 				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
 				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
 				if (A->vPos.x > B->vPos.x)
@@ -849,7 +901,7 @@ void CStage::Collison_Object(void)
 				continue;
 
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-			{//¾Õ¿¡ÀÖ´Â°Å ºñ±³ÇÑ´ÙÀ½ µÚ¿¡ÀÖ´Â°Å¸¸ exºÎ¸£±â
+			{//ï¿½Õ¿ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½Ö´Â°Å¸ï¿½ exï¿½Î¸ï¿½ï¿½ï¿½
 				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
 				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
 				if (A->vPos.z > B->vPos.z)
@@ -865,7 +917,7 @@ void CStage::Collison_Object(void)
 
 void CStage::Key_Input(const _float& fTimeDelta)
 {
-	// Test HP UI ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ »èÁ¦ ¿¹Á¤
+	// Test HP UI ï¿½Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #pragma region
 	CGameObject* pPlayerHp_UI = Engine::Get_Object(L"UI", L"Player_Hp2");
 

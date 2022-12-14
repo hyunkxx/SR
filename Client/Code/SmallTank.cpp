@@ -126,7 +126,7 @@ HRESULT CSmallTank::Add_Component(void)
 
 	FAILED_CHECK_RETURN(__super::Add_Component(), E_FAIL);
 
-	/* µ¿Çö ¼¼ÆÃ ¹ß»çÀ§Ä¡´Â ¾îµð? */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½? */
 	Posin_Setting(_vec3(0.f, 2.f, 0.f));
 	Head_Setting(_vec3(0.f, 2.f, 0.f));
 	Body_Setting(_vec3(0.f, 2.f, 0.f));
@@ -141,7 +141,7 @@ HRESULT CSmallTank::Ready_Object(void)
 	m_stInfo.fAccel_Ad = data.fAccel_Ad;
 	m_stInfo.fAccel_Back = data.fAccel_Back;
 
-	//ÃÖ°í¼Óµµ Á¦ÇÑ
+	//ï¿½Ö°ï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
 	m_stInfo.fAccel_top_speed = data.fAccel_top_speed;
 	m_stInfo.fBack_top_speed = data.fBack_top_speed;
 
@@ -353,7 +353,7 @@ void CSmallTank::Head_Spin(const _float & fTimeDelta)
 		m_pTransformHead->Get_Info(INFO_LOOK, &pPlayerLook);
 		pPlayerPos.y = 0.f;
 		_vec3 Dir = Engine::Get_Camera()->Get_Look();
-		// ¿Í¼­ Ä«¸Þ¶ó ·èº¤ÅÍ ¹æÇâ°ú Æ÷½Å ¹æÇâ ºñ±³ÇØ¼­ ¿òÁ÷ÀÌ°Ô ÇÏ±â
+		// ï¿½Í¼ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½èº¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ï±ï¿½
 
 		D3DXVec3Normalize(&Dir, &Dir);
 		D3DXVec3Normalize(&pPlayerLook, &pPlayerLook);
@@ -571,7 +571,7 @@ void CSmallTank::Update_UI(void)
 
 
 	_float fScale[ROT_END];
-	//°æÀüÂ÷ ³ôÀÌ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
 	{
 		UI_fScaleX = 2.f;

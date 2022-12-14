@@ -173,6 +173,10 @@ HRESULT CHumvee::Ready_Object(void)
 	m_stInfo.fLowAngle = tankData.fLowAngle;
 	m_stInfo.TopAngle = tankData.TopAngle;
 
+	m_stInfo.fDamage = tankData.fDamage;
+	m_stInfo.fCurHP = tankData.fCurHP;
+	m_stInfo.fMaxHP = tankData.fMaxHP;
+
 	//UI_HP
 	UI_Orgin_HP = UI_fHP = tankData.fMaxHP;
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
@@ -221,7 +225,6 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 				m_bStart = true;
 				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
 			}
-
 		}
 		if (Get_DIKeyState_Custom(DIK_J) == KEY_STATE::TAP)
 		{

@@ -34,6 +34,11 @@ private:
 private:
 	EData    m_eData;
 	CGameObject* m_pEffectManager;
+	CGameObject* m_pFactoryUI;
+
+	/* Button UI */
+	//bool m_bShowSelectVehicle = false;
+	CGameObject* m_pButton[(UINT)VEHICLE::MAX];
 
 	void Key_Input(const _float& fTimeDelta);
 
@@ -42,6 +47,6 @@ private:
 	wstring m_szChatting = L"";
 	_tchar	m_PlayerChating[128] = L"";
 	_tchar	m_ChattingWin[128] = L"";
-	_uint				m_iKillCount = 0;
+	_uint	m_iKillCount = 0;
 };
 

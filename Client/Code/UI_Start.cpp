@@ -45,18 +45,18 @@ HRESULT CUI_Start::Ready_Object(void)
 
 _int CUI_Start::Update_Object(const _float & fTimeDelta)
 {
-	_int iPlayTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
+	//_int iPlayTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
 
-	if (iPlayTime >= 183)
-	{
-		m_bHelp = true;
-	}
-	if (iPlayTime == 182)
-	{
-		m_bHelp = false;
-	}
+	//if (iPlayTime >= 180)
+	//{
+	//	m_bHelp = true;
+	//}
+	//if (iPlayTime == 179)
+	//{
+	//	m_bHelp = false;
+	//}
 
-	if (Get_DIKeyState_Custom(DIK_F1) == KEY_STATE::TAP)
+	if (Get_DIKeyState_Custom(DIK_F7) == KEY_STATE::TAP)
 	{
 		m_bHelp = !m_bHelp;
 	}
@@ -80,17 +80,17 @@ void CUI_Start::Render_Object(void)
 	{
 		wstring HelpWinFont1 , HelpWinFont2;
 
-		HelpWinFont1 = L"G: ÅÊÅ© ½Ãµ¿ ON	 \n\nW S A D : ÀÌµ¿ \n\nÁÂÅ¬¸¯: Æ÷Åº °ø°Ý \n\nV : ½ÃÁ¡ º¯È¯\n\nK : °øÁß Æø°Ý Áö¿ø \n\nENTER : Ã¤ÆÃ		\n\nENTER + NUM : Àû ÅÊÅ© ¼ýÀÚ\n\n";
+		HelpWinFont1 = L"G: ï¿½ï¿½Å© ï¿½Ãµï¿½ ON	 \n\nW S A D : ï¿½Ìµï¿½ \n\nï¿½ï¿½Å¬ï¿½ï¿½: ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ \n\nV : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯\n\nK : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ \n\nENTER : Ã¤ï¿½ï¿½		\n\nENTER + NUM : ï¿½ï¿½ ï¿½ï¿½Å© ï¿½ï¿½ï¿½ï¿½\n\n";
 															
-		HelpWinFont2 = L"¼ýÀÚ 1  : ½Ã¾ß ÁÜ ÀÎ	 \n\n¼ýÀÚ 2  : ½Ã¾ß ÁÜ ¾Æ¿ô	 \n\nG : (ÀÚÁÖÆ÷) ¿¬¸·Åº \n\nC : ÀÌ¸ðÆ¼ÄÜ \n\nF1 : µµ¿ò¸»\n\nF3 : º¼·ý ¿É¼Ç";
+		HelpWinFont2 = L"ï¿½ï¿½ï¿½ï¿½ 1  : ï¿½Ã¾ï¿½ ï¿½ï¿½ ï¿½ï¿½	 \n\nï¿½ï¿½ï¿½ï¿½ 2  : ï¿½Ã¾ï¿½ ï¿½ï¿½ ï¿½Æ¿ï¿½	 \n\nG : (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½Åº \n\nC : ï¿½Ì¸ï¿½Æ¼ï¿½ï¿½ \n\nF1 : ï¿½ï¿½ï¿½ï¿½\n\nF3 : ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½";
 			
-		// ÀÓ½Ã ¼³Á¤ -> »èÁ¦ ( º¸¿©ÁÙ ¶©, ¹Ø¿¡ °É·Î)
-		wstring HelpWinFont3{ L" ÀÓ½Ã ¼³Á¤\nÁÂ¿ì È­»ìÇ¥ : ÇÃ·¹ÀÌ¾î Ã¼·Â °¨¼Ò.\t\t F11 Æ÷½ÅUI Á¦°Å\nÇèºñ,·ÕÅÊ : Á×´ÂÅ°->m" };
+		// ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½Ø¿ï¿½ ï¿½É·ï¿½)
+		wstring HelpWinFont3{ L" ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½\nï¿½Â¿ï¿½ È­ï¿½ï¿½Ç¥ : ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.\t\t F11 ï¿½ï¿½ï¿½ï¿½UI ï¿½ï¿½ï¿½ï¿½\nï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ : ï¿½×´ï¿½Å°->m" };
 		Render_Font(L"Font_Retro", (HelpWinFont1).c_str(), &_vec2(25.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		Render_Font(L"Font_Retro", (HelpWinFont2).c_str(), &_vec2(400.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		Render_Font(L"Font_Retro", (HelpWinFont3).c_str(), &_vec2(25, 400.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
-		// ³ªÁß¿¡ °íÁ¤ µÉ ¿øº» À§Ä¡
+		// ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 	/*	Render_Font(L"Font_Retro1", (HelpWinFont1).c_str(), &_vec2(50.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		
 		Render_Font(L"Font_Retro1", (HelpWinFont2).c_str(), &_vec2(400.f, 100.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));*/

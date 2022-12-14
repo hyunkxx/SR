@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\TankManager.h"
 
+#include "Export_Function.h"
+
 #include "Humvee.h"
 #include "SmallTank.h"
 #include "MiddleTank.h"
@@ -53,10 +55,10 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 		break;
 	case Engine::VEHICLE::MAX:
 		MSG_BOX("차량 인덱스 범위 초과");
-		break;
+		return;
 	default:
 		MSG_BOX("차량 인덱스 범위 초과");
-		break;
+		return;
 	}
 }
 
@@ -87,7 +89,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 400;
 
 
-	tankData[(UINT)VEHICLE::SMALL_TANK].strName = L"CV90 경전차";
+	tankData[(UINT)VEHICLE::SMALL_TANK].strName = L"A - 44";
 	tankData[(UINT)VEHICLE::SMALL_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].fMaxHP = 500.f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].fCurHP = 500.f;
@@ -111,7 +113,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::SMALL_TANK].fReloadTime = 0.5f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].iCannonSpeed = 500;
 
-	tankData[(UINT)VEHICLE::MIDDLE_TANK].strName = L"T62 중형전차";
+	tankData[(UINT)VEHICLE::MIDDLE_TANK].strName = L"TE6E4";
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fMaxHP = 1000.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fCurHP = 1000.f;
@@ -135,7 +137,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fReloadTime = 2.5f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].iCannonSpeed = 700;
 
-	tankData[(UINT)VEHICLE::BIG_TANK].strName = L"Tiger 중전차";
+	tankData[(UINT)VEHICLE::BIG_TANK].strName = L"KING TIGER";
 	tankData[(UINT)VEHICLE::BIG_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fMaxHP = 2000.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fCurHP = 2000.f;
@@ -159,7 +161,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::BIG_TANK].fReloadTime = 5.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].iCannonSpeed = 800;
 
-	tankData[(UINT)VEHICLE::LONG_TANK].strName = L"K-9 자주곡사포";
+	tankData[(UINT)VEHICLE::LONG_TANK].strName = L"M55";
 	tankData[(UINT)VEHICLE::LONG_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fMaxHP = 1200.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fCurHP = 1100.f;

@@ -55,7 +55,7 @@ public:
 
 	const _vec3				Get_HitPos(void) { return m_fHitPos; }
 	void				Set_Rock(_bool Rock) { m_bRock = Rock; }
-
+	
 	const Tank_State Get_TankInfo(void) { return  m_stInfo; }
 
 protected:
