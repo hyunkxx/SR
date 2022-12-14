@@ -132,10 +132,10 @@ void CBoom_Bullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _
 {
 	m_pTransformCom->Reset_Trans();
 
-	m_fSpeed = 100.f;
+	m_fSpeed = 200.f;
 	m_vDir = vDir;
 	m_vPos = vPos;
-	m_fScale = 5.f;
+	m_fScale = 3.f;
 	m_fAccum = 0.f;
 	m_bDead = false;
 	D3DXVec3Normalize(&m_vDir, &m_vDir);

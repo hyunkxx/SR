@@ -16,6 +16,7 @@
 #include "BoomCamera.h"
 
 #include "Boom_Support.h"
+#include "BattleShip_Support.h"
 
 #include"Default_Enermy.h"
 #include "TestBox.h"
@@ -45,6 +46,7 @@
 #include "BoomEffect.h"
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
+#include "BattleShip.h"
 
 #include "EffectPool.h"
 #include "EffectManager.h"
@@ -279,7 +281,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Bomber", pGameObject), E_FAIL);
 
-
+	pGameObject = CBattleShip::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BattleShip", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
 	for (_int i = 0; 200 > i; i++)
 	{
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
@@ -324,6 +329,11 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boom_Support", pGameObject), E_FAIL);
+
+	pGameObject = CBattleShip_Support::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BattleShip_Support", pGameObject), E_FAIL);
+
 
 	//bottomdirenermy
 	_int iBottomDir_Count = 5;

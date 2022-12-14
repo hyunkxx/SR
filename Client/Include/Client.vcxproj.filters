@@ -251,9 +251,6 @@
     <Filter Include="02. GameObject\09.Skill\Bomber">
       <UniqueIdentifier>{b9109e8d-41d0-457a-836e-a94f515ca7fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\09.Skill\Boom_Support">
-      <UniqueIdentifier>{5ce7a8c3-ac5b-4efe-871a-a55a95372fb7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\04.Camera\08.DroneCamera">
       <UniqueIdentifier>{0856b73d-430b-43a2-9f92-164e7f9c8df4}</UniqueIdentifier>
     </Filter>
@@ -271,6 +268,15 @@
     </Filter>
     <Filter Include="02. GameObject\02. BackGround">
       <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09.Skill\Bomber\Boom_Support">
+      <UniqueIdentifier>{5ce7a8c3-ac5b-4efe-871a-a55a95372fb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09.Skill\BattleShip">
+      <UniqueIdentifier>{690e699d-50f2-488e-bc40-8e519e9facf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09.Skill\BattleShip\BattleShip_Support">
+      <UniqueIdentifier>{eb9d7680-4dff-4fdc-bef1-ad5ce4b6a899}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -455,7 +461,7 @@
       <Filter>02. GameObject\09.Skill\Bomber</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Boom_Support.h">
-      <Filter>02. GameObject\09.Skill\Boom_Support</Filter>
+      <Filter>02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DroneCamera.h">
       <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
@@ -477,6 +483,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_Compass.h">
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShip_Support.h">
+      <Filter>02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleShip.h">
+      <Filter>02. GameObject\09.Skill\BattleShip</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -652,7 +664,7 @@
       <Filter>02. GameObject\09.Skill\Bomber</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Boom_Support.cpp">
-      <Filter>02. GameObject\09.Skill\Boom_Support</Filter>
+      <Filter>02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DroneCamera.cpp">
       <Filter>02. GameObject\04.Camera\08.DroneCamera</Filter>
@@ -674,6 +686,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Compass.cpp">
       <Filter>02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BattleShip_Support.cpp">
+      <Filter>02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BattleShip.cpp">
+      <Filter>02. GameObject\09.Skill\BattleShip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

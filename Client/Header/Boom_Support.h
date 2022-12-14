@@ -21,7 +21,6 @@ public:
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
 	virtual void		RenderGUI(void)override;
-
 public:
 	void				Air_Rain(_vec3	_vPos);
 private:
@@ -43,5 +42,4 @@ private:
 	virtual void Free(void) override;
 
 };
-
 

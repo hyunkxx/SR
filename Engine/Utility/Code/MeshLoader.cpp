@@ -74,7 +74,12 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"Turret_body.bin", L"Turret_body");
 	LoadMesh(L"Turret_head.bin", L"Turret_head");
 	LoadMesh(L"Turret_posin.bin", L"Turret_posin");
-
+	//BattleShip
+	LoadMesh(L"Ham_body.bin", L"Ham_body");
+	LoadMesh(L"Ham_head.bin", L"Ham_head");
+	LoadMesh(L"Ham_posin.bin", L"Ham_posin");
+	LoadMesh(L"Ham_head.bin", L"Ham_head2");
+	LoadMesh(L"Ham_posin.bin", L"Ham_posin2");
 	//Bomber
 	LoadMesh(L"air_ally_body.bin", L"air_ally_body");
 	//Boom

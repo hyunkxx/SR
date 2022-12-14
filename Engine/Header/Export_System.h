@@ -40,6 +40,7 @@ inline void				Render_Font(const _tchar* pFontTag,	const _tchar* pString,	const 
 inline _byte		Get_DIKeyState(_ubyte byKeyID);
 inline _byte		Get_DIMouseState(MOUSEKEYSTATE byMouseID);
 inline KEY_STATE	Get_DIKeyState_Custom(_int _key);
+inline KEY_STATE	Get_DIMouseState_Custom(MOUSEKEYSTATE _key);
 inline _long		Get_DIMouseMove(MOUSEMOVESTATE eMoveState);
 inline	HRESULT		Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 inline  void		Update_InputDev(void);

@@ -48,7 +48,33 @@ void CInputDev::Update_InputDev(void)
 			m_strKeyList[i].bPrevPush = false;
 		}
 	}
-
+	for (int i = 0; DIM_END > i; i++)
+	{
+		if (Get_DIMouseState((MOUSEKEYSTATE)i) & 0x80)
+		{
+			if (m_strMouseList[i].bPrevPush)
+			{
+				m_strMouseList[i].eKeyState = KEY_STATE::HOLD;
+			}
+			else
+			{
+				m_strMouseList[i].eKeyState = KEY_STATE::TAP;
+			}
+			m_strMouseList[i].bPrevPush = true;
+		}
+		else
+		{
+			if (m_strMouseList[i].bPrevPush)
+			{
+				m_strMouseList[i].eKeyState = KEY_STATE::AWAY;
+			}
+			else
+			{
+				m_strMouseList[i].eKeyState = KEY_STATE::NONE;
+			}
+			m_strMouseList[i].bPrevPush = false;
+		}
+	}
 }
 
 HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)

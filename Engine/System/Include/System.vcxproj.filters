@@ -72,9 +72,6 @@
     <ClInclude Include="..\..\Header\InputDev.h">
       <Filter>04. InputDev</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\KeyMgr.h">
-      <Filter>04. InputDev</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
       <Filter>05.CollisionMgr</Filter>
     </ClInclude>
@@ -114,9 +111,6 @@
       <Filter>03. Font\FontMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InputDev.cpp">
-      <Filter>04. InputDev</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\KeyMgr.cpp">
       <Filter>04. InputDev</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CollisionMgr.cpp">

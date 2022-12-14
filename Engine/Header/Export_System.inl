@@ -61,7 +61,10 @@ KEY_STATE	Get_DIKeyState_Custom(_int _key)
 {
 	return  CInputDev::GetInstance()->Get_DIKeyState_Custom(_key);
 }
-
+KEY_STATE	Get_DIMouseState_Custom(MOUSEKEYSTATE _key)
+{
+	return  CInputDev::GetInstance()->Get_DIMouseState_Custom(_key);
+}
 _long		Get_DIMouseMove(MOUSEMOVESTATE eMoveState)
 {
 	return CInputDev::GetInstance()->Get_DIMouseMove(eMoveState);

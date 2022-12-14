@@ -37,9 +37,7 @@ HRESULT CDroneCamera::Ready_Object(const _vec3 * pEye, const _vec3 * pAt, const 
 _int CDroneCamera::Update_Object(const _float & fTimeDelta)
 {
 	_vec3 TargetPos;
-	CGameObject* pTarget = (Engine::Get_Object(L"GameLogic", L"Boom_Support"));
-	NULL_CHECK_RETURN(pTarget, E_FAIL);
-	static_cast<CTransform*>(pTarget->Get_Component(L"Proto_Transform", ID_DYNAMIC))->Get_Info(INFO_POS, &TargetPos);
+	m_pTargetTrans->Get_Info(INFO_POS, &TargetPos);
 	m_vEye.x = TargetPos.x;
 	m_vEye.z = TargetPos.z - 5;
 	m_vAt = TargetPos;
@@ -60,8 +58,17 @@ void CDroneCamera::Reset_Pos(void)
 {
 	Engine::StopSound(DRONE_SOUND);
 	Engine::PlaySound_SR(L"Drone.mp3", DRONE_SOUND, 0.2f);
-	
+
 	m_vEye.y = 0.f;
+}
+void CDroneCamera::Camera_Setting(_vec3	Target_Pos)
+{
+
+}
+
+void CDroneCamera::Target_Setting(CTransform * Target_Pos)
+{
+	m_pTargetTrans = Target_Pos;
 }
 
 CDroneCamera * CDroneCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pEye, const _vec3 * pAt, const _vec3 * pUp, const _float & fFov, const _float & fAspect, const _float & fNear, const _float & fFar)

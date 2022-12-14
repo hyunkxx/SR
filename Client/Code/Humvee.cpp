@@ -9,6 +9,7 @@
 #include "Boom_Support.h"
 #include "UI_Volume.h"
 #include "Boom_Support.h"
+#include "BattleShip_Support.h"
 
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
@@ -221,6 +222,16 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
 			}
 
+		}
+		if (Get_DIKeyState_Custom(DIK_J) == KEY_STATE::TAP)
+		{
+
+			m_bStart = false;
+			m_fEngineCount = 0.f;
+			_vec3 Pos;
+			m_pTransformBody->Get_Info(INFO_POS, &Pos);
+			if (dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support")))
+				dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support"))->Air_Rain(Pos);
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
 		{

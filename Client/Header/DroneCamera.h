@@ -1,6 +1,9 @@
 #pragma once
 #include "Camera.h"
 
+BEGIN(Engine)
+class CTransform;
+END
 class CDroneCamera :
 	public CCamera
 {
@@ -15,7 +18,8 @@ public:
 	virtual const   _vec3		Get_Info(void) { return _vec3(0.f, 0.f, 0.f); };
 	virtual			void		Move_Info(_vec3 _Info) {};
 	void			Reset_Pos(void);
-	virtual void		 Camera_Setting(_vec3	Target_Pos) {}
+	virtual void		 Camera_Setting(_vec3	Target_Pos);
+	void		 Target_Setting(CTransform*	Target_Pos);
 public:
 	static	CDroneCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,
@@ -25,9 +29,9 @@ public:
 		const _float& fAspect = (_float)(WINCX) / WINCY,
 		const _float& fNear = 0.1f,
 		const _float& fFar = 1000.f);
-
+private:
+	CTransform* m_pTargetTrans = nullptr;
 private:
 	virtual void Free(void) override;
 
 };
-

@@ -20,7 +20,6 @@ CBoom_Support::CBoom_Support(const CBoom_Support & rhs)
 
 CBoom_Support::~CBoom_Support()
 {
-
 }
 
 HRESULT CBoom_Support::Ready_Object(void)
@@ -128,7 +127,11 @@ void CBoom_Support::Air_Rain(_vec3	_vPos)
 	// 여기에 카메라 체인지로 폭격 카메라 넣어주기
 	Engine::Camera_Change(L"DroneCamera");
 	if (dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
+	{
 		dynamic_cast<CDroneCamera*>(Engine::Get_Camera())->Reset_Pos();
+		dynamic_cast<CDroneCamera*>(Engine::Get_Camera())->Target_Setting(m_pTransformCom);
+	}
+
 	static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Set_Rock(true);
 }
 
@@ -148,7 +151,7 @@ void CBoom_Support::Key_Input(const _float & fTimeDelta)
 	if (Engine::Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 		Move.x += 100.f * fTimeDelta;
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80 && !m_bStrike)
+	if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP && !m_bStrike)
 	{
 		m_bStrike = true;
 		m_bRock = true;
