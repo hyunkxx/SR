@@ -21,6 +21,11 @@ CComponent*		Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
+void Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag)
+{
+	CManagement::GetInstance()->Delete_Object(pLayerTag, pObjTag);
+}
+
 HRESULT			Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement** ppInstance)
 {
 	CManagement*		pManagement = CManagement::GetInstance();

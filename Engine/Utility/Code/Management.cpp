@@ -39,6 +39,11 @@ CLayer * CManagement::Find_Layer(const _tchar * pLayerTag)
 	return m_pScene->Get_Layer(pLayerTag);
 }
 
+void CManagement::Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag)
+{
+	m_pScene->Delete_Object(pLayerTag, pObjTag);
+}
+
 
 CLayer * CManagement::Get_Layer(const _tchar * pLayerTag)
 {

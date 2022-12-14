@@ -41,6 +41,8 @@ private:
 	void KeyInput();
 	bool OnMouseClick();
 	void UpdateTransform();
+	void RenderButton();
+	void BuyVehicle();
 private: /* UI value */
 	VEHICLE m_eType;
 	bool m_bUpdateTransform;

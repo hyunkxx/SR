@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\TankManager.h"
 
+#include "Export_Function.h"
+
 #include "Humvee.h"
 #include "SmallTank.h"
 #include "MiddleTank.h"
@@ -32,6 +34,7 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 	if (m_pVehicle)
 	{
 		Safe_Release(m_pVehicle);
+		Engine::Delete_Object(L"GameLogic", L"PlayerVehicle");
 	}
 
 	switch (eType)
@@ -53,11 +56,13 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 		break;
 	case Engine::VEHICLE::MAX:
 		MSG_BOX("차량 인덱스 범위 초과");
-		break;
+		return;
 	default:
 		MSG_BOX("차량 인덱스 범위 초과");
-		break;
+		return;
 	}
+
+	CManagement::GetInstance()->Add_GameObject(L"GameLogic", m_pVehicle);
 }
 
 void CTankManager::InitalizeData()

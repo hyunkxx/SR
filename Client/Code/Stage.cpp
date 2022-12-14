@@ -53,7 +53,7 @@
 #include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
-
+#include "GameMode.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) 
 	: CScene(pGraphicDev)
@@ -75,6 +75,8 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
+
+	CGameMode::GetInstance()->InitGameMode(500, 20000, 800);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);

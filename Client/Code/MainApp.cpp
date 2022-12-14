@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "Stage.h"
 #include "TankManager.h"
+#include "GameMode.h"
 
 CMainApp::CMainApp()
 	: m_pGraphicDev(nullptr)
@@ -134,6 +135,7 @@ void CMainApp::Free(void)
 {
 	ImguiManager::DestroyInstance();
 	CTankManager::DestroyInstance();
+	CGameMode::DestroyInstance();
 
 	Safe_Release(m_pGraphicDev);
 

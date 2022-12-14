@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "TankSet.h"
 #include "TankManager.h"
+#include "GameMode.h"
 
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, VEHICLE eType)
 	: Engine::CGameObject(pGraphicDev)
@@ -49,7 +50,7 @@ HRESULT CButtonUI::Ready_Object(void)
 
 	m_fScaleX = 100.f;
 	m_fScaleY = 80.f;
-	m_fScaleZ = 1.f;
+	m_fScaleZ = 0.01f;
 
 	m_fPosX = WINCX - m_fScaleX;
 	m_fPosY = 200.f;
@@ -70,6 +71,9 @@ _int CButtonUI::Update_Object(const _float & fTimeDelta)
 	OnMouseClick();
 	UpdateTransform();
 
+	if (m_bClicked)
+		BuyVehicle();
+
 	return 0;
 }
 
@@ -85,20 +89,7 @@ void CButtonUI::Render_Object(void)
 	if (!m_bShow)
 		return;
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
-
-	_matrix	ViewMatrix, OldProjection;
-	D3DXMatrixIdentity(&ViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjection);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-		
-	m_bClicked ? m_pClickedTexture->Set_Texture(0) : m_pNonClickTexture->Set_Texture(0);
-
-	m_pRcTex->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
+	RenderButton();
 }
 
 void CButtonUI::Free(void)
@@ -217,5 +208,51 @@ void CButtonUI::UpdateTransform()
 		m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 		m_bUpdateTransform = false;
+	}
+}
+
+void CButtonUI::RenderButton()
+{
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
+
+	_matrix	ViewMatrix, OldProjection;
+	D3DXMatrixIdentity(&ViewMatrix);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjection);
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	
+	m_bClicked ? m_pClickedTexture->Set_Texture(0) : m_pNonClickTexture->Set_Texture(0);
+
+	m_pRcTex->Render_Buffer();
+
+	wstring strPoint = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
+	Engine::Render_Font(L"Font_Retro", strPoint.c_str(), new _vec2(100.f, 100.f), D3DCOLOR_ARGB(255,255,255,255));
+
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
+}
+
+void CButtonUI::BuyVehicle()
+{
+	switch (m_eType)
+	{
+	case VEHICLE::HUMVEE:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+		break;
+	case VEHICLE::SMALL_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+		break;
+	case VEHICLE::MIDDLE_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+		break;
+	case VEHICLE::BIG_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::BIG_TANK);
+		break;
+	case VEHICLE::LONG_TANK:
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::LONG_TANK);
+		break;
+	default:
+		MSG_BOX("BuyVehicle() 인덱스 범위 초과");
+		break;
 	}
 }
