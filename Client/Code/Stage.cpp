@@ -33,7 +33,9 @@
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
 #include "UI_FontMgr.h"
+#include "UI_Player_Hp_Back.h"
 #include "UI_Player_Hp.h"
+#include "UI_Player_Hp_Front.h"
 #include "UI_World_Bubble.h"
 #include "UI_Volume.h"
 #include "UI_Compass.h"
@@ -521,6 +523,14 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev, 450.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
+
+pGameObject = CUI_Player_Hp_Front::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp1", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Player_Hp_Back::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp3", pGameObject), E_FAIL);
 
 	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
