@@ -12,7 +12,6 @@ CSmallTank::CSmallTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
 	m_bDead = false;
-	//	m_stInfo.eID = VEHICLE::M3;
 }
 
 CSmallTank::CSmallTank(const CSmallTank & rhs)

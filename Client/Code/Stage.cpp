@@ -652,7 +652,7 @@ void CStage::Collison_Object(void)
 			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(iter->second)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 			{
 				dynamic_cast<ICollisionable*>(Dest->second)->OBB_Collision_EX();
-				CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"�λ��"), wstring(L"���� �ε������ϴ�!"));
+				//CUI_FontMgr::GetInstance()->SendChatLog(wstring(L"�λ��"), wstring(L"���� �ε������ϴ�!"));
 			}
 		}
 		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
