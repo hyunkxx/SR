@@ -11,8 +11,8 @@ CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 {
 	m_fDuration = 0.2f;
 
-	m_color[0] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.f);
-	m_color[1] = D3DXCOLOR(0.4f, 0.4f, 0.0f, 1.f);
+	m_color[0] = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	m_color[1] = D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.f);
 	m_color[2] = D3DXCOLOR(0.1f, 0.1f, 0.0f, 1.f);
 
 	for (int i = 0; i < MaxObjectCount; ++i)
@@ -24,7 +24,8 @@ CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 
 	for (int i = 0; i < MaxObjectCount; ++i)
 	{
-		m_vDir.push_back(_vec3(cosf(float(rand() % 4)), cos(float(rand() % 4)), cosf(float(rand() % 4))));
+		m_vDir.push_back(_vec3(cos(float(rand() % 10)), cosf(float(rand() % 10)), cosf(float(rand() % 10))));
+		//D3DXVec3Normalize(&m_vDir[i], &m_vDir[i]);
 	}
 
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)

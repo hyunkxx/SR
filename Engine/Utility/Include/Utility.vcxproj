@@ -170,7 +170,6 @@ call CopyUtility.bat</Command>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Boom_Bullet.h" />
     <ClInclude Include="..\..\Header\Bullet.h" />
-    <ClInclude Include="..\..\Header\BulletEffect.h" />
     <ClInclude Include="..\..\Header\Calculator.h" />
     <ClInclude Include="..\..\Header\Camera.h" />
     <ClInclude Include="..\..\Header\Collisionable.h" />
@@ -216,7 +215,6 @@ call CopyUtility.bat</Command>
   <ItemGroup>
     <ClCompile Include="..\Code\Boom_Bullet.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
-    <ClCompile Include="..\Code\BulletEffect.cpp" />
     <ClCompile Include="..\Code\Calculator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\Collisionable.cpp" />

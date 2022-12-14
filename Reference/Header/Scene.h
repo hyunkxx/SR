@@ -19,7 +19,6 @@ public:
 										const _tchar* pComponentTag, 
 										COMPONENTID eID);
 	HRESULT				Add_GameObject(const _tchar * pObjTag, CGameObject* pObject);
-	CGameObject*		Swap_Object(const _tchar * pLayerTag, const _tchar * pObjTag, CGameObject * pObj);
 	void				Delete_Object(const _tchar* pLayerTag, const _tchar* pObjTag);
 protected:
 	virtual		void		Collison_Object(void)PURE;

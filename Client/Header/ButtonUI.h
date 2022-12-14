@@ -66,7 +66,6 @@ private: /* UI value */
 	_int	iRotaion;
 private:
 	bool m_bShow;
-	bool m_bPressed;
 	bool m_bClicked;
 };
 

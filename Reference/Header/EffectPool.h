@@ -11,7 +11,7 @@ class ENGINE_DLL CEffectPool : public CComponent
 {
 	const _uint nMaxPoolSize;
 public:
-	enum class EFFECT_TYPE { EXPLOSION, FIRE, BULLET, MAX };
+	enum class EFFECT_TYPE { EXPLOSION, FIRE, MAX };
 	static CEffectPool* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:
 	explicit CEffectPool(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -27,17 +27,14 @@ public:
 private:
 	void AddExplosionPool(_vec3 vPos);
 	void AddFirePool(_vec3 vPos);
-	void AddBulletPool(_vec3 vPos);
 private:
 
 public:
 	vector<CEffector*> m_vecExplosions;
 	vector<CEffector*> m_vecFire;
-	vector<CEffector*> m_vecBullet;
 
 	list<CEffector*> m_ExplosionPool;
 	list<CEffector*> m_FirePool;
-	list<CEffector*> m_BulletPool;
 };
 
 END

@@ -21,11 +21,6 @@ CComponent*		Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
-CGameObject* Swap_Object(const _tchar* pLayerTag, const _tchar* pObjTag, CGameObject* pObj)
-{
-	return CManagement::GetInstance()->Swap_Object(pLayerTag,pObjTag, pObj);
-}
-
 void Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag)
 {
 	CManagement::GetInstance()->Delete_Object(pLayerTag, pObjTag);

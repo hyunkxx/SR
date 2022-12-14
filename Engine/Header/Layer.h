@@ -15,7 +15,6 @@ private:
 public:
 	CGameObject*	Get_GameObject(const _tchar* pObjTag);
 	CComponent*		Get_Component(const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
-	CGameObject*	Swap_Object(const _tchar * pObjTag, CGameObject* pObj);
 	void			Delete_Object(const _tchar* pObjTag);
 public:
 	HRESULT			Add_GameObject(const _tchar* pObjTag, CGameObject* pObject);

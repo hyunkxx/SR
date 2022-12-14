@@ -3,7 +3,6 @@
 #include "Effector.h"
 #include "ExplosionEffect.h"
 #include "FireEffect.h"
-#include "BulletEffect.h"
 #include "Utility.h"
 
 USING(Engine)
@@ -23,13 +22,6 @@ CEffectPool::CEffectPool(LPDIRECT3DDEVICE9 pGraphicDev)
 		m_vecFire.push_back(
 			CFireEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
 	}
-
-
-	for (_uint i = 0; i < nMaxPoolSize; ++i)
-	{
-		m_vecBullet.push_back(
-			CBulletEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
-	}
 }
 
 CEffectPool::CEffectPool(const CEffectPool & rhs)
@@ -46,12 +38,6 @@ CEffectPool::CEffectPool(const CEffectPool & rhs)
 	{
 		m_vecFire.push_back(
 			CFireEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
-	}
-
-	for (_uint i = 0; i < nMaxPoolSize; ++i)
-	{
-		m_vecFire.push_back(
-			CBulletEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
 	}
 }
 
@@ -103,21 +89,6 @@ _int CEffectPool::Update_Component(const _float & fTimeDelta)
 		}
 	}
 
-	for (auto Effect = m_BulletPool.begin(); Effect != m_BulletPool.end(); )
-	{
-		(*Effect)->Update_Component(fTimeDelta);
-
-		if (!(*Effect)->GetRunngin())
-		{
-			(*Effect)->Reset();
-			Effect = m_BulletPool.erase(Effect);
-		}
-		else
-		{
-			++Effect;
-		}
-	}
-
 	return _int();
 }
 
@@ -140,11 +111,6 @@ void CEffectPool::Free(void)
 		Effect = m_vecFire.erase(Effect);
 	}
 
-	for (auto Effect = m_vecBullet.begin(); Effect != m_vecBullet.end(); )
-	{
-		Safe_Release(*Effect);
-		Effect = m_vecBullet.erase(Effect);
-	}
 	__super::Free();
 }
 
@@ -161,9 +127,6 @@ void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos)
 	case EFFECT_TYPE::FIRE:
 		AddFirePool(vPos);
 		break;
-	case EFFECT_TYPE::BULLET:
-		AddBulletPool(vPos);
-		break;
 	}
 }
 
@@ -175,11 +138,6 @@ void CEffectPool::RenderEffect(EFFECT_TYPE eType)
 	}
 
 	for (auto Effect = m_FirePool.begin(); Effect != m_FirePool.end(); ++Effect)
-	{
-		(*Effect)->RenderEffect();
-	}
-
-	for (auto Effect = m_BulletPool.begin(); Effect != m_BulletPool.end(); ++Effect)
 	{
 		(*Effect)->RenderEffect();
 	}
@@ -219,25 +177,6 @@ void CEffectPool::AddFirePool(_vec3 vPos)
 		}
 	}
 	
-	(*Effect)->SetPosition(vPos);
-	(*Effect)->SetRunning(true);
-}
-
-void CEffectPool::AddBulletPool(_vec3 vPos)
-{
-	if (m_BulletPool.size() >= nMaxPoolSize - 1)
-		return;
-
-	auto& Effect = m_vecBullet.begin();
-	for (; Effect != m_vecBullet.end(); ++Effect)
-	{
-		if (!(*Effect)->GetRunngin())
-		{
-			m_BulletPool.push_back(*Effect);
-			break;
-		}
-	}
-
 	(*Effect)->SetPosition(vPos);
 	(*Effect)->SetRunning(true);
 }

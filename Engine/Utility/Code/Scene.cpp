@@ -54,12 +54,6 @@ HRESULT CScene::Add_GameObject(const _tchar * pObjTag, CGameObject * pObject)
 	return S_OK;
 }
 
-CGameObject* CScene::Swap_Object(const _tchar * pLayerTag, const _tchar * pObjTag, CGameObject * pObj)
-{
-	auto	iter = find_if(m_umapLayer.begin(), m_umapLayer.end(), CTag_Finder(pLayerTag));
-	return (*iter).second->Swap_Object(pObjTag,pObj);
-}
-
 void CScene::Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag)
 {
 	auto	iter = find_if(m_umapLayer.begin(), m_umapLayer.end(), CTag_Finder(pLayerTag));

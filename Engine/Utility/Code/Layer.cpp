@@ -33,25 +33,10 @@ CComponent* Engine::CLayer::Get_Component(const _tchar* pObjTag, const _tchar* p
 
 void CLayer::Delete_Object(const _tchar * pObjTag)
 {
-	for (auto iter = m_mapObject.begin(); iter != m_mapObject.end(); )
-	{
-		if (!lstrcmpW(iter->first, pObjTag))
-		{
-			Safe_Release(iter->second);
-			iter = m_mapObject.erase(iter);
-			break;
-		}
-	}
-}
-
-CGameObject* CLayer::Swap_Object(const _tchar * pObjTag, CGameObject * pObj)
-{
 	auto iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
 
-	CGameObject* ret = iter->second;
-	iter->second = pObj;
-
-	return ret;
+	Safe_Release(iter->second);
+	m_mapObject.erase(iter);
 }
 
 HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pObject)
