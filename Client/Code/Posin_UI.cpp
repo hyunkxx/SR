@@ -86,9 +86,9 @@ _int CPosin_UI::Update_Object(const _float & fTimeDelta)
 void CPosin_UI::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	
+
 	Add_RenderGroup(RENDER_UI, this);
-	
+
 }
 
 void CPosin_UI::Render_Object(void)
@@ -202,9 +202,9 @@ HRESULT CPosin_UI::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_Posin_UI_RcTex"));
+	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Posin_UI_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Proto_Posin_UI_Tex"));
 	NULL_CHECK_RETURN(m_pTexture, E_FAIL);

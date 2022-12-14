@@ -9,12 +9,12 @@ class CTexture;
 
 END
 
-class CUI_Player_Hp_Front : public Engine::CGameObject
+class CUI_MiniMap : public Engine::CGameObject
 {
 private:
-	explicit CUI_Player_Hp_Front(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CUI_Player_Hp_Front(const CUI_Player_Hp_Front& rhs);
-	virtual ~CUI_Player_Hp_Front();
+	explicit CUI_MiniMap(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CUI_MiniMap(const CUI_MiniMap& rhs);
+	virtual ~CUI_MiniMap();
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -23,9 +23,13 @@ public:
 	virtual void Render_Object(void)  override;
 	virtual const   _vec3		Get_Info(void) { return _vec3(); }
 	virtual			void		Move_Info(_vec3 _Info) {}
-	static CUI_Player_Hp_Front*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CUI_MiniMap*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
+
+	_int				m_iTankType;
+	wstring		m_szTankType;
+
 	HRESULT		Add_Component(void);
 
 	virtual void Free(void) override;
@@ -44,16 +48,9 @@ private:
 	_float					m_fPosX;
 	_float					m_fPosY;
 	_float					m_fPosZ;
-
+	_bool					m_bPosinOn = true;
 public:
 
-	void				Set_ScaleX(const _float& fX) { m_fScaleX = fX; }
-	void				Set_ScaleY(const _float& fY) { m_fScaleY = fY; }
-	void				Set_ScaleZ(const _float& fZ) { m_fScaleZ = fZ; }
-
-	void				Set_PosX(const _float& fX) { m_fPosX = fX; }
-	void				Set_PosY(const _float& fY) { m_fPosY = fY; }
-	void				Set_PosZ(const _float& fZ) { m_fPosZ = fZ; }
 
 };
 

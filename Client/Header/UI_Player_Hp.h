@@ -32,10 +32,16 @@ private:
 
 
 	CRcTex*						m_pRcTex = nullptr;
+
+	// front
 	CTexture*					m_pTexture = nullptr;
 	CTransform*				m_pTransform = nullptr;
 
-	_matrix  m_matProj;
+	//Back
+	CTexture*					m_pBTexture = nullptr;
+	CTransform*				m_pBTransform = nullptr;
+
+	_matrix  m_matProj1, m_matProj2;
 
 public:
 
@@ -43,6 +49,7 @@ private:
 	_float					m_fOrgin_HP;
 	_float					m_fHP;
 
+	// HP Bar (Front)
 	_float					m_fScaleX;
 	_float					m_fScaleY;
 	_float					m_fScaleZ;
@@ -51,8 +58,20 @@ private:
 	_float					m_fPosY;
 	_float					m_fPosZ;
 
+	// HP Back (²®µ¥±â)
+	_float					m_fBScaleX;
+	_float					m_fBScaleY;
+	_float					m_fBScaleZ;
+
+	_float					m_fBPosX;
+	_float					m_fBPosY;
+	_float					m_fBPosZ;
+	
 	_float					m_fOrgin_ScaleX;
 	_float					m_fOrgin_PosX;
+
+
+	_float HP_Percent;
 
 public:
 	const _float Get_HP_UI(void) { return m_fHP; }

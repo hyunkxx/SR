@@ -56,6 +56,7 @@ public:
 	wstring				Get_PlayerName(void) { return szPlayerName; }
 
 	_uint			iAllCount{ 0 }, iLiveCount{ 0 };
+	_uint			Get_LiveCount(void) { return iLiveCount; }
 	void				Set_AllCount(_uint _AllCount) { iLiveCount = iAllCount = _AllCount; }
 	void				Set_LiveCount(_uint DeathCount) { iLiveCount -= DeathCount; }
 
