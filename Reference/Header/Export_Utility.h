@@ -57,6 +57,8 @@ inline 	_int			Update_Scene(const _float& fTimeDelta);
 inline void				LateUpdate_Scene(void);
 inline void				Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
 inline void				RenderGUI();
+inline void				Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag);
+inline CGameObject*		Swap_Object(const _tchar* pLayerTag, const _tchar* pObjTag, CGameObject* pObj);
 
 // Renderer
 inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);

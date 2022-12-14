@@ -34,7 +34,10 @@ private:
 private:
 	EData    m_eData;
 	CGameObject* m_pEffectManager;
+	CGameObject* m_pFactoryUI;
 
+	/* Button UI */
+	CGameObject* m_pButton[(UINT)VEHICLE::MAX];
 	void Key_Input(const _float& fTimeDelta);
 
 	wstring m_szOutput_Chatting = L"";

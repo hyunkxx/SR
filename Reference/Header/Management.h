@@ -6,7 +6,7 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CManagement :	public CBase
+class ENGINE_DLL CManagement : public CBase
 {
 	DECLARE_SINGLETON(CManagement)
 
@@ -18,11 +18,13 @@ public:
 	CLayer*		Get_Layer(const _tchar* pLayerTag);
 	CGameObject*	Get_Object(const _tchar* pLayerTag, const _tchar* pObjTag);
 	CComponent*		Get_Component(const _tchar* pLayerTag,
-								  const _tchar* pObjTag,
-								  const _tchar* pComponentTag,
-								  COMPONENTID eID);
+		const _tchar* pObjTag,
+		const _tchar* pComponentTag,
+		COMPONENTID eID);
 	HRESULT			Add_GameObject(const _tchar * pObjTag, CGameObject* pObject);
 	class CLayer*   Find_Layer(const _tchar* pLayerTag);
+	CGameObject*	Swap_Object(const _tchar* pLayerTag, const _tchar* pObjTag, CGameObject* pObj);
+	void			Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag);
 public:
 	HRESULT			Set_Scene(CScene* pScene);
 

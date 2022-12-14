@@ -174,8 +174,13 @@ g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
+
     switch (message)
     {
     case WM_COMMAND:

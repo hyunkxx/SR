@@ -46,11 +46,13 @@
 #include "Bomber.h"
 #include "BattleShip.h"
 
+#include "ButtonUI.h"
 #include "EffectPool.h"
 #include "EffectManager.h"
 #include"TempOccupationScore.h"
 #include "Building.h"
 #include "TankManager.h"
+#include "GameMode.h"
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -73,6 +75,8 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
+	CGameMode::GetInstance()->InitGameMode(500, 20000, 800);
+
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment_Object(L"Environment_Object"), E_FAIL);
@@ -94,7 +98,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	//else
 	//{	ShowCursor(false);}
 
-	Engine::PlaySound_SR(L"coh_ingame2.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
@@ -553,6 +557,48 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
 
+	/* Select Vehicle UI */
+	_vec3 vPos;
+	ZeroMemory(&vPos, sizeof(_vec3));
+
+	vPos = { 0.f, 0.f, 0.f };
+	pGameObject = m_pButton[0] = CButtonUI::Create(m_pGraphicDev, VEHICLE::HUMVEE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_00", pGameObject), E_FAIL);
+
+	vPos = { 80.f, 0.f, 0.f };
+	pGameObject = m_pButton[1] = CButtonUI::Create(m_pGraphicDev, VEHICLE::SMALL_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_01", pGameObject), E_FAIL);
+	vPos = { 160.f, 0.f, 0.f };
+	pGameObject = m_pButton[2] = CButtonUI::Create(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_02", pGameObject), E_FAIL);
+
+	vPos = { 240.f, 0.f, 0.f };
+	pGameObject = m_pButton[3] = CButtonUI::Create(m_pGraphicDev, VEHICLE::BIG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_03", pGameObject), E_FAIL);
+
+	vPos = { 320.f, 0.f, 0.f };
+	pGameObject = m_pButton[4] = CButtonUI::Create(m_pGraphicDev, VEHICLE::LONG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_04", pGameObject), E_FAIL);
+
+	for (int i = 0; i < 3; ++i)
+	{
+		vPos = { 200.f * (i + 1), 0.f, 0.f };
+		static_cast<CButtonUI*>(m_pButton[i])->Set_PosX(vPos.x);
+	}
+
+	vPos = { 290.f , 380.f, 0.f };
+	static_cast<CButtonUI*>(m_pButton[3])->Set_PosX(vPos.x);
+	static_cast<CButtonUI*>(m_pButton[3])->Set_PosY(vPos.y);
+
+	vPos = { 500.f , 380.f, 0.f };
+	static_cast<CButtonUI*>(m_pButton[4])->Set_PosX(vPos.x);
+	static_cast<CButtonUI*>(m_pButton[4])->Set_PosY(vPos.y);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -715,7 +761,11 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
+
+					if (i == BULLET_ID::MASHINE_BULLET)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+					else if (i == BULLET_ID::CANNONBALL)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
 					(*iter)->Set_Dead(true);
 					continue;

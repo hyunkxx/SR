@@ -140,6 +140,26 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Speed_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Speed1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_SpeedBar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/UI_SpeedBar.png", TEX_NORMAL)), E_FAIL);
 
+	/* Select Button */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_non", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_non.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_click.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/humvee_btn.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/humvee_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/small_btn.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/small_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/middle_btn.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/middle_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/big_btn.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/big_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/long_btn.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/long_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+
+
 	lstrcpy(m_szString, L"Complete");
 
 

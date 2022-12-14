@@ -139,6 +139,9 @@
     <Filter Include="03. GameObject\Bullet\Boom_Bullet">
       <UniqueIdentifier>{a31daac8-eef3-436a-9690-902656852e83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\05 Effector\BulletEffect">
+      <UniqueIdentifier>{4c1c83b1-b51d-4ab3-9315-ae8c7433031b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Boom_Bullet.cpp">
       <Filter>03. GameObject\Bullet\Boom_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BulletEffect.cpp">
+      <Filter>04. Component\05 Effector\BulletEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\Boom_Bullet.h">
       <Filter>03. GameObject\Bullet\Boom_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\BulletEffect.h">
+      <Filter>04. Component\05 Effector\BulletEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

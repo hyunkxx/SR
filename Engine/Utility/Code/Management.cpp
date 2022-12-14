@@ -13,14 +13,14 @@ CManagement::~CManagement()
 	Free();
 }
 
-CComponent * CManagement::Get_Component(const _tchar * pLayerTag, 
-										const _tchar * pObjTag,
-										const _tchar * pComponentTag,
-										COMPONENTID eID)
+CComponent * CManagement::Get_Component(const _tchar * pLayerTag,
+	const _tchar * pObjTag,
+	const _tchar * pComponentTag,
+	COMPONENTID eID)
 {
 	if (nullptr == m_pScene)
 		return nullptr;
-	
+
 	return m_pScene->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
@@ -37,6 +37,16 @@ CLayer * CManagement::Find_Layer(const _tchar * pLayerTag)
 	if (nullptr == m_pScene)
 		return nullptr;
 	return m_pScene->Get_Layer(pLayerTag);
+}
+
+CGameObject* CManagement::Swap_Object(const _tchar * pLayerTag, const _tchar * pObjTag, CGameObject * pObj)
+{
+	return m_pScene->Swap_Object(pLayerTag, pObjTag, pObj);
+}
+
+void CManagement::Delete_Object(const _tchar * pLayerTag, const _tchar * pObjTag)
+{
+	m_pScene->Delete_Object(pLayerTag, pObjTag);
 }
 
 

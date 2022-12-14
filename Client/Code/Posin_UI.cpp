@@ -46,6 +46,8 @@ HRESULT CPosin_UI::Ready_Object(void)
 
 	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
+	wstring name;
+	
 	if (m_szTankType == L"Humvee")
 	{
 		m_iTankType = 0;
