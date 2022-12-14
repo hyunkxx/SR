@@ -18,7 +18,7 @@ CMainApp::~CMainApp()
 HRESULT CMainApp::Ready_MainApp(void)
 {
 	srand((_uint)time(nullptr));
-	ShowCursor(false);
+	ShowCursor(true);
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
@@ -32,10 +32,11 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	SetUp_InputDev();
 	Update_InputDev();
 
+	ImguiManager::GetInstance()->NewFrame();
+	
 	NULL_CHECK_RETURN(m_pManagementClass, -1);
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
-	ImguiManager::GetInstance()->NewFrame();
 
 	return 0;
 }
@@ -49,8 +50,8 @@ void CMainApp::LateUpdate_MainApp(void)
 void CMainApp::Render_MainApp(void)
 {
 	Engine::Get_GraphicDev()->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//UI 확인 때문에 잠시 꺼뒀습니다.
-	//Engine::RenderGUI();
+
+	Engine::RenderGUI();
 	ImguiManager::GetInstance()->EndFrame();
 	Engine::Render_Begin(D3DXCOLOR(.2f, 0.2f, 0.2f, 1.f));
 
@@ -83,7 +84,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang7", L"안상수2006가는", 30, 35, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang6", L"안상수2006가는", 50, 65, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro2", L"Galmuri6 Regular", 10, 15, FW_HEAVY);
-	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro", L"Galmuri9 Regular", 15, 25, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro", L"Galmuri7 Regular", 15, 25, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro3", L"Galmuri9 Regular", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro1", L"Galmuri9 Regular", 25, 35, FW_HEAVY);
 

@@ -166,6 +166,8 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	CLayer*		pLayer = CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
+	ShowCursor(false);
+
 	CGameObject*		pGameObject = nullptr;
 
 	
@@ -247,6 +249,8 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 {
+	ShowCursor(false);
+
 	CLayer*		pLayer = CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
@@ -742,7 +746,6 @@ void CStage::Collison_Object(void)
 		}
 	}
 
-	//예시) 총알과 충돌처리 하고 싶은애들 이렇게 추가하면 됨
 	for (int i = 0; BULLET_ID::MASHINE_BULLET_RELOAD > i; i++)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
@@ -762,12 +765,14 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
+					if(i == BULLET_ID::MASHINE_BULLET)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+					else if (i == BULLET_ID::CANNONBALL)
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 					(*iter)->Set_Dead(true);
 					continue;
 				}
-
 			}
 
 			//총알 vs 게임 오브젝트 충돌

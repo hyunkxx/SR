@@ -34,7 +34,6 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 	if (m_pVehicle)
 	{
 		Safe_Release(m_pVehicle);
-		Engine::Delete_Object(L"GameLogic", L"PlayerVehicle");
 	}
 
 	switch (eType)
@@ -61,8 +60,6 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 		MSG_BOX("차량 인덱스 범위 초과");
 		return;
 	}
-
-	CManagement::GetInstance()->Add_GameObject(L"GameLogic", m_pVehicle);
 }
 
 void CTankManager::InitalizeData()

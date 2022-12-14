@@ -10,6 +10,7 @@ CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, VEHICLE eType)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bShow(false)
 	, m_bClicked(false)
+	, m_bPressed(false)
 	, m_bUpdateTransform(true)
 	, m_eType(eType)
 {
@@ -19,6 +20,7 @@ CButtonUI::CButtonUI(const CButtonUI& rhs)
 	: Engine::CGameObject(rhs)
 	, m_bShow(false)
 	, m_bClicked(false)
+	, m_bPressed(false)
 	, m_bUpdateTransform(true)
 	, m_eType(rhs.m_eType)
 {
@@ -68,11 +70,16 @@ _int CButtonUI::Update_Object(const _float & fTimeDelta)
 
 	KeyInput();
 
-	OnMouseClick();
-	UpdateTransform();
+	if (!m_bShow)
+		return 0;
 
-	if (m_bClicked)
+	if (OnMouseClick())
+	{
 		BuyVehicle();
+		m_bClicked = false;
+	}
+
+	UpdateTransform();
 
 	return 0;
 }
@@ -167,11 +174,12 @@ HRESULT CButtonUI::Add_Component(void)
 
 void CButtonUI::KeyInput()
 {
-	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP)
+	Tank_State state = static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Get_TankInfo();
+
+	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP /*&& state.fCurHP < 0.01f*/)
 	{
 		m_bShow = !m_bShow;
 
-		//커서보이게 하고 차량 움직임 정지 (포신의 회전각만 적용됨)
 		ShowCursor(m_bShow);
 		static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(m_bShow);
 	}
@@ -191,12 +199,17 @@ bool CButtonUI::OnMouseClick()
 
 	if (PtInRect(&rc, ptMouse) && Get_DIMouseState(DIM_LB) & 0x80)
 	{
-		m_bClicked = true;
+		m_bPressed = true;
 	}
 	else
 	{
-		m_bClicked = false;
+		m_bPressed = false;
 	}
+	
+	if (PtInRect(&rc, ptMouse) && ImGui::IsKeyReleased(ImGuiKey_MouseLeft))
+		m_bClicked = true;
+	else
+		m_bClicked = false;
 
 	return m_bClicked;
 }
@@ -222,12 +235,13 @@ void CButtonUI::RenderButton()
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 	
-	m_bClicked ? m_pClickedTexture->Set_Texture(0) : m_pNonClickTexture->Set_Texture(0);
+	m_bPressed ? m_pClickedTexture->Set_Texture(0) : m_pNonClickTexture->Set_Texture(0);
 
 	m_pRcTex->Render_Buffer();
 
+	_vec2 vPos = { 100.f, 100.f };
 	wstring strPoint = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
-	Engine::Render_Font(L"Font_Retro", strPoint.c_str(), new _vec2(100.f, 100.f), D3DCOLOR_ARGB(255,255,255,255));
+	Engine::Render_Font(L"Font_Retro", strPoint.c_str(), &vPos, D3DCOLOR_ARGB(255,255,255,255));
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
 }
@@ -240,7 +254,7 @@ void CButtonUI::BuyVehicle()
 		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
 		break;
 	case VEHICLE::SMALL_TANK:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);			
 		break;
 	case VEHICLE::MIDDLE_TANK:
 		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
@@ -255,4 +269,10 @@ void CButtonUI::BuyVehicle()
 		MSG_BOX("BuyVehicle() 인덱스 범위 초과");
 		break;
 	}
+
+	CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
+	CGameObject* pGameObject  =  Engine::Swap_Object(L"GameLogic", L"PlayerVehicle", *CTankManager::GetInstance()->GetVehicle());
+	static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(true);
+
+	pGameObject->Set_Dead(true);
 }

@@ -62,7 +62,6 @@ bool CGameMode::VictoryCheck()
 	{
 		m_eGameResult = GAME_RESULT::DRAW;
 	}
-
 	return true;
 }
 
