@@ -158,9 +158,6 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI">
       <UniqueIdentifier>{0d14e78e-2813-4168-8717-7664f3029bc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\03.Game_End_UI">
-      <UniqueIdentifier>{07b20f6c-8431-4b2a-834e-ceae4fe3185b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Item_UI">
       <UniqueIdentifier>{0e847c98-8fd8-456b-9908-b3587e4d7ba4}</UniqueIdentifier>
     </Filter>
@@ -283,6 +280,18 @@
     </Filter>
     <Filter Include="02. GameObject\93.UI\11. FectoryUI">
       <UniqueIdentifier>{1f728917-f1b1-43f3-9c1d-ee48733b32ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel">
+      <UniqueIdentifier>{9a78b6a4-8fe8-4218-8859-7ae2003d12a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed">
+      <UniqueIdentifier>{07f14199-dd3a-4ad6-9afe-445b31b10dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\03.UI_Reload">
+      <UniqueIdentifier>{8e50347d-9d3b-4cfc-a169-115d02379d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap">
+      <UniqueIdentifier>{07b20f6c-8431-4b2a-834e-ceae4fe3185b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -493,17 +502,20 @@
     <ClInclude Include="..\Header\GameMode.h">
       <Filter>03. GameSystem\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_Speed.h">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_Fuel.h">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_MiniMap.h">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ButtonUI.h">
       <Filter>02. GameObject\93.UI\11. FectoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Fuel.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MiniMap.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Speed.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Reload.h">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\03.UI_Reload</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -705,17 +717,20 @@
     <ClCompile Include="..\Code\GameMode.cpp">
       <Filter>03. GameSystem\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_Fuel.cpp">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_MiniMap.cpp">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_Speed.cpp">
-      <Filter>02. GameObject\93.UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ButtonUI.cpp">
       <Filter>02. GameObject\93.UI\11. FectoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Fuel.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MiniMap.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Speed.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Reload.cpp">
+      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\03.UI_Reload</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

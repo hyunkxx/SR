@@ -133,31 +133,47 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);
 	// 미니맵
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_MiniMap_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Mini_map.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Minimap_P_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_2.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Minimap_A_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Player_HP_Bar.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Minimap_E_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Minimap_Rader_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Rader_10.png", TEX_NORMAL)), E_FAIL);
 	// 연료계
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Fuel_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/fuel2.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Fuel_Bar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Fuel3.png", TEX_NORMAL)), E_FAIL);
 	// 속도계
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Speed_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Speed1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_SpeedBar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/UI_SpeedBar.png", TEX_NORMAL)), E_FAIL);
+	// 재장전
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Reload_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Reload1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_ReloadBar_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/UI_SpeedBar.png", TEX_NORMAL)), E_FAIL);
+
+
+
+
 
 	/* Select Button */
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_non", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_non.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_click.png", TEX_NORMAL)), E_FAIL);
+	// 파일 경로 수정 해야함
+#pragma region
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/humvee_btn.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/humvee_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_non", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/small_btn.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/small_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"humvee_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/middle_btn.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/middle_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"small_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/big_btn.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/big_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"middle_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/long_btn.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/long_btn_clicked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"big_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"long_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
+
+#pragma endregion
 
 
 	lstrcpy(m_szString, L"Complete");

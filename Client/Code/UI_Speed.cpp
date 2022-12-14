@@ -38,7 +38,7 @@ HRESULT CUI_Speed::Ready_Object(void)
 	m_fScaleY = 25.f;
 	m_fScaleZ = 1.f;
 
-	m_fPosX = 715.f;
+	m_fPosX = 720.f;
 	m_fPosY = 460.f;
 	m_fPosZ = 0.02f;
 
@@ -192,10 +192,17 @@ void CUI_Speed::Update_Speed(void)
 		//fSpeed = static_cast<CLongTank*>(pTank)->Get_Speed();
 	}
 
-	
-
 	_float fSpeed_Percent = fabsf(TankInfo.fSpeed / TankInfo.fAccel_top_speed);
-	
+
+	if (m_szTankType == L"Humvee")
+	{
+		fSpeed_Percent = fabsf(TankInfo.fSpeed / 32.f);
+	}
+	else if (m_szTankType == L"Tiger ÁßÀüÂ÷")
+	{
+		fSpeed_Percent = fabsf(TankInfo.fSpeed / 22.5f);
+	}
+
 	if (fSpeed_Percent >= 1.f)
 	{
 		fSpeed_Percent = 1.f;
