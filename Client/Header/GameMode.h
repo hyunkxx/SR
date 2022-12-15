@@ -25,6 +25,8 @@ public:
 public:
 	bool m_bShowMenu = false;
 	GAME_RESULT m_eGameResult;
+	_vec3	m_AllyBasePosition = { 0.f, 0.f, 0.f };
+	_vec3	m_EnemyBasePosition = { 0.f,0.f,0.f };
 
 	_int	m_nGold[(UINT)TYPE::MAX];		// 재화
 	_int	m_nPoint[(UINT)TYPE::MAX];		// 승점 포인트

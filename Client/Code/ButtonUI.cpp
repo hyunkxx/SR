@@ -174,9 +174,17 @@ HRESULT CButtonUI::Add_Component(void)
 
 void CButtonUI::KeyInput()
 {
+	CGameObject* pGameObject = static_cast<CGameObject*>(*CTankManager::GetInstance()->GetVehicle());
 	Tank_State state = static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Get_TankInfo();
 
-	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP /*&& state.fCurHP < 0.01f*/)
+	_vec3 vLength = static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Get_Info() - CGameMode::GetInstance()->m_AllyBasePosition;
+	float fLength = D3DXVec3Length(&vLength);
+
+	if (fLength > 250.f)
+		m_bShow = false;
+
+	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && fLength <= 250.f
+		|| Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && pGameObject->Get_Dead())
 	{
 		m_bShow = !m_bShow;
 
@@ -242,6 +250,8 @@ void CButtonUI::RenderButton()
 	_vec2 vPos = { 100.f, 100.f };
 	wstring strPoint = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
 	Engine::Render_Font(L"Font_Retro", strPoint.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+	vPos = { WINCX * 0.5f - 100.f, WINCY - 100.f };
+	Engine::Render_Font(L"Font_Retro1", L"차량을 선택하세요", &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
 }
