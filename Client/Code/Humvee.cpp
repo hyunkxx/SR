@@ -179,8 +179,8 @@ HRESULT CHumvee::Ready_Object(void)
 
 	//UI_HP
 	m_stInfo.fCurHP = m_stInfo.fMaxHP = tankData.fMaxHP;
-	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
-	UI_fScaleY = 0.2f;
+	UI_fOrgin_ScaleX = UI_fScaleX = 4.f;
+	UI_fScaleY = 0.9f;
 	UI_fScaleZ = 1.f;
 
 	// UI_Minimap
@@ -641,17 +641,13 @@ void CHumvee::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//험비 높이
-	if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
-	{
-		UI_fScaleX = 4.f;
-		UI_fScaleY = 0.9f;
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
 
-		fScale[ROT_X] = UI_fScaleX;
-		fScale[ROT_Y] = UI_fScaleY;
-		fScale[ROT_Z] = UI_fScaleZ;
-	}
+	vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+
+	fScale[ROT_X] = UI_fScaleX;
+	fScale[ROT_Y] = UI_fScaleY;
+	fScale[ROT_Z] = UI_fScaleZ;
 
 	_vec3 BillPos = vUI_HPF;
 

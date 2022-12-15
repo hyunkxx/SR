@@ -60,8 +60,7 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
 		}
 
-		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-		{
+		
 			if (m_AllyOccupation > 0)
 			{
 				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
@@ -70,9 +69,8 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 			{
 				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
 			}
-		}
-		if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-		{
+
+	
 			if (m_EnermyOccupation > 0)
 			{
 				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
@@ -92,7 +90,7 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 			m_AllyOccupation = 100.f;
 			m_LocationState = LOCATIONSTATE::STATE_ALLY;
 		}
-	}
+	
 	return OBJ_NOEVENT;
 }
 

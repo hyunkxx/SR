@@ -111,8 +111,8 @@ void CCreateAi::Produce(_float fTimeDelta)
 					Enermy->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] -= 2200;
 					break;
 				case 1:
-					m_eData.TankType = TANKTYPE::LONG_TANK;
-					Enermy->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] -= 2500;
+					m_eData.TankType = TANKTYPE::BIG_TANK;
+					Enermy->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] -= 2200;
 					break;
 				case 2:
 					m_eData.TankType = TANKTYPE::MIDDLE_TANK;

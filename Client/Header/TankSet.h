@@ -107,4 +107,11 @@ protected:
 	CTransform*      m_pRader_Transform = nullptr;
 	_float               m_fRader;
 
+
+
+public:
+	_float Get_HP(void) { return m_stInfo.fCurHP; }
+	void Minus_HP(_float minus) { m_stInfo.fCurHP -= minus; }
+	void Plus_HP(_float plus) { m_stInfo.fCurHP += plus; }
+
 };

@@ -66,8 +66,7 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 				}
 			}
 		}
-		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-		{
+		
 			if (m_AllyOccupation > 0)
 			{
 				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
@@ -76,9 +75,8 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 			{
 				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
 			}
-		}
-		if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-		{
+	
+		
 			if (m_EnermyOccupation > 0)
 			{
 				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
@@ -87,7 +85,7 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 			{
 				m_AllyOccupation += fTimeDelta*m_iAllyCount;
 			}
-		}
+		
 		if (m_EnermyOccupation >= 100.f)
 		{
 			m_EnermyOccupation = 100.f;
