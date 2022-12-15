@@ -296,6 +296,9 @@
     <Filter Include="02. GameObject\93.UI\11. FectoryUI\AI">
       <UniqueIdentifier>{ec5e4827-f62b-4b53-83b8-c53264b7e892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\CreateAi">
+      <UniqueIdentifier>{3f69e06c-f544-4755-95b1-54c0cc29ced8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -532,6 +535,9 @@
     <ClInclude Include="..\Header\AICreateButton.h">
       <Filter>02. GameObject\93.UI\11. FectoryUI\AI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CreateAi.h">
+      <Filter>02. GameObject\00. Tank\01. AI\CreateAi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -758,6 +764,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\AICreateButton.cpp">
       <Filter>02. GameObject\93.UI\11. FectoryUI\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CreateAi.cpp">
+      <Filter>02. GameObject\00. Tank\01. AI\CreateAi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

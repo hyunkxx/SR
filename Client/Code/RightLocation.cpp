@@ -54,7 +54,9 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 				CheckObject(OBJID::OBJID_BDENERMY);
 			}
 		}
+
 		Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+
 		{
 			if (Temps.size() != 0)
 			{
@@ -65,9 +67,27 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 			}
 		}
 		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-			m_EnermyOccupation += 0.00005f*m_iEnermyCount;
+		{
+			if (m_AllyOccupation > 0)
+			{
+				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
+			}
+			else
+			{
+				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
+			}
+		}
 		if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-			m_AllyOccupation += 0.000005f*m_iAllyCount;
+		{
+			if (m_EnermyOccupation > 0)
+			{
+				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
+			}
+			else
+			{
+				m_AllyOccupation += fTimeDelta*m_iAllyCount;
+			}
+		}
 		if (m_EnermyOccupation >= 100.f)
 		{
 			m_EnermyOccupation = 100.f;
@@ -81,6 +101,7 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 	}
 	return OBJ_NOEVENT;
 }
+
 
 void CRightLocation::LateUpdate_Object(void)
 {

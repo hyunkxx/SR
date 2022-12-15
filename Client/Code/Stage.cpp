@@ -28,6 +28,7 @@
 #include"RightTopLocation.h"
 #include"LeftTopLocation.h"
 #include"LeftLocation.h"
+#include"CreateAi.h"
 
 // ui
 #include "Posin_UI.h"
@@ -522,6 +523,11 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
 
+	pGameObject = CCreateAi::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CreateAi", pGameObject), E_FAIL);
+
+
 	for (_int i = 0; 10 > i; i++)
 	{
 		pGameObject = CShootEffect::Create(m_pGraphicDev);
@@ -731,6 +737,7 @@ void CStage::Collison_Object(void)
 	vector<CGameObject*> BDAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
+	CGameObject* TempCreateAi = pGameLogic->Get_GameObject(L"CreateAi");
 	for (auto&iter = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != iter; iter++)
 	{
 		for (auto&Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
@@ -892,6 +899,7 @@ void CStage::Collison_Object(void)
 
 			for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
 			{
+
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
 					continue;
 
@@ -901,7 +909,14 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+
 					dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(30.f);
+					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+					}
 					continue;
 				}
 			}
@@ -917,7 +932,56 @@ void CStage::Collison_Object(void)
 				{
 					(*iter)->Set_Dead(true);
 					dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
-					//(*iters)->Set_Dead(true);
+					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+					}
+					continue;
+				}
+			}
+			for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
+					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CDefault_Ally*>(*iters)->Set_DisCountLocation();
+					}
+					continue;
+				}
+			}
+			for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(30.f);
+					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CBottomDirAlly*>(*iters)->Set_DisCountLocation();
+					}
 					continue;
 				}
 			}

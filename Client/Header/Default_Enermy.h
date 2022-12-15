@@ -43,9 +43,7 @@ public:
 	_bool Get_LeftLocation() { return m_bLeftLocationCount; }
 	_bool Get_RightTopLocation() { return m_bRightTopLocationCount; }
 	_bool Get_LeftTopLocation() { return m_bLeftTopLocationCount; }
-	_int  Get_Targeted() { return Targeted; }
 
-	void  Set_Targeted(_int _Count) { Targeted += _Count; }
 	void  Set_SuccessOccupation(_int RecentSO) { m_iSuccessOccupation = RecentSO; }
 	_int  Get_LocationCheck() { return m_iLocationCheck; }
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
@@ -53,7 +51,8 @@ public:
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	_int Get_Action() { return m_iAction; }
 	void  Set_DisCountLocation();
-
+	_bool Get_CreateCheck(void) { return CreateCheck; }
+	void Set_CreateCheck(_bool _true) { CreateCheck = _true; }
 	void AiMove(_float fTimeDelta);
 public:
 	//에너미에서 사용하는 함수
@@ -68,6 +67,7 @@ public:
 	void Run(_float fTimeDelta);
 	void Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
 	void Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	_float GetHp(void) { return UI_fHP; }
 	void 	ColObject(_float fTimeDelta);
 private:
 	HRESULT		Add_Component(void);
@@ -107,11 +107,13 @@ private:
 	_int  BulletCount = 0;
 	_bool m_bTest;
 	_bool bLeft;
+	_bool CreateCheck = false;
 	_float re = 0.f;
 	//탱크 정보
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
 	_int   m_iCannonSpeed, TempBullet;
+
 public:
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

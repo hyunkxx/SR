@@ -36,6 +36,10 @@ HRESULT CLeftTopLocation::Ready_Object(void)
 
 _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 {
+	if (GetKeyState('L') & 8000)
+	{
+		_int a = 10;
+	}
 
 	__super::Update_Object(fTimeDelta);
 	if (m_Test == false)
@@ -57,9 +61,27 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 		}
 
 		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-			m_EnermyOccupation += 0.00005f*m_iEnermyCount;
+		{
+			if (m_AllyOccupation > 0)
+			{
+				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
+			}
+			else
+			{
+				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
+			}
+		}
 		if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-			m_AllyOccupation += 0.00005f*m_iAllyCount;
+		{
+			if (m_EnermyOccupation > 0)
+			{
+				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
+			}
+			else
+			{
+				m_AllyOccupation += fTimeDelta*m_iAllyCount;
+			}
+		}
 		if (m_EnermyOccupation >= 100.f)
 		{
 			m_EnermyOccupation = 100.f;
@@ -117,7 +139,6 @@ void CLeftTopLocation::CheckObject(_int _ObjID)
 			{
 				dynamic_cast<CDefault_Enermy*>(*iter)->Set_LocationCheck(LOCATIONCHECK::LOCATIONCHECK_LEFTTOP);
 				dynamic_cast<CDefault_Enermy*>(*iter)->Set_PastLocation(LOCATIONCHECK::LOCATIONCHECK_LEFTTOP);
-				//set함수 만들거나,객체내에서 카운트 내려주기
 				m_iEnermyCount += 1;
 			}
 			if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_LocationCheck() == LOCATIONCHECK::LOCATIONCHECK_LEFTTOP && dynamic_cast<CDefault_Enermy*>(*iter)->Get_LeftTopLocation() == false)

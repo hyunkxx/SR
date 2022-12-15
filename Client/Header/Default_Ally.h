@@ -17,8 +17,6 @@ class CVoxel;
 END
 class CDefault_Ally :public CGameObject, public ICollisionable
 {
-public:
-	enum TYPE { TYPE_DEFAULT_ALLY, TYPE_BDENERMY, TYPE_END };
 private:
 	explicit CDefault_Ally(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CDefault_Ally(const CDefault_Ally& rhs);
@@ -52,6 +50,8 @@ public:
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	_float Dist(CTransform* _Target);
 
+	void Set_DisCountLocation();
+
 public:
 
 	void Basic(_float fTimeDelta);
@@ -62,6 +62,9 @@ public:
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	void Run(_float fTimeDelta);
 
+	_float GetHp(void) { return UI_fHP; }
+	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
 private:
 	HRESULT		Add_Component(void);
 
@@ -92,7 +95,6 @@ private:
 	_bool LeftCheck = false;
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
-	_int  TempBullet = 0;
 	_bool m_bOnce = false;
 	_bool m_bTest = false;
 	_bool ColBuild = false;
@@ -103,7 +105,7 @@ private:
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
-	_int   m_iCannonSpeed;
+	_int   m_iCannonSpeed, TempBullet;
 public:
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
@@ -118,8 +120,7 @@ private:
 	_float					UI_Orgin_HP, UI_fHP;
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
-	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+
 
 	// Minimap UI
 	_matrix				UI_Minimap_matProj;

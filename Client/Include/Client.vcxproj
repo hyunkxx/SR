@@ -182,6 +182,7 @@
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
     <ClInclude Include="..\Header\Building.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
+    <ClInclude Include="..\Header\CreateAi.h" />
     <ClInclude Include="..\Header\Default_Ally.h" />
     <ClInclude Include="..\Header\Default_Enermy.h" />
     <ClInclude Include="..\Header\DirButton.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
     <ClCompile Include="..\Code\Building.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
+    <ClCompile Include="..\Code\CreateAi.cpp" />
     <ClCompile Include="..\Code\Default_Ally.cpp" />
     <ClCompile Include="..\Code\Default_Enermy.cpp" />
     <ClCompile Include="..\Code\DirButton.cpp" />

@@ -70,13 +70,17 @@ _int CRightTopLocation::Update_Object(const _float& fTimeDelta)
 	if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
 		m_EnermyOccupation += 0.5f*m_iEnermyCount;
 	if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-		m_AllyOccupation += 0.5f*m_iAllyCount;
-	if (m_EnermyOccupation >= 100.f)
+		m_AllyOccupation += fTimeDelta*m_iAllyCount*0.5f;
+	if (m_EnermyOccupation > 100.f)
+	{
 		m_EnermyOccupation = 100.f;
-	m_LocationState = LOCATIONSTATE::STATE_ENERMYHQ;
-	if (m_AllyOccupation >= 100.f)
-		m_AllyOccupation = 100.f;
-	m_LocationState = LOCATIONSTATE::STATE_ALLY;
+		m_LocationState = LOCATIONSTATE::STATE_ENERMYHQ;
+	}
+	if (m_AllyOccupation > 100.f)
+	{
+		m_AllyOccupation = 101.f;
+		m_LocationState = LOCATIONSTATE::STATE_ALLY;
+	}
 
 	return OBJ_NOEVENT;
 }

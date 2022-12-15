@@ -35,6 +35,7 @@ public:
 	virtual			void		OBB_Collision_EX(void)	override;
 	virtual			void		Update_OBB(void)		override;
 	virtual			OBB*        Get_OBB(void)			override;
+	void Set_DisCountLocation();
 public:
 
 	void	StateCheck();
@@ -60,6 +61,10 @@ public:
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void   Run(_float fTimeDelta);
 	void     	ColObject(_float fTimeDelta);
+
+	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	_float GetHp(void) { return UI_fHP; }
 private:
 	HRESULT		Add_Component(void);
 
@@ -120,8 +125,6 @@ private:
 	_float					UI_Orgin_HP, UI_fHP;
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
-	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
 
 	// Minimap UI
 	_matrix				UI_Minimap_matProj;

@@ -44,9 +44,8 @@ public:
 	_bool Get_LeftLocation() { return m_bLeftLocationCount; }
 	_bool Get_RightTopLocation() { return m_bRightTopLocationCount; }
 	_bool Get_LeftTopLocation() { return m_bLeftTopLocationCount; }
-	_int  Get_Targeted() { return Targeted; }
 
-	void  Set_Targeted(_int _Count) { Targeted += _Count; }
+
 	void  Set_SuccessOccupation(_int RecentSO) { m_iSuccessOccupation = RecentSO; }
 	_int  Get_LocationCheck() { return m_iLocationCheck; }
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
@@ -54,10 +53,13 @@ public:
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	void  Set_DisCountLocation();
 	float  Get_Hp() { return UI_fHP; };
-	void					Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void					Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	void Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void	Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	_float GetHp(void) { return UI_fHP; }
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void Run(_float fTimeDelta);
+	_bool Get_CreateCheck(void) { return CreateCheck; }
+	void Set_CreateCheck(_bool _true) { CreateCheck = _true; }
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -112,6 +114,7 @@ private:
 	_bool m_bTest;
 	_bool bLeft;
 	_float re = 0.f;
+	_bool CreateCheck = false;
 	//탱크 정보
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
