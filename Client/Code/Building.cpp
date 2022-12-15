@@ -74,12 +74,14 @@ HRESULT CBuilding::Ready_Object(void)
 
 void CBuilding::SetRotation(const _float& fRotation)
 {
+	m_fRotation = fRotation;
 	static_cast<CTransform*>(m_pTransform)->Set_Pos(m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	static_cast<CTransform*>(m_pTransform)->Rotation(ROTATION::ROT_Y, m_fRotation);
 }
 
 void CBuilding::SetPosition(const _vec3& vPos)
 {
+	m_vPosition = vPos;
 	static_cast<CTransform*>(m_pTransform)->Set_Pos(m_vPosition.x, m_vPosition.y, m_vPosition.z);
 	static_cast<CTransform*>(m_pTransform)->Rotation(ROTATION::ROT_Y, m_fRotation);
 }
@@ -102,8 +104,8 @@ void CBuilding::LateUpdate_Object(void)
 
 void CBuilding::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pMesh->Render(&m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, static_cast<CTransform*>(m_pTransform)->Get_WorldMatrix());
+	m_pMesh->Render(static_cast<CTransform*>(m_pTransform)->Get_WorldMatrix());
 }
 
 void CBuilding::RenderGUI(void)
@@ -130,20 +132,26 @@ void CBuilding::CollisionSetting()
 {
 	switch (m_eType)
 	{
-	case TYPE::BUILDING:
+	case TYPE::BUILDING_1:
 		m_stBody.fLen[x] = 15.f;
 		m_stBody.fLen[y] = 14.f;
 		m_stBody.fLen[z] = 10.5;
+		break;
+	case TYPE::BUILDING_2:
+		m_stBody.fLen[x] = 15.f;
+		m_stBody.fLen[y] = 14.f;
+		m_stBody.fLen[z] = 13.5;
 		break;
 	case TYPE::ROCK:
 		m_stBody.fLen[x] = 10.f;
 		m_stBody.fLen[y] = 4.f;
 		m_stBody.fLen[z] = 6.f;
 		break;
-	case TYPE::BASE:
+	case TYPE::BASE_ALLY:
+	case TYPE::BASE_ENEMY:
 		m_stBody.fLen[x] = 15.f;
 		m_stBody.fLen[y] = 14.f;
-		m_stBody.fLen[z] = 10.f;
+		m_stBody.fLen[z] = 15.f;
 		break;
 	case TYPE::OASIS:
 		m_stBody.fLen[x] = 2.f;

@@ -254,6 +254,10 @@ void CAICreateButton::RenderButton()
 		_vec2 vPos = { WINCX * 0.5f - 100.f, WINCY * 0.5f - 40.f };
 		Engine::Render_Font(L"Font_Retro1", L"차량을 선택하세요", &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
 
+		wstring buff = CTankManager::GetInstance()->GetName((VEHICLE)CGameMode::GetInstance()->eData.TankType);
+		vPos = { WINCX * 0.5f - (10.f * (buff.length() * 0.5f)),  WINCY * 0.5f - 60.f };
+		Engine::Render_Font(L"Font_Retro", buff.c_str(), &vPos, D3DCOLOR_ARGB(255, 0, 255, 255));
+
 		wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]) + L"  GOLD";
 		vPos = { WINCX * 0.5f - (10.f * (strGold.length() * 0.5f)) , WINCY * 0.5f };
 		Engine::Render_Font(L"Font_Retro", strGold.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));

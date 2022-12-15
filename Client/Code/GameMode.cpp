@@ -18,6 +18,7 @@ CGameMode::CGameMode()
 	ZeroMemory(&m_nVictoryPoint, sizeof(m_nVictoryPoint));
 	ZeroMemory(&m_fBaseCurHP, sizeof(m_fBaseCurHP));
 	ZeroMemory(&m_fBaseMaxHP, sizeof(m_fBaseMaxHP));
+	ZeroMemory(&eData, sizeof(EData));
 }
 
 

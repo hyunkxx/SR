@@ -143,9 +143,10 @@ HRESULT CHumvee::Add_Component(void)
 	//Body_Setting(_vec3(0.f, 4.f, -0.3f));
 
 	/* 동현 세팅 발사위치는 어디? */
-	Posin_Setting(_vec3(0.f, 2.f, 0.f));
-	Head_Setting(_vec3(0.f, 2.f, 0.f));
-	Body_Setting(_vec3(0.f, 2.f, 0.f));
+	Posin_Setting(_vec3(50.f, 2.f, 50.f));
+	Head_Setting(_vec3(50.f, 2.f, 50.f));
+	Body_Setting(_vec3(50.f, 2.f, 50.f));
+
 	return S_OK;
 }
 
@@ -166,7 +167,7 @@ HRESULT CHumvee::Ready_Object(void)
 
 	m_stInfo.fReloadTime = tankData.fReloadTime;
 	m_stInfo.iCannonSpeed = tankData.iCannonSpeed;
-	m_fScale = 0.8f;
+	m_fScale = 0.5f;
 	m_stInfo.RotSpeed = tankData.RotSpeed;
 
 	m_stInfo.fLowAngle = tankData.fLowAngle;
@@ -189,8 +190,8 @@ HRESULT CHumvee::Ready_Object(void)
 	// UI_Rader
 	m_fRader = 6.f;
 
-	m_stBody.fLen[x] = 2.f  * m_fScale;
-	m_stBody.fLen[y] = 3.f  * m_fScale;
+	m_stBody.fLen[x] = 2.5f  * m_fScale;
+	m_stBody.fLen[y] = 4.f  * m_fScale;
 	m_stBody.fLen[z] = 4.5f * m_fScale;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -215,8 +216,8 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			if (!m_bDead)
 				m_bDead = true;
 		}
-		if (Get_DIMouseState(DIM_LB) & 0x80 
-			&& !CTankManager::GetInstance()->IsLock() 
+		if (Get_DIMouseState(DIM_LB) & 0x80
+			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{
 			m_bPosinShake = true;
@@ -311,7 +312,7 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 		else
 			Plus_Back_AccelSpeed(fTimeDelta);
 	}
-	
+
 
 	D3DXVec3Normalize(&vDir, &vDir);
 	Move_Info(vDir * m_stInfo.fSpeed * fTimeDelta);
@@ -560,8 +561,8 @@ void CHumvee::Posin_Shake(const _float & fTimeDelta)
 		{
 			m_fPosinAccum = 0.f;
 			m_bPosinShake = false;
-			_vec3 Pos , Pos2;
-			
+			_vec3 Pos, Pos2;
+
 			m_pTransformHead->Get_Info(INFO_POS, &Pos2);
 			m_pTransformBody->Get_Info(INFO_POS, &Pos);
 			m_pTransformHead->Set_Pos(Pos.x, Pos2.y, Pos.z);
@@ -640,7 +641,7 @@ void CHumvee::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//험비 높이
-	if (Engine::Get_Camera_ID() ==CAMERA_ID::TANK_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		UI_fScaleX = 2.f;
 		UI_fScaleY = 0.2f;
@@ -658,7 +659,7 @@ void CHumvee::Update_UI(void)
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
 
 		fScale[ROT_X] = UI_fScaleX;
-		fScale[ROT_Y] = UI_fScaleY ;
+		fScale[ROT_Y] = UI_fScaleY;
 		fScale[ROT_Z] = UI_fScaleZ;
 	}
 

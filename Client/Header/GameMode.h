@@ -24,7 +24,7 @@ public:
 	bool UseMenu() { return m_bOnSelectButton || m_bOnCreateButton || m_bOnSoundMenu; };
 	bool VictoryCheck();
 public:
-	EData eData; //AI 积己侩
+	EData eData = {}; //AI 积己侩
 
 	int m_nAllyCount = 0;
 	int m_nEnemyCount = 0;

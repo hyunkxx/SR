@@ -174,7 +174,7 @@ void CDirButton::KeyInput()
 
 		CGameMode::GetInstance()->m_bOnCreateButton = !CGameMode::GetInstance()->m_bOnCreateButton;
 
-		
+
 		m_fSmoothStart = 0.f;
 		static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(CGameMode::GetInstance()->UseMenu());
 	}

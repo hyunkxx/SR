@@ -60,7 +60,7 @@ void CBigTank::LateUpdate_Object(void)
 
 void CBigTank::Render_Object(void)
 {
-	if (Engine::Get_Camera_ID()!=CAMERA_ID::AIM_CAMERA) 
+	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA)
 	{
 		if (m_bDead)
 		{
@@ -124,9 +124,9 @@ HRESULT CBigTank::Add_Component(void)
 	FAILED_CHECK_RETURN(__super::Add_Component(), E_FAIL);
 
 	/* 동현 세팅 발사위치는 어디? */
-	Posin_Setting(_vec3(0.f, 2.f, 0.f));
-	Head_Setting(_vec3(0.f, 2.f, 0.f));
-	Body_Setting(_vec3(0.f, 2.f, 0.f));
+	Posin_Setting(_vec3(50.f, 2.f, 50.f));
+	Head_Setting(_vec3(50.f, 2.f, 50.f));
+	Body_Setting(_vec3(50.f, 2.f, 50.f));
 
 	return S_OK;
 }
@@ -146,7 +146,7 @@ HRESULT CBigTank::Ready_Object(void)
 	m_stInfo.fReload = data.fReload;
 	m_stInfo.fReloadTime = data.fReloadTime;
 	m_stInfo.iCannonSpeed = data.iCannonSpeed;
-	m_fScale = 1.5f;
+	m_fScale = 1.2f;
 	m_stInfo.RotSpeed = data.RotSpeed;
 
 	m_stInfo.fLowAngle = data.fLowAngle;
@@ -171,6 +171,11 @@ HRESULT CBigTank::Ready_Object(void)
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
 
+	m_stBody.fLen[x] = 2.5f  * m_fScale;
+	m_stBody.fLen[y] = 4.f  * m_fScale;
+	m_stBody.fLen[z] = 4.5f * m_fScale;
+
+	CGameObject::Ready_Object();
 	return S_OK;
 }
 

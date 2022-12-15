@@ -57,7 +57,7 @@ void CLongTank::LateUpdate_Object(void)
 		Engine::PlaySound_SR(L"TANK_RELOAD.wav", PLAYER_BULLET_EXIT_SOUND1, CUI_Volume::s_fAllSound);
 		m_bReLoad = true;
 	}
-		
+
 	__super::LateUpdate_Object();
 }
 
@@ -154,9 +154,9 @@ HRESULT CLongTank::Add_Component(void)
 
 	FAILED_CHECK_RETURN(__super::Add_Component(), E_FAIL);
 
-	Head_Setting(_vec3(0.f, 0.7f * m_fScale, 0.f));
-	Body_Setting(_vec3(0.f, 0.7f * m_fScale, 0.f));
-	Posin_Setting(_vec3(0.f, 0.7f * m_fScale, 0.f));
+	Head_Setting(_vec3(50.f, 0.7f * m_fScale, 50.f));
+	Body_Setting(_vec3(50.f, 0.7f * m_fScale, 50.f));
+	Posin_Setting(_vec3(50.f, 0.7f * m_fScale, 50.f));
 
 	return S_OK;
 }
@@ -206,8 +206,13 @@ HRESULT CLongTank::Ready_Object(void)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_stBody.fLen[x] = 2.5f  * m_fScale;
+	m_stBody.fLen[y] = 4.f  * m_fScale;
+	m_stBody.fLen[z] = 4.5f * m_fScale;
+
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
+
 	CGameObject::Ready_Object();
 	return S_OK;
 }
@@ -320,7 +325,7 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		else
 			Plus_Back_AccelSpeed(fTimeDelta);
 	}
-	
+
 
 	D3DXVec3Normalize(&vDir, &vDir);
 	Move_Info(vDir * m_stInfo.fSpeed * fTimeDelta);
@@ -555,7 +560,7 @@ void CLongTank::Camera_Change(void)
 
 		Engine::StopSound(CAMERA_CHANGE_SOUND);
 		Engine::PlaySound_SR(L"Aim_Sound.wav", CAMERA_CHANGE_SOUND, CUI_Volume::s_fBGMSound);
-	
+
 	}
 }
 
@@ -689,7 +694,7 @@ void CLongTank::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//중전차 높이
-	if (Engine::Get_Camera_ID()==CAMERA_ID::TANK_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		UI_fScaleX = 2.f;
 		UI_fScaleY = 0.2f;
@@ -699,7 +704,7 @@ void CLongTank::Update_UI(void)
 		fScale[ROT_Y] = UI_fScaleY;
 		fScale[ROT_Z] = UI_fScaleZ;
 	}
-	else if (Engine::Get_Camera_ID()==CAMERA_ID::DRONE_CAMERA)
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		UI_fScaleX = 3.f;
 		UI_fScaleY = 0.4f;

@@ -64,7 +64,7 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 void CTankManager::InitalizeData()
 {
 	tankData[(UINT)VEHICLE::HUMVEE].strName = L"Humvee";
-	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 100.f;
+	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 80.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fMaxHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fCurHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fSpeed = 0.f;;
@@ -85,7 +85,7 @@ void CTankManager::InitalizeData()
 	// 장전 속도
 	tankData[(UINT)VEHICLE::HUMVEE].fReload = 0.1f;
 	tankData[(UINT)VEHICLE::HUMVEE].fReloadTime = 0.1f;
-	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 400;
+	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 200;
 
 
 	tankData[(UINT)VEHICLE::SMALL_TANK].strName = L"A - 44";
@@ -110,10 +110,10 @@ void CTankManager::InitalizeData()
 	// 장전 속도
 	tankData[(UINT)VEHICLE::SMALL_TANK].fReload = 0.5f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].fReloadTime = 0.5f;
-	tankData[(UINT)VEHICLE::SMALL_TANK].iCannonSpeed = 500;
+	tankData[(UINT)VEHICLE::SMALL_TANK].iCannonSpeed = 250;
 
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].strName = L"TE6E4";
-	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 100.f;
+	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 200.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fMaxHP = 1000.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fCurHP = 1000.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fSpeed = 0.f;;
@@ -134,10 +134,10 @@ void CTankManager::InitalizeData()
 	// 장전 속도
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fReload = 2.5f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fReloadTime = 2.5f;
-	tankData[(UINT)VEHICLE::MIDDLE_TANK].iCannonSpeed = 700;
+	tankData[(UINT)VEHICLE::MIDDLE_TANK].iCannonSpeed = 300;
 
 	tankData[(UINT)VEHICLE::BIG_TANK].strName = L"KING TIGER";
-	tankData[(UINT)VEHICLE::BIG_TANK].fDamage = 100.f;
+	tankData[(UINT)VEHICLE::BIG_TANK].fDamage = 400.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fMaxHP = 2000.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fCurHP = 2000.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fSpeed = 0.f;;
@@ -158,10 +158,10 @@ void CTankManager::InitalizeData()
 	// 장전 속도
 	tankData[(UINT)VEHICLE::BIG_TANK].fReload = 5.f;
 	tankData[(UINT)VEHICLE::BIG_TANK].fReloadTime = 5.f;
-	tankData[(UINT)VEHICLE::BIG_TANK].iCannonSpeed = 800;
+	tankData[(UINT)VEHICLE::BIG_TANK].iCannonSpeed = 500;
 
 	tankData[(UINT)VEHICLE::LONG_TANK].strName = L"M55";
-	tankData[(UINT)VEHICLE::LONG_TANK].fDamage = 100.f;
+	tankData[(UINT)VEHICLE::LONG_TANK].fDamage = 1000.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fMaxHP = 1200.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fCurHP = 1100.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fSpeed = 0.f;;
@@ -182,5 +182,5 @@ void CTankManager::InitalizeData()
 	// 장전 속도
 	tankData[(UINT)VEHICLE::LONG_TANK].fReload = 6.f;
 	tankData[(UINT)VEHICLE::LONG_TANK].fReloadTime = 6.f;
-	tankData[(UINT)VEHICLE::LONG_TANK].iCannonSpeed = 1100;
+	tankData[(UINT)VEHICLE::LONG_TANK].iCannonSpeed = 900;
 }

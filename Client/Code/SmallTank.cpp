@@ -127,9 +127,9 @@ HRESULT CSmallTank::Add_Component(void)
 	FAILED_CHECK_RETURN(__super::Add_Component(), E_FAIL);
 
 	/* 동현 세팅 발사위치는 어디? */
-	Posin_Setting(_vec3(0.f, 2.f, 0.f));
-	Head_Setting(_vec3(0.f, 2.f, 0.f));
-	Body_Setting(_vec3(0.f, 2.f, 0.f));
+	Posin_Setting(_vec3(50.f, 2.f, 50.f));
+	Head_Setting(_vec3(50.f, 2.f, 50.f));
+	Body_Setting(_vec3(50.f, 2.f, 50.f));
 
 	return S_OK;
 }
@@ -168,11 +168,16 @@ HRESULT CSmallTank::Ready_Object(void)
 	// UI_Rader
 	m_fRader = 6.f;
 
+	m_stBody.fLen[x] = 3.5f  * m_fScale;
+	m_stBody.fLen[y] = 4.f  * m_fScale;
+	m_stBody.fLen[z] = 4.5f * m_fScale;
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
 
+	CGameObject::Ready_Object();
 	return S_OK;
 }
 
@@ -479,7 +484,7 @@ void CSmallTank::Camera_Change(void)
 {
 	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
 	{
-	 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+		if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 		{
 			Engine::Camera_Change(L"AimCamera");
 			Engine::Get_Camera()->Camera_Setting(_vec3{ 0.f,0.f,0.f });
@@ -585,7 +590,7 @@ void CSmallTank::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//경전차 높이
-	if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		UI_fScaleX = 2.f;
 		UI_fScaleY = 0.2f;

@@ -69,7 +69,7 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"Long_enemy_body.bin", L"Long_enemy_body");
 	LoadMesh(L"Long_enemy_head.bin", L"Long_enemy_head");
 	LoadMesh(L"Long_enemy_posin.bin", L"Long_enemy_posin");
-	
+
 	//Turret
 	LoadMesh(L"Turret_body.bin", L"Turret_body");
 	LoadMesh(L"Turret_head.bin", L"Turret_head");
@@ -96,13 +96,15 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"Building_000_object.bin", L"Building_000_object"); //정상
 	LoadMesh(L"Building_100_object.bin", L"Building_100_object"); //파괴
 
+	LoadMesh(L"Building_001_object.bin", L"Building_001_object");
+
 	/* base */
 	LoadMesh(L"ally_base_object.bin", L"Base_ally");
 	LoadMesh(L"enemy_base_object.bin", L"Base_enemy");
 
 	/* 기존 건물 */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
-	LoadMesh(L"Building_001_object.bin", L"Building_001_object");
+	//LoadMesh(L"Building_001_object.bin", L"Building_001_object");
 	LoadMesh(L"Rock_object.bin", L"Rock_object");
 	LoadMesh(L"Building_object.bin", L"Building_object");
 }

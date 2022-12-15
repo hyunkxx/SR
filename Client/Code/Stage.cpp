@@ -8,7 +8,6 @@
 #include "BackGround.h"
 #include "Terrain.h"
 #include"Default_Enermy.h"
-#include "TestBox.h"
 #include"Default_Ally.h"
 #include"BottomDirEnermy.h"
 #include"BottomDirAlly.h"
@@ -95,7 +94,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Environment_Object(L"Environment_Object"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"UI"), E_FAIL);
-	
+
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	return S_OK;
 }
@@ -157,7 +156,7 @@ void CStage::Render_Scene(void)
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
-	
+
 	}
 }
 
@@ -167,7 +166,7 @@ CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	if (FAILED(pInstance->Ready_Scene()))
 		Safe_Release(pInstance);
-	
+
 	return pInstance;
 }
 
@@ -185,7 +184,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	
+
 	// CTerrain
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -279,10 +278,6 @@ HRESULT CStage::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 
 	_vec3 vPos, vRot;
 	CreateMap(pLayer);
-
-	pGameObject = CTestBox::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestBox", pGameObject), E_FAIL);
 
 	pGameObject = m_pEffectManager = CEffectManager::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -415,7 +410,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	//Default_Enermy
 	_int iEnermy_Count = 5;
-	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count  + iBottomDir_Count - 2);
+	CUI_FontMgr::GetInstance()->Set_AllCount(iEnermy_Count + iBottomDir_Count - 2);
 	for (_int i = 0; iEnermy_Count > i; i++)
 	{
 		_int tanktype = rand() % 4;
@@ -923,7 +918,7 @@ void CStage::Collison_Object(void)
 					(*iter)->Set_Dead(true);
 					dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
 					//(*iters)->Set_Dead(true);
-					continue;				
+					continue;
 				}
 			}
 		}
@@ -1006,27 +1001,57 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 
 	vPos = { 315.f, 0.f,  315.f };
 
-	pGameObject = CBuilding::Create(m_pGraphicDev, L"Oasis", vPos, CBuilding::TYPE::BUILDING);
+	pGameObject = CBuilding::Create(m_pGraphicDev, L"Oasis", vPos, CBuilding::TYPE::OASIS);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	static_cast<CBuilding*>(pGameObject)->SetRotation(0.f);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(
 		static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 
+	pGameObject = m_pBase_Ally = CBuilding::Create(m_pGraphicDev, L"Base_ally", vPos, CBuilding::TYPE::BASE_ALLY);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	static_cast<CBuilding*>(pGameObject)->SetRotation(D3DXToRadian(110.f));
+	vPos = { 20.f, 7.f, 20.f };
+	static_cast<CBuilding*>(pGameObject)->SetPosition(vPos);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+		static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 
-	for (int j = 0 ; j < 9 ; ++j)
+
+	pGameObject = m_pBase_Enemy = CBuilding::Create(m_pGraphicDev, L"Base_enemy", vPos, CBuilding::TYPE::BASE_ENEMY);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	static_cast<CBuilding*>(pGameObject)->SetRotation(D3DXToRadian(20.f));
+	vPos = { 610.f, 7.f, 610.f };
+	static_cast<CBuilding*>(pGameObject)->SetPosition(vPos);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+		static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+
+	for (int j = 0; j < 9; ++j)
 	{
-		for (int i = -1 ; i < 8 ; ++i)
+		for (int i = -1; i < 8; ++i)
 		{
-			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::MAX + 2;
+			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::TYPE_MAX;
 
 			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
-			fRot = (float)(rand() % 180);
-			
+			fRot = rand() % 180;
+
 			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
 				continue;
 
 			switch ((CBuilding::TYPE)ObjectNumber)
 			{
+			case CBuilding::TYPE::BUILDING_1:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_000_object", vPos, CBuilding::TYPE::BUILDING_1);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
+			case CBuilding::TYPE::BUILDING_2:
+				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_001_object", vPos, CBuilding::TYPE::BUILDING_2);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+				break;
 			case CBuilding::TYPE::ROCK:
 				pGameObject = CBuilding::Create(m_pGraphicDev, L"Rock_object", vPos, CBuilding::TYPE::ROCK);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -1058,11 +1083,6 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			default:
-				pGameObject = CBuilding::Create(m_pGraphicDev, L"Building_000_object", vPos, CBuilding::TYPE::BUILDING);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				static_cast<CBuilding*>(pGameObject)->SetRotation(fRot);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(
-					static_cast<CBuilding*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
 				break;
 			}
 		}
