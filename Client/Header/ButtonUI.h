@@ -43,7 +43,11 @@ private:
 	void UpdateTransform();
 	void RenderButton();
 	void BuyVehicle();
+	void HideMessage(float fDeltaTime);
 private: /* UI value */
+	bool hasGold = true;
+	float hideTimer = 0.f;
+
 	VEHICLE m_eType;
 	bool m_bUpdateTransform;
 

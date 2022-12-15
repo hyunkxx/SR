@@ -50,8 +50,8 @@ HRESULT CButtonUI::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
-	m_fScaleX = 100.f;
-	m_fScaleY = 80.f;
+	m_fScaleX = 80;
+	m_fScaleY = 60.f;
 	m_fScaleZ = 0.01f;
 
 	m_fPosX = WINCX - m_fScaleX;
@@ -80,6 +80,8 @@ _int CButtonUI::Update_Object(const _float & fTimeDelta)
 		BuyVehicle();
 		m_bClicked = false;
 	}
+		
+	HideMessage(fTimeDelta);
 
 	UpdateTransform();
 
@@ -251,11 +253,18 @@ void CButtonUI::RenderButton()
 
 	m_pRcTex->Render_Buffer();
 
-	_vec2 vPos = { 100.f, 100.f };
-	wstring strPoint = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
-	Engine::Render_Font(L"Font_Retro", strPoint.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
-	vPos = { WINCX * 0.5f - 100.f, WINCY - 100.f };
+	wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]) + L"  GOLD";
+	_vec2 vPos = { WINCX * 0.5f - 100.f + (strGold.length() *0.5f) * 15.f , WINCY - 150.f };
+	Engine::Render_Font(L"Font_Retro", strGold.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	vPos = { WINCX * 0.5f - 100.f, WINCY - 190.f };
 	Engine::Render_Font(L"Font_Retro1", L"차량을 선택하세요", &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
+
+	if (!hasGold)
+	{
+		_vec2 vPos = { WINCX * 0.5f - 70.f , WINCY - 120.f };
+		Engine::Render_Font(L"Font_Retro", L"골드가 부족합니다.", &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
 }
@@ -265,28 +274,90 @@ void CButtonUI::BuyVehicle()
 	switch (m_eType)
 	{
 	case VEHICLE::HUMVEE:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+		if (CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] >= 200)
+		{
+			hasGold = true;
+			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 200;
+			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+		}
+		else
+		{
+			hasGold = false;
+		}
 		break;
 	case VEHICLE::SMALL_TANK:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+		if (CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] >= 800)
+		{
+			hasGold = true;
+			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 800;
+			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+		}
+		else
+		{
+			hasGold = false;
+		}
 		break;
 	case VEHICLE::MIDDLE_TANK:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+		if (CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] >= 1500)
+		{
+			hasGold = true;
+			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 1500;
+			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+		}
+		else
+		{
+			hasGold = false;
+		}
 		break;
 	case VEHICLE::BIG_TANK:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::BIG_TANK);
+		if (CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] >= 2500)
+		{
+			hasGold = true;
+			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2500;
+			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::BIG_TANK);
+		}
+		else
+		{
+			hasGold = false;
+		}
 		break;
 	case VEHICLE::LONG_TANK:
-		CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::LONG_TANK);
+		if (CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] >= 2300)
+		{
+			hasGold = true;
+			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2300;
+			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::LONG_TANK);
+		}
+		else
+		{
+			hasGold = false;
+		}
 		break;
 	default:
 		MSG_BOX("BuyVehicle() 인덱스 범위 초과");
 		break;
 	}
 
+	if (!hasGold)
+		return;
+
 	CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
 	CGameObject* pGameObject = Engine::Swap_Object(L"GameLogic", L"PlayerVehicle", *CTankManager::GetInstance()->GetVehicle());
 	static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(true);
 
 	pGameObject->Set_Dead(true);
+}
+
+void CButtonUI::HideMessage(float fDeltaTime)
+{
+	if (hasGold)
+		return;
+
+	hideTimer += fDeltaTime;
+
+	if (hideTimer > 2.f)
+	{
+		hideTimer = 0.f;
+		hasGold = true;
+	}
 }

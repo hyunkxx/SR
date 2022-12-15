@@ -591,11 +591,11 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 		static_cast<CButtonUI*>(m_pButton[i])->Set_PosX(vPos.x);
 	}
 
-	vPos = { 290.f , 380.f, 0.f };
+	vPos = { 290.f , 330.f, 0.f };
 	static_cast<CButtonUI*>(m_pButton[3])->Set_PosX(vPos.x);
 	static_cast<CButtonUI*>(m_pButton[3])->Set_PosY(vPos.y);
 
-	vPos = { 500.f , 380.f, 0.f };
+	vPos = { 500.f , 330.f, 0.f };
 	static_cast<CButtonUI*>(m_pButton[4])->Set_PosX(vPos.x);
 	static_cast<CButtonUI*>(m_pButton[4])->Set_PosY(vPos.y);
 
