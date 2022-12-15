@@ -1210,7 +1210,7 @@ void CDefault_Ally::Update_UI(void)
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		UI_fScaleX = 3.f;
-		UI_fScaleY = 0.4f;
+		UI_fScaleY = 0.6f;
 
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY + 1.5f, UI_fScaleZ);
 

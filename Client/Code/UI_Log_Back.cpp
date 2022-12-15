@@ -46,21 +46,21 @@ HRESULT CUI_Log_Back::Ready_Object(void)
 _int CUI_Log_Back::Update_Object(const _float & fTimeDelta)
 {
 
-	// 플레이 타임
-	m_iPlayerTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
+	//// 플레이 타임
+	//m_iPlayerTime = CUI_FontMgr::GetInstance()->Get_PlayTime();
 
-	UpdateChatting();
+	//UpdateChatting();
 
-	__super::Update_Object(fTimeDelta);
+	//__super::Update_Object(fTimeDelta);
 
 	return 0;
 }
 
 void CUI_Log_Back::LateUpdate_Object(void)
 {
-	__super::LateUpdate_Object();
+	//__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	//Add_RenderGroup(RENDER_PRIORITY, this);
 }
 
 void CUI_Log_Back::Render_Object(void)

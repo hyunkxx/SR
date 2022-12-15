@@ -1238,7 +1238,7 @@ void CBottomDirAlly::Update_UI(void)
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		UI_fScaleX = 3.f;
-		UI_fScaleY = 0.4f;
+		UI_fScaleY = 0.6f;
 
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
@@ -1250,6 +1250,9 @@ void CBottomDirAlly::Update_UI(void)
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
+		UI_fScaleX = 2.f;
+		UI_fScaleY = 0.2f;
+
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);

@@ -57,5 +57,8 @@ private:
 	_tchar	m_PlayerChating[128] = L"";
 	_tchar	m_ChattingWin[128] = L"";
 	_uint				m_iKillCount = 0;
+
+
+	_float changeColor = 0.f;
 };
 

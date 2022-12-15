@@ -44,41 +44,41 @@ HRESULT CPlayer_Chatting::Ready_Object(void)
 
 _int CPlayer_Chatting::Update_Object(const _float & fTimeDelta)
 {
-	__super::Update_Object(fTimeDelta);
+//	__super::Update_Object(fTimeDelta);
 
-	m_szPlayerName = CUI_FontMgr::GetInstance()->Get_PlayerName();
+	//m_szPlayerName = CUI_FontMgr::GetInstance()->Get_PlayerName();
 
-	CGameObject*		pTankView = pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
-	CGameObject*		pStaticView = pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
+	//CGameObject*		pTankView = pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
+	//CGameObject*		pStaticView = pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
 
-	if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
-	{
-		if (m_bChatting == true)
-		{
-			Chatting(fTimeDelta);
-		}
+	//if (Engine::Get_Camera_ID()  ==CAMERA_ID::TANK_CAMERA)
+	//{
+	//	if (m_bChatting == true)
+	//	{
+	//		Chatting(fTimeDelta);
+	//	}
 
-		if (Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
-		{
-			if (m_bChatting == true)
-			{
-				m_bChatting = false;
-			}
-			else
-			{
-				m_bChatting = true;
-			}
-		}
-	}
+	//	if (Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
+	//	{
+	//		if (m_bChatting == true)
+	//		{
+	//			m_bChatting = false;
+	//		}
+	//		else
+	//		{
+	//			m_bChatting = true;
+	//		}
+	//	}
+	//}
 
 	return 0;
 }
 
 void CPlayer_Chatting::LateUpdate_Object(void)
 {
-	__super::LateUpdate_Object();
+	//__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_UI, this);
+	//Add_RenderGroup(RENDER_UI, this);
 }
 
 void CPlayer_Chatting::Render_Object(void)

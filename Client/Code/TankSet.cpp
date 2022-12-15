@@ -43,7 +43,7 @@ void CTankSet::LateUpdate_Object(void)
 
 void CTankSet::Render_Object(void)
 {
-	if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA) && !m_bDead)
 	{
 		// HP UI
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
@@ -54,7 +54,7 @@ void CTankSet::Render_Object(void)
 		m_pRcTexF->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) && !m_bDead)
 	{
 		// Minimap UI
 		_matrix OldViewMatrix, OldProjMatrix;

@@ -153,7 +153,7 @@ HRESULT CBigTank::Ready_Object(void)
 	m_stInfo.TopAngle = data.TopAngle;
 
 	//UI_HP
-	UI_Orgin_HP = UI_fHP = data.fMaxHP;
+	m_stInfo.fCurHP = m_stInfo.fMaxHP = data.fMaxHP;
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -556,16 +556,16 @@ void CBigTank::Update_UI(void)
 	_vec3 vTankPos, vUI_HPF, vUI_HPB;
 
 
-	if (UI_fHP >= UI_Orgin_HP)
+	if (m_stInfo.fCurHP >= m_stInfo.fMaxHP)
 	{
-		UI_fHP = UI_Orgin_HP;
+		m_stInfo.fCurHP = m_stInfo.fMaxHP;
 	}
-	if (UI_fHP <= 0.f)
+	if (m_stInfo.fCurHP <= 0.f)
 	{
-		UI_fHP = 0.f;
+		m_stInfo.fCurHP = 0.f;
 	}
 
-	_float HP_Percent = (UI_fHP / UI_Orgin_HP);
+	_float HP_Percent = (m_stInfo.fCurHP / m_stInfo.fMaxHP);
 
 	if (HP_Percent > 1.f)
 	{
@@ -595,21 +595,10 @@ void CBigTank::Update_UI(void)
 
 	_float fScale[ROT_END];
 	//중전차 높이
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	 if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
-		UI_fScaleX = 2.f;
-		UI_fScaleY = 0.2f;
-
-		vUI_HPF = { vTankPos.x, vTankPos.y + 4.5f, vTankPos.z };
-
-		fScale[ROT_X] = UI_fScaleX;
-		fScale[ROT_Y] = UI_fScaleY;
-		fScale[ROT_Z] = UI_fScaleZ;
-	}
-	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
-	{
-		UI_fScaleX = 3.f;
-		UI_fScaleY = 0.4f;
+		 UI_fScaleX = 4.f;
+		 UI_fScaleY = 0.9f;
 
 		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
 

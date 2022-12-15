@@ -135,6 +135,13 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+	changeColor += 0.1f;
+
+	if (changeColor >= 1.f)
+	{
+		changeColor = 0.f;
+	}
+
 	// _DEBUG¿ë Ãâ·Â
 	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
@@ -142,7 +149,7 @@ void CStage::Render_Scene(void)
 	// ÅÊÅ© Á¾·ù or ÀÌ¸§								27.45% »¡°­, 28.63% ³ì»ö ¹× 39.22%
 	if ((!showF1Win) && Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 12.f, WINCY_HALF + PERCENTY * 20.f), D3DXCOLOR(0.2745f, 0.2863f, .3922f, 1.f));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 12.f, WINCY_HALF + PERCENTY * 35.f), D3DXCOLOR(changeColor, 1.f- changeColor, changeColor, 1.f));
 	}
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)

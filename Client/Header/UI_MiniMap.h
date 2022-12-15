@@ -35,12 +35,20 @@ private:
 	virtual void Free(void) override;
 
 
-	CRcTex*						m_pRcTex = nullptr;
+	CRcTex*					m_pRcTex = nullptr;
 	CTexture*					m_pTexture = nullptr;
-	CTransform*				m_pTransform = nullptr;
+	CTransform*			m_pTransform = nullptr;
+
+	CTexture*					m_pATexture = nullptr;
+	CTransform*			m_pATransform = nullptr;
+
+	CTexture*					m_pBTexture = nullptr;
+	CTransform*			m_pBTransform = nullptr;
 
 	_matrix  m_matProj;
 
+	// 명시적 구분
+	// minimap back
 	_float					m_fScaleX;
 	_float					m_fScaleY;
 	_float					m_fScaleZ;
@@ -48,6 +56,25 @@ private:
 	_float					m_fPosX;
 	_float					m_fPosY;
 	_float					m_fPosZ;
+
+	// minimap Curcle common
+	_float					m_fCurcleScaleX;
+	_float					m_fCurcleScaleY;
+	_float					m_fCurcleScaleZ;
+	_float					m_fCurclePosZ;
+
+
+	// minimap curcle1			
+	_float					m_fAPosX;
+	_float					m_fAPosY;
+	_int						m_iASite = 0;
+
+	// minimap curcle2
+	_float					m_fBPosX;
+	_float					m_fBPosY;
+	_int						m_iBSite = 0;
+
+
 	_bool					m_bPosinOn = true;
 public:
 

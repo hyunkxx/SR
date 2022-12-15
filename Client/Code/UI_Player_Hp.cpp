@@ -33,25 +33,78 @@ HRESULT CUI_Player_Hp::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
+	// 채팅창 살릴려면 이거 복구
+#pragma region
+	//// Front
+	//m_fOrgin_ScaleX = m_fScaleX = 70.f;
+	//m_fScaleY = 9.f;
+	//m_fScaleZ = 0.1f;
+
+	//m_fOrgin_PosX = m_fPosX = 150.f;
+	//m_fPosY = 468.f;
+	//m_fPosZ = 0.02f;
+
+
+	//// Back
+	//m_fBScaleX = 120.f;
+	//m_fBScaleY  = 40.f;
+	//m_fBScaleZ = 1.f;
+
+	//m_fBPosX  = 120.f;
+	//m_fBPosY  = 475.f;
+	//m_fBPosZ  = 0.03f;
+	//
+	//// Reload
+
+	//m_fROrgin_ScaleX = m_fRScaleX = 50.f;
+	//m_fRScaleY = 4.f;
+	//m_fRScaleZ = 0.1f;
+
+	//m_fROrgin_PosX = m_fRPosX = 135.f;
+	//m_fRPosY = 485.f;
+	//m_fRPosZ = 0.02f;
+
+
+	//// Hp bar
+	//m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
+	//m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
+
+	//// Hp Back
+	//m_pBTransform->Set_Scale(m_fBScaleX, m_fBScaleY, m_fBScaleZ);
+	//m_pBTransform->Set_Pos(m_fBPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fBPosY, m_fBPosZ);
+
+	//// Reload
+	//m_pRTransform->Set_Scale(m_fRScaleX, m_fRScaleY, m_fRScaleZ);
+	//m_pRTransform->Set_Pos(m_fRPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fRPosY, m_fRPosZ);
+
+
+	//// Player Tank Info Get
+	//szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
+
+#pragma endregion
+
+
+	// 채팅창 없애고 위치 지정
+#pragma region
 	// Front
 	m_fOrgin_ScaleX = m_fScaleX = 70.f;
 	m_fScaleY = 9.f;
 	m_fScaleZ = 0.1f;
 
 	m_fOrgin_PosX = m_fPosX = 150.f;
-	m_fPosY = 468.f;
+	m_fPosY = 558.f;
 	m_fPosZ = 0.02f;
 
 
 	// Back
 	m_fBScaleX = 120.f;
-	m_fBScaleY  = 40.f;
+	m_fBScaleY = 40.f;
 	m_fBScaleZ = 1.f;
 
-	m_fBPosX  = 120.f;
-	m_fBPosY  = 475.f;
-	m_fBPosZ  = 0.03f;
-	
+	m_fBPosX = 120.f;
+	m_fBPosY = 565.f;
+	m_fBPosZ = 0.03f;
+
 	// Reload
 
 	m_fROrgin_ScaleX = m_fRScaleX = 50.f;
@@ -59,7 +112,7 @@ HRESULT CUI_Player_Hp::Ready_Object(void)
 	m_fRScaleZ = 0.1f;
 
 	m_fROrgin_PosX = m_fRPosX = 135.f;
-	m_fRPosY = 485.f;
+	m_fRPosY = 575.f;
 	m_fRPosZ = 0.02f;
 
 
@@ -78,6 +131,10 @@ HRESULT CUI_Player_Hp::Ready_Object(void)
 
 	// Player Tank Info Get
 	szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
+
+
+#pragma endregion
+
 
 
 
