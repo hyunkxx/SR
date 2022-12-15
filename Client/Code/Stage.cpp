@@ -2,12 +2,20 @@
 #include "..\Header\Stage.h"
 #include "Export_Function.h"
 
+//
 #include "Tank_01.h"
 #include "Humvee.h"
-
 #include "BackGround.h"
 #include "Terrain.h"
+#include"Default_Enermy.h"
+#include "TestBox.h"
+#include"Default_Ally.h"
+#include"BottomDirEnermy.h"
+#include"BottomDirAlly.h"
+#include "Building.h"
+#include "BattleShip.h"
 
+//camera
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
 #include "TankCamera.h"
@@ -15,20 +23,13 @@
 #include "DroneCamera.h"
 #include "BoomCamera.h"
 
-#include "Boom_Support.h"
-#include "BattleShip_Support.h"
-
-#include"Default_Enermy.h"
-#include "TestBox.h"
-#include"Default_Ally.h"
-#include"BottomDirEnermy.h"
-#include"BottomDirAlly.h"
-
+// ai
 #include"RightLocation.h"
 #include"RightTopLocation.h"
 #include"LeftTopLocation.h"
 #include"LeftLocation.h"
 
+// ui
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
@@ -38,19 +39,24 @@
 #include "UI_Volume.h"
 #include "UI_Compass.h"
 #include "UI_Start.h"
+#include "UI_MiniMap.h"
+#include "UI_Speed.h"
+//#include "UI_Fuel.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
+#include "ButtonUI.h"
+#include"TempOccupationScore.h"
+
+// effect skill
 #include "ShootEffect.h"
 #include "BoomEffect.h"
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
-#include "BattleShip.h"
-
-#include "ButtonUI.h"
+#include "Boom_Support.h"
+#include "BattleShip_Support.h"
 #include "EffectPool.h"
 #include "EffectManager.h"
-#include"TempOccupationScore.h"
-#include "Building.h"
+
 #include "TankManager.h"
 #include "GameMode.h"
 
@@ -122,6 +128,11 @@ void CStage::Render_Scene(void)
 	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
+	// ≈ ≈© ¡æ∑˘ or ¿Ã∏ß								27.45% ª°∞≠, 28.63% ≥Ïªˆ π◊ 39.22%
+	if ((!showF1Win) && Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	{
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 12.f, WINCY_HALF + PERCENTY * 20.f), D3DXCOLOR(0.2745f, 0.2863f, .3922f, 1.f));
+	}
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
@@ -135,11 +146,7 @@ void CStage::Render_Scene(void)
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
 
-		// ≈ ≈© ¡æ∑˘ or ¿Ã∏ß								27.45% ª°∞≠, 28.63% ≥Ïªˆ π◊ 39.22%
-		if (!showF1Win)
-		{
-			Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX, WINCY_HALF + PERCENTY * 20.f), D3DXCOLOR(0.2745f, 0.2863f, .3922f, 1.f));
-		}
+	
 	}
 }
 
@@ -513,7 +520,7 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev, 450.f);
+	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
 
@@ -556,6 +563,20 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CAim_UI_Pers::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
+
+	pGameObject = CUI_Speed::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Speed_UI", pGameObject), E_FAIL);
+
+	pGameObject = CUI_MiniMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MiniMap_UI", pGameObject), E_FAIL);
+
+	//pGameObject = CUI_Fuel::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fuel_UI", pGameObject), E_FAIL);
+
+
 
 	/* Select Vehicle UI */
 	_vec3 vPos;
@@ -896,21 +917,7 @@ void CStage::Collison_Object(void)
 
 void CStage::Key_Input(const _float& fTimeDelta)
 {
-	// Test HP UI §—§—§—§—§—§— ªË¡¶ øπ¡§
-#pragma region
-	CGameObject* pPlayerHp_UI = Engine::Get_Object(L"UI", L"Player_Hp2");
-
-	if (Get_DIKeyState_Custom(DIK_LEFT) == KEY_STATE::HOLD)
-	{
-		static_cast<CUI_Player_Hp*>(pPlayerHp_UI)->Minus_HP_UI(3.f);
-	}
-	if (Get_DIKeyState_Custom(DIK_RIGHT) == KEY_STATE::HOLD)
-	{
-		static_cast<CUI_Player_Hp*>(pPlayerHp_UI)->Plus_HP_UI(3.f);
-	}
-
-#pragma endregion
-
+	
 }
 
 

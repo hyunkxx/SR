@@ -34,38 +34,16 @@ HRESULT CUI_MiniMap::Ready_Object(void)
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	m_fScaleX = 80.f;
-	m_fScaleY = 80.f;
-	m_fScaleZ = 1.f;
+	m_fScaleY = 57.5f;
+	m_fScaleZ = 0.f;
 
-	m_fPosX = 715.f;
-	m_fPosY = 515.f;
-	m_fPosZ = 0.03f;
+	m_fPosX = 720.f;
+	m_fPosY = 542.5f;
+	m_fPosZ = 0.9f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
-/*
-	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
-	if (m_szTankType == L"Humvee")
-	{
-		m_iTankType = 0;
-	}
-	else if (m_szTankType == L"CV90 경전차")
-	{
-		m_iTankType = 1;
-	}
-	else if (m_szTankType == L"T62 중형전차")
-	{
-		m_iTankType = 2;
-	}
-	else if (m_szTankType == L"Tiger 중전차")
-	{
-		m_iTankType = 3;
-	}
-	else if (m_szTankType == L"K-9 자주곡사포")
-	{
-		m_iTankType = 4;
-	}*/
 	return S_OK;
 }
 
@@ -81,7 +59,7 @@ void CUI_MiniMap::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 	
-	Add_RenderGroup(RENDER_UI, this);
+	Add_RenderGroup(RENDER_PRIORITY, this);
 	
 }
 
@@ -91,7 +69,12 @@ void CUI_MiniMap::Render_Object(void)
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
-		
+		_matrix OldViewMatrix, OldProjMatrix;
+
+
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
 		_matrix	ViewMatrix;
@@ -102,6 +85,10 @@ void CUI_MiniMap::Render_Object(void)
 
 		m_pTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
 	}
 

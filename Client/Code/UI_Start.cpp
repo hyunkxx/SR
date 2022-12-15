@@ -71,10 +71,10 @@ void CUI_Start::Render_Object(void)
 
 		HelpWinFont1 = L"G: 탱크 시동 ON	 \n\nW S A D : 이동 \n\n좌클릭: 포탄 공격 \n\nV : 시점 변환\n\nK : 공중 폭격 지원 \n\nENTER : 채팅		\n\nENTER + NUM : 적 탱크 숫자\n\n";
 															
-		HelpWinFont2 = L"숫자 1  : 시야 줌 인	 \n\n숫자 2  : 시야 줌 아웃	 \n\nG : (자주포) 연막탄 \n\nC : 이모티콘 \n\nF1 : 도움말\n\nF3 : 볼륨 옵션";
+		HelpWinFont2 = L"숫자 1  : 시야 줌 인	 \n\n숫자 2  : 시야 줌 아웃	 \n\nG : (자주포) 연막탄 \n\nC : 이모티콘 \n\nJ : 함선 폭격 지원\n\nF1 : 도움말\n\nF3 : 볼륨 옵션";
 			
 		// 임시 설정 -> 삭제 ( 보여줄 땐, 밑에 걸로)
-		wstring HelpWinFont3{ L" 임시 설정\n좌우 화살표 : 플레이어 체력 감소.\t\t F11 포신UI 제거\n험비,롱탱 : 죽는키->m" };
+		wstring HelpWinFont3{ L" 임시 설정\nF11 포신UI 제거\n험비,롱탱 : 죽는키->m" };
 		Render_Font(L"Font_Retro", (HelpWinFont1).c_str(), &_vec2(25.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		Render_Font(L"Font_Retro", (HelpWinFont2).c_str(), &_vec2(400.f, 25.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 		Render_Font(L"Font_Retro", (HelpWinFont3).c_str(), &_vec2(25, 400.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));

@@ -46,28 +46,7 @@ HRESULT CPosin_UI::Ready_Object(void)
 
 	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
-	wstring name;
 	
-	if (m_szTankType == L"Humvee")
-	{
-		m_iTankType = 0;
-	}
-	else if (m_szTankType == L"CV90 경전차")
-	{
-		m_iTankType = 1;
-	}
-	else if (m_szTankType == L"T62 중형전차")
-	{
-		m_iTankType = 2;
-	}
-	else if (m_szTankType == L"Tiger 중전차")
-	{
-		m_iTankType = 3;
-	}
-	else if (m_szTankType == L"K-9 자주곡사포")
-	{
-		m_iTankType = 4;
-	}
 	return S_OK;
 }
 
@@ -129,31 +108,26 @@ void CPosin_UI::Render_Object(void)
 
 		//_float fSpeed;
 
+
 		if (m_szTankType == L"Humvee")
 		{
 			TankInfo = static_cast<CHumvee*>(pTank)->Get_TankInfo();
-
-			//	fSpeed = static_cast<CHumvee*>(pTank)->Get_Speed();
 		}
-		else if (m_szTankType == L"CV90 경전차")
+		else if (m_szTankType == L"A - 44")
 		{
 			TankInfo = static_cast<CSmallTank*>(pTank)->Get_TankInfo();
-			//fSpeed = static_cast<CSmallTank*>(pTank)->Get_Speed();
 		}
-		else if (m_szTankType == L"T62 중형전차")
+		else if (m_szTankType == L"TE6E4")
 		{
 			TankInfo = static_cast<CMiddleTank*>(pTank)->Get_TankInfo();
-			//fSpeed = static_cast<CMiddleTank*>(pTank)->Get_Speed();
 		}
-		else if (m_szTankType == L"Tiger 중전차")
+		else if (m_szTankType == L"KING TIGER")
 		{
 			TankInfo = static_cast<CBigTank*>(pTank)->Get_TankInfo();
-			//fSpeed = static_cast<CBigTank*>(pTank)->Get_Speed();
 		}
-		else if (m_szTankType == L"K-9 자주곡사포")
+		else if (m_szTankType == L"M55")
 		{
 			TankInfo = static_cast<CLongTank*>(pTank)->Get_TankInfo();
-			//fSpeed = static_cast<CLongTank*>(pTank)->Get_Speed();
 		}
 
 

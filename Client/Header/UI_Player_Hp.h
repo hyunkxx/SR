@@ -17,13 +17,13 @@ private:
 	virtual ~CUI_Player_Hp();
 
 public:
-	HRESULT Ready_Object(_float fOrgin_HP);
+	virtual HRESULT Ready_Object(void);
 	virtual _int Update_Object(const _float& fTimeDelta)override;
 	virtual void LateUpdate_Object(void)  override;
 	virtual void Render_Object(void)  override;
 	virtual const   _vec3		Get_Info(void) { return _vec3(); }
 	virtual			void		Move_Info(_vec3 _Info) {}
-	static CUI_Player_Hp*		Create(LPDIRECT3DDEVICE9 pGraphicDev, _float fOrgin_HP);
+	static CUI_Player_Hp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	HRESULT		Add_Component(void);
@@ -41,13 +41,18 @@ private:
 	CTexture*					m_pBTexture = nullptr;
 	CTransform*				m_pBTransform = nullptr;
 
-	_matrix  m_matProj1, m_matProj2;
+	// Reload
+	CTexture*					m_pRTexture = nullptr;
+	CTransform*				m_pRTransform = nullptr;
+
+
+
+	_matrix  m_matProj;
 
 public:
 
 private:
-	_float					m_fOrgin_HP;
-	_float					m_fHP;
+
 
 	// HP Bar (Front)
 	_float					m_fScaleX;
@@ -58,6 +63,9 @@ private:
 	_float					m_fPosY;
 	_float					m_fPosZ;
 
+	_float					m_fOrgin_ScaleX;
+	_float					m_fOrgin_PosX;
+
 	// HP Back (²®µ¥±â)
 	_float					m_fBScaleX;
 	_float					m_fBScaleY;
@@ -67,19 +75,31 @@ private:
 	_float					m_fBPosY;
 	_float					m_fBPosZ;
 	
-	_float					m_fOrgin_ScaleX;
-	_float					m_fOrgin_PosX;
+	// Reload (Front Bar)
+	_float					m_fRScaleX;
+	_float					m_fRScaleY;
+	_float					m_fRScaleZ;
+
+	_float					m_fRPosX;
+	_float					m_fRPosY;
+	_float					m_fRPosZ;
+
+	_float					m_fROrgin_ScaleX;
+	_float					m_fROrgin_PosX;
 
 
 	_float HP_Percent;
+	_float Reload_Percent;
+	_bool Reload_Fire  = false;
+	wstring szTankName;
+	Tank_State			TankInfo;
 
 public:
-	const _float Get_HP_UI(void) { return m_fHP; }
+	void				Update_Tank_Info(void);
+
 	void				 Update_HP(void);
-	void				 Minus_HP_UI(_float HP_minus) { m_fHP -= HP_minus; }
-	void				 Plus_HP_UI(_float HP_plus) { m_fHP += HP_plus; }
 
-
+	void				Update_Reload(void);
 
 };
 

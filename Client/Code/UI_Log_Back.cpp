@@ -60,7 +60,7 @@ void CUI_Log_Back::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_UI, this);
+	Add_RenderGroup(RENDER_PRIORITY, this);
 }
 
 void CUI_Log_Back::Render_Object(void)
@@ -86,6 +86,10 @@ void CUI_Log_Back::Render_Object(void)
 		m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
+		_matrix OldViewMatrix, OldProjMatrix;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 		_matrix	ViewMatrix;
 		D3DXMatrixIdentity(&ViewMatrix);
@@ -95,6 +99,11 @@ void CUI_Log_Back::Render_Object(void)
 
 		m_pTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{

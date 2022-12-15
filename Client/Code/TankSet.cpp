@@ -42,15 +42,44 @@ void CTankSet::LateUpdate_Object(void)
 
 void CTankSet::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+	if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
+	{
+		// HP UI
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+		m_pTextureF->Set_Texture(0);
+		m_pRcTexF->Render_Buffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	}
 
-	m_pTextureF->Set_Texture(0);
-	m_pRcTexF->Render_Buffer();
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	{
+		// Minimap UI
+		_matrix OldViewMatrix, OldProjMatrix;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pMinimap_Transform->Get_WorldMatrix());
+		_matrix	Minimap_ViewMatrix;
+		D3DXMatrixIdentity(&Minimap_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &Minimap_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &UI_Minimap_matProj);
+		m_pMinimap_Texure->Set_Texture(0);
+		m_pMinimap_RcTex->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		// Rader UI
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pRader_Transform->Get_WorldMatrix());
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &Minimap_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &UI_Minimap_matProj);
+		m_pRader_Texure->Set_Texture(0);
+		m_pRader_RcTex->Render_Buffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	}
 	__super::Render_Object();
 }
 
@@ -199,6 +228,7 @@ HRESULT CTankSet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformPosin", pComponent });
 
+	// HP UI
 	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
@@ -210,6 +240,32 @@ HRESULT CTankSet::Add_Component(void)
 	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
+
+	//MiniMap UI
+	pComponent = m_pMinimap_RcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pMinimap_RcTex, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pMinimap_Texure = static_cast<CTexture*>(Clone_Prototype(L"Proto_Minimap_P_Tex"));
+	NULL_CHECK_RETURN(m_pMinimap_Texure, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Minimap_P_Tex", pComponent });
+
+	pComponent = m_pMinimap_Transform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pMinimap_Transform, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_Minimap_P", pComponent });
+
+	// Rader
+	pComponent = m_pRader_RcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pRader_RcTex, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pRader_Texure = static_cast<CTexture*>(Clone_Prototype(L"Proto_Minimap_Rader_Tex"));
+	NULL_CHECK_RETURN(m_pRader_Texure, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Minimap_Rader_Tex", pComponent });
+
+	pComponent = m_pRader_Transform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pRader_Transform, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_Rader", pComponent });
 
 	return S_OK;
 }

@@ -38,7 +38,7 @@ HRESULT CUI_Speed::Ready_Object(void)
 	m_fScaleY = 25.f;
 	m_fScaleZ = 1.f;
 
-	m_fPosX = 715.f;
+	m_fPosX = 720.f;
 	m_fPosY = 460.f;
 	m_fPosZ = 0.02f;
 
@@ -48,11 +48,11 @@ HRESULT CUI_Speed::Ready_Object(void)
 	// 이걸 움직이면 된다.
 	m_fFScaleX = 0.f;
 	m_fFOrgin_ScaleX = 70.f;
-	m_fFScaleY = 14.f;
+	m_fFScaleY = 6.f;
 	m_fFScaleZ = 1.f;
 
-	m_fFOrgin_PosX = m_fFPosX = 705.f;
-	m_fFPosY = 451.f;
+	m_fFOrgin_PosX = m_fFPosX = 707.f;
+	m_fFPosY = 452.f;
 	m_fFPosZ = 0.01f;
 
 	m_pFTransform->Set_Scale(m_fFScaleX, m_fFScaleY, m_fFScaleZ);
@@ -165,37 +165,39 @@ void CUI_Speed::Update_Speed(void)
 {
 	CGameObject* pTank = Engine::Get_Object(L"GameLogic", L"PlayerVehicle");
 
+
 	if (m_szTankType == L"Humvee")
 	{
 		TankInfo = static_cast<CHumvee*>(pTank)->Get_TankInfo();
-
-		//	fSpeed = static_cast<CHumvee*>(pTank)->Get_Speed();
 	}
-	else if (m_szTankType == L"CV90 경전차")
+	else if (m_szTankType == L"A - 44")
 	{
 		TankInfo = static_cast<CSmallTank*>(pTank)->Get_TankInfo();
-		//fSpeed = static_cast<CSmallTank*>(pTank)->Get_Speed();
 	}
-	else if (m_szTankType == L"T62 중형전차")
+	else if (m_szTankType == L"TE6E4")
 	{
 		TankInfo = static_cast<CMiddleTank*>(pTank)->Get_TankInfo();
-		//fSpeed = static_cast<CMiddleTank*>(pTank)->Get_Speed();
+	}
+	else if (m_szTankType == L"KING TIGER")
+	{
+		TankInfo = static_cast<CBigTank*>(pTank)->Get_TankInfo();
+	}
+	else if (m_szTankType == L"M55")
+	{
+		TankInfo = static_cast<CLongTank*>(pTank)->Get_TankInfo();
+	}
+
+	_float fSpeed_Percent = fabsf(TankInfo.fSpeed / TankInfo.fAccel_top_speed);
+
+	if (m_szTankType == L"Humvee")
+	{
+		fSpeed_Percent = fabsf(TankInfo.fSpeed / 32.f);
 	}
 	else if (m_szTankType == L"Tiger 중전차")
 	{
-		TankInfo = static_cast<CBigTank*>(pTank)->Get_TankInfo();
-		//fSpeed = static_cast<CBigTank*>(pTank)->Get_Speed();
-	}
-	else if (m_szTankType == L"K-9 자주곡사포")
-	{
-		TankInfo = static_cast<CLongTank*>(pTank)->Get_TankInfo();
-		//fSpeed = static_cast<CLongTank*>(pTank)->Get_Speed();
+		fSpeed_Percent = fabsf(TankInfo.fSpeed / 22.5f);
 	}
 
-	
-
-	_float fSpeed_Percent = fabsf(TankInfo.fSpeed / TankInfo.fAccel_top_speed);
-	
 	if (fSpeed_Percent >= 1.f)
 	{
 		fSpeed_Percent = 1.f;

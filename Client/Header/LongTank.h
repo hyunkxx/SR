@@ -22,7 +22,7 @@ public:
 	virtual void RenderGUI(void) override;
 	virtual void		Sound_Setting(const _float & fTimeDelta)override;
 	void				 Update_UI(void);
-public:
+	void					Update_Minimap(void); public:
 	virtual	HRESULT		Add_Component(void);
 	virtual HRESULT		Ready_Object(void);
 
