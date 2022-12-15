@@ -1383,9 +1383,7 @@ void CDefault_Ally::Update_UI(void)
 
 void CDefault_Ally::Free(void)
 {
-	Safe_Release(m_pMinimap_RcTex);
-	Safe_Release(m_pMinimap_Texure);
-	Safe_Release(m_pMinimap_Transform);
+
 	__super::Free();
 }
 

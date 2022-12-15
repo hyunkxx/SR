@@ -136,7 +136,7 @@ void CMainApp::Free(void)
 {
 	ImguiManager::DestroyInstance();
 	CTankManager::DestroyInstance();
-	CGameMode::DestroyInstance();
+	
 
 	Safe_Release(m_pGraphicDev);
 

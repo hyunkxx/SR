@@ -187,6 +187,7 @@ CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free(void)
 {
+	CGameMode::GetInstance()->DestroyInstance();
 	CUI_FontMgr::GetInstance()->DestroyInstance();
 	Engine::StopAll();
 	__super::Free();

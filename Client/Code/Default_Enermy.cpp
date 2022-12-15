@@ -32,7 +32,7 @@ CDefault_Enermy::CDefault_Enermy(const CDefault_Enermy & rhs)
 CDefault_Enermy::~CDefault_Enermy()
 {
 	Free();
-	CGameMode::GetInstance()->m_nEnemyCount--;
+	//CGameMode::GetInstance()->m_nEnemyCount--;
 }
 
 HRESULT CDefault_Enermy::Ready_Object(void)
@@ -1338,9 +1338,6 @@ HRESULT CDefault_Enermy::Add_Component(void)
 
 void CDefault_Enermy::Free(void)
 {
-	Safe_Release(m_pMinimap_RcTex);
-	Safe_Release(m_pMinimap_Texure);
-	Safe_Release(m_pMinimap_Transform);
 	__super::Free();
 }
 void CDefault_Enermy::Update_UI(void)

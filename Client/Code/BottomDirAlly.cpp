@@ -1185,9 +1185,6 @@ HRESULT CBottomDirAlly::Add_Component(void)
 
 void CBottomDirAlly::Free(void)
 {
-	Safe_Release(m_pMinimap_RcTex);
-	Safe_Release(m_pMinimap_Texure);
-	Safe_Release(m_pMinimap_Transform);
 	__super::Free();
 }
 
