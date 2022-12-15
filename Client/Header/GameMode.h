@@ -21,6 +21,7 @@ public:
 	void Reset();
 	void InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold);
 
+	bool UseMenu() { return m_bShowMenu; };
 	bool VictoryCheck();
 public:
 	bool m_bShowMenu = false;

@@ -3,6 +3,8 @@
 
 #include  "Export_Function.h"
 #include "UI_Start.h"
+#include "GameMode.h"
+
 CAim_UI::CAim_UI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -29,12 +31,12 @@ HRESULT CAim_UI::Ready_Object(void)
 	m_fY = 300.f;
 
 	m_pTransformCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
-	m_pTransformCom->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f);
+	m_pTransformCom->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 1.f);
 
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.0f);
 
-	m_bTexture[0] = true;
-	m_bTexture[1] = false;
+	m_bTexture[0] = false;
+	m_bTexture[1] = true;
 	m_bTexture[2] = false;
 	return S_OK;
 }
@@ -56,6 +58,8 @@ void CAim_UI::LateUpdate_Object(void)
 
 void CAim_UI::Render_Object(void)
 {
+	if (CGameMode::GetInstance()->UseMenu())
+		return;
 
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA && Engine::Get_Camera_ID() != CAMERA_ID::TANK_CAMERA)
 		return;

@@ -68,6 +68,8 @@ _int CButtonUI::Update_Object(const _float & fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
 
+	CGameMode::GetInstance()->m_bShowMenu = m_bShow;
+
 	KeyInput();
 
 	if (!m_bShow)
@@ -181,7 +183,9 @@ void CButtonUI::KeyInput()
 	float fLength = D3DXVec3Length(&vLength);
 
 	if (fLength > 250.f)
+	{
 		m_bShow = false;
+	}
 
 	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && fLength <= 250.f
 		|| Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && pGameObject->Get_Dead())
