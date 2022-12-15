@@ -51,7 +51,7 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 				m_pTransformCom_Copy[0]->Get_Info(INFO_POS, &Pos);
 				m_ShootingTime = 0.f;
 				CGameObject* pBullet = Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
-				//Engine::Get_Camera()->Camera_Setting(Pos);
+				Engine::Get_Camera()->Shake_On();
 			}
 			else if (m_iBulletCount == 1)
 			{
@@ -60,6 +60,7 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 				m_ShootingTime = 0.f;
 				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
 				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos,_vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
+				Engine::Get_Camera()->Shake_On();
 			}
 			else if (m_iBulletCount == 2)
 			{
@@ -68,6 +69,7 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 				m_ShootingTime = 0.f;
 				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
 				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
+				Engine::Get_Camera()->Shake_On();
 			}
 			else if (m_iBulletCount == 3)
 			{
@@ -76,9 +78,9 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 				m_ShootingTime = 0.f;
 				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
 				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
-				
+				Engine::Get_Camera()->Shake_On();
 			}
-			Engine::Get_Camera()->Shake_On();
+			
 			m_iBulletCount++;
 		}
 	}

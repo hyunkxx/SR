@@ -172,7 +172,7 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 		{
 			m_fChangeTime += fTimeDelta;
 
-			if (m_fChangeTime > 1.f)
+			if (m_fChangeTime > 1.5f)
 			{
 				static_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support"))->Fire();
 				m_bDead = true;
