@@ -4,7 +4,8 @@
 #include "Export_Function.h"
 #include "Voxel.h"
 #include "EffectManager.h"
-
+#include "ShootEffect.h"
+#include "Gun_Shoot_Effect.h"
 CTankSet::CTankSet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -53,7 +54,6 @@ void CTankSet::Render_Object(void)
 		m_pRcTexF->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
-
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		// Minimap UI
@@ -80,7 +80,6 @@ void CTankSet::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 	}
-	__super::Render_Object();
 }
 
 void CTankSet::Rotation_Body(ROTATION eID,_float fAngle)
@@ -228,7 +227,6 @@ HRESULT CTankSet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformPosin", pComponent });
 
-	// HP UI
 	pComponent = m_pRcTexF = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
@@ -241,11 +239,11 @@ HRESULT CTankSet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
 
-	//MiniMap UI
 	pComponent = m_pMinimap_RcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pMinimap_RcTex, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
+	//MiniMap UI
 	pComponent = m_pMinimap_Texure = static_cast<CTexture*>(Clone_Prototype(L"Proto_Minimap_P_Tex"));
 	NULL_CHECK_RETURN(m_pMinimap_Texure, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Minimap_P_Tex", pComponent });
@@ -266,7 +264,6 @@ HRESULT CTankSet::Add_Component(void)
 	pComponent = m_pRader_Transform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pRader_Transform, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_Rader", pComponent });
-
 	return S_OK;
 }
 
@@ -285,7 +282,6 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 		D3DXVec3Normalize(&Dir, &Dir);
 		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
 		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed/10.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
-		m_stInfo.fReloadTime = 0.f;
 	}
 	else
 	{
@@ -296,7 +292,28 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
 		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
 		m_stInfo.fReloadTime = 0.f;
+
+		if (eID == BULLET_ID::CANNONBALL)
+		{
+			Engine::StopSound(PLAYER_SHOT_SOUND1);
+			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
+			pObject->Set_Dead(false);
+			pObject->Set_Scale(10.f);
+			static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformPosin);
+			static_cast<CShootEffect*>(pObject)->Set_Dist(6.f, 0.f , 0.f);	
+		}
+		else if(eID == BULLET_ID::MASHINE_BULLET)
+		{
+			Engine::StopSound(PLAYER_SHOT_SOUND1);
+			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::HUMVEE_SHOOT_EFFECT);
+			pObject->Set_Dead(false);
+			static_cast<CGun_Shoot_Effect*>(pObject)->Set_Target(m_pTransformPosin);
+		}
 	}
+
+
 }
 		
 

@@ -36,6 +36,16 @@ HRESULT CDroneCamera::Ready_Object(const _vec3 * pEye, const _vec3 * pAt, const 
 
 _int CDroneCamera::Update_Object(const _float & fTimeDelta)
 {
+	if (m_bCount)
+	{
+		m_fCountTime += fTimeDelta;
+		if (m_fCameraCount < m_fCountTime)
+		{
+			m_bCount = false;
+			Engine::Camera_Change(L"TankCamera");
+		}
+	}
+
 	_vec3 TargetPos;
 	m_pTargetTrans->Get_Info(INFO_POS, &TargetPos);
 	m_vEye.x = TargetPos.x;
@@ -69,6 +79,13 @@ void CDroneCamera::Camera_Setting(_vec3	Target_Pos)
 void CDroneCamera::Target_Setting(CTransform * Target_Pos)
 {
 	m_pTargetTrans = Target_Pos;
+}
+
+void CDroneCamera::Count_On(_float Count)
+{
+	m_bCount = true;
+	m_fCameraCount = Count;
+	m_fCountTime = 0.f;
 }
 
 CDroneCamera * CDroneCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pEye, const _vec3 * pAt, const _vec3 * pUp, const _float & fFov, const _float & fAspect, const _float & fNear, const _float & fFar)

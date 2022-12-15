@@ -7,8 +7,6 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
-#include "UI_Volume.h"
-#include "Boom_Support.h"
 #include "BattleShip_Support.h"
 
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -42,7 +40,6 @@ _int CHumvee::Update_Object(const _float & fTimeDelta)
 		Sound_Setting(fTimeDelta);
 		Update_UI();
 		Update_Minimap();
-		Update_OBB();
 	}
 	return __super::Update_Object(fTimeDelta);
 }
@@ -159,6 +156,7 @@ HRESULT CHumvee::Ready_Object(void)
 	m_stInfo.fAccel_Ad = tankData.fAccel_Ad;
 	m_stInfo.fAccel_Back = tankData.fAccel_Back;
 
+
 	//최고속도 제한
 	m_stInfo.fAccel_top_speed = tankData.fAccel_top_speed;
 	m_stInfo.fBack_top_speed = tankData.fBack_top_speed;
@@ -174,8 +172,11 @@ HRESULT CHumvee::Ready_Object(void)
 	m_stInfo.fLowAngle = tankData.fLowAngle;
 	m_stInfo.TopAngle = tankData.TopAngle;
 
-	//UI_HP
+
 	m_stInfo.fCurHP = m_stInfo.fMaxHP = tankData.fMaxHP;
+
+	//UI_HP
+	UI_Orgin_HP = UI_fHP = tankData.fMaxHP;
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -221,10 +222,6 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
 			Shoot_Bullet(BULLET_ID::MASHINE_BULLET_RELOAD);
-
-			Engine::StopSound(PLAYER_SHOT_SOUND1);
-			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-			Engine::Get_Object(L"GameLogic", L"Gun_ShootEffect")->Set_Dead(false);
 		}
 		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
 		{
@@ -598,7 +595,9 @@ void CHumvee::Free(void)
 
 void CHumvee::Update_UI(void)
 {
-
+	CGameObject* pTankView = Engine::Get_Object(L"Environment", L"TankCamera");
+	CGameObject* pStaticView = Engine::Get_Object(L"Environment", L"StaticCamera");
+	CGameObject* pAimView = Engine::Get_Object(L"Environment", L"AimCamera");
 	_vec3 vTankPos, vUI_HPF, vUI_HPB;
 
 
@@ -720,6 +719,4 @@ void CHumvee::Update_Minimap(void)
 	// Minimap _ Rader
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, 0.1f);
 	m_pRader_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], 0.1f);
-
 }
-

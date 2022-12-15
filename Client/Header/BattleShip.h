@@ -39,6 +39,8 @@ private:
 	CVoxel*				m_pHead2 = nullptr;
 	CVoxel*				m_pPosin2 = nullptr;
 
+	_float				m_fMoveTime = 0.f;
+
 	_bool				m_bShootReady = false;
 	_bool				m_bBoomShoot = false;;
 	_float				m_fShootTime = 0.f;
@@ -46,6 +48,8 @@ private:
 	_float				m_fAngle_1 = 0.f;
 	_float				m_fAngle_2 = 0.f;
 	_float				m_fChangeTime = 0.f;
+
+	CGameObject*		m_pNewTarget = nullptr;
 public:
 	static CBattleShip* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);

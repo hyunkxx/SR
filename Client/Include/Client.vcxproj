@@ -199,6 +199,9 @@
     <ClInclude Include="..\Header\MiddleTank.h" />
     <ClInclude Include="..\Header\MoonWalkCamera.h" />
     <ClInclude Include="..\Header\ObjectMesh.h" />
+    <ClInclude Include="..\Header\ShipBullet.h" />
+    <ClInclude Include="..\Header\ShipCamera.h" />
+    <ClInclude Include="..\Header\ShootSmoke.h" />
     <ClInclude Include="..\Header\SmallTank.h" />
     <ClInclude Include="..\Header\TankManager.h" />
     <ClInclude Include="..\Header\Player_Chatting.h" />
@@ -287,6 +290,9 @@
     <ClCompile Include="..\Code\MiddleTank.cpp" />
     <ClCompile Include="..\Code\MoonWalkCamera.cpp" />
     <ClCompile Include="..\Code\ObjectMesh.cpp" />
+    <ClCompile Include="..\Code\ShipBullet.cpp" />
+    <ClCompile Include="..\Code\ShipCamera.cpp" />
+    <ClCompile Include="..\Code\ShootSmoke.cpp" />
     <ClCompile Include="..\Code\SmallTank.cpp" />
     <ClCompile Include="..\Code\TankManager.cpp" />
     <ClCompile Include="..\Code\Player_Chatting.cpp" />

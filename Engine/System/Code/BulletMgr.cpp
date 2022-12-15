@@ -75,11 +75,11 @@ void CBulletMgr::Collect_Object(void)
 	}
 }
 
-void CBulletMgr::Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID)
+CGameObject* CBulletMgr::Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID)
 {
 
 	if (0 > eID ||  BULLET_END <= eID || !m_qBullet_Ammunition_Depot[eID].size())
-		return;
+		return nullptr;
 
 	CGameObject* pBullet = m_qBullet_Ammunition_Depot[eID].front();
 	
@@ -94,6 +94,7 @@ void CBulletMgr::Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _floa
 	m_vBullet_War[eID].push_back(pBullet);
 	m_qBullet_Ammunition_Depot[eID].pop();
 
+	return pBullet;
 }
 
 void CBulletMgr::Free(void)

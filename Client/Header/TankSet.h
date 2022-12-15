@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Voxel.h"
 #include "Collisionable.h"
+#include "UI_Volume.h"
 BEGIN(Engine)
 class CRcTex;
 class CTexture;
@@ -97,17 +98,16 @@ protected:
 	//void						 Update_UI(void);
 
 	// Minimap UI
-	_matrix				UI_Minimap_matProj;
-	CRcTex*				m_pMinimap_RcTex = nullptr;
-	CTexture*			m_pMinimap_Texure = nullptr;
-	CTransform*		m_pMinimap_Transform = nullptr;
-	_float					m_fMinimap[TRANSFORM_FLOAT_END];
+	_matrix            UI_Minimap_matProj;
+	CRcTex*            m_pMinimap_RcTex = nullptr;
+	CTexture*         m_pMinimap_Texure = nullptr;
+	CTransform*      m_pMinimap_Transform = nullptr;
+	_float               m_fMinimap[TRANSFORM_FLOAT_END];
 
 	// Minimap Rader UI
-	CRcTex*				m_pRader_RcTex = nullptr;
-	CTexture*			m_pRader_Texure = nullptr;
-	CTransform*		m_pRader_Transform = nullptr;
-	_float					m_fRader;
-
+	CRcTex*            m_pRader_RcTex = nullptr;
+	CTexture*         m_pRader_Texure = nullptr;
+	CTransform*      m_pRader_Transform = nullptr;
+	_float               m_fRader;
 
 };

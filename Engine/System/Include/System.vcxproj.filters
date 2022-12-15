@@ -43,6 +43,9 @@
     <Filter Include="08.CameraMgr">
       <UniqueIdentifier>{fbceb991-2e8d-4fae-b999-fa8aae2b0a5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="09.CSPEffectMgr">
+      <UniqueIdentifier>{86631026-f22b-4f7b-af14-4f04f6dbd704}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Timer.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="..\..\Header\CameraMgr.h">
       <Filter>08.CameraMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\SP_EffectMgr.h">
+      <Filter>09.CSPEffectMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Timer.cpp">
@@ -127,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CameraMgr.cpp">
       <Filter>08.CameraMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SP_EffectMgr.cpp">
+      <Filter>09.CSPEffectMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

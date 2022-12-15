@@ -281,6 +281,15 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap">
       <UniqueIdentifier>{07b20f6c-8431-4b2a-834e-ceae4fe3185b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04.Camera\11.ShipCamera">
+      <UniqueIdentifier>{ba3ba270-7c02-4359-b09f-7a8826ab8423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09.Skill\BattleShip\BattleShipBullet">
+      <UniqueIdentifier>{1d86119b-f863-4b69-a096-1ce35c4a8081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08.Effect\ShootSmoke">
+      <UniqueIdentifier>{ac794216-becb-42d0-a5cb-4139c6bdf607}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -502,6 +511,15 @@
     <ClInclude Include="..\Header\UI_Player_Hp.h">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShipCamera.h">
+      <Filter>02. GameObject\04.Camera\11.ShipCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShipBullet.h">
+      <Filter>02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShootSmoke.h">
+      <Filter>02. GameObject\08.Effect\ShootSmoke</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -713,6 +731,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Player_Hp.cpp">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShipCamera.cpp">
+      <Filter>02. GameObject\04.Camera\11.ShipCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShipBullet.cpp">
+      <Filter>02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShootSmoke.cpp">
+      <Filter>02. GameObject\08.Effect\ShootSmoke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

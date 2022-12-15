@@ -7,7 +7,6 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
-#include "UI_Volume.h"
 CBigTank::CBigTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -171,6 +170,7 @@ HRESULT CBigTank::Ready_Object(void)
 
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
+
 	return S_OK;
 }
 
@@ -195,10 +195,6 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
-
-			Engine::StopSound(PLAYER_SHOT_SOUND1);
-			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 			m_bReLoad = false;
 		}
 		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
@@ -675,5 +671,4 @@ void CBigTank::Update_Minimap(void)
 	// Minimap _ Rader
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, 0.1f);
 	m_pRader_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], 0.1f);
-
 }

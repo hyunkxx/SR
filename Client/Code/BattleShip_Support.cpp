@@ -6,6 +6,9 @@
 #include "TankSet.h"
 #include "TankManager.h"
 #include "BattleShip.h"
+#include "ShipCamera.h"
+#include "TankCamera.h"
+#include "ShipBullet.h"
 CBattleShip_Support::CBattleShip_Support(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -37,6 +40,49 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 		return OBJ_NOEVENT;
 	 
+	if (m_bBulletShoot)
+	{
+		m_ShootingTime += fTimeDelta;
+		if (0.5f < m_ShootingTime)
+		{
+			if (m_iBulletCount == 0)
+			{
+				_vec3 Pos;
+				m_pTransformCom_Copy[0]->Get_Info(INFO_POS, &Pos);
+				m_ShootingTime = 0.f;
+				CGameObject* pBullet = Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
+				//Engine::Get_Camera()->Camera_Setting(Pos);
+			}
+			else if (m_iBulletCount == 1)
+			{
+				_vec3 Pos;
+				m_pTransformCom_Copy[1]->Get_Info(INFO_POS, &Pos);
+				m_ShootingTime = 0.f;
+				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
+				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos,_vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
+			}
+			else if (m_iBulletCount == 2)
+			{
+				_vec3 Pos;
+				m_pTransformCom_Copy[2]->Get_Info(INFO_POS, &Pos);
+				m_ShootingTime = 0.f;
+				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
+				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
+			}
+			else if (m_iBulletCount == 3)
+			{
+				_vec3 Pos;
+				m_pTransformCom->Get_Info(INFO_POS, &Pos);
+				m_ShootingTime = 0.f;
+				CGameObject* pBullet =  Engine::Reuse_Object(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f, BULLET_ID::SHIP_REAL_BULLET);
+				static_cast<CShipBullet*>(pBullet)->Bullet_Setting(Pos, _vec3{ 0.f,0.f ,0.f }, 500.f, 0.f, 0.f);
+				
+			}
+			Engine::Get_Camera()->Shake_On();
+			m_iBulletCount++;
+		}
+	}
+	
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 
 
@@ -60,7 +106,7 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 			m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
 		}
 
-		if (6.f < m_fDaedCount)
+		if (25.f < m_fDaedCount)
 		{
 			m_fDaedCount = 0.f;
 			m_bDead = true;
@@ -72,11 +118,15 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 			_vec3 Pos;
 			m_pTransformCom->Get_Info(INFO_POS, &Pos);
 			//여기서 카메라 교체
-			Engine::Camera_Change(L"TankCamera");
+			Engine::Camera_Change(L"ShipCamera");
+			static_cast<CShipCamera*>(Engine::Get_Camera())->Reset_Pos();
+			static_cast<CShipCamera*>(Engine::Get_Camera())->Set_Target(static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"BattleShip", L"Proto_Ship_Head_Transform", ID_DYNAMIC)));
+			static_cast<CShipCamera*>(Engine::Get_Camera())->Set_Dist(60.f);
 		}
 	}
 	else
 		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(200 * fTimeDelta));
+
 
 
 	Key_Input(fTimeDelta);
@@ -131,6 +181,10 @@ void CBattleShip_Support::Air_Rain(_vec3 _vPos)
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
 	m_pTransformCom->Set_Pos(_vPos.x, 0.1f, _vPos.z);
 
+	m_ShootingTime = 0.f;
+	m_bBulletShoot = false;
+	m_iBulletCount = 0;
+
 	for (int i = 0; 3 > i; i++)
 	{
 		m_pTransformCom_Copy[i]->Reset_Trans();
@@ -147,6 +201,11 @@ void CBattleShip_Support::Air_Rain(_vec3 _vPos)
 	}
 	static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Set_Rock(true);
 
+}
+
+void CBattleShip_Support::Fire(void)
+{
+	m_bBulletShoot = true;
 }
 
 void CBattleShip_Support::Key_Input(const _float & fTimeDelta)

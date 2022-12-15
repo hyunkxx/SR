@@ -11,7 +11,7 @@
 #include "SoundMgr.h"
 #include"EnermyMgr.h"
 #include "CameraMgr.h"
-
+#include "SP_EffectMgr.h"
 BEGIN(Engine)
 
 // GraphicDev
@@ -56,8 +56,13 @@ inline void LateUpdate_BulletMgr(void);
 inline void Bullet_Supply(CGameObject* pBullet, BULLET_ID eID);
 inline list<CGameObject*>* Get_Bullet_List(BULLET_ID eID);
 inline void Collect_Object(void);
-inline void Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID);
-
+inline CGameObject* Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID);
+//EffectMgr
+inline void Update_CSP_EffectMgr(const _float & fTimeDelta);
+inline void LateUpdate_CSP_EffectMgr(void);
+inline void Effect_Supply(CGameObject* pBullet, EFFECT_ID eID);
+inline void Collect_Effect(void);
+inline CGameObject* Reuse_Effect(EFFECT_ID eID);
 // SoundMgr
 inline void Ready_Sound(void);
 inline void PlaySound_SR(_tchar* pSoundKey, SoundType eID, _float fVolume);

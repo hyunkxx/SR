@@ -2,6 +2,8 @@
 
 #include "Export_Function.h"
 
+USING(Engine)
+
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -37,7 +39,6 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 
 	m_fAccum += fTimeDelta;
 	m_pTransform->Set_Scale(m_fScale, m_fScale, m_fScale);
-	Update_OBB();
 	_vec3 Move, Dir1, Dir2;
 	Move.x = m_vDir.x * m_fSpeed * fTimeDelta * cosf(-m_fAngleX);
 	Move.z = m_vDir.z * m_fSpeed * fTimeDelta * cosf(-m_fAngleX);
@@ -53,14 +54,14 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	if (Dir2.y < Dir1.y)
 		Scalar *= -1;
 
-	if(m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET)
+	if(m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET || m_eID == SHIP_BULLET)
 		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
 	else
 		m_pTransform->Rotation(ROT_X,D3DXToRadian(-1000.f *fTimeDelta));
 
 	m_pTransform->Move_Pos(&Move);
 	__super::Update_Object(fTimeDelta);
-	
+	Update_OBB();
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return OBJ_NOEVENT;
@@ -97,8 +98,8 @@ void CBullet::Render_Object(void)
 
 void CBullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY)
 {
-	m_pTransform->Reset_Trans();
 	m_stBody.vPos = { -100.f,-100.f,-100.f };
+	Update_OBB();
 	m_vPos = vPos;
 	m_vDir = vDir;
 	m_fSpeed = fSpeed;
@@ -153,6 +154,11 @@ void CBullet::Set_ID(BULLET_ID eID)
 		m_fHitRange = 3.f;
 		m_fScale = 10.f;
 	}
+	else if (eID == BULLET_ID::SHIP_BULLET)
+	{
+		m_fHitRange = 3.f;
+		m_fScale = 20.f;
+	}
 	else if (eID == BULLET_ID::MASHINE_BULLET_RELOAD)
 	{
 		m_fHitRange = 0.f;
@@ -168,7 +174,8 @@ void CBullet::Set_ID(BULLET_ID eID)
 void CBullet::Reset_Trans(void)
 {
 	m_pTransform->Reset_Trans();
-	m_stBody.vPos = { -100.f,-100.f ,-100.f };
+	m_pTransform->Set_Pos(-100.f, 50.f, -100.f);
+	m_stBody.vPos = { -100.f,-50.f ,-100.f };
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev)

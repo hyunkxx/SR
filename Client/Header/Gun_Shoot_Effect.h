@@ -23,15 +23,16 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
 	virtual void Render_Object(void) override;
-
+	void		 Set_Target(CTransform* pTarget) { m_pTarget = pTarget; }
 private:
 	HRESULT		Add_Component(void);
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
+	CTransform*			m_pTarget = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
-
+	EFFECT_ID			m_eID = EFFECT_ID::HUMVEE_SHOOT_EFFECT;
 private:
 	_float			m_fFrame = 0.f;
 

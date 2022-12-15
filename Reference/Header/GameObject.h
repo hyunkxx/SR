@@ -29,7 +29,7 @@ public:
 	//충돌처리 용도
 	virtual         _bool		Get_Dead(void) { return m_bDead; }
 	void						Set_Dead(_bool bDead) { m_bDead = bDead; }
-
+	void						Set_Scale(_float fScale) { m_fScale = fScale; }
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	void				Set_CollisionDist(void);

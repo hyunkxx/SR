@@ -66,9 +66,6 @@ _int CTankCamera::Update_Object(const _float & fTimeDelta)
 
 void CTankCamera::LateUpdate_Object(void)
 {
-
-
-
 	CCamera::LateUpdate_Object();
 }
 
@@ -131,11 +128,10 @@ void CTankCamera::Mouse_Fix(void)
 }
 
 void CTankCamera::Camera_Setting(_vec3 Target_Pos)
-{
-	CGameObject* pObject = Engine::Get_Object(L"GameLogic", L"BoomEffect");
-	pObject->Set_Dead(false);
+{	
+	CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::BOOMER_BOOM_SMOKE);
+	static_cast<CBoomEffect*>(pObject)->Set_Dead(false);
 	static_cast<CBoomEffect*>(pObject)->Set_Pos(Target_Pos);
-
 	Target_Pos.y = 0.f;
 	Target_Pos -= m_vEye;
 	D3DXVec3Normalize(&Target_Pos, &Target_Pos);

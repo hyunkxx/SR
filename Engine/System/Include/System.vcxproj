@@ -178,6 +178,7 @@ call CopySystem.bat</Command>
     <ClInclude Include="..\..\Header\InputDev.h" />
     <ClInclude Include="..\..\Header\MyFont.h" />
     <ClInclude Include="..\..\Header\SoundMgr.h" />
+    <ClInclude Include="..\..\Header\SP_EffectMgr.h" />
     <ClInclude Include="..\..\Header\Timer.h" />
     <ClInclude Include="..\..\Header\TimerMgr.h" />
   </ItemGroup>
@@ -193,6 +194,7 @@ call CopySystem.bat</Command>
     <ClCompile Include="..\Code\InputDev.cpp" />
     <ClCompile Include="..\Code\MyFont.cpp" />
     <ClCompile Include="..\Code\SoundMgr.cpp" />
+    <ClCompile Include="..\Code\SP_EffectMgr.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerMgr.cpp" />
   </ItemGroup>

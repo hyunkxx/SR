@@ -4,6 +4,10 @@
 #include "Export_Function.h"
 #include "UI_Volume.h"
 #include "TankSet.h"
+#include "ShootEffect.h"
+#include "DroneCamera.h"
+#include "ShipCamera.h"
+#include "BattleShip_Support.h"
 
 CBattleShip::CBattleShip(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -23,11 +27,28 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 		return 0;
+	m_fMoveTime += fTimeDelta;
 
-	if (!m_bShootReady)
+
+		if (!m_bShootReady && m_fMoveTime > 1.f)
+		{
+			Engine::PlaySound_SR(L"Ship_Horn.mp3", SoundType::SHIP_ENGINE_SOUND3, 1.f);
+			Engine::PlaySound_SR(L"Hamsun_BGM.mp3", SoundType::SHIP_ENGINE_SOUND5, 0.2f);
+		}
+
+	if (!m_bShootReady && m_fMoveTime  > 2.f)
+		Engine::PlaySound_SR(L"Ship_Bell.mp3", SoundType::SHIP_ENGINE_SOUND4, 0.7f);
+	if(m_fMoveTime  > 10.f)
+		Engine::StopSound(SHIP_ENGINE_SOUND4);
+	
+	if (!m_bShootReady && m_fMoveTime > 10.f)
 	{
+		static_cast<CShipCamera*>(Engine::Get_Camera())->Set_Dist(100.f);
+
+		Engine::StopSound(SHIP_ENGINE_SOUND3);
 		if (70.f >= m_fAngle_1)
 		{
+			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND1, 0.5f);
 			m_fAngle_1 += 30.f * fTimeDelta;
 			m_pTransformHead->Rotation(ROT_Y,D3DXToRadian(30.f * fTimeDelta));
 			m_pTransformPosin->Rotation(ROT_Y, D3DXToRadian(30.f * fTimeDelta));
@@ -35,39 +56,114 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 		if (70.f >= m_fAngle_2)
 
 		{
+			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND2, 0.5f);
 			m_fAngle_2 += 25.f * fTimeDelta;
 			m_pTransformHead2->Rotation(ROT_Y, D3DXToRadian(25.f * fTimeDelta));
 			m_pTransformPosin2->Rotation(ROT_Y, D3DXToRadian(25.f * fTimeDelta));
 		}
 
 		if (70.f <= m_fAngle_1 && 70.f <= m_fAngle_2)
+		{
+			Engine::StopSound(SHIP_ENGINE_SOUND5);
+			Engine::StopSound(SHIP_ENGINE_SOUND1);
+			Engine::StopSound(SHIP_ENGINE_SOUND2);
+			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND1, 1.f);
+			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND2, 1.f);
+			m_fMoveTime = 0.f;
 			m_bShootReady = true;
+			
+		}
 	}
-	else if(m_bShootReady)
+	else if (m_bShootReady && m_fMoveTime < 2.f)
 	{
+		m_pTransformPosin->Rotation(ROT_X, D3DXToRadian(-5.f * fTimeDelta));
+		m_pTransformPosin2->Rotation(ROT_X, D3DXToRadian(-5.f * fTimeDelta));
+	}
+	else if(m_bShootReady && m_fMoveTime > 1.f)
+	{
+		Engine::StopSound(SHIP_ENGINE_SOUND1);
+		Engine::StopSound(SHIP_ENGINE_SOUND2);
 		m_fShootTime += fTimeDelta;
 		if (0.4f < m_fShootTime && 4 > m_iShootCount)
 		{
 			m_fShootTime = 0.f;
 			if (0 == m_iShootCount)
 			{
+				CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
+				pObject->Set_Dead(false);
+				pObject->Set_Scale(30.f);
+				static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformHead);
+				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, 1.f*m_fScale , 3.f * m_fScale);
+				//static_cast<CShootEffect*>(pObject)->Set_Smoke(true);
+				Engine::Get_Camera()->Shake_On();
 				Engine::StopSound(SHIP_SHOOT_SOUND1);
 				Engine::PlaySound_SR(L"Ham_Fire_1.wav", SHIP_SHOOT_SOUND1, 1.f);
+
+				_vec3 Pos, Dir;
+				m_pTransformPosin->Get_Info(INFO_POS, &Pos);
+				m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+				D3DXVec3Normalize(&Dir, &Dir);
+				Pos += Dir * 10.f;
+				Engine::Reuse_Object(Pos, Dir, 1000.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), SHIP_BULLET);
 			}
-			else if (1 == m_iShootCount)
+			else if (1 == m_iShootCount)                    
 			{
+				CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
+				pObject->Set_Dead(false);
+				pObject->Set_Scale(30.f);
+				static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformHead);
+				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, -1.f*m_fScale, 3.f * m_fScale);
+				//static_cast<CShootEffect*>(pObject)->Set_Smoke(true);
+				Engine::Get_Camera()->Shake_On();
 				Engine::StopSound(SHIP_SHOOT_SOUND2);
 				Engine::PlaySound_SR(L"Ham_Fire_2.wav", SHIP_SHOOT_SOUND2, 1.f);
+
+				_vec3 Pos, Dir;
+				m_pTransformPosin->Get_Info(INFO_POS, &Pos);
+				m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+				D3DXVec3Normalize(&Dir, &Dir);
+				Pos += Dir * 10.f;
+				Engine::Reuse_Object(Pos, Dir, 1000.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), SHIP_BULLET);
 			}
 			else if (2 == m_iShootCount)
 			{
+				CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
+				pObject->Set_Dead(false);
+				pObject->Set_Scale(30.f);
+				static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformHead2);
+				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, 1.f*m_fScale, 3.f * m_fScale);
+				//static_cast<CShootEffect*>(pObject)->Set_Smoke(true);
+				Engine::Get_Camera()->Shake_On();
 				Engine::StopSound(SHIP_SHOOT_SOUND3);
 				Engine::PlaySound_SR(L"Ham_Fire_3.wav", SHIP_SHOOT_SOUND3, 1.f);
+
+				_vec3 Pos, Dir;
+				m_pTransformPosin2->Get_Info(INFO_POS, &Pos);
+				m_pTransformPosin2->Get_Info(INFO_LOOK, &Dir);
+				D3DXVec3Normalize(&Dir, &Dir);
+				Pos += Dir * 10.f;
+				Engine::Reuse_Object(Pos, Dir, 1000.f, m_pTransformPosin2->Get_Angle(ROT_X), m_pTransformPosin2->Get_Angle(ROT_Y), SHIP_BULLET);
 			}
 			else if (3 == m_iShootCount)
 			{
+				CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
+				pObject->Set_Dead(false);
+				pObject->Set_Scale(30.f);
+				static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformHead2);
+				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, -1.f*m_fScale, 3.f * m_fScale);
+				//static_cast<CShootEffect*>(pObject)->Set_Smoke(true);
+				Engine::Get_Camera()->Shake_On();
 				Engine::StopSound(SHIP_SHOOT_SOUND4);
 				Engine::PlaySound_SR(L"Ham_Fire_4.wav", SHIP_SHOOT_SOUND4, 1.f);
+
+				_vec3 Pos, Dir;
+				m_pTransformPosin2->Get_Info(INFO_POS, &Pos);
+				m_pTransformPosin->Get_Info(INFO_LOOK, &Dir);
+				D3DXVec3Normalize(&Dir, &Dir);
+				Pos += Dir * 10.f;
+				m_pNewTarget = Engine::Reuse_Object(Pos, Dir, 1000.f, m_pTransformPosin2->Get_Angle(ROT_X), m_pTransformPosin2->Get_Angle(ROT_Y), SHIP_BULLET);
+				static_cast<CShipCamera*>(Engine::Get_Camera())->Set_Target(static_cast<CTransform*>(m_pNewTarget->Get_Component(L"Proto_Bullet_Transform", ID_DYNAMIC)));
+				static_cast<CShipCamera*>(Engine::Get_Camera())->Eye_Lock(true);
 			}
 
 			m_iShootCount++;
@@ -75,10 +171,16 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 		else if (4 == m_iShootCount)
 		{
 			m_fChangeTime += fTimeDelta;
-			if (m_fChangeTime > 6.f)
+
+			if (m_fChangeTime > 1.f)
 			{
+				static_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support"))->Fire();
 				m_bDead = true;
+				static_cast<CShipCamera*>(Engine::Get_Camera())->Eye_Lock(false);
 				Engine::Camera_Change(L"TankCamera");
+				_vec3 Pos;
+				static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"BattleShip_Support", L"Proto_Transform_1", ID_DYNAMIC))->Get_Info(INFO_POS, &Pos);
+				Engine::Get_Camera()->Camera_Setting(Pos);
 				//여기서 발사 사운드 다 없애기
 				Engine::StopSound(SHIP_SHOOT_SOUND1);
 				Engine::StopSound(SHIP_SHOOT_SOUND2);
@@ -138,6 +240,7 @@ void CBattleShip::Strike(void)
 	m_fShootTime = 0.f;
 	m_iShootCount = 0;
 	m_fChangeTime = 0.f;
+	m_fMoveTime = 0.f;
 	m_pTransformBody->Reset_Trans();
 	m_pTransformHead->Reset_Trans();
 	m_pTransformHead2->Reset_Trans();
@@ -156,7 +259,7 @@ void CBattleShip::Strike(void)
 	m_pTransformPosin->Set_Pos(0.f, 13.5f * m_fScale, 4.f * m_fScale);
 	m_pTransformPosin2->Set_Pos(0.f, 11.5f * m_fScale, 15.f * m_fScale);
 
-	_vec3 Move = { 0.f, 1.f, 0.f };
+	_vec3 Move = { -400.f, 1.f, 100.f };
 	m_pTransformBody->Move_Pos(&Move);
 	m_pTransformHead->Move_Pos(&Move);
 	m_pTransformHead2->Move_Pos(&Move);

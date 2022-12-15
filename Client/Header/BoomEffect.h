@@ -30,7 +30,7 @@ private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
-
+	EFFECT_ID			m_eID = EFFECT_ID::BOOMER_BOOM_SMOKE;
 private:
 	_float			m_fFrame = 0.f;
 	_vec3			m_vPos;

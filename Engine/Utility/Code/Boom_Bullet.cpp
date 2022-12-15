@@ -130,8 +130,6 @@ void CBoom_Bullet::Set_ID(BULLET_ID eID)
 
 void CBoom_Bullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float AngleY)
 {
-	m_pTransformCom->Reset_Trans();
-
 	m_fSpeed = 200.f;
 	m_vDir = vDir;
 	m_vPos = vPos;
@@ -148,6 +146,7 @@ void CBoom_Bullet::Bullet_Setting(_vec3 vPos, _vec3 vDir, const _float fSpeed, _
 void CBoom_Bullet::Reset_Trans(void)
 {
 	m_pTransformCom->Reset_Trans();
+	m_pTransformCom->Set_Pos(-100.f, 50.f, -100.f);
 	m_stBody.vPos = { -100.f,-100.f,-100.f };
 }
 

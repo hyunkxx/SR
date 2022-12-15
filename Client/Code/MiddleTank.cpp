@@ -7,7 +7,6 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
-#include "UI_Volume.h"
 CMiddleTank::CMiddleTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -162,7 +161,6 @@ HRESULT CMiddleTank::Ready_Object(void)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
-	// UI_Minimap
 	D3DXMatrixOrthoLH(&UI_Minimap_matProj, WINCX, WINCY, 0.f, 1.f);
 	m_fMinimap[SCALEX] = m_fMinimap[SCALEY] = 4.f;
 	m_fMinimap[SCALEZ] = 1.f;
@@ -174,6 +172,7 @@ HRESULT CMiddleTank::Ready_Object(void)
 
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
+
 	return S_OK;
 }
 
@@ -190,10 +189,6 @@ void CMiddleTank::Key_Input(const _float & fTimeDelta)
 		{
 			m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
-
-			Engine::StopSound(PLAYER_SHOT_SOUND1);
-			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 			m_bReLoad = false;
 
 		}
@@ -546,6 +541,7 @@ void CMiddleTank::Free(void)
 	Safe_Release(m_pRader_RcTex);
 	Safe_Release(m_pRader_Texure);
 	Safe_Release(m_pRader_Transform);
+
 	CGameObject::Free();
 }
 
@@ -678,5 +674,4 @@ void CMiddleTank::Update_Minimap(void)
 	// Minimap _ Rader
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, 0.1f);
 	m_pRader_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], 0.1f);
-
 }

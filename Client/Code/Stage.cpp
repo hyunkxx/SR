@@ -14,6 +14,7 @@
 #include"BottomDirAlly.h"
 #include "Building.h"
 #include "BattleShip.h"
+#include "ShipBullet.h"
 
 //camera
 #include "DynamicCamera.h"
@@ -22,7 +23,7 @@
 #include "AimCamera.h"
 #include "DroneCamera.h"
 #include "BoomCamera.h"
-
+#include "ShipCamera.h"
 // ai
 #include"RightLocation.h"
 #include"RightTopLocation.h"
@@ -56,6 +57,8 @@
 #include "BattleShip_Support.h"
 #include "EffectPool.h"
 #include "EffectManager.h"
+#include "ShootSmoke.h"
+
 
 #include "TankManager.h"
 #include "GameMode.h"
@@ -107,6 +110,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	Engine::Update_BulletMgr(fTimeDelta);
+	Engine::Update_CSP_EffectMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
 	Engine::Update_CameraMgr(fTimeDelta);
 	__super::Update_Scene(fTimeDelta);
@@ -117,6 +121,7 @@ void CStage::LateUpdate_Scene(void)
 {
 	Collison_Object();
 	Engine::LateUpdate_BulletMgr();
+	Engine::LateUpdate_CSP_EffectMgr();
 	Engine::LateUpdate_EnermyMgr();
 	Engine::LateUpdate_CameraMgr();
 	__super::LateUpdate_Scene();
@@ -246,6 +251,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"BoomCamera", pCameraObject), E_FAIL);
 
+	pCameraObject = CShipCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"ShipCamera", pCameraObject), E_FAIL);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -300,7 +313,12 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL);
 	}
-
+	for (_int i = 0; 10 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_BULLET);
+	}
 	for (_int i = 0; 1000 > i; i++)
 	{
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
@@ -333,6 +351,13 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		CGameObject* pBullet = CBoom_Bullet::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::BOOM_BULLET);
+	}
+	for (_int i = 0; 10 > i; i++)
+	{
+		CGameObject* pBullet = CShipBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		static_cast<CShipBullet*>(pBullet)->Set_ID(BULLET_ID::SHIP_REAL_BULLET);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_REAL_BULLET);
 	}
 	// Skill
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);
@@ -495,18 +520,30 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
 
-
-	pGameObject = CShootEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShootEffect", pGameObject), E_FAIL);
-
-	pGameObject = CBoomEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BoomEffect", pGameObject), E_FAIL);
-
-	pGameObject = CGun_Shoot_Effect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Gun_ShootEffect", pGameObject), E_FAIL);
+	for (_int i = 0; 10 > i; i++)
+	{
+		pGameObject = CShootEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Engine::Effect_Supply(pGameObject, EFFECT_ID::TANK_SHOOT_SMOKE);
+	}
+	for (_int i = 0; 10 > i; i++)
+	{
+		pGameObject = CBoomEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Engine::Effect_Supply(pGameObject, EFFECT_ID::BOOMER_BOOM_SMOKE);
+	}
+	for (_int i = 0; 10 > i; i++)
+	{
+		pGameObject = CGun_Shoot_Effect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Engine::Effect_Supply(pGameObject, EFFECT_ID::HUMVEE_SHOOT_EFFECT);
+	}
+	for (_int i = 0; 10 > i; i++)
+	{
+		pGameObject = CShootSmoke::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Engine::Effect_Supply(pGameObject, EFFECT_ID::SHIP_SMOKE_EFFECT);
+	}
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 

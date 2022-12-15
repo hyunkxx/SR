@@ -23,6 +23,7 @@ public:
 	virtual void		RenderGUI(void)override;
 public:
 	void				Air_Rain(_vec3	_vPos);
+	void				Fire(void);
 private:
 	void				Key_Input(const _float& fTimeDelta);
 private:
@@ -41,6 +42,10 @@ private:
 
 	_bool				m_bSetting = false;
 	_int				m_iShootCount = 0;
+
+	_float				m_ShootingTime = 0.f;
+	_bool				m_bBulletShoot = false;
+	_int				m_iBulletCount = 0;
 public:
 	static CBattleShip_Support*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

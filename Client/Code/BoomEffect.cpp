@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "TankSet.h"
+#include "DroneCamera.h"
 CBoomEffect::CBoomEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -43,6 +44,10 @@ _int CBoomEffect::Update_Object(const _float & fTimeDelta)
 		m_bDead = true;
 		m_fFrame = 0.f;
 	}
+	if (dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
+	{
+		m_pTransformCom->Rotation(ROT_X, -m_pTransformCom->Get_Angle(ROT_X) + D3DXToRadian(-90.f));
+	}
 
 	__super::Update_Object(fTimeDelta);
 
@@ -60,6 +65,9 @@ void CBoomEffect::LateUpdate_Object(void)
 	}
 	Engine::Get_Camera()->Set_Rock(true);
 	
+	if (!dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
+		__super::LateUpdate_Object();
+
 	_vec3	vTemp;
 	m_pTransformCom->Get_Info(INFO_POS, &vTemp);
 
@@ -68,15 +76,16 @@ void CBoomEffect::LateUpdate_Object(void)
 	_matrix		matWorld, matView, matBill;
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView = Engine::Get_Camera()->Get_View();
 
 	D3DXMatrixIdentity(&matBill);
 
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
+
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
-
+	
 	D3DXMatrixInverse(&matBill, 0, &matBill);
 
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));

@@ -19,6 +19,8 @@ public:
 protected:
 	void		Camera_Shake(const _float& fTimeDelta);
 public:
+	_matrix		Get_View(void) { return m_matView; }
+public:
 	void		Shake_On(void)
 	{
 		if (!m_bShake)

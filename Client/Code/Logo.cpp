@@ -100,6 +100,7 @@ HRESULT CLogo::Ready_Prototype(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Gun_ShootEffectTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Gun_Smoke/Gun_Effect_0%d.png", TEX_NORMAL, 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Gun_Smoke_Shell", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Smoke_Shell/Smoke_shell_%d.png", TEX_NORMAL, 63)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Boom", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Boom/Boom_%d.png", TEX_NORMAL, 33)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Posin_Smoke", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/PosinSmoke/Posin_Smoke_0%d.png", TEX_NORMAL, 4)), E_FAIL);
 
 
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"target_0", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/target_0.png", TEX_NORMAL)), E_FAIL);

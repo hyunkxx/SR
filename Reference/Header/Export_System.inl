@@ -114,14 +114,37 @@ inline void Collect_Object(void)
 {
 	CBulletMgr::GetInstance()->Collect_Object();
 }
-inline void Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID)
+inline CGameObject* Reuse_Object(_vec3 vPos, _vec3 vDir, const _float fSpeed, _float fAngleX, _float fAngleY, BULLET_ID eID)
 {
-	CBulletMgr::GetInstance()->Reuse_Object(vPos, vDir, fSpeed, fAngleX, fAngleY, eID);
+	return CBulletMgr::GetInstance()->Reuse_Object(vPos, vDir, fSpeed, fAngleX, fAngleY, eID);
 }
 inline list<CGameObject*>* Get_Bullet_List(BULLET_ID eID)
 {
 	return CBulletMgr::GetInstance()->Get_Bullet_List(eID);
 }
+
+//EffectMgr
+inline void Update_CSP_EffectMgr(const _float & fTimeDelta)
+{
+	CSP_EffectMgr::GetInstance()->Update_CSP_EffectMgr(fTimeDelta);
+}
+inline void LateUpdate_CSP_EffectMgr(void)
+{
+	CSP_EffectMgr::GetInstance()->LateUpdate_CSP_EffectMgr();
+}
+inline void Effect_Supply(CGameObject* pBullet, EFFECT_ID eID)
+{
+	CSP_EffectMgr::GetInstance()->Effect_Supply(pBullet, eID);
+}
+inline void Collect_Effect(void)
+{
+	CSP_EffectMgr::GetInstance()->Collect_Effect();
+}
+inline CGameObject* Reuse_Effect(EFFECT_ID eID)
+{
+	return CSP_EffectMgr::GetInstance()->Reuse_Effect(eID);
+}
+
 // SoundMgr
 inline void Ready_Sound(void)
 {
@@ -197,6 +220,7 @@ CCamera*	Get_Camera(const _tchar* CameraTag)
 
 inline void			Release_System(void)
 {
+	CSP_EffectMgr::GetInstance()->DestroyInstance();
 	CCameraMgr::GetInstance()->DestroyInstance();
 	SoundMgr::GetInstance()->DestroyInstance();
 	CBulletMgr::GetInstance()->DestroyInstance();

@@ -2,7 +2,7 @@
 #include "..\Header\ShootEffect.h"
 
 #include "Export_Function.h"
-
+#include "ShootSmoke.h"
 CShootEffect::CShootEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -24,31 +24,44 @@ HRESULT CShootEffect::Ready_Object(void)
 	m_fScale = 10.f;
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 	return S_OK;
-	Get_Dead();
 }
 
 _int CShootEffect::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bDead)
+	if (m_pTarget)
 	{
-		CTransform*		pPlayerTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformPosin", ID_DYNAMIC));
-		_vec3 Pos, Look;
-
-		pPlayerTransform->Get_Info(INFO_POS, &Pos);
-		pPlayerTransform->Get_Info(INFO_LOOK, &Look);
+		m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
+		_vec3 Pos, Look, Right , Up;
+		m_pTarget->Get_Info(INFO_POS, &Pos);
+		m_pTarget->Get_Info(INFO_RIGHT, &Right);
+		m_pTarget->Get_Info(INFO_UP, &Up);
+		m_pTarget->Get_Info(INFO_LOOK, &Look);
+		D3DXVec3Normalize(&Right, &Right);
+		D3DXVec3Normalize(&Up, &Up);
 		D3DXVec3Normalize(&Look, &Look);
-		Pos += Look * 6.f;
+		Pos += Look * m_fLookDist;
+		Pos += Right * m_fRightDist;
+		Pos += Up * m_fUpDist;
 		m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
-		return OBJ_NOEVENT;
 	}
-		
 
 
 	m_fFrame += 72.f * fTimeDelta;
 
 	if (m_fFrame > 24.f)
 	{
+		if (m_bSmoke)
+		{
+			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::SHIP_SMOKE_EFFECT);
+			pObject->Set_Dead(false);
+			_vec3 Pos;
+			m_pTransformCom->Get_Info(INFO_POS, &Pos);
+			static_cast<CShootSmoke*>(pObject)->Effect_Setting(Pos);
+		}
+		m_bSmoke = false;
 		m_bDead = true;
+		m_fLookDist = 0.f;
+		m_fRightDist = 0.f;
 		m_fFrame = 0.f;
 	}
 	
