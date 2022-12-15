@@ -169,9 +169,11 @@ void CDirButton::KeyInput()
 	{
 		if (CGameMode::GetInstance()->m_bOnSelectButton)
 		{
+			ShowCursor(false);
 			CGameMode::GetInstance()->m_bOnSelectButton = false;
 		}
 
+		CGameMode::GetInstance()->m_bOnTrigger = true;
 		CGameMode::GetInstance()->m_bOnCreateButton = !CGameMode::GetInstance()->m_bOnCreateButton;
 
 
@@ -376,11 +378,11 @@ void CDirButton::SmoothYMove(const float & fDeltaTime)
 
 	if (CGameMode::GetInstance()->m_bOnCreateButton)
 	{
-		m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+		m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 3.f);
 	}
 	else
 	{
-		m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+		m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 3.f);
 	}
 
 	Set_PosX(m_fPosX);

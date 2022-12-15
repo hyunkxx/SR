@@ -36,7 +36,7 @@ _int CCreateAi::Update_Object(const _float & fTimeDelta)
 	if (Field <= 12)
 		Produce(fTimeDelta);
 
-	return OBJ_NOEVENT();
+	return 0;
 }
 void CCreateAi::LateUpdate_Object(void)
 {

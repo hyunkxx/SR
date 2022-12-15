@@ -299,6 +299,9 @@
     <Filter Include="02. GameObject\00. Tank\01. AI\CreateAi">
       <UniqueIdentifier>{3f69e06c-f544-4755-95b1-54c0cc29ced8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\12. BaseUI">
+      <UniqueIdentifier>{2b269022-7699-437c-88e0-115242807964}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -538,6 +541,9 @@
     <ClInclude Include="..\Header\CreateAi.h">
       <Filter>02. GameObject\00. Tank\01. AI\CreateAi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BaseUI.h">
+      <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -767,6 +773,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CreateAi.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\CreateAi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseUI.cpp">
+      <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

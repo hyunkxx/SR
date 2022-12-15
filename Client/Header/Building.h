@@ -33,6 +33,7 @@ public:
 	virtual			OBB*  Get_OBB(void) override;
 public:
 	wstring& GetID() { return m_ID; }
+	const TYPE& GetType() { return m_eType; }
 	_float GetRotation() const { return m_fRotation; }
 	void SetRotation(const _float& vRot);
 	const _vec3& GetPosition() const { return m_vPosition; }

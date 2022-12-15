@@ -51,6 +51,10 @@ private:
 	CGameObject* m_pBase_Ally;
 	CGameObject* m_pBase_Enemy;
 
+	/* Base UI */
+	CGameObject* m_pAllyHP;
+	CGameObject* m_pEnemyHP;
+
 	wstring m_szOutput_Chatting = L"";
 	wstring m_szInput_Chatting = L"";
 	wstring m_szChatting = L"";

@@ -63,6 +63,8 @@
 #include "DirButton.h"
 #include "AICreateButton.h"
 
+#include "BaseUI.h"
+
 /* System */
 #include "TankManager.h"
 #include "GameMode.h"
@@ -104,13 +106,18 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
 
-	if (CGameMode::GetInstance()->UseMenu())
+	if (CGameMode::GetInstance()->m_bOnTrigger)
 	{
-		CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(true);
-	}
-	else
-	{
-		CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(false);
+		if (CGameMode::GetInstance()->UseMenu())
+		{
+			CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(true);
+		}
+		else
+		{
+			CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(false);
+		}
+
+		CGameMode::GetInstance()->m_bOnTrigger = false;
 	}
 
 	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
@@ -698,18 +705,31 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
 
 	/* Dir Button */
-	vPos = { 300.f, 0.f, 0.f };
+	vPos = { 330.f, 0.f, 0.f };
 	pGameObject = m_pLeftButton = CDirButton::Create(m_pGraphicDev, CDirButton::DIR::LEFT);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_left", pGameObject), E_FAIL);
 	static_cast<CDirButton*>(pGameObject)->Set_PosX(vPos.x);
 
-	vPos = { 500.f, 0.f, 0.f };
+	vPos = { 470.f, 0.f, 0.f };
 	pGameObject = m_pRightButton = CDirButton::Create(m_pGraphicDev, CDirButton::DIR::RIGHT);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_right", pGameObject), E_FAIL);
 	static_cast<CDirButton*>(pGameObject)->Set_PosX(vPos.x);
 	m_umapLayer.insert({ pLayerTag, pLayer });
+
+	vPos = { 200.f, 0.f, 0.f };
+	pGameObject = m_pAllyHP = CBaseUI::Create(m_pGraphicDev, CBaseUI::TYPE::ALLY);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ally_hp", pGameObject), E_FAIL);
+	static_cast<CBaseUI*>(pGameObject)->Set_PosX(vPos.x);
+
+	vPos = { 600.f, 0.f, 0.f };
+	pGameObject = m_pEnemyHP = CBaseUI::Create(m_pGraphicDev, CBaseUI::TYPE::ENEMY);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"enemy_hp", pGameObject), E_FAIL);
+	static_cast<CBaseUI*>(pGameObject)->Set_PosX(vPos.x);
+
 
 	return S_OK;
 }
@@ -874,9 +894,41 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 
 					if (i == BULLET_ID::MASHINE_BULLET)
+					{
 						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 100.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 100.f;
+							break;
+						default:
+							break;
+						}
+					}
 					else if (i == BULLET_ID::CANNONBALL)
+					{
 						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 500.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 500.f;
+							break;
+						default:
+							break;
+						}
+					}
 
 					(*iter)->Set_Dead(true);
 					continue;
@@ -917,6 +969,9 @@ void CStage::Collison_Object(void)
 				{
 					(*iter)->Set_Dead(true);
 
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
 					dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(30.f);
 					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 					{
@@ -938,6 +993,10 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
 					dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 					{
@@ -961,6 +1020,9 @@ void CStage::Collison_Object(void)
 				{
 					(*iter)->Set_Dead(true);
 
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
 					dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
 					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
 					{
@@ -982,6 +1044,9 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
 					dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(30.f);
 					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)

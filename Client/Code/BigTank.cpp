@@ -186,6 +186,13 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 
 	if (!m_bRock)
 	{
+		//¿”Ω√ ªÁ∏¡ ≈∞ 
+		if (Get_DIKeyState_Custom(DIK_M) == KEY_STATE::TAP)
+		{
+			if (!m_bDead)
+				m_bDead = true;
+		}
+
 		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
 		{
 			if (m_bStart)

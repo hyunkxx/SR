@@ -190,6 +190,12 @@ void CMiddleTank::Key_Input(const _float & fTimeDelta)
 
 	if (!m_bRock)
 	{
+		//ÀÓ½Ã »ç¸Á Å° 
+		if (Get_DIKeyState_Custom(DIK_M) == KEY_STATE::TAP)
+		{
+			if (!m_bDead)
+				m_bDead = true;
+		}
 		if (Get_DIMouseState(DIM_LB) & 0x80
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)

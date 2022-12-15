@@ -185,9 +185,11 @@ void CAICreateButton::KeyInput()
 	{
 		if (CGameMode::GetInstance()->m_bOnSelectButton)
 		{
+			ShowCursor(false);
 			CGameMode::GetInstance()->m_bOnSelectButton = false;
 		}
 
+		CGameMode::GetInstance()->m_bOnTrigger = true;
 		CGameMode::GetInstance()->m_bOnCreateButton = !CGameMode::GetInstance()->m_bOnCreateButton;
 
 		m_fSmoothStart = 0.f;

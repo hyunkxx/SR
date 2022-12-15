@@ -116,7 +116,8 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 			m_bShow = !m_bShow;
 
 			CGameMode::GetInstance()->m_bOnSoundMenu = m_bShow;
-			CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(m_bShow);
+
+			CGameMode::GetInstance()->m_bOnTrigger = true;
 
 			CTankManager::GetInstance()->MouseLBTLock(m_bShow);
 

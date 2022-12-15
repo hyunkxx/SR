@@ -22,7 +22,7 @@ public:
 	_matrix		Get_View(void) { return m_matView; }
 public:
 	_bool		Get_MouseFix() { return m_bFix; }
-	void		Set_MouseFix(bool bValue) { m_bFix = bValue; }
+	void		Set_MouseFix(bool bValue) { ShowCursor(bValue); m_bFix = bValue; }
 	void		Shake_On(void)
 	{
 		if (!m_bShake)
@@ -56,6 +56,7 @@ protected:
 	_bool		m_bRock = false;
 protected:
 	virtual void		Free(void);
+private:
 };
 
 END

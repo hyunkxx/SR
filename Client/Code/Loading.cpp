@@ -196,6 +196,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"ai_right_btn", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/ai_right_btn.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"ai_right_btn_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/ai_right_btn_click.png", TEX_NORMAL)), E_FAIL);
 
+	/* BaseUI */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_back", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseBackground.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_ally_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseAllyFront.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_enemy_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseEnemyFront.png", TEX_NORMAL)), E_FAIL);
 
 
 	lstrcpy(m_szString, L"Complete");

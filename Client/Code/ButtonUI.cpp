@@ -179,19 +179,25 @@ void CButtonUI::KeyInput()
 	_vec3 vLength = static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Get_Info() - CGameMode::GetInstance()->m_AllyBasePosition;
 	float fLength = D3DXVec3Length(&vLength);
 
-	if (fLength > 250.f)
+
+	if (!pGameObject->Get_Dead())
 	{
-		CGameMode::GetInstance()->m_bOnSelectButton = false;
+		if (fLength > 250.f)
+		{
+			CGameMode::GetInstance()->m_bOnSelectButton = false;
+		}
 	}
 
 	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && fLength <= 250.f
-		|| Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && pGameObject->Get_Dead())
+		|| (pGameObject->Get_Dead() && Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP))
 	{
 		if (CGameMode::GetInstance()->m_bOnCreateButton)
 		{
+			ShowCursor(false);
 			CGameMode::GetInstance()->m_bOnCreateButton = false;
 		}
 
+		CGameMode::GetInstance()->m_bOnTrigger = true;
 		CGameMode::GetInstance()->m_bOnSelectButton = !CGameMode::GetInstance()->m_bOnSelectButton;
 
 		m_fSmoothStart = 0.f;

@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "Transform.h"
 #include "Voxel.h"
+#include "GameMode.h"
 
 USING(Engine)
 
@@ -140,7 +141,7 @@ void CBuilding::CollisionSetting()
 	case TYPE::BUILDING_2:
 		m_stBody.fLen[x] = 15.f;
 		m_stBody.fLen[y] = 14.f;
-		m_stBody.fLen[z] = 13.5;
+		m_stBody.fLen[z] = 15.f;
 		break;
 	case TYPE::ROCK:
 		m_stBody.fLen[x] = 10.f;

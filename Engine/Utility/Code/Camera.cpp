@@ -42,10 +42,7 @@ _int CCamera::Update_Object(const _float& fTimeDelta)
 
 void CCamera::LateUpdate_Object(void)
 {
-	if (m_bFix)
-		ShowCursor(true);
-	else
-		ShowCursor(false);
+
 }
 
 void CCamera::Camera_Shake(const _float & fTimeDelta)

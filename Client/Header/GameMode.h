@@ -34,6 +34,8 @@ public:
 	bool m_bOnSelectButton = false;
 	bool m_bOnCreateButton = false;
 
+	bool m_bOnTrigger = false;
+
 	GAME_RESULT m_eGameResult;
 	_vec3	m_AllyBasePosition = { 0.f, 0.f, 0.f };
 	_vec3	m_EnemyBasePosition = { 0.f,0.f,0.f };

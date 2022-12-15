@@ -1198,14 +1198,14 @@ void CDefault_Enermy::ColObject(_float fTimeDelta)
 		_vec3 vLook;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(-vLook*fAccel_top_speed*fTimeDelta*1.1));
+		m_pTransformCom->Move_Pos(&(-vLook * fAccel_top_speed * fTimeDelta * 1.1f));
 	}
 	else if (re <= 2)
 	{
 		_vec3 vLook;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta*1.1));
+		m_pTransformCom->Move_Pos(&(vLook * fAccel_top_speed * fTimeDelta * 1.1f));
 	}
 	if (re >= 2)
 	{

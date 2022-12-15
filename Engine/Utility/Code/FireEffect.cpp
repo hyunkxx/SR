@@ -88,7 +88,6 @@ _int CFireEffect::Update_Component(const _float & fTimeDelta)
 		D3DXMatrixRotationY(&matAxis[1], (*iter)->GetRotation().y);
 		D3DXMatrixRotationZ(&matAxis[2], (*iter)->GetRotation().z);
 		matRot = matAxis[0] * matAxis[1] * matAxis[2];
-
 		D3DXMatrixTranslation(
 			&matTrans,
 			(*iter)->GetPosition().x += m_vDir[i].x * m_fSpeed * fTimeDelta,
