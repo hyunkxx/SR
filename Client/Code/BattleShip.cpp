@@ -137,7 +137,7 @@ void CBattleShip::Strike(void)
 	m_fAngle_2 = 0.f;
 	m_fShootTime = 0.f;
 	m_iShootCount = 0;
-
+	m_fChangeTime = 0.f;
 	m_pTransformBody->Reset_Trans();
 	m_pTransformHead->Reset_Trans();
 	m_pTransformHead2->Reset_Trans();

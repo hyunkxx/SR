@@ -75,9 +75,9 @@ void CHumvee::Render_Object(void)
 
 		if (m_bDead)
 		{
-			m_pHead->Change_Color_Dead();
-			m_pBody->Change_Color_Dead();
-			m_pPosin->Change_Color_Dead();
+			m_pHead->Return_Color();
+			m_pBody->Return_Color();
+			m_pPosin->Return_Color();
 		}
 		__super::Render_Object();
 	}
