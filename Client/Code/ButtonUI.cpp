@@ -5,6 +5,7 @@
 #include "TankSet.h"
 #include "TankManager.h"
 #include "GameMode.h"
+#include "Utility.h"
 
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, VEHICLE eType)
 	: Engine::CGameObject(pGraphicDev)
@@ -50,15 +51,16 @@ HRESULT CButtonUI::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
-	m_fScaleX = 80;
-	m_fScaleY = 60.f;
+	m_fScaleX = 70.f;
+	m_fScaleY = 50.f;
 	m_fScaleZ = 0.01f;
 
-	m_fPosX = WINCX - m_fScaleX;
-	m_fPosY = 200.f;
+	m_fPosX = WINCX * 0.5f;
+	m_fPosY = m_fOriginY;
 	m_fPosZ = 0.1f;
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
+
 	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
 	return S_OK;
@@ -68,20 +70,16 @@ _int CButtonUI::Update_Object(const _float & fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
 
-	CGameMode::GetInstance()->m_bShowMenu = m_bShow;
-
 	KeyInput();
-
-	if (!m_bShow)
-		return 0;
+	SmoothYMove(fTimeDelta);
 
 	if (OnMouseClick())
 	{
 		BuyVehicle();
 		m_bClicked = false;
 	}
-		
-	HideMessage(fTimeDelta);
+
+	HideText(fTimeDelta);
 
 	UpdateTransform();
 
@@ -97,9 +95,6 @@ void CButtonUI::LateUpdate_Object(void)
 
 void CButtonUI::Render_Object(void)
 {
-	if (!m_bShow)
-		return;
-
 	RenderButton();
 }
 
@@ -186,16 +181,21 @@ void CButtonUI::KeyInput()
 
 	if (fLength > 250.f)
 	{
-		m_bShow = false;
+		CGameMode::GetInstance()->m_bOnSelectButton = false;
 	}
 
 	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && fLength <= 250.f
 		|| Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && pGameObject->Get_Dead())
 	{
-		m_bShow = !m_bShow;
+		if (CGameMode::GetInstance()->m_bOnCreateButton)
+		{
+			CGameMode::GetInstance()->m_bOnCreateButton = false;
+		}
 
-		ShowCursor(m_bShow);
-		static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(m_bShow);
+		CGameMode::GetInstance()->m_bOnSelectButton = !CGameMode::GetInstance()->m_bOnSelectButton;
+
+		m_fSmoothStart = 0.f;
+		static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(CGameMode::GetInstance()->UseMenu());
 	}
 }
 
@@ -253,17 +253,26 @@ void CButtonUI::RenderButton()
 
 	m_pRcTex->Render_Buffer();
 
-	wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]) + L"  GOLD";
-	_vec2 vPos = { WINCX * 0.5f - 100.f + (strGold.length() *0.5f) * 15.f , WINCY - 150.f };
-	Engine::Render_Font(L"Font_Retro", strGold.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
-
-	vPos = { WINCX * 0.5f - 100.f, WINCY - 190.f };
-	Engine::Render_Font(L"Font_Retro1", L"차량을 선택하세요", &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
-
-	if (!hasGold)
+	if (CGameMode::GetInstance()->m_bOnSelectButton)
 	{
-		_vec2 vPos = { WINCX * 0.5f - 70.f , WINCY - 120.f };
-		Engine::Render_Font(L"Font_Retro", L"골드가 부족합니다.", &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+		_vec2 vPos = { WINCX * 0.5f - 100.f, WINCY * 0.5f - 40.f };
+		Engine::Render_Font(L"Font_Retro1", L"차량을 선택하세요", &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
+
+		wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]) + L"  GOLD";
+		vPos = { WINCX * 0.5f - (10.f * (strGold.length() * 0.5f)) , WINCY * 0.5f };
+		Engine::Render_Font(L"Font_Retro", strGold.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		if (!hasGold)
+		{
+			_vec2 vPos = { WINCX * 0.5f - 70.f , WINCY * 0.5f + 40.f };
+			Engine::Render_Font(L"Font_Retro", L"골드가 부족합니다.", &vPos, D3DCOLOR_ARGB(255, 230, 230, 230));
+
+			if (m_bHideText)
+			{
+				hasGold = true;
+				m_bHideText = false;
+			}
+		}
 	}
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
@@ -339,25 +348,104 @@ void CButtonUI::BuyVehicle()
 	}
 
 	if (!hasGold)
+	{
 		return;
+	}
 
 	CLayer* pLayer = Engine::Get_Layer(L"GameLogic");
 	CGameObject* pGameObject = Engine::Swap_Object(L"GameLogic", L"PlayerVehicle", *CTankManager::GetInstance()->GetVehicle());
 	static_cast<CTankSet*>(*CTankManager::GetInstance()->GetVehicle())->Set_Rock(true);
 
-	pGameObject->Set_Dead(true);
+	pGameObject->Set_Dead(false);
 }
 
-void CButtonUI::HideMessage(float fDeltaTime)
+void CButtonUI::SmoothYMove(const float& fDeltaTime)
 {
-	if (hasGold)
-		return;
+	m_fSmoothStart += fDeltaTime;
 
-	hideTimer += fDeltaTime;
-
-	if (hideTimer > 2.f)
+	switch (m_eType)
 	{
-		hideTimer = 0.f;
-		hasGold = true;
+	case VEHICLE::HUMVEE:
+		if (m_fSmoothStart >= 0.4f)
+		{
+			if (CGameMode::GetInstance()->m_bOnSelectButton)
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+			}
+			else
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+			}
+		}
+		break;
+	case VEHICLE::SMALL_TANK:
+		if (m_fSmoothStart >= 0.2f)
+		{
+			if (CGameMode::GetInstance()->m_bOnSelectButton)
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+			}
+			else
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+			}
+		}
+		break;
+	case VEHICLE::MIDDLE_TANK:
+		if (m_fSmoothStart >= 0.0f)
+		{
+			if (CGameMode::GetInstance()->m_bOnSelectButton)
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+			}
+			else
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+			}
+		}
+		break;
+	case VEHICLE::BIG_TANK:
+		if (m_fSmoothStart >= 0.2f)
+		{
+			if (CGameMode::GetInstance()->m_bOnSelectButton)
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+			}
+			else
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+			}
+		}
+		break;
+	case VEHICLE::LONG_TANK:
+		if (m_fSmoothStart >= 0.4f)
+		{
+			if (CGameMode::GetInstance()->m_bOnSelectButton)
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fDeltaY, fDeltaTime * 2.f);
+			}
+			else
+			{
+				m_fPosY = Utility::Lerp(m_fPosY, m_fOriginY, fDeltaTime * 2.f);
+			}
+		}
+		break;
+	}
+
+	Set_PosX(m_fPosX);
+	Set_PosY(m_fPosY);
+}
+
+void CButtonUI::HideText(const float& fDeltaTime)
+{
+	if (!hasGold)
+	{
+		m_fHideTimer += fDeltaTime;
+
+		if (m_fHideTimer >= 1.5f)
+		{
+			m_bHideText = true;
+			m_fHideTimer = 0.f;
+		}
 	}
 }

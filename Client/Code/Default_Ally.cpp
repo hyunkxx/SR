@@ -8,10 +8,13 @@
 #include"RightTopLocation.h"
 #include"BottomDirEnermy.h"
 #include"Default_Enermy.h"	
+#include "GameMode.h"
+
 CDefault_Ally::CDefault_Ally(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_bRightLocationCount(false)
 {
+	CGameMode::GetInstance()->m_nAllyCount++;
 }
 
 CDefault_Ally::CDefault_Ally(const CDefault_Ally & rhs)
@@ -22,6 +25,7 @@ CDefault_Ally::CDefault_Ally(const CDefault_Ally & rhs)
 CDefault_Ally::~CDefault_Ally()
 {
 	Free();
+	CGameMode::GetInstance()->m_nAllyCount--;
 }
 
 HRESULT CDefault_Ally::Ready_Object(void)

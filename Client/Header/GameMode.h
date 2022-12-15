@@ -21,10 +21,19 @@ public:
 	void Reset();
 	void InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold);
 
-	bool UseMenu() { return m_bShowMenu; };
+	bool UseMenu() { return m_bOnSelectButton || m_bOnCreateButton || m_bOnSoundMenu; };
 	bool VictoryCheck();
 public:
-	bool m_bShowMenu = false;
+	EData eData; //AI »ý¼º¿ë
+
+	int m_nAllyCount = 0;
+	int m_nEnemyCount = 0;
+	const int m_nUnitMaxCount = 12;
+
+	bool m_bOnSoundMenu = false;
+	bool m_bOnSelectButton = false;
+	bool m_bOnCreateButton = false;
+
 	GAME_RESULT m_eGameResult;
 	_vec3	m_AllyBasePosition = { 0.f, 0.f, 0.f };
 	_vec3	m_EnemyBasePosition = { 0.f,0.f,0.f };

@@ -9,7 +9,7 @@ END
 class CBuilding : public CGameObject, public ICollisionable
 {
 public:
-	enum class TYPE { BUILDING, ROCK, PLANT_1, PLANT_2, PLANT_3, MAX };
+	enum class TYPE { BUILDING, ROCK, PLANT_1, PLANT_2, PLANT_3, OASIS, BASE, MAX };
 	static _int ID;
 public:
 	static CBuilding* Create(LPDIRECT3DDEVICE9 pGramphicDev, wstring strMeshKey, const _vec3& vPos, TYPE eType);

@@ -166,6 +166,7 @@
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h" />
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\Header\AICreateButton.h" />
     <ClInclude Include="..\Header\AimCamera.h" />
     <ClInclude Include="..\Header\Aim_UI.h" />
     <ClInclude Include="..\Header\Aim_UI_Pers.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\Header\Default_Ally.h" />
     <ClInclude Include="..\Header\Default_Enermy.h" />
+    <ClInclude Include="..\Header\DirButton.h" />
     <ClInclude Include="..\Header\DroneCamera.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\EffectManager.h" />
@@ -257,6 +259,7 @@
     <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Code\AICreateButton.cpp" />
     <ClCompile Include="..\Code\AimCamera.cpp" />
     <ClCompile Include="..\Code\Aim_UI.cpp" />
     <ClCompile Include="..\Code\Aim_UI_Pers.cpp" />
@@ -274,6 +277,7 @@
     <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\Default_Ally.cpp" />
     <ClCompile Include="..\Code\Default_Enermy.cpp" />
+    <ClCompile Include="..\Code\DirButton.cpp" />
     <ClCompile Include="..\Code\DroneCamera.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\EffectManager.cpp" />

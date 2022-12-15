@@ -140,6 +140,16 @@ void CBuilding::CollisionSetting()
 		m_stBody.fLen[y] = 4.f;
 		m_stBody.fLen[z] = 6.f;
 		break;
+	case TYPE::BASE:
+		m_stBody.fLen[x] = 15.f;
+		m_stBody.fLen[y] = 14.f;
+		m_stBody.fLen[z] = 10.f;
+		break;
+	case TYPE::OASIS:
+		m_stBody.fLen[x] = 2.f;
+		m_stBody.fLen[y] = 3.f;
+		m_stBody.fLen[z] = 2.f;
+		break;
 	default:
 		m_stBody.fLen[x] = 2.f;
 		m_stBody.fLen[y] = 3.f;

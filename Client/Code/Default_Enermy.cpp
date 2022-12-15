@@ -16,21 +16,23 @@
 #include "StaticCamera.h"
 #include "AimCamera.h"
 #include "Collisionable.h"
+#include "GameMode.h"
 
 CDefault_Enermy::CDefault_Enermy(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	CGameMode::GetInstance()->m_nEnemyCount++;
 }
 
 CDefault_Enermy::CDefault_Enermy(const CDefault_Enermy & rhs)
 	: CGameObject(rhs)
 {
-
 }
 
 CDefault_Enermy::~CDefault_Enermy()
 {
 	Free();
+	CGameMode::GetInstance()->m_nEnemyCount--;
 }
 
 HRESULT CDefault_Enermy::Ready_Object(void)

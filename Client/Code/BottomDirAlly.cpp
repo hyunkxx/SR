@@ -11,10 +11,12 @@
 #include "TankCamera.h"
 #include "StaticCamera.h"
 #include "AimCamera.h"
+#include "GameMode.h"
 
 CBottomDirAlly::CBottomDirAlly(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	CGameMode::GetInstance()->m_nAllyCount++;
 }
 
 CBottomDirAlly::CBottomDirAlly(const CBottomDirAlly & rhs)
@@ -25,6 +27,7 @@ CBottomDirAlly::CBottomDirAlly(const CBottomDirAlly & rhs)
 CBottomDirAlly::~CBottomDirAlly()
 {
 	Free();
+	CGameMode::GetInstance()->m_nAllyCount--;
 }
 
 HRESULT CBottomDirAlly::Ready_Object(void)

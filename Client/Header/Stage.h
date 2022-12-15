@@ -38,7 +38,14 @@ private:
 
 	/* Button UI */
 	CGameObject* m_pButton[(UINT)VEHICLE::MAX];
-	void Key_Input(const _float& fTimeDelta);
+	CGameObject* m_pUIBack;
+
+	/* AI CreateUI */
+	CGameObject* m_pAIButton[(UINT)VEHICLE::MAX];
+
+	/* Dir Button */
+	CGameObject* m_pLeftButton;
+	CGameObject* m_pRightButton;
 
 	wstring m_szOutput_Chatting = L"";
 	wstring m_szInput_Chatting = L"";

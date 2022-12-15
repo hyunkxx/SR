@@ -95,7 +95,11 @@ void CMeshLoader::Initalize()
 
 	LoadMesh(L"Building_000_object.bin", L"Building_000_object"); //정상
 	LoadMesh(L"Building_100_object.bin", L"Building_100_object"); //파괴
-	
+
+	/* base */
+	LoadMesh(L"ally_base_object.bin", L"Base_ally");
+	LoadMesh(L"enemy_base_object.bin", L"Base_enemy");
+
 	/* 기존 건물 */
 	LoadMesh(L"Building_01_object.bin", L"Building_01_object");
 	LoadMesh(L"Building_001_object.bin", L"Building_001_object");

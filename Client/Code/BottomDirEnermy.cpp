@@ -14,10 +14,12 @@
 #include "StaticCamera.h"
 #include "AimCamera.h"
 #include"BottomDirAlly.h"
+#include "GameMode.h"
 
 CBottomDirEnermy::CBottomDirEnermy(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	CGameMode::GetInstance()->m_nEnemyCount++;
 }
 
 CBottomDirEnermy::CBottomDirEnermy(const CBottomDirEnermy & rhs)
@@ -28,6 +30,7 @@ CBottomDirEnermy::CBottomDirEnermy(const CBottomDirEnermy & rhs)
 CBottomDirEnermy::~CBottomDirEnermy()
 {
 	Free();
+	CGameMode::GetInstance()->m_nEnemyCount--;
 }
 
 HRESULT CBottomDirEnermy::Ready_Object(void)
@@ -1026,7 +1029,7 @@ CBottomDirEnermy* CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("BackGround Create Failed");
 		Safe_Release(pInstance);
 	}
-
+	
 	return pInstance;
 }
 
@@ -1227,8 +1230,8 @@ void CBottomDirEnermy::Free(void)
 	Safe_Release(m_pMinimap_RcTex);
 	Safe_Release(m_pMinimap_Texure);
 	Safe_Release(m_pMinimap_Transform);
-	__super::Free();
 
+	__super::Free();
 }
 
 void CBottomDirEnermy::Update_UI(void)

@@ -43,10 +43,14 @@ private:
 	void UpdateTransform();
 	void RenderButton();
 	void BuyVehicle();
-	void HideMessage(float fDeltaTime);
+	void SmoothYMove(const float& fDeltaTime);
+	void HideText(const float&);
 private: /* UI value */
+	float m_fSmoothStart = 0.f;
+	float m_fHideTimer = 0.f;
+
+	bool m_bHideText = false;
 	bool hasGold = true;
-	float hideTimer = 0.f;
 
 	VEHICLE m_eType;
 	bool m_bUpdateTransform;
@@ -68,6 +72,9 @@ private: /* UI value */
 	_float	m_fPosZ;
 
 	_int	iRotaion;
+private:
+	const _float m_fOriginY = -100.f;
+	const _float m_fDeltaY = +110.f;
 private:
 	bool m_bShow;
 	bool m_bPressed;

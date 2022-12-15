@@ -20,7 +20,6 @@ private:
 	void		Mouse_Fix(void);
 
 private:
-	_bool		m_bFix   = false;
 	_bool		m_bCheck = false;
 
 public:

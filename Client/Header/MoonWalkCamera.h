@@ -37,7 +37,6 @@ public:
 
 private:
 	_vec3		m_vPos = { 0.f, 0.f, 0.f };
-	_bool		m_bFix = false;
 	_vec3		m_vLook;
 	_vec3		Target_Pos;
 	_vec3		m_vDir;

@@ -5,6 +5,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "TankManager.h"
+#include "GameMode.h"
 
 _float CUI_Volume:: s_fAllSound;
 _float CUI_Volume::s_fShotSound;
@@ -113,7 +114,9 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 		if (Get_DIKeyState_Custom(DIK_F3) == KEY_STATE::TAP)
 		{
 			m_bShow = !m_bShow;
-			ShowCursor(m_bShow);
+
+			CGameMode::GetInstance()->m_bOnSoundMenu = m_bShow;
+			CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(m_bShow);
 
 			CTankManager::GetInstance()->MouseLBTLock(m_bShow);
 

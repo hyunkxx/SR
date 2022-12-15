@@ -45,7 +45,6 @@
 //#include "UI_Fuel.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
-#include "ButtonUI.h"
 #include"TempOccupationScore.h"
 
 // effect skill
@@ -59,7 +58,12 @@
 #include "EffectManager.h"
 #include "ShootSmoke.h"
 
+/* Button */
+#include "ButtonUI.h"
+#include "DirButton.h"
+#include "AICreateButton.h"
 
+/* System */
 #include "TankManager.h"
 #include "GameMode.h"
 
@@ -84,7 +88,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 20000, 800);
+	CGameMode::GetInstance()->InitGameMode(500, 20000, 20000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -99,13 +103,15 @@ HRESULT CStage::Ready_Scene(void)
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
-	Key_Input(fTimeDelta);
 
-	//CGameObject* pVolume = Engine::Get_Object(L"UI", L"Volume_UI");
-	//if (static_cast<CUI_Volume*>(pVolume)->Get_Volume_Show())
-	//{	ShowCursor(true);}
-	//else
-	//{	ShowCursor(false);}
+	if (CGameMode::GetInstance()->UseMenu())
+	{
+		CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(true);
+	}
+	else
+	{
+		CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(false);
+	}
 
 	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
@@ -307,6 +313,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BattleShip", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
+
 	for (_int i = 0; 200 > i; i++)
 	{
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
@@ -619,44 +626,81 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	_vec3 vPos;
 	ZeroMemory(&vPos, sizeof(_vec3));
 
-	vPos = { 0.f, 0.f, 0.f };
+	vPos = { 100.f, 0.f, 0.f };
 	pGameObject = m_pButton[0] = CButtonUI::Create(m_pGraphicDev, VEHICLE::HUMVEE);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_00", pGameObject), E_FAIL);
+	static_cast<CButtonUI*>(pGameObject)->Set_PosX(vPos.x);
 
-	vPos = { 80.f, 0.f, 0.f };
+	vPos = { 250.f, 0.f, 0.f };
 	pGameObject = m_pButton[1] = CButtonUI::Create(m_pGraphicDev, VEHICLE::SMALL_TANK);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_01", pGameObject), E_FAIL);
-	vPos = { 160.f, 0.f, 0.f };
+	static_cast<CButtonUI*>(pGameObject)->Set_PosX(vPos.x);
+
+	vPos = { 400.f, 0.f, 0.f };
 	pGameObject = m_pButton[2] = CButtonUI::Create(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_02", pGameObject), E_FAIL);
+	static_cast<CButtonUI*>(pGameObject)->Set_PosX(vPos.x);
 
-	vPos = { 240.f, 0.f, 0.f };
+	vPos = { 550.f, 0.f, 0.f };
 	pGameObject = m_pButton[3] = CButtonUI::Create(m_pGraphicDev, VEHICLE::BIG_TANK);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_03", pGameObject), E_FAIL);
+	static_cast<CButtonUI*>(pGameObject)->Set_PosX(vPos.x);
 
-	vPos = { 320.f, 0.f, 0.f };
+	vPos = { 700.f, 0.f, 0.f };
 	pGameObject = m_pButton[4] = CButtonUI::Create(m_pGraphicDev, VEHICLE::LONG_TANK);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_04", pGameObject), E_FAIL);
+	static_cast<CButtonUI*>(pGameObject)->Set_PosX(vPos.x);
 
-	for (int i = 0; i < 3; ++i)
-	{
-		vPos = { 200.f * (i + 1), 0.f, 0.f };
-		static_cast<CButtonUI*>(m_pButton[i])->Set_PosX(vPos.x);
-	}
+	/* Create AI UI */
+	ZeroMemory(&vPos, sizeof(_vec3));
 
-	vPos = { 290.f , 330.f, 0.f };
-	static_cast<CButtonUI*>(m_pButton[3])->Set_PosX(vPos.x);
-	static_cast<CButtonUI*>(m_pButton[3])->Set_PosY(vPos.y);
+	vPos = { 100.f, 0.f, 0.f };
+	pGameObject = m_pButton[0] = CAICreateButton::Create(m_pGraphicDev, VEHICLE::HUMVEE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ai_btn_00", pGameObject), E_FAIL);
+	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
 
-	vPos = { 500.f , 330.f, 0.f };
-	static_cast<CButtonUI*>(m_pButton[4])->Set_PosX(vPos.x);
-	static_cast<CButtonUI*>(m_pButton[4])->Set_PosY(vPos.y);
+	vPos = { 250.f, 0.f, 0.f };
+	pGameObject = m_pButton[1] = CAICreateButton::Create(m_pGraphicDev, VEHICLE::SMALL_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ai_btn_01", pGameObject), E_FAIL);
+	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
 
+	vPos = { 400.f, 0.f, 0.f };
+	pGameObject = m_pButton[2] = CAICreateButton::Create(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ai_btn_02", pGameObject), E_FAIL);
+	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
+
+	vPos = { 550.f, 0.f, 0.f };
+	pGameObject = m_pButton[3] = CAICreateButton::Create(m_pGraphicDev, VEHICLE::BIG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ai_btn_03", pGameObject), E_FAIL);
+	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
+
+	vPos = { 700.f, 0.f, 0.f };
+	pGameObject = m_pButton[4] = CAICreateButton::Create(m_pGraphicDev, VEHICLE::LONG_TANK);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ai_btn_04", pGameObject), E_FAIL);
+	static_cast<CAICreateButton*>(pGameObject)->Set_PosX(vPos.x);
+
+	/* Dir Button */
+	vPos = { 300.f, 0.f, 0.f };
+	pGameObject = m_pLeftButton = CDirButton::Create(m_pGraphicDev, CDirButton::DIR::LEFT);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_left", pGameObject), E_FAIL);
+	static_cast<CDirButton*>(pGameObject)->Set_PosX(vPos.x);
+
+	vPos = { 500.f, 0.f, 0.f };
+	pGameObject = m_pRightButton = CDirButton::Create(m_pGraphicDev, CDirButton::DIR::RIGHT);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"btn_right", pGameObject), E_FAIL);
+	static_cast<CDirButton*>(pGameObject)->Set_PosX(vPos.x);
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -950,11 +994,6 @@ void CStage::Collison_Object(void)
 			}
 		}
 	}
-}
-
-void CStage::Key_Input(const _float& fTimeDelta)
-{
-	
 }
 
 

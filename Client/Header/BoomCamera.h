@@ -35,7 +35,6 @@ public:
 		const _float& fFar = 1000.f);
 private:
 	_vec3		m_vPos = { 0.f, 0.f, 0.f };
-	_bool		m_bFix = false;
 	_vec3		m_vLook;
 	CTransform* Target_Trans = nullptr;
 private:

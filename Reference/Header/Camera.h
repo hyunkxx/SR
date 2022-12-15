@@ -21,6 +21,8 @@ protected:
 public:
 	_matrix		Get_View(void) { return m_matView; }
 public:
+	_bool		Get_MouseFix() { return m_bFix; }
+	void		Set_MouseFix(bool bValue) { m_bFix = bValue; }
 	void		Shake_On(void)
 	{
 		if (!m_bShake)
@@ -38,9 +40,10 @@ public:
 	CAMERA_ID		Get_ID(void) { return m_eID; }
 	void			Set_Rock(_bool Rock) { m_bRock = Rock; }
 protected:
-	_vec3				m_vEye, m_vAt, m_vUp;
-	_float				m_fAspect, m_fFov, m_fNear, m_fFar;
-	_matrix				m_matView, m_matProj;
+	_bool		m_bFix = false;
+	_vec3		m_vEye, m_vAt, m_vUp;
+	_float		m_fAspect, m_fFov, m_fNear, m_fFar;
+	_matrix		m_matView, m_matProj;
 	//카메라 쉐이킹용 누적 시간
 	_bool		m_bShake = false;
 	_bool		m_bxRand = false;

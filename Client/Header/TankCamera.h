@@ -20,7 +20,6 @@ private:
 public:
 	void Set_MouseFix(_bool _bFix) {m_bFix = _bFix;}
 private:
-	_bool		m_bFix = false;
 	_bool		m_bCheck = false;
 	_vec3		m_vLook;
 public:
