@@ -804,18 +804,8 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
+					dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(30.f);
 					continue;
-					//(*iters)->Set_Dead(true);
-
-					/*dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
-					m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
-					m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
-					m_eData.vPos.y = 0;
-					m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
-					m_eData.TankType = TANKTYPE::HUMVEE;
-					CGameObject* pEnermy = CDefault_Enermy::Create(m_pGraphicDev, &m_eData);
-					NULL_CHECK(pEnermy);
-					Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);*/
 				}
 			}
 			for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
@@ -829,18 +819,9 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
 				{
 					(*iter)->Set_Dead(true);
-					continue;
+					dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
 					//(*iters)->Set_Dead(true);
-					/*dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
-					m_eData.eID = OBJID::OBJID_BDENERMY;
-					m_eData.vPos.x = (float)VTXITV*(VTXCNTX / 2) + rand() % 200;
-					m_eData.vPos.y = 0;
-					m_eData.vPos.z = (float)VTXITV*(VTXCNTZ / 2) + rand() % 100;
-
-					CGameObject* pEnermy = CBottomDirEnermy::Create(m_pGraphicDev, &m_eData);
-					NULL_CHECK(pEnermy);
-					Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDENERMY);*/
-					
+					continue;				
 				}
 			}
 		}

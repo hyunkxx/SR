@@ -51,25 +51,20 @@ _int CRightTopLocation::Update_Object(const _float& fTimeDelta)
 		if (Temps.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_BDENERMY);
-			Occupation(OBJID::OBJID_BDENERMY);
-
 		}
 		if (Sours.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ENERMY);
-			Occupation(OBJID::OBJID_DEFAULT_ENERMY);
 		}
 		Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
 		Sours = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 		if (Temps.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
-			Occupation(OBJID::OBJID_DEFAULT_ALLY);
 		}
 		if (Sours.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_BDALLY);
-			Occupation(OBJID::OBJID_BDALLY);
 		}
 	}
 	if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
@@ -195,89 +190,6 @@ void CRightTopLocation::CheckObject(_int _ObjID)
 		break;
 	}
 }
-void CRightTopLocation::Occupation(_int _ObjID)
-{
-	switch (_ObjID)
-	{
-	case OBJID::OBJID_DEFAULT_ENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_RightTopLocation() == true)
-			{
-				if (m_EnermyOccupation >= 100.f)
-				{
-					if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_RightTopLocation() == true)
-					{
-						dynamic_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-					}
-				}
-			}
-		}
-		break;
-	}
-	case OBJID::OBJID_BDENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_EnermyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightTopLocation() == true)
-				{
-					dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-				}
-			}
-		}
-		break;
-	}
-
-	case OBJID::OBJID_DEFAULT_ALLY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_AllyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_RightTopLocation() == true)
-				{
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-				}
-			}
-			if (m_iAllyCount >= 1 && m_iEnermyCount >= 1)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_RightTopLocation() == true)
-				{
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-				}
-			}
-		}
-		break;
-	}
-	case OBJID::OBJID_BDALLY:
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_AllyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightTopLocation() == true)
-				{
-					dynamic_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-				}
-			}
-			if (m_iAllyCount >= 1 && m_iEnermyCount >= 1)
-			{
-				if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightTopLocation() == true)
-				{
-					dynamic_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-				}
-			}
-		}
-		break;
-	}
-}
-
 
 CRightTopLocation* CRightTopLocation::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

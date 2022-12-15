@@ -53,6 +53,8 @@ public:
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	_int Get_Action() { return m_iAction; }
 	void  Set_DisCountLocation();
+
+	void AiMove(_float fTimeDelta);
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -60,11 +62,13 @@ public:
 	void Wait(_float fTimeDelta);
 	void Enermy_In_Area(_float fTimeDelta);
 	void Detect(_float fTimeDelta);
-	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
+	_bool Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	_float Dist(CTransform* _Target);
-	void		ObjectCol(_bool m_Left);
-	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	void ObjectCol(_bool m_Left);
+	void Run(_float fTimeDelta);
+	void Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
+	void Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	void 	ColObject(_float fTimeDelta);
 private:
 	HRESULT		Add_Component(void);
 	EData*      m_EData;
@@ -95,12 +99,19 @@ private:
 	_bool LeftCheck = false;
 	_bool m_bDef = false;
 	_int Targeted = 0;
-	_float m_fReloadTime = 0.f, m_fReload = 0.1f;
+	_float Range = 0.f;
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_bool ColBuild = false;
 	_int  ColBuildCount = 0;
-
+	_int  BulletCount = 0;
+	_bool m_bTest;
+	_bool bLeft;
+	_float re = 0.f;
+	//탱크 정보
+	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
+	_float m_fReloadTime, m_fReload;
+	_int   m_iCannonSpeed, TempBullet;
 public:
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CDefault_Enermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
@@ -108,10 +119,10 @@ private:
 	virtual void Free(void) override;
 
 	// HP UI
-	_matrix				UI_matViewF, m_UI_ProjMatrix;
-	CRcTex*				m_pRcTexF = nullptr;
-	CTexture*			m_pTextureF = nullptr;
-	CTransform*		m_pTransformHP_UI = nullptr;
+	_matrix					UI_matViewF, m_UI_ProjMatrix;
+	CRcTex*					m_pRcTexF = nullptr;
+	CTexture*				m_pTextureF = nullptr;
+	CTransform*				m_pTransformHP_UI = nullptr;
 	_float					UI_Orgin_HP, UI_fHP;
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;

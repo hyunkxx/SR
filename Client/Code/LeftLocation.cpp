@@ -50,23 +50,19 @@ _int CLeftLocation::Update_Object(const _float& fTimeDelta)
 		if (Temps.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_BDENERMY);
-			Occupation(OBJID::OBJID_BDENERMY);
 		}
 		if (Sours.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ENERMY);
-			Occupation(OBJID::OBJID_DEFAULT_ENERMY);
 		}
 		if (Dests.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
-			Occupation(OBJID::OBJID_DEFAULT_ALLY);
 		}
 		Dests = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 		if (Dests.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_BDALLY);
-			Occupation(OBJID::OBJID_BDALLY);
 		}
 
 
@@ -166,7 +162,6 @@ void CLeftLocation::CheckObject(_int _ObjID)
 				static_cast<CBottomDirEnermy*>(*iter)->Set_LocationCheck(LOCATIONCHECK::LOCATIONCHECK_END);
 				m_iEnermyCount -= 1;
 			}
-
 		}
 		break;
 	}
@@ -191,102 +186,6 @@ void CLeftLocation::CheckObject(_int _ObjID)
 		break;
 	}
 
-	default:
-		break;
-	}
-}
-
-void CLeftLocation::Occupation(_int _ObjID)
-{
-	switch (_ObjID)
-	{
-
-	case OBJID::OBJID_DEFAULT_ALLY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_AllyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_LeftLocation() == true)
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_LeftLocation() == true)
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-		}
-		break;
-	}
-	case OBJID::OBJID_DEFAULT_ENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_EnermyOccupation >= 100.f)
-			{
-				if (static_cast<CDefault_Enermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-			{
-				if (static_cast<CDefault_Enermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-			{
-				if (static_cast<CDefault_Enermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-			}
-
-		}
-		break;
-	}
-	case OBJID::OBJID_BDENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_EnermyOccupation >= 100.f)
-			{
-				if (static_cast<CBottomDirEnermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-			{
-				if (static_cast<CBottomDirEnermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-				if (static_cast<CBottomDirEnermy*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-
-		}
-		break;
-	}
-	case OBJID::OBJID_BDALLY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_AllyOccupation >= 100.f)
-			{
-				if (static_cast<CBottomDirAlly*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-			{
-				if (static_cast<CBottomDirAlly*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-			else if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-				if (static_cast<CBottomDirAlly*>(*iter)->Get_LeftLocation() == true)
-					static_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-
-		}
-		break;
-	}
 	default:
 		break;
 	}

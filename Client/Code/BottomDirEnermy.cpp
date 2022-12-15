@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 #include"Management.h"
 #include"Layer.h"
-#include"TestPlayer.h"
+
 //Location
 #include"RightLocation.h"
 #include"LeftTopLocation.h"
@@ -14,6 +14,7 @@
 #include "StaticCamera.h"
 #include "AimCamera.h"
 #include"BottomDirAlly.h"
+
 CBottomDirEnermy::CBottomDirEnermy(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -56,6 +57,88 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 	m_EData = (EData*)pArg;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+
+	switch (m_EData->TankType)
+	{
+	case TANKTYPE::HUMVEE:
+	{
+		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
+		TempBullet = 1;
+		m_fMaxHp = data.fMaxHP;
+		fCurHp = data.fCurHP;
+		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		RotSpped = data.RotSpeed;
+		fPosinDist = data.fPosinDist;
+		m_fReloadTime = data.fReloadTime;
+		m_fReload = data.fReload;
+		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 50.f;
+		break;
+	}
+	case TANKTYPE::SMALL_TANK:
+	{
+		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK);
+
+		m_fMaxHp = data.fMaxHP;
+		fCurHp = data.fCurHP;
+		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		RotSpped = data.RotSpeed;
+		fPosinDist = data.fPosinDist;
+		m_fReloadTime = data.fReloadTime;
+		m_fReload = data.fReload;
+		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 65.f;
+		break;
+	}
+	case TANKTYPE::MIDDLE_TANK:
+	{
+		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK);
+
+		m_fMaxHp = data.fMaxHP;
+		fCurHp = data.fCurHP;
+		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		RotSpped = data.RotSpeed;
+		fPosinDist = data.fPosinDist;
+		m_fReloadTime = data.fReloadTime;
+		m_fReload = data.fReload;
+		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 75.f;
+		break;
+	}
+	case TANKTYPE::BIG_TANK:
+	{
+		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK);
+
+		m_fMaxHp = data.fMaxHP;
+		fCurHp = data.fCurHP;
+		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		RotSpped = data.RotSpeed;
+		fPosinDist = data.fPosinDist;
+		m_fReloadTime = data.fReloadTime;
+		m_fReload = data.fReload;
+		m_iCannonSpeed = data.iCannonSpeed;
+		Range = 85.f;
+		break;
+	}
+	case TANKTYPE::LONG_TANK:
+	{
+		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::LONG_TANK);
+
+		m_fMaxHp = data.fMaxHP;
+		fCurHp = data.fCurHP;
+		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		RotSpped = data.RotSpeed;
+		fPosinDist = data.fPosinDist;
+		m_fReloadTime = data.fReloadTime;
+		m_fReload = data.fReload;
+		m_iCannonSpeed = data.iCannonSpeed;
+		break;
+	}
+	default:
+		break;
+
+	}
+
 	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 
@@ -85,45 +168,46 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 
 _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 {
-	m_fPreHp = UI_fHP;
 	__super::Update_Object(fTimeDelta);
+
 	m_fReloadTime += fTimeDelta;
 
-	if (ColBuild != true)
+	if (m_iLocationState == LOCATIONSTATE::STATE_ENERMYHQ)
 	{
-		StateCheck();
-		Detect(fTimeDelta);
-		Basic(fTimeDelta);
-	}
-	else
-	{
-		++ColBuildCount;
-		_vec3 vLook;
-		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		m_pTransformCom->Move_Pos(&(vLook*10.f*fTimeDelta));
-		if (ColBuildCount >= 140)
+		UI_fHP += 0.0001f*fTimeDelta;
+		if (UI_fHP >= UI_Orgin_HP)
 		{
-			ColBuildCount = 0;
-			ColBuild = false;
+			UI_fHP = UI_Orgin_HP;
 		}
 	}
+	PreHp = UI_fHP;
+
+
+	StateCheck();
+	if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+	{
+		Detect(fTimeDelta);
+	}
+	Basic(fTimeDelta);
+
 	_vec3 vTrans;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
 	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
-	Update_OBB();
 	Add_RenderGroup(RENDER_NONALPHA, this);
+	Update_OBB();
+
 	return OBJ_NOEVENT;
 }
 
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
+	if (PreHp != UI_fHP)
+	{
+		m_iAction = AIACTION::AIACTION_RUN;
+	}
 
-	//Ready_Object			UI √ﬂ∞°
-	//Render_object			UI √ﬂ∞°
-	//Add_Component			UI √ﬂ∞°
-	Update_UI();
 }
 
 void CBottomDirEnermy::Render_Object(void)
@@ -221,7 +305,15 @@ void CBottomDirEnermy::StateCheck()
 		CGameObject* Dest = Sour->Get_GameObject(L"RightLocation");
 		CRightLocation* LTemp = dynamic_cast<CRightLocation*>(Dest);
 		m_iLocationState = LTemp->Get_LocationState();
-
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			if (LTemp->Get_EnermyOccupation() >= 100.f)
+				m_iAction = AIACTION::AIACTION_WAIT;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() >= 1)
+				m_iAction = AIACTION::AIACTION_ENERMY_IN_AREA;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() <= 0)
+				m_iAction = AIACTION::AIACTION_OCCOPATION;
+		}
 
 	}
 	//LeftLocation
@@ -242,6 +334,15 @@ void CBottomDirEnermy::StateCheck()
 		CGameObject* Dest = Sour->Get_GameObject(L"LeftLocation");
 		CLeftLocation* LTemp = dynamic_cast<CLeftLocation*>(Dest);
 		m_iLocationState = LTemp->Get_LocationState();
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			if (LTemp->Get_EnermyOccupation() >= 100.f)
+				m_iAction = AIACTION::AIACTION_WAIT;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() >= 1)
+				m_iAction = AIACTION::AIACTION_ENERMY_IN_AREA;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() <= 0)
+				m_iAction = AIACTION::AIACTION_OCCOPATION;
+		}
 	}
 	//RightTopLocation
 	else if (vPos.x >VTXITV*VTXCNTX / 2.f && vPos.z >VTXITV*VTXCNTZ / 2.f)
@@ -252,9 +353,7 @@ void CBottomDirEnermy::StateCheck()
 			m_vPatrol.x = (rand() % 180 + VTXITV*VTXCNTX / 2.f);
 			m_vPatrol.y = 0;
 			m_vPatrol.z = (rand() % 180 + VTXITV*VTXCNTZ / 2.f);
-
 			m_bRightTopLocationCount = true;
-
 		}
 
 		m_bRightLocationCount = false;
@@ -266,6 +365,15 @@ void CBottomDirEnermy::StateCheck()
 		CGameObject* Dest = Sour->Get_GameObject(L"RightTopLocation");
 		CRightTopLocation* LTemp = dynamic_cast<CRightTopLocation*>(Dest);
 		m_iLocationState = LTemp->Get_LocationState();
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			if (LTemp->Get_EnermyOccupation() >= 100.f)
+				m_iAction = AIACTION::AIACTION_WAIT;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() >= 1)
+				m_iAction = AIACTION::AIACTION_ENERMY_IN_AREA;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() <= 0)
+				m_iAction = AIACTION::AIACTION_OCCOPATION;
+		}
 	}
 	//LeftTopLocation
 	else if (vPos.x < VTXITV*VTXCNTX / 2.f && vPos.z > VTXITV*VTXCNTZ / 2.f)
@@ -288,6 +396,15 @@ void CBottomDirEnermy::StateCheck()
 		CGameObject* Dest = Sour->Get_GameObject(L"LeftTopLocation");
 		CLeftTopLocation* LTemp = dynamic_cast<CLeftTopLocation*>(Dest);
 		m_iLocationState = LTemp->Get_LocationState();
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			if (LTemp->Get_EnermyOccupation() >= 100.f)
+				m_iAction = AIACTION::AIACTION_WAIT;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() >= 1)
+				m_iAction = AIACTION::AIACTION_ENERMY_IN_AREA;
+			else if (LTemp->Get_EnemyCount() >= 1 && LTemp->Get_AllyCount() <= 0)
+				m_iAction = AIACTION::AIACTION_OCCOPATION;
+		}
 	}
 }
 
@@ -296,121 +413,88 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 	CTransform*		pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	if (pPlayerTransform == nullptr)
 		return;
-
 	vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 	if (Temps.size() != 0)
 	{
+		_float fPreAllyCol;
+		_bool bReady = false;
+		CTransform* pCompareTransform = nullptr;
 		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
 		{
 			CTransform*	pAllyTransform = static_cast<CTransform*> (static_cast<CBottomDirAlly*>(*iter)->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 			_float fPlayerCol = Dist(pPlayerTransform);
-			_float fAllyCol = Dist(pAllyTransform);
-			if (fPlayerCol < fAllyCol)
+			if (bReady == false)
 			{
-				if (fPlayerCol <= 60.f)
+				fPreAllyCol = Dist(pAllyTransform);
+				pCompareTransform = pAllyTransform;
+				if (fPlayerCol > fPreAllyCol)
 				{
-					m_iAction = AIACTION::AIACTION_BATTLE;
-					_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
-					pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
-					m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
-
-					Dir = TargetPos - vEHPos;
-
-					m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
-					D3DXVec3Normalize(&vLook, &vLook);
-					D3DXVec3Normalize(&Dir, &Dir);
-
-					Left_RightCheck(Dir, vLook);
-
-					_float Dot = D3DXVec3Dot(&vLook, &Dir);
-					_float Angle = (float)acosf(Dot);
-					if (isnan(Angle))
-					{
-						Angle = 0;
-					}
-					if (LeftCheck == false)
-					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-					}
-					else
-					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-					}
-					m_pTransformHead->Get_Info(INFO_POS, &Pos);
-					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
-					Dir = TargetPos - Pos;
-					D3DXVec3Normalize(&Dir, &Dir);
-					D3DXVec3Normalize(&vLook, &vLook);
-					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						if (m_fReloadTime > m_fReload)
-						{
-							Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-							m_fReloadTime = 0.f;
-						}
-					}
+					bReady = true;
 				}
 			}
 			else
 			{
-				if (fAllyCol <= 60.f)
+				_float AllyCol = Dist(pAllyTransform);
+				if (AllyCol < fPreAllyCol)
 				{
-					m_iAction = AIACTION::AIACTION_BATTLE;
-					_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
-					m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
-					pAllyTransform->Get_Info(INFO::INFO_POS, &TargetPos);
-					Dir = TargetPos - vEHPos;
-
-					m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
-
-					D3DXVec3Normalize(&vLook, &vLook);
-					D3DXVec3Normalize(&Dir, &Dir);
-
-					Left_RightCheck(Dir, vLook);
-					_float Dot = D3DXVec3Dot(&vLook, &Dir);
-					_float Angle = (float)acosf(Dot);
-					if (isnan(Angle))
-					{
-						Angle = 0;
-					}
-					if (LeftCheck == false)
-					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-					}
-					else
-					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-					}
-
-					m_pTransformHead->Get_Info(INFO_POS, &Pos);
-					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
-					Dir = TargetPos - Pos;
-					D3DXVec3Normalize(&Dir, &Dir);
-					D3DXVec3Normalize(&vLook, &vLook);
-					Pos += Dir* 3.f;
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						if (m_fReloadTime > m_fReload)
-						{
-							Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-							m_fReloadTime = 0.f;
-						}
-					}
-
+					fPreAllyCol = AllyCol;
+					pCompareTransform = pAllyTransform;
 				}
 			}
-
 		}
+		if (fPreAllyCol <Range)
+		{
+			m_iAction = AIACTION::AIACTION_BATTLE;
+			_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+			m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+			pCompareTransform->Get_Info(INFO::INFO_POS, &TargetPos);
+			Dir = TargetPos - vEHPos;
 
+			m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+
+			D3DXVec3Normalize(&vLook, &vLook);
+			D3DXVec3Normalize(&Dir, &Dir);
+
+			Left_RightCheck(Dir, vLook);
+			_float Dot = D3DXVec3Dot(&vLook, &Dir);
+			_float Angle = (float)acosf(Dot);
+			if (isnan(Angle))
+			{
+				Angle = 0;
+			}
+			if (LeftCheck == false)
+			{
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+			}
+			else
+			{
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+			}
+			m_pTransformHead->Get_Info(INFO_POS, &Pos);
+			m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+			Dir = TargetPos - Pos;
+			D3DXVec3Normalize(&Dir, &Dir);
+			D3DXVec3Normalize(&vLook, &vLook);
+			Pos += Dir* 3.f*fPosinDist;
+
+			if (m_fReloadTime > m_fReload + 5.f)
+			{
+				if (abs(D3DXToDegree(Angle)) < 4.f)
+				{
+					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+					m_fReloadTime = 0.f;
+				}
+			}
+			else
+			{
+				m_iAction = AIACTION::AIACTION_OCCOPATION;
+			}
+		}
 	}
-
 	_float fPlayerCol = Dist(pPlayerTransform);
-	if (fPlayerCol <= 60.f)
+	if (fPlayerCol <= Range)
 	{
 		m_iAction = AIACTION::AIACTION_BATTLE;
 		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
@@ -446,14 +530,18 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 		Dir = TargetPos - Pos;
 		D3DXVec3Normalize(&Dir, &Dir);
 		D3DXVec3Normalize(&vLook, &vLook);
-		Pos += Dir* 3.f;
-		if (abs(D3DXToDegree(Angle)) < 4.f)
+		Pos += Dir* 3.f*fPosinDist;
+		if (m_fReloadTime > m_fReload + 5.f)
 		{
-			if (m_fReloadTime > m_fReload)
+			if (abs(D3DXToDegree(Angle)) < 4.f)
 			{
-				Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
 				m_fReloadTime = 0.f;
 			}
+		}
+		else
+		{
+			m_iAction = AIACTION::AIACTION_OCCOPATION;
 		}
 	}
 
@@ -493,25 +581,117 @@ void CBottomDirEnermy::Set_DisCountLocation()
 		RTemp->Set_EnermyCount();
 	}
 }
+void CBottomDirEnermy::Run(_float fTimeDelta)
+{
+	CTransform*		pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	if (pPlayerTransform == nullptr)
+		return;
+
+	_float fPlayerCol = Dist(pPlayerTransform);
+	if (fPlayerCol <= Range)
+	{
+		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+		pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+
+		Dir = TargetPos - vEHPos;
+
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&Dir, &Dir);
+
+		Left_RightCheck(Dir, vLook);
+
+		_float Dot = D3DXVec3Dot(&vLook, &Dir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+			Angle = 0;
+		}
+		if (LeftCheck == false)
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+		}
+		else
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+		}
+
+		m_pTransformHead->Get_Info(INFO_POS, &Pos);
+		m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+		Dir = TargetPos - Pos;
+		D3DXVec3Normalize(&Dir, &Dir);
+		D3DXVec3Normalize(&vLook, &vLook);
+		Pos += Dir* 3.f*fPosinDist;
+
+		if (m_fReloadTime > m_fReload + 3.f)
+		{
+			if (abs(D3DXToDegree(Angle)) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+				m_fReloadTime = 0.f;
+			}
+		}
+	}
+
+	if (UI_fHP < 290.f)
+	{
+		_vec3 vTemp, vSour, vLook, vDir;
+		_float Dot, Angle;
+
+		vTemp = { (_float)((VTXCNTX*VTXITV) - rand() % 80 - 60),0.f,(_float)((VTXCNTX*VTXITV) - rand() % 100 - 40) };
+		m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		vDir = vTemp - vSour;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		Left_RightCheck(vDir, vLook);
+
+		Dot = D3DXVec3Dot(&vDir, &vLook);
+
+		Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+			Angle = 0;
+		if (LeftCheck == false)
+		{
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+		}
+		else if (LeftCheck == true)
+		{
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+		}
+
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
+	}
+	if (UI_fHP >= UI_Orgin_HP)
+	{
+		m_iAction = AIACTION::AIACTION_END;
+	}
+}
 void CBottomDirEnermy::Basic(_float fTimeDelta)
 {
-
-	if (m_iAction != AIACTION::AIACTION_BATTLE)
+	switch (m_iAction)
 	{
-
-		switch (m_iAction)
-		{
-		case AIACTION::AIACTION_WAIT:
-			Wait(fTimeDelta);
-			break;
-		case AIACTION::AIACTION_OCCOPATION:
-			Occupation(fTimeDelta);
-			break;
-		case AIACTION::AIACTION_ENERMY_IN_AREA:
-			Enermy_In_Area(fTimeDelta);
-			break;
-
-		}
+	case AIACTION::AIACTION_WAIT:
+		Wait(fTimeDelta);
+		break;
+	case AIACTION::AIACTION_OCCOPATION:
+		Occupation(fTimeDelta);
+		break;
+	case AIACTION::AIACTION_ENERMY_IN_AREA:
+		Enermy_In_Area(fTimeDelta);
+		break;
+	case AIACTION::AIACTION_RUN:
+		Run(fTimeDelta);
+		break;
+	case AIACTION::AIACTION_OBJECTCOL:
+		ColObject(fTimeDelta);
+		break;
 	}
 }
 
@@ -583,7 +763,7 @@ void CBottomDirEnermy::Occupation(_float fTimeDelta)
 		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -AngleTemp*fTimeDelta*3.f);
 		_vec3 vTrans2;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-		m_pTransformCom->Move_Pos(&(vTrans2*10.f*fTimeDelta));
+		m_pTransformCom->Move_Pos(&(vTrans2*fAccel_top_speed*fTimeDelta));
 	}
 	else
 	{
@@ -592,7 +772,7 @@ void CBottomDirEnermy::Occupation(_float fTimeDelta)
 		m_pTransformPosin->Rotation(ROTATION::ROT_Y, AngleTemp*fTimeDelta*3.f);
 		_vec3 vTrans2;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-		m_pTransformCom->Move_Pos(&(vTrans2*10.f*fTimeDelta));
+		m_pTransformCom->Move_Pos(&(vTrans2*fAccel_top_speed*fTimeDelta));
 	}
 
 }
@@ -639,7 +819,7 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 			}
 
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 			break;
 		case LOCATIONCHECK::LOCATIONCHECK_LEFTTOP:
 			vTemp = { m_vPatrol.x,0.f,0.f };
@@ -670,7 +850,7 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 			}
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 			break;
 
 		case LOCATIONCHECK::LOCATIONCHECK_RIGHT:
@@ -705,7 +885,7 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 
 			}
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 
 			break;
 		}
@@ -740,7 +920,7 @@ void CBottomDirEnermy::Wait(_float fTimeDelta)
 
 			}
 			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+			m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 			break;
 		}
 
@@ -805,7 +985,7 @@ void CBottomDirEnermy::Enermy_In_Area(_float fTimeDelta)
 	{
 		_vec3 vTrans2;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-		m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*10.f));
+		m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 	}
 }
 CBottomDirEnermy* CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -837,24 +1017,55 @@ CBottomDirEnermy * CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev, void 
 
 void CBottomDirEnermy::ObjectCol(_bool m_Left)
 {
-	_bool bLeft = m_Left;
-	_vec3 vLook;
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-	D3DXVec3Normalize(&vLook, &vLook);
-	m_pTransformCom->Move_Pos(&(-vLook*7.f));
-	if (bLeft)
+	if (!m_bTest)
 	{
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f));
-		ColBuild = true;
+		m_bTest = true;
 	}
 	else
 	{
-		ColBuild = true;
-		m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
-		m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
-		m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f));
+		m_iAction = AIACTION::AIACTION_OBJECTCOL;
+		bLeft = m_Left;
+	}
+}
+
+void CBottomDirEnermy::ColObject(_float fTimeDelta)
+{
+	re += fTimeDelta;
+	if (re <= 1)
+	{
+		if (bLeft)
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
+			ColBuild = true;
+		}
+		else
+		{
+			ColBuild = true;
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
+		}
+		if (re <= 0.4)
+		{
+			_vec3 vLook;
+			m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+			D3DXVec3Normalize(&vLook, &vLook);
+			m_pTransformCom->Move_Pos(&(-vLook*fAccel_top_speed*0.7f*fTimeDelta));
+		}
+	}
+	else if (re <= 2)
+	{
+		_vec3 vLook;
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		D3DXVec3Normalize(&vLook, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta));
+	}
+	if (re >= 2)
+	{
+		re = 0.f;
+		m_iAction = AIACTION::AIACTION_END;
 	}
 }
 
@@ -863,18 +1074,77 @@ HRESULT CBottomDirEnermy::Add_Component(void)
 	CComponent*		pComponent = nullptr;
 
 	//≈ ≈© ∏ˆ≈Î
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_body");
-	NULL_CHECK_RETURN(m_pBody, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_head");
-	NULL_CHECK_RETURN(m_pHead, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
+	if (m_EData->TankType == TANKTYPE::HUMVEE)
+	{
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_body");
+		NULL_CHECK_RETURN(m_pBody, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_posin");
-	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelPosin", pComponent });
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_head");
+		NULL_CHECK_RETURN(m_pHead, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
 
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Humvee_enemy_posin");
+		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
+	}
+	else if (m_EData->TankType == TANKTYPE::SMALL_TANK)
+	{
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Small_enemy_body");
+		NULL_CHECK_RETURN(m_pBody, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
+
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Small_enemy_head");
+		NULL_CHECK_RETURN(m_pHead, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
+
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Small_enemy_posin");
+		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
+	}
+	else if (m_EData->TankType == TANKTYPE::MIDDLE_TANK)
+	{
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Middle_enemy_body");
+		NULL_CHECK_RETURN(m_pBody, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
+
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Middle_enemy_head");
+		NULL_CHECK_RETURN(m_pHead, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
+
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Middle_enemy_posin");
+		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
+	}
+	else if (m_EData->TankType == TANKTYPE::BIG_TANK)
+	{
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Big_enemy_body");
+		NULL_CHECK_RETURN(m_pBody, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
+
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Big_enemy_head");
+		NULL_CHECK_RETURN(m_pHead, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
+
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Big_enemy_posin");
+		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
+	}
+	else if (m_EData->TankType == TANKTYPE::LONG_TANK)
+	{
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Long_enemy_body");
+		NULL_CHECK_RETURN(m_pBody, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
+
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Long_enemy_head");
+		NULL_CHECK_RETURN(m_pHead, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
+
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Long_enemy_posin");
+		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
+	}
 
 	//≈ ≈© øÚ¡˜¿”
 

@@ -57,6 +57,9 @@ public:
 	void Detect(_float fTimeDelta);
 	void		ObjectCol(_bool m_Left);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
+	void    Set_Count(_int _Count) { m_iCount += _Count; }
+	void   Run(_float fTimeDelta);
+	void     	ColObject(_float fTimeDelta);
 private:
 	HRESULT		Add_Component(void);
 
@@ -75,6 +78,10 @@ private:
 	_float       preDist;
 	_bool		m_bonce = false;
 	_float     Range = 0.f;
+	_float    PreHp = 0.f;
+	_float re = 0.f;
+	_bool bLeft = false;
+	_bool m_bTest = false;
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
@@ -93,6 +100,7 @@ private:
 	_bool m_bOnce = false;
 	_bool ColBuild = false;
 	_int  ColBuildCount = 0;
+	_int m_iCount = 0;
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
@@ -116,4 +124,4 @@ private:
 	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
 public:
 	void						 Update_UI(void);
-};
+};	

@@ -56,6 +56,8 @@ public:
 	float  Get_Hp() { return UI_fHP; };
 	void					Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
 	void					Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
+	void    Set_Count(_int _Count) { m_iCount += _Count; }
+	void Run(_float fTimeDelta);
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -65,10 +67,8 @@ public:
 	void Detect(_float fTimeDelta);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	_float Dist(CTransform* _Target);
-	_float PreDist = 0.f;
-	_bool m_bOcne = false;
-	CTransform* pTempTr = nullptr;
 	void		ObjectCol(_bool m_Left);
+	void		ColObject(_float fTimeDelta);
 private:
 	HRESULT		Add_Component(void);
 
@@ -99,13 +99,23 @@ private:
 	_vec3   m_vPatrol = {};
 	_bool LeftCheck = false;
 	_int Targeted = 0;
-	_float m_fReloadTime = 0.f, m_fReload = 1.f;
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_float  m_fPreHp = 0.f;
 	_bool ColBuild = false;
 	_int  ColBuildCount = 0;
-
+	_int m_iCount = 0;
+	_float     Range = 0.f;
+	_float PreDist = 0.f;
+	_bool m_bOcne = false;
+	_float PreHp = 0.f;
+	_bool m_bTest;
+	_bool bLeft;
+	_float re = 0.f;
+	//탱크 정보
+	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
+	_float m_fReloadTime, m_fReload;
+	_int   m_iCannonSpeed, TempBullet;
 public:
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CBottomDirEnermy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

@@ -35,9 +35,12 @@ private:
 public:
 	_int				Get_LocationState() { return m_LocationState; }
 	void				CheckObject(_int _ObjID);
-	void				Occupation(_int _ObjID);
+
 	_float				Get_AllyOccupation() { return m_AllyOccupation; }
 	_float				Get_EnermyOccupation() { return m_EnermyOccupation; }
+	_int				Get_AllyCount() { return m_iAllyCount; }
+	_int				Get_EnemyCount() { return m_iEnermyCount; }
+
 	void				Set_EnermyCount() { m_iEnermyCount -= 1; }
 	void                Set_AllyCount() { m_iAllyCount -= 1; }
 public:

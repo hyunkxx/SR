@@ -50,12 +50,10 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 		if (Temps.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ENERMY);
-			Occupation(OBJID::OBJID_DEFAULT_ENERMY);
 		}
 		if (Sours.size() != 0)
 		{
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
-			Occupation(OBJID::OBJID_DEFAULT_ALLY);
 		}
 
 		if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
@@ -156,72 +154,6 @@ void CLeftTopLocation::CheckObject(_int _ObjID)
 	}
 	default:
 		break;
-	}
-}
-
-void CLeftTopLocation::Occupation(_int _ObjID)
-{
-	CManagement* Temp = CManagement::GetInstance();
-	CLayer*      Sour = Temp->Find_Layer(L"GameLogic");
-	CGameObject* Dest;
-
-	switch (_ObjID)
-	{
-	case OBJID::OBJID_PLAYER:
-	{
-		CTestPlayer* TestPlayerTemp = dynamic_cast<CTestPlayer*>(Dest = Sour->Get_GameObject(L"TestPlayer"));
-		break;
-	}
-
-	case OBJID::OBJID_DEFAULT_ENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
-
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_EnermyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-			{
-				if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-			}
-			else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-			{
-				if (dynamic_cast<CDefault_Enermy*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Enermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-		}
-		break;
-	}
-	case OBJID::OBJID_DEFAULT_ALLY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
-
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (m_AllyOccupation >= 100.f)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-			}
-			else  if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-			}
-			else if (m_iAllyCount >= 1 && m_iEnermyCount >= 1)
-			{
-				if (dynamic_cast<CDefault_Ally*>(*iter)->Get_LeftTopLocation() == true)
-					dynamic_cast<CDefault_Ally*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-			}
-		}
-		break;
-	}
-
 	}
 }
 

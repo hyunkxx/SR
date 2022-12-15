@@ -36,7 +36,7 @@ public:
 	virtual			void		OBB_Collision_EX(void)	override;
 	virtual			void		Update_OBB(void)		override;
 	virtual			OBB*        Get_OBB(void)			override;
-
+	void     	ColObject(_float fTimeDelta);
 	void		ObjectCol(_bool m_Left);
 public:
 
@@ -60,6 +60,8 @@ public:
 	void Enermy_In_Area(_float fTimeDelta);
 	void Detect(_float fTimeDelta);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
+	void Run(_float fTimeDelta);
+
 private:
 	HRESULT		Add_Component(void);
 
@@ -73,10 +75,11 @@ private:
 	CTransform*			m_pTransformHead = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	CTransform*			m_pTransformPosin = nullptr;
-
+	_bool bLeft;
 	EData*       m_EData;
 
 private:
+
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
 	_bool m_bRightLocationCount = false
@@ -90,9 +93,12 @@ private:
 	_vec3 vPatrolRange = {};
 	_bool m_bPatrol = false;
 	_bool m_bOnce = false;
+	_bool m_bTest = false;
 	_bool ColBuild = false;
 	_int  ColBuildCount = 0;
 	_float Range = 0.f;
+	_float PreHp;
+	_float re = 0.f;
 
 public:
 	static CDefault_Ally*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

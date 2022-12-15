@@ -52,7 +52,6 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 			for (auto iter = Temps.begin(); iter < Temps.end(); ++iter)
 			{
 				CheckObject(OBJID::OBJID_BDENERMY);
-				Occupation(OBJID::OBJID_BDENERMY);
 			}
 		}
 		Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
@@ -62,7 +61,6 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 				for (auto iter = Temps.begin(); iter < Temps.end(); ++iter)
 				{
 					CheckObject(OBJID::OBJID_BDALLY);
-					Occupation(OBJID::OBJID_BDALLY);
 				}
 			}
 		}
@@ -151,68 +149,6 @@ void CRightLocation::CheckObject(_int _ObjID)
 	}
 	default:
 		break;
-	}
-}
-void CRightLocation::Occupation(_int _ObjID)
-{
-	switch (_ObjID)
-	{
-	case OBJID::OBJID_BDENERMY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
-			{
-
-				if (m_EnermyOccupation >= 100.f)
-				{
-					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-				}
-
-				else if (m_iEnermyCount >= 1 && m_iAllyCount <= 0)
-				{
-					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-				}
-				else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-				{
-					if (dynamic_cast<CBottomDirEnermy*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirEnermy*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-				}
-			}
-		}
-		break;
-	}
-	case OBJID::OBJID_BDALLY:
-	{
-		vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
-		for (auto& iter = Temps.begin(); iter < Temps.end(); ++iter)
-		{
-			if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightLocation() == true)
-			{
-				if (m_AllyOccupation >= 100.f)
-				{
-					if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_WAIT);
-				}
-				else if (m_iAllyCount >= 1 && m_iEnermyCount <= 0)
-				{
-					if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_OCCOPATION);
-				}
-
-				else if (m_iEnermyCount >= 1 && m_iAllyCount >= 1)
-				{
-					if (dynamic_cast<CBottomDirAlly*>(*iter)->Get_RightLocation() == true)
-						dynamic_cast<CBottomDirAlly*>(*iter)->Set_Action(AIACTION::AIACTION_ENERMY_IN_AREA);
-				}
-
-			}
-		}
-		break;
-	}
 	}
 }
 

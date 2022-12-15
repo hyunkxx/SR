@@ -169,21 +169,21 @@ void CTempOccupationScore::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sLeft);
 		m_pBufferLeftCom->Render_Buffer();
-	
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sRight);
 		m_pBufferRightCom->Render_Buffer();
-	
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformRightTopCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sRightTop);
 		m_pBufferRighttopCom->Render_Buffer();
-	
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sLeftTop);
 		m_pBufferLefttopCom->Render_Buffer();
 		_matrix	ViewMatrix;
 		D3DXMatrixIdentity(&ViewMatrix);
-	
+
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
