@@ -1031,7 +1031,7 @@ HRESULT CStage::CreateMap(CLayer* pLayer)
 			int ObjectNumber = rand() % (UINT)CBuilding::TYPE::TYPE_MAX;
 
 			vPos = { float((rand() % 80) + (100 * i)) , 0.f , (float(rand() % 80) + (100 * j)) };
-			fRot = rand() % 180;
+			fRot = (float)rand() % 180;
 
 			if ((vPos.x < 150.f && vPos.z < 150.f) || (vPos.x > 430.f && vPos.z > 430.f))
 				continue;
