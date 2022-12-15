@@ -224,7 +224,7 @@ void CDefault_Enermy::LateUpdate_Object(void)
 	__super::LateUpdate_Object();
 	if (PreHp != UI_fHP)
 	{
-		m_iAction = AIACTION::AIACTION_RUN;
+		//m_iAction = AIACTION::AIACTION_RUN;
 	}
 
 	Update_UI();

@@ -218,7 +218,7 @@ void CBottomDirAlly::LateUpdate_Object(void)
 	__super::LateUpdate_Object();
 	if (PreHp != UI_fHP)
 	{
-		m_iAction = AIACTION::AIACTION_RUN;
+		//m_iAction = AIACTION::AIACTION_RUN;
 	}
 	Update_UI();
 	Update_Minimap();
@@ -276,7 +276,7 @@ void CBottomDirAlly::StateCheck()
 		{
 			m_vPatrol.x = (_float)(VTXITV* VTXCNTX*0.5 + rand() % 210 + 30.f);
 			m_vPatrol.y = 0.f;
-			m_vPatrol.z = (_float)(VTXITV* VTXCNTX*0.5 - rand() % 170 - 60.f);
+			m_vPatrol.z = (_float)(VTXITV* VTXCNTX*0.5 - rand() % 110 - 140.f);
 			m_bRightLocationCount = true;
 		}
 		m_bRightTopLocationCount = false;

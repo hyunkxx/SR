@@ -29,7 +29,7 @@ private:
 	CLocation*          m_pLocationCom = nullptr;
 	_int				m_LocationState;
 	_int				m_iAllyCount = 0, m_iEnermyCount = 0;
-	_float				m_EnermyOccupation = 100.f
+	_float				m_EnermyOccupation = 0.f
 		, m_AllyOccupation = 0.f;
 	_bool               m_Test = false;
 public:

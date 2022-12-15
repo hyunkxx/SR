@@ -220,7 +220,7 @@ void CBottomDirEnermy::LateUpdate_Object(void)
 	__super::LateUpdate_Object();
 	if (PreHp != UI_fHP)
 	{
-		m_iAction = AIACTION::AIACTION_RUN;
+		//m_iAction = AIACTION::AIACTION_RUN;
 	}
 
 
@@ -325,7 +325,7 @@ void CBottomDirEnermy::StateCheck()
 		{
 			m_vPatrol.x = (float)(VTXITV*VTXCNTX *0.5f + rand() % 200 + 70.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (float)(VTXITV*VTXCNTZ*0.5f - rand() % 210 + 50.f);
+			m_vPatrol.z = (float)(VTXITV*VTXCNTZ*0.5f - rand() % 160 - 110.f);
 			m_bRightLocationCount = true;
 		}
 		m_bRightTopLocationCount = false;

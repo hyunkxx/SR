@@ -1060,71 +1060,7 @@ void CStage::Collison_Object(void)
 		}
 	}
 
-	for (auto& iter = DAlly.begin(); iter < DAlly.end(); ++iter)
-	{
-		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
-		{
-			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
-				continue;
 
-			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
-				continue;
-
-			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-			{//dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
-			}
-		}
-
-	}
-
-
-	for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
-	{
-		for (auto& iter = iters + 1; iter <BDAlly.end(); ++iter)
-		{
-			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
-				continue;
-
-			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
-				continue;
-
-			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-			{//앞에있는거 비교한다음 뒤에있는거만 ex부르기
-				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
-				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
-				if (A->vPos.x > B->vPos.x)
-				{
-					dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
-				}
-				else
-					dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
-			}
-		}
-	}
-
-	for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
-	{
-		for (auto& iter = iters + 1; iter <DAlly.end(); ++iter)
-		{
-			if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
-				continue;
-
-			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
-				continue;
-
-			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
-			{//앞에있는거 비교한다음 뒤에있는거만 ex부르기
-				OBB* A = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
-				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
-				if (A->vPos.z > B->vPos.z)
-				{
-					dynamic_cast<ICollisionable*>(*iters)->OBB_Collision_EX();
-				}
-				else
-					dynamic_cast<ICollisionable*>(*iter)->OBB_Collision_EX();
-			}
-		}
-	}
 }
 
 
