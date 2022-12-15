@@ -48,13 +48,6 @@ HRESULT CBottomDirEnermy::Ready_Object(void)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
-	// UI_Minimap
-	D3DXMatrixOrthoLH(&UI_Minimap_matProj, WINCX, WINCY, 0.f, 1.f);
-	m_fMinimap[SCALEX] = m_fMinimap[SCALEY] = 4.f;
-	m_fMinimap[SCALEZ] = 1.f;
-	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
-
-
 	return S_OK;
 }
 
@@ -85,13 +78,6 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 	m_stHead.fLen[x] = 1.f;
 	m_stHead.fLen[y] = 1.f;
 	m_stHead.fLen[z] = 1.9f;
-
-	// UI_Minimap
-	D3DXMatrixOrthoLH(&UI_Minimap_matProj, WINCX, WINCY, 0.f, 1.f);
-	m_fMinimap[SCALEX] = m_fMinimap[SCALEY] = 4.f;
-	m_fMinimap[SCALEZ] = 1.f;
-	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
-
 
 	__super::Ready_Object();
 	return S_OK;
@@ -138,11 +124,12 @@ void CBottomDirEnermy::LateUpdate_Object(void)
 	//Render_object			UI 추가
 	//Add_Component			UI 추가
 	Update_UI();
-	Update_Minimap();
 }
 
 void CBottomDirEnermy::Render_Object(void)
 {
+
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
 
@@ -152,28 +139,16 @@ void CBottomDirEnermy::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
 
-
-	// HP UI
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &UI_matViewF);
+
 	m_pTextureF->Set_Texture(0);
 	m_pRcTexF->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-	// Minimap UI
-	_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pMinimap_Transform->Get_WorldMatrix());
-	D3DXMatrixIdentity(&Minimap_ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &Minimap_ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &UI_Minimap_matProj);
-	m_pMinimap_Texure->Set_Texture(0);
-	m_pMinimap_RcTex->Render_Buffer();
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 const _vec3 CBottomDirEnermy::Get_Info(void)
@@ -932,29 +907,11 @@ HRESULT CBottomDirEnermy::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_WHP2", pComponent });
 
-
-	//MiniMap UI
-	pComponent = m_pMinimap_RcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
-	NULL_CHECK_RETURN(m_pMinimap_RcTex, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
-
-	pComponent = m_pMinimap_Texure = static_cast<CTexture*>(Clone_Prototype(L"Proto_Minimap_E_Tex"));
-	NULL_CHECK_RETURN(m_pMinimap_Texure, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Minimap_E_Tex", pComponent });
-
-	pComponent = m_pMinimap_Transform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
-	NULL_CHECK_RETURN(m_pMinimap_Transform, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_Minimap_E", pComponent });
-
-
 	return S_OK;
 }
 
 void CBottomDirEnermy::Free(void)
 {
-	Safe_Release(m_pMinimap_RcTex);
-	Safe_Release(m_pMinimap_Texure);
-	Safe_Release(m_pMinimap_Transform);
 	__super::Free();
 
 }
@@ -1049,41 +1006,3 @@ void CBottomDirEnermy::Update_UI(void)
 		}
 	}
 }
-
-void CBottomDirEnermy::Update_Minimap(void)
-{
-	_vec3 vTankPos;
-
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTankPos);
-
-	_float fX_Percent = (roundf(vTankPos.x) / 635.f);
-	_float fZ_Percent = (roundf(vTankPos.z) / 635.f);
-
-	if (fX_Percent <= 0.f)
-	{
-		fX_Percent = 0.f;
-	}
-	else if (fX_Percent >= 1.f)
-	{
-		fX_Percent = 1.f;
-	}
-
-	if (fZ_Percent <= 0.f)
-	{
-		fZ_Percent = 0.f;
-	}
-	else if (fZ_Percent >= 1.f)
-	{
-		fZ_Percent = 1.f;
-	}
-
-	m_fMinimap[POSX] = 640.f + roundf(160.f * fX_Percent);
-	m_fMinimap[POSY] = 600.f - roundf(115.f * fZ_Percent);
-	m_fMinimap[POSZ] = 0.03f;
-
-	// Minimap _ Pos
-	m_pMinimap_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], m_fMinimap[POSZ]);
-
-
-}
-

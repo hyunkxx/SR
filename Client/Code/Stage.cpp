@@ -2,20 +2,12 @@
 #include "..\Header\Stage.h"
 #include "Export_Function.h"
 
-// obj
 #include "Tank_01.h"
 #include "Humvee.h"
+
 #include "BackGround.h"
 #include "Terrain.h"
-#include "BattleShip_Support.h"
-#include "Building.h"
-#include"Default_Enermy.h"
-#include "TestBox.h"
-#include"Default_Ally.h"
-#include"BottomDirEnermy.h"
-#include"BottomDirAlly.h"
 
-// camera
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
 #include "TankCamera.h"
@@ -23,13 +15,20 @@
 #include "DroneCamera.h"
 #include "BoomCamera.h"
 
-// ai
+#include "Boom_Support.h"
+#include "BattleShip_Support.h"
+
+#include"Default_Enermy.h"
+#include "TestBox.h"
+#include"Default_Ally.h"
+#include"BottomDirEnermy.h"
+#include"BottomDirAlly.h"
+
 #include"RightLocation.h"
 #include"RightTopLocation.h"
 #include"LeftTopLocation.h"
 #include"LeftLocation.h"
 
-// UI
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
@@ -41,24 +40,17 @@
 #include "UI_Start.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
-#include "ButtonUI.h"
-#include"TempOccupationScore.h"
-#include "UI_MiniMap.h"
-#include "UI_Fuel.h"
-#include "UI_Speed.h"
-#include "UI_Reload.h"
-
-//Effect
 #include "ShootEffect.h"
 #include "BoomEffect.h"
 #include "Gun_Shoot_Effect.h"
 #include "Bomber.h"
 #include "BattleShip.h"
+
+#include "ButtonUI.h"
 #include "EffectPool.h"
 #include "EffectManager.h"
-#include "Boom_Support.h"
-
-//etc
+#include"TempOccupationScore.h"
+#include "Building.h"
 #include "TankManager.h"
 #include "GameMode.h"
 
@@ -564,24 +556,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CAim_UI_Pers::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
-
-	pGameObject = CUI_Speed::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Speed_UI", pGameObject), E_FAIL);
-
-	pGameObject = CUI_Reload::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Reload_UI", pGameObject), E_FAIL);
-
-	pGameObject = CUI_MiniMap::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MiniMap_UI", pGameObject), E_FAIL);
-
-	pGameObject = CUI_Fuel::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Fuel_UI", pGameObject), E_FAIL);
-
-
 
 	/* Select Vehicle UI */
 	_vec3 vPos;

@@ -116,16 +116,7 @@ private:
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
 
-	// Minimap UI
-	_matrix				UI_Minimap_matProj;
-	CRcTex*				m_pMinimap_RcTex = nullptr;
-	CTexture*			m_pMinimap_Texure = nullptr;
-	CTransform*		m_pMinimap_Transform = nullptr;
-	_float					m_fMinimap[TRANSFORM_FLOAT_END];
-
-
 public:
 	void						 Update_UI(void);
-	void						 Update_Minimap(void);
 };
 

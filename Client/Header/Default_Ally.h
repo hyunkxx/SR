@@ -110,22 +110,12 @@ private:
 	_float					UI_fOrgin_ScaleX;
 	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
 	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
-
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
 	_int   m_iCannonSpeed, TempBullet;
 
-	// Minimap UI
-	_matrix				UI_Minimap_matProj;
-	CRcTex*				m_pMinimap_RcTex = nullptr;
-	CTexture*			m_pMinimap_Texure = nullptr;
-	CTransform*		m_pMinimap_Transform = nullptr;
-	_float					m_fMinimap[TRANSFORM_FLOAT_END];
-
-
 public:
 	void						 Update_UI(void);
-	void						 Update_Minimap(void);
 
 };

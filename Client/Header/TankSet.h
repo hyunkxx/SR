@@ -94,19 +94,6 @@ protected:
 	_float					UI_fOrgin_ScaleX;
 	void						Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
 	void						Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
-
-	// Minimap UI
-	_matrix				UI_Minimap_matProj;
-	CRcTex*				m_pMinimap_RcTex = nullptr;
-	CTexture*			m_pMinimap_Texure = nullptr;
-	CTransform*		m_pMinimap_Transform = nullptr;
-	_float					m_fMinimap[TRANSFORM_FLOAT_END];
-
-	// Minimap Rader UI
-	CRcTex*				m_pRader_RcTex = nullptr;
-	CTexture*			m_pRader_Texure = nullptr;
-	CTransform*		m_pRader_Transform = nullptr;
-	_float					m_fRader;
-
+	//void						 Update_UI(void);
 
 };

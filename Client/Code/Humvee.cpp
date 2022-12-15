@@ -41,7 +41,6 @@ _int CHumvee::Update_Object(const _float & fTimeDelta)
 		Posin_Shake(fTimeDelta);
 		Sound_Setting(fTimeDelta);
 		Update_UI();
-		Update_Minimap();
 		Update_OBB();
 	}
 	return __super::Update_Object(fTimeDelta);
@@ -180,24 +179,11 @@ HRESULT CHumvee::Ready_Object(void)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
-	// UI_Minimap
-	D3DXMatrixOrthoLH(&UI_Minimap_matProj, WINCX, WINCY, 0.f, 1.f);
-	m_fMinimap[SCALEX] = m_fMinimap[SCALEY] = 4.f;
-	m_fMinimap[SCALEZ] = 1.f;
-
-	// UI_Rader
-	m_fRader = 6.f;
-
 	m_stBody.fLen[x] = 2.f  * m_fScale;
 	m_stBody.fLen[y] = 3.f  * m_fScale;
 	m_stBody.fLen[z] = 4.5f * m_fScale;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-
-	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
-	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
-
 
 	CGameObject::Ready_Object();
 	return S_OK;
@@ -589,12 +575,6 @@ CHumvee * CHumvee::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CHumvee::Free(void)
 {
-	Safe_Release(m_pMinimap_RcTex);
-	Safe_Release(m_pMinimap_Texure);
-	Safe_Release(m_pMinimap_Transform);
-	Safe_Release(m_pRader_RcTex);
-	Safe_Release(m_pRader_Texure);
-	Safe_Release(m_pRader_Transform);
 	CGameObject::Free();
 }
 
@@ -679,51 +659,3 @@ void CHumvee::Update_UI(void)
 		}
 	}
 }
-
-void CHumvee::Update_Minimap(void)
-{
-	m_fRader = m_fRader + 0.6f;
-
-	if (m_fRader >= 30.f)
-	{
-		m_fRader = 6.f;
-	}
-
-	_vec3 vTankPos;
-
-	m_pTransformBody->Get_Info(INFO::INFO_POS, &vTankPos);
-
-	_float fX_Percent = (roundf(vTankPos.x) / 635.f);
-	_float fZ_Percent = (roundf(vTankPos.z) / 635.f);
-
-	if (fX_Percent <= 0.f)
-	{
-		fX_Percent = 0.f;
-	}
-	else if (fX_Percent >= 1.f)
-	{
-		fX_Percent = 1.f;
-	}
-
-	if (fZ_Percent <= 0.f)
-	{
-		fZ_Percent = 0.f;
-	}
-	else if (fZ_Percent >= 1.f)
-	{
-		fZ_Percent = 1.f;
-	}
-
-	m_fMinimap[POSX] = 640.f + roundf(160.f * fX_Percent);
-	m_fMinimap[POSY] = 600.f - roundf(115.f * fZ_Percent);
-	m_fMinimap[POSZ] = 0.03f;
-
-	// Minimap _ Pos
-	m_pMinimap_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], m_fMinimap[POSZ]);
-
-	// Minimap _ Rader
-	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, 0.1f);
-	m_pRader_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], 0.1f);
-
-}
-
