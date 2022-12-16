@@ -186,6 +186,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\FireEffect.h" />
     <ClInclude Include="..\..\Header\FloorTex.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
+    <ClInclude Include="..\..\Header\GroundEffect.h" />
     <ClInclude Include="..\..\Header\HitPoint.h" />
     <ClInclude Include="..\..\Header\Layer.h" />
     <ClInclude Include="..\..\Header\Light.h" />
@@ -231,6 +232,7 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\FireEffect.cpp" />
     <ClCompile Include="..\Code\FloorTex.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
+    <ClCompile Include="..\Code\GroundEffect.cpp" />
     <ClCompile Include="..\Code\HitPoint.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />
     <ClCompile Include="..\Code\Light.cpp" />

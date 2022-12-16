@@ -64,7 +64,7 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 void CTankManager::InitalizeData()
 {
 	tankData[(UINT)VEHICLE::HUMVEE].strName = L"Humvee";
-	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 80.f;
+	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 5.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fMaxHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fCurHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fSpeed = 0.f;;
@@ -86,8 +86,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::HUMVEE].fReload = 0.1f;
 	tankData[(UINT)VEHICLE::HUMVEE].fReloadTime = 0.1f;
 	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 300;
-
-
+	
 	tankData[(UINT)VEHICLE::SMALL_TANK].strName = L"A - 44";
 	tankData[(UINT)VEHICLE::SMALL_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].fMaxHP = 500.f;

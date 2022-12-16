@@ -9,7 +9,7 @@ USING(Engine)
 CFireEffect::CFireEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 	: CEffector(pGraphicDevice, vPos)
 {
-	m_fDuration = 0.2f;
+	m_fDuration = 2.0f;
 
 	m_color[0] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.f);
 	m_color[1] = D3DXCOLOR(0.4f, 0.4f, 0.0f, 1.f);
@@ -63,7 +63,7 @@ _int CFireEffect::Update_Component(const _float & fTimeDelta)
 		return 0;
 
 	m_fLocalTime += fTimeDelta;
-	m_fGravityLocal += fTimeDelta * 3.f;
+	m_fGravityLocal += fTimeDelta * 6.f;
 
 	if (m_fLocalTime > m_fDuration)
 	{
@@ -91,7 +91,7 @@ _int CFireEffect::Update_Component(const _float & fTimeDelta)
 		D3DXMatrixTranslation(
 			&matTrans,
 			(*iter)->GetPosition().x += m_vDir[i].x * m_fSpeed * fTimeDelta,
-			(*iter)->GetPosition().y += m_vDir[i].y * m_fSpeed * fTimeDelta,
+			(*iter)->GetPosition().y += (m_vDir[i].y - m_fGravityLocal)  * m_fSpeed * fTimeDelta,
 			(*iter)->GetPosition().z += m_vDir[i].z * m_fSpeed * fTimeDelta);
 
 		D3DXMatrixTranslation(

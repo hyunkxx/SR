@@ -4,6 +4,7 @@
 #include "ExplosionEffect.h"
 #include "FireEffect.h"
 #include "BulletEffect.h"
+#include "GroundEffect.h"
 #include "Utility.h"
 
 USING(Engine)
@@ -30,6 +31,12 @@ CEffectPool::CEffectPool(LPDIRECT3DDEVICE9 pGraphicDev)
 		m_vecBullet.push_back(
 			CBulletEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
 	}
+
+	for (_uint i = 0; i < nMaxPoolSize; ++i)
+	{
+		m_vecGround.push_back(
+			CGroundEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
+	}
 }
 
 CEffectPool::CEffectPool(const CEffectPool & rhs)
@@ -50,8 +57,14 @@ CEffectPool::CEffectPool(const CEffectPool & rhs)
 
 	for (_uint i = 0; i < nMaxPoolSize; ++i)
 	{
-		m_vecFire.push_back(
+		m_vecBullet.push_back(
 			CBulletEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
+	}
+
+	for (_uint i = 0; i < nMaxPoolSize; ++i)
+	{
+		m_vecGround.push_back(
+			CGroundEffect::Create(m_pGraphicDev, { 0.f,0.f,0.f }));
 	}
 }
 
@@ -118,6 +131,21 @@ _int CEffectPool::Update_Component(const _float & fTimeDelta)
 		}
 	}
 
+	for (auto Effect = m_GroundPool.begin(); Effect != m_GroundPool.end(); )
+	{
+		(*Effect)->Update_Component(fTimeDelta);
+
+		if (!(*Effect)->GetRunngin())
+		{
+			(*Effect)->Reset();
+			Effect = m_GroundPool.erase(Effect);
+		}
+		else
+		{
+			++Effect;
+		}
+	}
+
 	return _int();
 }
 
@@ -145,6 +173,12 @@ void CEffectPool::Free(void)
 		Safe_Release(*Effect);
 		Effect = m_vecBullet.erase(Effect);
 	}
+
+	for (auto Effect = m_vecGround.begin(); Effect != m_vecGround.end(); )
+	{
+		Safe_Release(*Effect);
+		Effect = m_vecGround.erase(Effect);
+	}
 	__super::Free();
 }
 
@@ -164,6 +198,9 @@ void CEffectPool::UseEffect(EFFECT_TYPE eType, _vec3 vPos)
 	case EFFECT_TYPE::BULLET:
 		AddBulletPool(vPos);
 		break;
+	case EFFECT_TYPE::GROUND:
+		AddGroundPool(vPos);
+		break;
 	}
 }
 
@@ -180,6 +217,11 @@ void CEffectPool::RenderEffect(EFFECT_TYPE eType)
 	}
 
 	for (auto Effect = m_BulletPool.begin(); Effect != m_BulletPool.end(); ++Effect)
+	{
+		(*Effect)->RenderEffect();
+	}
+
+	for (auto Effect = m_GroundPool.begin(); Effect != m_GroundPool.end(); ++Effect)
 	{
 		(*Effect)->RenderEffect();
 	}
@@ -234,6 +276,25 @@ void CEffectPool::AddBulletPool(_vec3 vPos)
 		if (!(*Effect)->GetRunngin())
 		{
 			m_BulletPool.push_back(*Effect);
+			break;
+		}
+	}
+
+	(*Effect)->SetPosition(vPos);
+	(*Effect)->SetRunning(true);
+}
+
+void CEffectPool::AddGroundPool(_vec3 vPos)
+{
+	if (m_GroundPool.size() >= nMaxPoolSize - 1)
+		return;
+
+	auto& Effect = m_vecGround.begin();
+	for (; Effect != m_vecGround.end(); ++Effect)
+	{
+		if (!(*Effect)->GetRunngin())
+		{
+			m_GroundPool.push_back(*Effect);
 			break;
 		}
 	}

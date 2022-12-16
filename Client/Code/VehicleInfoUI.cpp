@@ -54,15 +54,15 @@ _int CVehicleInfoUI::Update_Object(const _float & fTimeDelta)
 		UpdateString();
 	}
 
-	SmoothString(0.1f, fTimeDelta, m_szTitleBuff, m_szTitle);
-	SmoothString(0.1f, fTimeDelta, m_szNameBuff, m_szName);
-	SmoothString(0.1f, fTimeDelta, m_szSpeedBuff, m_szSpeed);
-	SmoothString(0.1f, fTimeDelta, m_szMaxSpeedBuff, m_szMaxSpeed);
-	SmoothString(0.1f, fTimeDelta, m_szRotSpeedBuff, m_szRotSpeed);
-	SmoothString(0.1f, fTimeDelta, m_szDamageBuff, m_szDamage);
-	SmoothString(0.1f, fTimeDelta, m_szReloadSpeedBuff, m_szReloadSpeed);
-	SmoothString(0.1f, fTimeDelta, m_szHPBuff, m_szHP);
-	SmoothString(0.1f, fTimeDelta, m_szBulletSpeedBuff, m_szBulletSpeed);
+	SmoothString(0.3f, fTimeDelta, m_szTitleBuff, m_szTitle);
+	SmoothString(0.3f, fTimeDelta, m_szNameBuff, m_szName);
+	SmoothString(0.3f, fTimeDelta, m_szSpeedBuff, m_szSpeed);
+	SmoothString(0.3f, fTimeDelta, m_szMaxSpeedBuff, m_szMaxSpeed);
+	SmoothString(0.3f, fTimeDelta, m_szRotSpeedBuff, m_szRotSpeed);
+	SmoothString(0.3f, fTimeDelta, m_szDamageBuff, m_szDamage);
+	SmoothString(0.3f, fTimeDelta, m_szReloadSpeedBuff, m_szReloadSpeed);
+	SmoothString(0.3f, fTimeDelta, m_szHPBuff, m_szHP);
+	SmoothString(0.3f, fTimeDelta, m_szBulletSpeedBuff, m_szBulletSpeed);
 
 	return _int();
 }
@@ -161,7 +161,7 @@ void CVehicleInfoUI::UpdateString()
 	ZeroMemory(m_szDamage, sizeof(m_szDamage));
 	ZeroMemory(m_szDamageBuff, sizeof(m_szDamageBuff));
 
-	wstring damage = L"Æ÷Åº°ø°Ý·Â  100";
+	wstring damage = L"Æ÷Åº°ø°Ý·Â  " + to_wstring((int)data.fDamage);
 	lstrcpy(m_szDamage, damage.c_str());
 
 	ZeroMemory(m_szReloadSpeed, sizeof(m_szReloadSpeed));

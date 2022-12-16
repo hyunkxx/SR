@@ -881,6 +881,11 @@ void CStage::Collison_Object(void)
 			if ((*iter)->Get_Dead())
 				continue;
 
+			_vec3 vPos = static_cast<CBullet*>(*iter)->Get_Info();
+
+			if (vPos.y <= 0.5f)
+				static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+
 			// 총알 vs 환경 오브젝트 충돌
 			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
 			{
@@ -893,7 +898,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-
+					
 					if (i == BULLET_ID::MASHINE_BULLET)
 					{
 						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);

@@ -151,7 +151,7 @@ HRESULT CMainMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	m_pInfoBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
 		L"black",
-		L"../Bin/Resource/Texture/Ui/white.png");
+		L"../Bin/Resource/Texture/Ui/info.png");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"white", pGameObject), E_FAIL);
 
@@ -160,7 +160,7 @@ HRESULT CMainMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	m_pBackground = pGameObject = CDefaultUI::Create(m_pGraphicDev,
 		L"SeletMenuBackground",
-		L"../Bin/Resource/Texture/Ui/white.png");
+		L"../Bin/Resource/Texture/Ui/Background2.png");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SeletMenuBackground", pGameObject), E_FAIL);
 
@@ -244,7 +244,7 @@ void CMainMenu::UpdateCam(const _float & fTimeDelta)
 
 	float x = Utility::Lerp(static_cast<CSimpleCamera*>(m_pCamera)->Get_Info().x, static_cast<CObjectMesh*>(m_pVehicle[m_nCurrentIndex])->Get_Info().x, 2.f * fTimeDelta);
 
-	static_cast<CSimpleCamera*>(m_pCamera)->SetEye({ x, 3.f , -13.f });
+	static_cast<CSimpleCamera*>(m_pCamera)->SetEye({ x, 4.f , -13.f });
 	static_cast<CSimpleCamera*>(m_pCamera)->SetLookAt({ x, 0.f, -8.f });
 }
 

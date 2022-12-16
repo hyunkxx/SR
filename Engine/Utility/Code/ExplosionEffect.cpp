@@ -64,7 +64,7 @@ void CExplosionEffect::Free(void)
 _int CExplosionEffect::Update_Component(const _float & fTimeDelta)
 {
 	if (!m_bRunning)
-		return 0;
+		return 0;			
 
 	m_fLocalTime += fTimeDelta;
 	m_fGravityLocal += fTimeDelta * 6.f;
