@@ -4,6 +4,13 @@
 #include "Export_Function.h"
 #include "TankSet.h"
 #include "DroneCamera.h"
+
+#include "Default_Enermy.h"
+#include "BottomDirEnermy.h"
+#include "Default_Ally.h"
+#include "CreateAi.h"
+
+#include "EffectManager.h"
 CBoomEffect::CBoomEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -38,9 +45,11 @@ _int CBoomEffect::Update_Object(const _float & fTimeDelta)
 
 	if (m_fFrame == 0)
 	{
+		m_bCollision = true;
 		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"Boom_Sound.wav", PLAYER_SHOT_SOUND1, fShootSound);
+
 	}
 	m_fFrame += 12.f * fTimeDelta;
 
@@ -70,7 +79,7 @@ void CBoomEffect::LateUpdate_Object(void)
 		return;
 	}
 	Engine::Get_Camera()->Set_Rock(true);
-	
+
 	if (!dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
 		__super::LateUpdate_Object();
 
@@ -91,10 +100,12 @@ void CBoomEffect::LateUpdate_Object(void)
 
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
-	
+
 	D3DXMatrixInverse(&matBill, 0, &matBill);
 
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+
+	Collision_Object();
 
 	__super::LateUpdate_Object();
 }
@@ -112,6 +123,75 @@ void CBoomEffect::Render_Object(void)
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CBoomEffect::Collision_Object(void)
+{
+	if (!m_bCollision)
+		return;
+
+	CGameObject* TempCreateAi = Engine::Get_Object(L"GameLogic", L"CreateAi");
+	vector<CGameObject*> BDAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
+	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
+	CGameObject* m_pEffectManager = Engine::Get_Object(L"Environment_Object", L"EffectManager");
+
+	for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(*iters)->Get_Info(), 30.f, (*iters)->Get_Dist()))
+		{
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
+
+			dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
+			if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
+			{
+				(*iters)->Set_Dead(true);
+				dynamic_cast<CDefault_Ally*>(*iters)->Set_DisCountLocation();
+			}
+		}
+	}
+	for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(*iters)->Get_Info(), 30.f, (*iters)->Get_Dist()))
+		{
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
+
+			dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1.f);
+			if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
+			{
+				(*iters)->Set_Dead(true);
+				dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+				dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+			}
+		}
+	}
+	for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+
+		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(*iters)->Get_Info(), 30.f, (*iters)->Get_Dist()))
+		{
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
+
+			dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
+			if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
+			{
+				(*iters)->Set_Dead(true);
+				dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+				dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+			}
+		}
+	}
+
+	m_bCollision = false;
 }
 
 HRESULT CBoomEffect::Add_Component(void)

@@ -21,11 +21,12 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
 	virtual void Render_Object(void) override;
+	void		 Collision_Object(void);
 public:
-	void		 Set_Pos(_vec3 Pos) {m_vPos = Pos;}
+	void		 Set_Pos(_vec3 Pos) { m_vPos = Pos; }
 private:
 	HRESULT		Add_Component(void);
-
+	_bool		m_bCollision = false;
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
