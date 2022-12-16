@@ -36,6 +36,12 @@ _int CBoomEffect::Update_Object(const _float & fTimeDelta)
 
 	m_pTransformCom->Set_Pos(m_vPos.x, (m_vPos.y + 30), m_vPos.z);
 
+	if (m_fFrame == 0)
+	{
+		_float fShootSound = 1.f;
+		Engine::StopSound(PLAYER_SHOT_SOUND1);
+		Engine::PlaySound_SR(L"Boom_Sound.wav", PLAYER_SHOT_SOUND1, fShootSound);
+	}
 	m_fFrame += 12.f * fTimeDelta;
 
 	if (m_fFrame > 33.f)

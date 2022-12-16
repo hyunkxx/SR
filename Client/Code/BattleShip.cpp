@@ -29,18 +29,20 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 		return 0;
 	m_fMoveTime += fTimeDelta;
 
+	m_pTransformSee->Set_Scale(1.2f, 1.f, 2.f);
+	m_pTransformSee->Set_Pos(-800.f, 0.1f, -200.f);
 
-		if (!m_bShootReady && m_fMoveTime > 1.f)
-		{
-			Engine::PlaySound_SR(L"Ship_Horn.mp3", SoundType::SHIP_ENGINE_SOUND3, 1.f);
-			Engine::PlaySound_SR(L"Hamsun_BGM.mp3", SoundType::SHIP_ENGINE_SOUND5, 0.2f);
-		}
+	if (!m_bShootReady && m_fMoveTime > 1.f)
+	{
+		Engine::PlaySound_SR(L"Ship_Horn.mp3", SoundType::SHIP_ENGINE_SOUND3, 1.f);
+		Engine::PlaySound_SR(L"Hamsun_BGM.mp3", SoundType::SHIP_ENGINE_SOUND5, 0.2f);
+	}
 
 	if (!m_bShootReady && m_fMoveTime  > 2.f)
 		Engine::PlaySound_SR(L"Ship_Bell.mp3", SoundType::SHIP_ENGINE_SOUND4, 0.7f);
-	if(m_fMoveTime  > 10.f)
+	if (m_fMoveTime  > 10.f)
 		Engine::StopSound(SHIP_ENGINE_SOUND4);
-	
+
 	if (!m_bShootReady && m_fMoveTime > 10.f)
 	{
 		static_cast<CShipCamera*>(Engine::Get_Camera())->Set_Dist(100.f);
@@ -50,10 +52,10 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 		{
 			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND1, 0.5f);
 			m_fAngle_1 += 30.f * fTimeDelta;
-			m_pTransformHead->Rotation(ROT_Y,D3DXToRadian(30.f * fTimeDelta));
+			m_pTransformHead->Rotation(ROT_Y, D3DXToRadian(30.f * fTimeDelta));
 			m_pTransformPosin->Rotation(ROT_Y, D3DXToRadian(30.f * fTimeDelta));
 		}
-		if (70.f >= m_fAngle_2)
+		if (75.f >= m_fAngle_2)
 
 		{
 			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND2, 0.5f);
@@ -71,15 +73,15 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 			Engine::PlaySound_SR(L"Ham_Posin_Sound.wav", SoundType::SHIP_ENGINE_SOUND2, 1.f);
 			m_fMoveTime = 0.f;
 			m_bShootReady = true;
-			
+
 		}
 	}
-	else if (m_bShootReady && m_fMoveTime < 2.f)
+	else if (m_bShootReady && m_fMoveTime < 1.f)
 	{
 		m_pTransformPosin->Rotation(ROT_X, D3DXToRadian(-5.f * fTimeDelta));
 		m_pTransformPosin2->Rotation(ROT_X, D3DXToRadian(-5.f * fTimeDelta));
 	}
-	else if(m_bShootReady && m_fMoveTime > 1.f)
+	else if (m_bShootReady && m_fMoveTime > 1.f)
 	{
 		Engine::StopSound(SHIP_ENGINE_SOUND1);
 		Engine::StopSound(SHIP_ENGINE_SOUND2);
@@ -93,7 +95,7 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 				pObject->Set_Dead(false);
 				pObject->Set_Scale(30.f);
 				static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformHead);
-				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, 1.f*m_fScale , 3.f * m_fScale);
+				static_cast<CShootEffect*>(pObject)->Set_Dist(10.f*m_fScale, 1.f*m_fScale, 3.f * m_fScale);
 				//static_cast<CShootEffect*>(pObject)->Set_Smoke(true);
 				Engine::Get_Camera()->Shake_On();
 				Engine::StopSound(SHIP_SHOOT_SOUND1);
@@ -106,7 +108,7 @@ _int CBattleShip::Update_Object(const _float & fTimeDelta)
 				Pos += Dir * 10.f;
 				Engine::Reuse_Object(Pos, Dir, 1000.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), SHIP_BULLET);
 			}
-			else if (1 == m_iShootCount)                    
+			else if (1 == m_iShootCount)
 			{
 				CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::TANK_SHOOT_SMOKE);
 				pObject->Set_Dead(false);
@@ -224,6 +226,9 @@ void CBattleShip::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin2->Get_WorldMatrix());
 	m_pPosin2->Render(m_pTransformPosin2->Get_WorldMatrix());
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformSee->Get_WorldMatrix());
+	m_pTextureCom->Set_Texture(0);
+	m_pBufferCom->Render_Buffer();
 }
 
 void CBattleShip::RenderGUI(void)
@@ -259,13 +264,13 @@ void CBattleShip::Strike(void)
 	m_pTransformPosin->Set_Pos(0.f, 13.5f * m_fScale, 4.f * m_fScale);
 	m_pTransformPosin2->Set_Pos(0.f, 11.5f * m_fScale, 15.f * m_fScale);
 
-	_vec3 Move = { -400.f, 1.f, 100.f };
+
+	_vec3 Move = { -500.f, 1.f, 100.f };
 	m_pTransformBody->Move_Pos(&Move);
 	m_pTransformHead->Move_Pos(&Move);
 	m_pTransformHead2->Move_Pos(&Move);
 	m_pTransformPosin->Move_Pos(&Move);
 	m_pTransformPosin2->Move_Pos(&Move);
-
 }
 
 HRESULT CBattleShip::Add_Component(void)
@@ -292,7 +297,6 @@ HRESULT CBattleShip::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin2, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Ship_Posin2_Transform", pComponent });
 
-
 	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Ham_body");
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelBody", pComponent });
@@ -312,6 +316,19 @@ HRESULT CBattleShip::Add_Component(void)
 	pComponent = m_pPosin2 = CVoxel::Create(m_pGraphicDev, L"Ham_posin2");
 	NULL_CHECK_RETURN(m_pPosin2, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin2", pComponent });
+
+	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Clone_Prototype(L"Proto_TerrainTex"));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
+
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_See"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_See", pComponent });
+
+	pComponent = m_pTransformSee = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformSee, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_See_Transform", pComponent });
+
 
 	return S_OK;
 }
@@ -334,7 +351,7 @@ HRESULT CBattleShip::Ready_Object(void)
 
 	m_pTransformBody->Set_Pos(0.f, 5.f * m_fScale, 0.f * m_fScale);
 	m_pTransformHead->Set_Pos(0.f, 11.f * m_fScale, 4.f * m_fScale);
-	m_pTransformHead2->Set_Pos(0.f,	9.f * m_fScale, 15.f * m_fScale);
+	m_pTransformHead2->Set_Pos(0.f, 9.f * m_fScale, 15.f * m_fScale);
 	m_pTransformPosin->Set_Pos(0.f, 13.5f * m_fScale, 4.f * m_fScale);
 	m_pTransformPosin2->Set_Pos(0.f, 11.5f * m_fScale, 15.f * m_fScale);
 

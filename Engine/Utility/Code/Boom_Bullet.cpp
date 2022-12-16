@@ -89,8 +89,6 @@ void CBoom_Bullet::LateUpdate_Object(void)
 		Engine::Camera_Change(L"TankCamera");
 		Engine::Get_Camera()->Camera_Setting(m_vPos);
 		Engine::Get_Camera()->Shake_On();
-		_float fShootSound = 8.f;
-		Engine::PlaySound_SR(L"Boom_Sound.wav", PLAYER_SHOT_SOUND1, fShootSound);
 	}
 	__super::LateUpdate_Object();
 }

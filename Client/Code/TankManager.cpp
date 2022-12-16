@@ -78,7 +78,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::HUMVEE].fAccel_top_speed = 40.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fBack_top_speed = -15.f;
 	//포신 길이, 포신 최대 각도, 회전속도 설정
-	tankData[(UINT)VEHICLE::HUMVEE].fPosinDist = 1.f;
+	tankData[(UINT)VEHICLE::HUMVEE].fPosinDist = 2.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fLowAngle = D3DXToRadian(0.f);
 	tankData[(UINT)VEHICLE::HUMVEE].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::HUMVEE].RotSpeed = 40.f;

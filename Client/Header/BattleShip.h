@@ -5,6 +5,7 @@
 BEGIN(Engine)
 class CRcTex;
 class CTexture;
+class CTerrainTex;
 class CTransform;
 END
 
@@ -32,6 +33,10 @@ private:
 	CTransform*			m_pTransformPosin = nullptr;
 	CTransform*			m_pTransformHead2 = nullptr;
 	CTransform*			m_pTransformPosin2 = nullptr;
+
+	CTransform*	        m_pTransformSee = nullptr;
+	CTerrainTex*		m_pBufferCom = nullptr;
+	CTexture*			m_pTextureCom = nullptr;
 
 	CVoxel*				m_pBody = nullptr;
 	CVoxel*				m_pHead = nullptr;
