@@ -936,8 +936,7 @@ void CStage::Collison_Object(void)
 				}
 
 			}
-
-			//총알 vs 게임 오브젝트 충돌
+			//총알 vs 게임 오브젝트 충돌(Collisionable을 가지고 있는게 유저 밖에 없어서 단순 유저 하나와 총알간의 충돌처리라고 봐도 됨.)
 			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -951,11 +950,18 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::CANNONBALL)
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(30.f);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
+
+					if (dynamic_cast<CTankSet*>((*Dest).second)->Get_HP() <= 0)
+						(*Dest).second->Set_Dead(true);
+
 					(*iter)->Set_Dead(true);
 					continue;
 				}
 			}
-
 
 			for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
 			{
