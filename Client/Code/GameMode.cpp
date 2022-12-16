@@ -21,7 +21,6 @@ CGameMode::CGameMode()
 	ZeroMemory(&eData, sizeof(EData));
 }
 
-
 CGameMode::~CGameMode()
 {
 }

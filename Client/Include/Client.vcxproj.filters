@@ -89,9 +89,6 @@
     <Filter Include="01. Scene\02. MainMenu">
       <UniqueIdentifier>{c48be1d0-238a-4814-8bff-a4a5fb3ccdba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. MainMenu\ObjectMesh">
-      <UniqueIdentifier>{837fa4f2-2c9d-4eb1-872a-2cc759f7485c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. Building">
       <UniqueIdentifier>{2a388c38-b057-4880-a0db-73eec77a08ae}</UniqueIdentifier>
     </Filter>
@@ -302,6 +299,24 @@
     <Filter Include="02. GameObject\93.UI\12. BaseUI">
       <UniqueIdentifier>{2b269022-7699-437c-88e0-115242807964}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\02. MainMenu\VehicleSelectMenu">
+      <UniqueIdentifier>{2e73999b-56bd-4195-9303-b7e51b5ff9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. MainMenu\VehicleSelectMenu\ObjectMesh">
+      <UniqueIdentifier>{837fa4f2-2c9d-4eb1-872a-2cc759f7485c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. MainMenu\ModeSelectMenu">
+      <UniqueIdentifier>{f326bc1f-a173-472e-b5d4-c1c4d06b7faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Stage\War">
+      <UniqueIdentifier>{a12a357a-1a81-4def-b0e3-7f6bbd3fc12f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. Stage\Rush">
+      <UniqueIdentifier>{47095455-fb79-4c90-bbe3-31dfa3b6520e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\13 Buttons">
+      <UniqueIdentifier>{c50d370d-540e-4e9e-89d9-ee137a8023c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -312,9 +327,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
       <Filter>02. GameObject\02. BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Stage.h">
-      <Filter>01. Scene\03. Stage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
       <Filter>02. GameObject\03. Terrain</Filter>
@@ -397,11 +409,8 @@
     <ClInclude Include="..\Header\Default_Ally.h">
       <Filter>02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MainMenu.h">
-      <Filter>01. Scene\02. MainMenu</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ObjectMesh.h">
-      <Filter>01. Scene\02. MainMenu\ObjectMesh</Filter>
+      <Filter>01. Scene\02. MainMenu\VehicleSelectMenu\ObjectMesh</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SimpleCamera.h">
       <Filter>02. GameObject\04.Camera\00. SimpleCamera</Filter>
@@ -544,6 +553,24 @@
     <ClInclude Include="..\Header\BaseUI.h">
       <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MainMenu.h">
+      <Filter>01. Scene\02. MainMenu\VehicleSelectMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ModeSelectMenu.h">
+      <Filter>01. Scene\02. MainMenu\ModeSelectMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage.h">
+      <Filter>01. Scene\03. Stage\War</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rush.h">
+      <Filter>01. Scene\03. Stage\Rush</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GameButton.h">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ModeButton.h">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -554,9 +581,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
       <Filter>02. GameObject\02. BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Stage.cpp">
-      <Filter>01. Scene\03. Stage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
       <Filter>02. GameObject\03. Terrain</Filter>
@@ -630,11 +654,8 @@
     <ClCompile Include="..\Code\Default_Ally.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MainMenu.cpp">
-      <Filter>01. Scene\02. MainMenu</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ObjectMesh.cpp">
-      <Filter>01. Scene\02. MainMenu\ObjectMesh</Filter>
+      <Filter>01. Scene\02. MainMenu\VehicleSelectMenu\ObjectMesh</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SimpleCamera.cpp">
       <Filter>02. GameObject\04.Camera\00. SimpleCamera</Filter>
@@ -776,6 +797,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\BaseUI.cpp">
       <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainMenu.cpp">
+      <Filter>01. Scene\02. MainMenu\VehicleSelectMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ModeSelectMenu.cpp">
+      <Filter>01. Scene\02. MainMenu\ModeSelectMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage.cpp">
+      <Filter>01. Scene\03. Stage\War</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rush.cpp">
+      <Filter>01. Scene\03. Stage\Rush</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GameButton.cpp">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ModeButton.cpp">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

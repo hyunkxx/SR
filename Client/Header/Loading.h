@@ -10,7 +10,7 @@ private:
 
 public:
 	LOADINGID				Get_LoadingID(void) const { return m_eID; }
-	CRITICAL_SECTION*		Get_Crt(void)     { return &m_Crt; }
+	CRITICAL_SECTION*		Get_Crt(void) { return &m_Crt; }
 	_bool					Get_Finish(void) const { return m_bFinish; }
 	const _tchar*			Get_String(void) { return m_szString; }
 

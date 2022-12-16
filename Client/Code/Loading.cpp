@@ -35,15 +35,15 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 	HANDLE				hThread[3]{};
 
 	hThread[i] = (HANDLE)_beginthreadex(nullptr,		 // 보안 속성 : 기본값(핸들의 상속 여부, nullptr인 경우 상속에서 제외)
-		0,			 // 디폴트 스택 사이즈(1바이트)
-		Thread_Main, // 쓰레드로 동작할 함수의 주소(__stdcall 규약)
-		&iData,		 // 쓰레드 함수로 전달할 함수의 매개 변수
-		0,			 // 쓰레드의 생성 및 실행을 조절하기 위한 flag
-		&dwThreadID[i]);    // 쓰레드 id반환*/
+	0,			 // 디폴트 스택 사이즈(1바이트)
+	Thread_Main, // 쓰레드로 동작할 함수의 주소(__stdcall 규약)
+	&iData,		 // 쓰레드 함수로 전달할 함수의 매개 변수
+	0,			 // 쓰레드의 생성 및 실행을 조절하기 위한 flag
+	&dwThreadID[i]);    // 쓰레드 id반환*/
 
 #pragma endregion 예시
 
-	m_hThread = (HANDLE)_beginthreadex(nullptr,	0, Thread_Main,	this, 0, nullptr);   
+	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
 
 	m_eID = eID;
 
@@ -68,7 +68,7 @@ unsigned int CLoading::Thread_Main(void* pArg)
 	case LOADING_BOSS:
 		break;
 	}
-	
+
 	LeaveCriticalSection(pLoading->Get_Crt());
 
 	//_endthreadex(0);
@@ -130,7 +130,7 @@ _uint CLoading::Loading_ForStage(void)
 	// Aim camera UI
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Posin_UI.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Compass_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Compass.png", TEX_NORMAL)), E_FAIL);
-	
+
 	// Stage UI
 	// 점령
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);
@@ -202,6 +202,14 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_ally_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseAllyFront.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_enemy_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseEnemyFront.png", TEX_NORMAL)), E_FAIL);
 
+	/* Button */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_war", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_war.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_war_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_war_click.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_rush", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_rush.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_rush_click", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_rush_click.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_start", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_start.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_exit", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_exit.png", TEX_NORMAL)), E_FAIL);
+
 
 	lstrcpy(m_szString, L"Complete");
 
@@ -221,7 +229,7 @@ CLoading * CLoading::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID)
 		MSG_BOX("Loading Create Failed");
 		return nullptr;
 	}
-	
+
 	return pInstance;
 }
 

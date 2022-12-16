@@ -80,17 +80,18 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	float Start = 80.f;
+	float Start = 10.f;
 	float End = 300.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 230, 210, 0));
+	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 240, 210, 0));
+	//m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 255, 255, 0));
 
 	m_pGraphicDev->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
 	m_pGraphicDev->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 20000, 20000);
+	CGameMode::GetInstance()->InitGameMode(500, 20000, 2000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -156,7 +157,7 @@ void CStage::Render_Scene(void)
 	// ÅÊÅ© Á¾·ù or ÀÌ¸§								27.45% »¡°­, 28.63% ³ì»ö ¹× 39.22%
 	if ((!showF1Win) && Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 12.f, WINCY_HALF + PERCENTY * 35.f), D3DXCOLOR(changeColor, 1.f- changeColor, changeColor, 1.f));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Tank_Name(), &_vec2(PERCENTX * 12.f, WINCY_HALF + PERCENTY * 35.f), D3DXCOLOR(changeColor, 1.f - changeColor, changeColor, 1.f));
 	}
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
@@ -187,8 +188,9 @@ CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free(void)
 {
-	CGameMode::GetInstance()->DestroyInstance();
 	CUI_FontMgr::GetInstance()->DestroyInstance();
+	CGameMode::DestroyInstance();
+
 	Engine::StopAll();
 	__super::Free();
 }
@@ -881,10 +883,14 @@ void CStage::Collison_Object(void)
 			if ((*iter)->Get_Dead())
 				continue;
 
-			_vec3 vPos = static_cast<CBullet*>(*iter)->Get_Info();
+			CBullet* pBullet = dynamic_cast<CBullet*>(*iter);
+			if (pBullet)
+			{
+				_vec3 vPos = pBullet->Get_Info();
 
-			if (vPos.y <= 0.5f)
-				static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+				if (vPos.y <= 0.5f)
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+			}
 
 			// ÃÑ¾Ë vs È¯°æ ¿ÀºêÁ§Æ® Ãæµ¹
 			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
@@ -898,7 +904,7 @@ void CStage::Collison_Object(void)
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
-					
+
 					if (i == BULLET_ID::MASHINE_BULLET)
 					{
 						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);

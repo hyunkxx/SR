@@ -58,7 +58,6 @@ void CMainApp::Render_MainApp(void)
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 	ImguiManager::GetInstance()->Render();
 	Engine::Render_End();
-
 }
 
 HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
@@ -68,7 +67,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
-	
+
 	FAILED_CHECK_RETURN(Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 8, 13, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Font((*ppGraphicDev), L"Font_GOTHIC", L"고딕", 30, 30, FW_HEAVY), E_FAIL);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Sitka1", L"Sitka Text", 5, 10, FW_HEAVY);
@@ -91,12 +90,10 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	//(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, TRUE);		// 조명에 의한 반사 연산 수행 여부
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);			// z버퍼에 무조건 깊이 값을 기록하되 정렬을 수행하지 말지 판다하는 옵션
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);	// Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정하는 문법
-	
 
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
-
 
 	FAILED_CHECK_RETURN(Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
@@ -128,7 +125,7 @@ CMainApp * CMainApp::Create(void)
 		MSG_BOX("MainApp Create Failed");
 		Safe_Release(pInstance);
 	}
-	
+
 	return pInstance;
 }
 
@@ -136,13 +133,11 @@ void CMainApp::Free(void)
 {
 	ImguiManager::DestroyInstance();
 	CTankManager::DestroyInstance();
-	
 
 	Safe_Release(m_pGraphicDev);
 
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pManagementClass);
-
 
 	Engine::Release_Utility();
 	Engine::Release_System();

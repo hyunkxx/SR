@@ -16,7 +16,8 @@ private:
 private:
 	explicit CGameMode();
 	virtual ~CGameMode();
-	inline virtual void	Free(void);
+public:
+	virtual void Free(void);
 public:
 	void Reset();
 	void InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold);
@@ -25,6 +26,11 @@ public:
 	bool VictoryCheck();
 public:
 	EData eData = {}; //AI »ý¼º¿ë
+
+	bool m_bGameStart = false;
+	bool m_bGameExit = false;
+	bool m_bWarPressed = false;
+	bool m_bRushPressed = false;
 
 	int m_nAllyCount = 0;
 	int m_nEnemyCount = 0;

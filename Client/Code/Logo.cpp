@@ -5,6 +5,7 @@
 #include "MainMenu.h"
 #include "TestPlayer.h"
 #include "BackGround.h"
+#include "ModeSelectMenu.h"
 #include "Stage.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -14,7 +15,7 @@ CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CLogo::~CLogo()
 {
-	
+
 }
 
 HRESULT CLogo::Ready_Scene(void)
@@ -25,7 +26,7 @@ HRESULT CLogo::Ready_Scene(void)
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
-		
+
 	return S_OK;
 }
 
@@ -43,14 +44,13 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 
 			Engine::PlaySound_SR(L"enter.mp3", SELECT_SOUND, 1.f);
 
-			//pScene = CStage::Create(m_pGraphicDev);
-			pScene = CMainMenu::Create(m_pGraphicDev);
+			pScene = CModeSelectMenu::Create(m_pGraphicDev);
 
 			NULL_CHECK_RETURN(pScene, -1);
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 		}
 	}
-	
+
 	return iExit;
 }
 
@@ -71,7 +71,7 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	if (FAILED(pInstance->Ready_Scene()))
 		Safe_Release(pInstance);
-	
+
 	return pInstance;
 }
 
@@ -127,7 +127,7 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar* pLayerTag)
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
-	
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
