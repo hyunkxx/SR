@@ -46,6 +46,7 @@ private:
 	_float					m_fPosZ;
 
 	wstring				m_szTankName;
+	wstring				m_szlastTankName;
 	_int						iRotaion;
 public:
 

@@ -46,7 +46,7 @@ HRESULT CBottomDirEnermy::Ready_Object(void)
 	m_pTransformPosin->Set_Pos(530.f, 2.f, 530.f);
 
 	//UI_HP
-	UI_Orgin_HP = UI_fHP = 300.f;    // tankData.fMaxHP;
+
 	UI_fOrgin_ScaleX = UI_fScaleX = 2.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -156,7 +156,7 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 
 	//UI_HP
-	UI_Orgin_HP = UI_fHP = 300.f;    // tankData.fMaxHP;
+
 	UI_fOrgin_ScaleX = UI_fScaleX = 3.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -187,13 +187,13 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 
 	if (m_iLocationState == LOCATIONSTATE::STATE_ENERMYHQ)
 	{
-		UI_fHP += 0.0001f*fTimeDelta;
-		if (UI_fHP >= UI_Orgin_HP)
+		fCurHp += 0.0001f*fTimeDelta;
+		if (fCurHp >= m_fMaxHp)
 		{
-			UI_fHP = UI_Orgin_HP;
+			fCurHp = m_fMaxHp;
 		}
 	}
-	PreHp = UI_fHP;
+	PreHp = fCurHp;
 
 
 	StateCheck();
@@ -216,7 +216,7 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 void CBottomDirEnermy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	if (PreHp != UI_fHP)
+	if (PreHp != fCurHp)
 	{
 		//m_iAction = AIACTION::AIACTION_RUN;
 	}
@@ -823,7 +823,7 @@ void CBottomDirEnermy::Run(_float fTimeDelta)
 		}
 	}
 
-	if (UI_fHP < 290.f)
+	if (fCurHp < 290.f)
 	{
 		_vec3 vTemp, vSour, vLook, vDir;
 		_float Dot, Angle;
@@ -855,7 +855,7 @@ void CBottomDirEnermy::Run(_float fTimeDelta)
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
 	}
-	if (UI_fHP >= UI_Orgin_HP)
+	if (fCurHp >= m_fMaxHp)
 	{
 		m_iAction = AIACTION::AIACTION_END;
 	}
@@ -1380,16 +1380,16 @@ void CBottomDirEnermy::Free(void)
 void CBottomDirEnermy::Update_UI(void)
 {
 
-	if (UI_fHP >= UI_Orgin_HP)
+	if (fCurHp >= m_fMaxHp)
 	{
-		UI_fHP = UI_Orgin_HP;
+		fCurHp = m_fMaxHp;
 	}
-	if (UI_fHP <= 0.f)
+	if (fCurHp <= 0.f)
 	{
-		UI_fHP = 0.f;
+		fCurHp = 0.f;
 	}
 
-	_float HP_Percent = (UI_fHP / UI_Orgin_HP);
+	_float HP_Percent = (fCurHp / m_fMaxHp);
 
 	if (HP_Percent > 1.f)
 	{

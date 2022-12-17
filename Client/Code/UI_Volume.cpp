@@ -245,36 +245,48 @@ void CUI_Volume::Sound_Volume_Control(void)
 	// all sound
 	if (PtInRect(&rc[0], ptMouse))
 	{
-		if (Get_DIMouseState(DIM_LB) )
+		if (Get_DIMouseState(DIM_LB))
 		{
+
+			Engine::StopSound(VOLUEM_BUTTON);
+
 			s_fAllSound = s_fAllSound - 0.01f;
 
 			if (s_fAllSound <= 0.f)
-			{s_fAllSound = 0.f;	}
+			{
+				s_fAllSound = 0.f;
+			}
 
 			s_fBGMSound = s_fShotSound = s_fAllSound;
 			szShotSoundCount = szBGMSoundCount = szAllSoundCount = to_wstring(_int(s_fAllSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
+
 	}
 	if (PtInRect(&rc[1], ptMouse))
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
+			Engine::StopSound(VOLUEM_BUTTON);
 			s_fAllSound = s_fAllSound + 0.01f;
 
 			if (s_fAllSound >= 1.f)
-			{	s_fAllSound = 1.f;}
+			{
+				s_fAllSound = 1.f;
+			}
 
 			s_fBGMSound = s_fShotSound = s_fAllSound;
 			szShotSoundCount = szBGMSoundCount = szAllSoundCount = to_wstring(_int(s_fAllSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
 
 	// bgm sound
 	if (PtInRect(&rc[2], ptMouse))
 	{
-		if (Get_DIMouseState(DIM_LB) )
+		if (Get_DIMouseState(DIM_LB))
 		{
+			Engine::StopSound(VOLUEM_BUTTON);
 			s_fBGMSound = s_fBGMSound - 0.01f;
 
 			if (s_fBGMSound <= 0.f)
@@ -282,13 +294,15 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fBGMSound = 0.f;
 			}
 			szBGMSoundCount = to_wstring(_int(s_fBGMSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fBGMSound);
 
 		}
 	}
 	if (PtInRect(&rc[3], ptMouse))
 	{
-		if (Get_DIMouseState(DIM_LB) )
+		if (Get_DIMouseState(DIM_LB))
 		{
+			Engine::StopSound(VOLUEM_BUTTON);
 			s_fBGMSound = s_fBGMSound + 0.01f;
 
 			if (s_fBGMSound >= 1.f)
@@ -296,14 +310,17 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fBGMSound = 1.f;
 			}
 			szBGMSoundCount = to_wstring(_int(s_fBGMSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fBGMSound);
+
 		}
 	}
 
 	// shot sound
 	if (PtInRect(&rc[4], ptMouse))
 	{
-		if (Get_DIMouseState(DIM_LB) )
+		if (Get_DIMouseState(DIM_LB))
 		{
+			Engine::StopSound(VOLUEM_BUTTON);
 			s_fShotSound = s_fShotSound - 0.01f;
 
 			if (s_fShotSound <= 0.f)
@@ -311,12 +328,15 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fShotSound = 0.f;
 			}
 			szShotSoundCount = to_wstring(_int(s_fShotSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fShotSound);
+
 		}
 	}
 	if (PtInRect(&rc[5], ptMouse))
 	{
-		if (Get_DIMouseState(DIM_LB) )
+		if (Get_DIMouseState(DIM_LB))
 		{
+			Engine::StopSound(VOLUEM_BUTTON);
 			s_fShotSound = s_fShotSound + 0.01f;
 
 			if (s_fShotSound >= 1.f)
@@ -324,6 +344,8 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fShotSound = 1.f;
 			}
 			szShotSoundCount = to_wstring(_int(s_fShotSound * 100.f));
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fShotSound);
+
 		}
 	}
 	// Continue Box

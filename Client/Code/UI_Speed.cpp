@@ -167,7 +167,7 @@ void CUI_Speed::Free(void)
 void CUI_Speed::Update_Speed(void)
 {
 	CGameObject* pTank = Engine::Get_Object(L"GameLogic", L"PlayerVehicle");
-
+	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
 	if (m_szTankType == L"Humvee")
 	{

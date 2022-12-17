@@ -1014,6 +1014,7 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
 
+					//Engine::PlaySound_SR(L"SE_Tank_S_STOP_00.wav", HIT_SOUND, CUI_Volume::s_fShotSound);			찾아 보는 중
 					if (dynamic_cast<CTankSet*>((*Dest).second)->Get_HP() <= 0)
 						(*Dest).second->Set_Dead(true);
 
@@ -1047,6 +1048,7 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
+					//Engine::PlaySound_SR(L"SE_Tank_S_STOP_00.wav", HIT_SOUND, CUI_Volume::s_fShotSound);			찾아 보는 중
 					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1080,6 +1082,7 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
+					//Engine::PlaySound_SR(L"SE_Tank_S_STOP_00.wav", HIT_SOUND, CUI_Volume::s_fShotSound);			찾아 보는 중
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1114,6 +1117,7 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
+					//Engine::PlaySound_SR(L"SE_Tank_S_STOP_00.wav", HIT_SOUND, CUI_Volume::s_fShotSound);			찾아 보는 중
 					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);

@@ -146,6 +146,7 @@ HRESULT CUI_Player_Hp::Ready_Object(void)
 
 _int CUI_Player_Hp::Update_Object(const _float & fTimeDelta)
 {
+	szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 	Update_Tank_Info();
 	Update_HP();
 	Update_Reload();

@@ -36,29 +36,30 @@ HRESULT CUI_Compass::Ready_Object(void)
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 
-	m_szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
+	m_szlastTankName = m_szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
 	if (m_szTankName == L"Humvee")
 	{
 		iRotaion = 40;
 	}
-	else if (m_szTankName == L"CV90 경전차")
+	else if (m_szTankName == L"A - 44")
 	{
 		iRotaion = 40;
 	}
-	else if (m_szTankName == L"T62 중형전차")
+	else if (m_szTankName == L"TE6E4")
 	{
 		iRotaion = 30;
 	}
-	else if (m_szTankName == L"Tiger 중전차")
+	else if (m_szTankName == L"KING TIGER")
 	{
 		iRotaion = 20;
 	}
-	else if (m_szTankName == L"K-9 자주곡사포")
+	else if (m_szTankName == L"M55")
 	{
 		iRotaion = 10;
 	}
-	
+
+
 	return S_OK;
 }
 
@@ -131,6 +132,38 @@ _int CUI_Compass::Update_Object(const _float & fTimeDelta)
 	//_float vAngle_F = ((vTankLook.x * vAimLook.x) + (vTankLook.z * vAimLook.z));
 	//vAngle_F = (vAngle_F * 3.1415f) / 180.f;
 #pragma endregion
+
+	m_szTankName = CUI_FontMgr::GetInstance()->Get_Tank_Name();
+
+	if (m_szlastTankName != m_szTankName)
+	{
+		m_pTransform->Rotation(ROT_Z, 0.f - m_pTransform->Get_Angle(ROT_Z));
+		m_szlastTankName = m_szTankName;
+
+	}
+
+
+	if (m_szTankName == L"Humvee")
+	{
+		iRotaion = 40;
+	}
+	else if (m_szTankName == L"A - 44")
+	{
+		iRotaion = 40;
+	}
+	else if (m_szTankName == L"TE6E4")
+	{
+		iRotaion = 30;
+	}
+	else if (m_szTankName == L"KING TIGER")
+	{
+		iRotaion = 20;
+	}
+	else if (m_szTankName == L"M55")
+	{
+		iRotaion = 10;
+	}
+
 
 
 	if (Get_DIKeyState_Custom(DIK_A) == KEY_STATE::HOLD)

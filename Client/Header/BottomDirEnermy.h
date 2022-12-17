@@ -52,10 +52,10 @@ public:
 	void  Set_Action(_int _action) { m_iAction = _action; }
 	void  Set_PastLocation(_int _Past) { m_PastLocation = _Past; }
 	void  Set_DisCountLocation();
-	float  Get_Hp() { return UI_fHP; };
-	void Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void	Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
-	_float GetHp(void) { return UI_fHP; }
+	float  Get_Hp() { return fCurHp; };
+	void Minus_HP_UI(_float HP_minus) { fCurHp -= HP_minus; }
+	void	Plus_HP_UI(_float HP_plus) { fCurHp += HP_plus; }
+	_float GetHp(void) { return fCurHp; }
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void Run(_float fTimeDelta);
 	_bool Get_CreateCheck(void) { return CreateCheck; }
@@ -131,7 +131,7 @@ private:
 	CRcTex*				m_pRcTexF = nullptr;
 	CTexture*			m_pTextureF = nullptr;
 	CTransform*		m_pTransformHP_UI = nullptr;
-	_float					UI_Orgin_HP, UI_fHP;
+
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
 

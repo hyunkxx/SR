@@ -65,9 +65,9 @@ public:
 	_float Dist(CTransform* _Target);
 	void ObjectCol(_bool m_Left);
 	void Run(_float fTimeDelta);
-	void Minus_HP_UI(_float HP_minus) { UI_fHP -= HP_minus; }
-	void Plus_HP_UI(_float HP_plus) { UI_fHP += HP_plus; }
-	_float GetHp(void) { return UI_fHP; }
+	void Minus_HP_UI(_float HP_minus) { fCurHp -= HP_minus; }
+	void Plus_HP_UI(_float HP_plus) { fCurHp += HP_plus; }
+	_float GetHp(void) { return fCurHp; }
 	void 	ColObject(_float fTimeDelta);
 private:
 	HRESULT		Add_Component(void);
@@ -125,7 +125,7 @@ private:
 	CRcTex*				m_pRcTexF = nullptr;
 	CTexture*			m_pTextureF = nullptr;
 	CTransform*		m_pTransformHP_UI = nullptr;
-	_float					UI_Orgin_HP, UI_fHP;
+
 	_float					UI_fScaleX, UI_fScaleY, UI_fScaleZ;
 	_float					UI_fOrgin_ScaleX;
 

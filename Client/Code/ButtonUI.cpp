@@ -6,7 +6,7 @@
 #include "TankManager.h"
 #include "GameMode.h"
 #include "Utility.h"
-
+#include "UI_FontMgr.h"
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, VEHICLE eType)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bShow(false)
@@ -297,6 +297,8 @@ void CButtonUI::BuyVehicle()
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 200;
 			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::HUMVEE);
+			CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::HUMVEE));
+
 		}
 		else
 		{
@@ -309,6 +311,8 @@ void CButtonUI::BuyVehicle()
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 800;
 			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::SMALL_TANK);
+			CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::SMALL_TANK));
+
 		}
 		else
 		{
@@ -321,6 +325,8 @@ void CButtonUI::BuyVehicle()
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 1500;
 			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::MIDDLE_TANK);
+			CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::MIDDLE_TANK));
+
 		}
 		else
 		{
@@ -333,6 +339,8 @@ void CButtonUI::BuyVehicle()
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2500;
 			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::BIG_TANK);
+			CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::BIG_TANK));
+
 		}
 		else
 		{
@@ -345,6 +353,8 @@ void CButtonUI::BuyVehicle()
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2300;
 			CTankManager::GetInstance()->CreateVehicle(m_pGraphicDev, VEHICLE::LONG_TANK);
+			CUI_FontMgr::GetInstance()->SavePlayerName(CTankManager::GetInstance()->GetName(VEHICLE::LONG_TANK));
+
 		}
 		else
 		{
