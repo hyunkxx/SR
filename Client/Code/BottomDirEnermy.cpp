@@ -162,7 +162,7 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 	UI_fScaleZ = 1.f;
 
 	m_stBody.fLen[x] = 1.5f;
-	m_stBody.fLen[y] = 0.7f;
+	m_stBody.fLen[y] = 2.f;
 	m_stBody.fLen[z] = 2.5f;
 
 	m_stHead.fLen[x] = 1.f;

@@ -158,7 +158,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 	m_stBody.fLen[x] = 1.5f;
-	m_stBody.fLen[y] = 0.7f;
+	m_stBody.fLen[y] = 2.f;
 	m_stBody.fLen[z] = 2.5f;
 
 	m_stHead.fLen[x] = 1.f;

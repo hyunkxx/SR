@@ -103,7 +103,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::SMALL_TANK].fBack_top_speed = -10.f;
 	//포신 길이, 포신 최대 각도, 회전속도 설정
 	tankData[(UINT)VEHICLE::SMALL_TANK].fPosinDist = 2.5f;
-	tankData[(UINT)VEHICLE::SMALL_TANK].fLowAngle = D3DXToRadian(0.f);
+	tankData[(UINT)VEHICLE::SMALL_TANK].fLowAngle = D3DXToRadian(10.f);
 	tankData[(UINT)VEHICLE::SMALL_TANK].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::SMALL_TANK].RotSpeed = 40.f;
 	// 장전 속도
@@ -127,7 +127,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fBack_top_speed = -10.f;
 	//포신 길이, 포신 최대 각도, 회전속도 설정
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fPosinDist = 2.5f;
-	tankData[(UINT)VEHICLE::MIDDLE_TANK].fLowAngle = D3DXToRadian(0.f);
+	tankData[(UINT)VEHICLE::MIDDLE_TANK].fLowAngle = D3DXToRadian(10.f);
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].RotSpeed = 30.f;
 	// 장전 속도
@@ -151,7 +151,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::BIG_TANK].fBack_top_speed = -7.5f;
 	//포신 길이, 포신 최대 각도, 회전속도 설정
 	tankData[(UINT)VEHICLE::BIG_TANK].fPosinDist = 3.f;
-	tankData[(UINT)VEHICLE::BIG_TANK].fLowAngle = D3DXToRadian(0.f);
+	tankData[(UINT)VEHICLE::BIG_TANK].fLowAngle = D3DXToRadian(10.f);
 	tankData[(UINT)VEHICLE::BIG_TANK].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::BIG_TANK].RotSpeed = 20.f;
 	// 장전 속도
@@ -175,7 +175,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::LONG_TANK].fBack_top_speed = -10.f;
 	//포신 길이, 포신 최대 각도, 회전속도 설정
 	tankData[(UINT)VEHICLE::LONG_TANK].fPosinDist = 3.5f;
-	tankData[(UINT)VEHICLE::LONG_TANK].fLowAngle = D3DXToRadian(0.f);
+	tankData[(UINT)VEHICLE::LONG_TANK].fLowAngle = D3DXToRadian(10.f);
 	tankData[(UINT)VEHICLE::LONG_TANK].TopAngle = D3DXToRadian(-40.f);
 	tankData[(UINT)VEHICLE::LONG_TANK].RotSpeed = 10.f;
 	// 장전 속도

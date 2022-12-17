@@ -270,11 +270,17 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			if (dwMouseMove < 0)
 			{
 				if (m_pTransformPosin->Get_Angle(ROT_X) >= m_stInfo.TopAngle)
-					Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
+					if (m_pTransformPosin->Get_Angle(ROT_X) > 0.f)
+						Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed / 3.f * fTimeDelta);
+					else
+						Rotation_Posin(ROT_X, (_float)-m_stInfo.RotSpeed * fTimeDelta);
 			}
 			else
 				if (m_pTransformPosin->Get_Angle(ROT_X) <= m_stInfo.fLowAngle)
-					Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
+					if (m_pTransformPosin->Get_Angle(ROT_X) > 0.f)
+						Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed / 3.f * fTimeDelta);
+					else
+						Rotation_Posin(ROT_X, (_float)m_stInfo.RotSpeed * fTimeDelta);
 		}
 
 		if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
@@ -490,16 +496,21 @@ void CHumvee::Expect_Hit_Point(const _float & fTimeDelta)
 		fFlyTime += 0.01f;
 		_vec3 Move;
 
-		Move.x = Dir.x * m_stInfo.iCannonSpeed * 0.01f * cosf(-fAngle);
-		Move.z = Dir.z * m_stInfo.iCannonSpeed * 0.01f * cosf(-fAngle);
-		Move.y = ((Dir.y * m_stInfo.iCannonSpeed * 0.01f) * sinf(-fAngle) - (0.5f * 9.8f * (fFlyTime * fFlyTime)));
+		Move.x = Dir.x * m_stInfo.iCannonSpeed * 0.01f;
+		Move.z = Dir.z * m_stInfo.iCannonSpeed * 0.01f;
+
+		if (m_pTransformPosin->Get_Angle(ROT_X) > 0.f)
+			Move.y = ((Dir.y * m_stInfo.iCannonSpeed * 0.01f) * sinf(fAngle) - (0.5f * 9.8f * (fFlyTime * fFlyTime)));
+		else
+			Move.y = ((Dir.y * m_stInfo.iCannonSpeed * 0.01f) * sinf(-fAngle) - (0.5f * 9.8f * (fFlyTime * fFlyTime)));
+		
 		Pos.y += Move.y;
 		if (Pos.y <= 0.f)
 			break;
 	}
 
-	m_fHitPos.x = Dir.x * m_stInfo.iCannonSpeed * fFlyTime * cosf(-fAngle);
-	m_fHitPos.z = Dir.z * m_stInfo.iCannonSpeed * fFlyTime * cosf(-fAngle);
+	m_fHitPos.x = Dir.x * m_stInfo.iCannonSpeed * fFlyTime;
+	m_fHitPos.z = Dir.z * m_stInfo.iCannonSpeed * fFlyTime;
 	m_fHitPos += Pos;
 	m_fHitPos.y = 0.f;
 

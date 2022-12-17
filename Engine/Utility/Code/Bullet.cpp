@@ -40,9 +40,13 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	m_fAccum += fTimeDelta;
 	m_pTransform->Set_Scale(m_fScale, m_fScale, m_fScale);
 	_vec3 Move, Dir1, Dir2;
-	Move.x = m_vDir.x * m_fSpeed * fTimeDelta * cosf(-m_fAngleX);
-	Move.z = m_vDir.z * m_fSpeed * fTimeDelta * cosf(-m_fAngleX);
-	Move.y = ((m_vDir.y * m_fSpeed * fTimeDelta) * sinf(-m_fAngleX) - (0.5f * 9.8f * (m_fAccum * m_fAccum)));
+	Move.x = m_vDir.x * m_fSpeed * fTimeDelta;
+	Move.z = m_vDir.z * m_fSpeed * fTimeDelta;
+
+	if(0.f < m_fAngleX)
+		Move.y = ((m_vDir.y * m_fSpeed * fTimeDelta) * sinf(m_fAngleX) - (0.5f * 9.8f * (m_fAccum * m_fAccum)));
+	else
+		Move.y = ((m_vDir.y * m_fSpeed * fTimeDelta) * sinf(-m_fAngleX) - (0.5f * 9.8f * (m_fAccum * m_fAccum)));
 
 	Dir2 = Dir1 = Move;
 	Dir1.y = 0.f;
@@ -54,7 +58,8 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	if (Dir2.y < Dir1.y)
 		Scalar *= -1;
 
-	if(m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET || m_eID == SHIP_BULLET)
+	
+	if(m_eID == CANNONBALL || m_eID == SMALL_CANNONBALL || m_eID == MIDDLE_CANNONBALL || m_eID == BIG_CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET || m_eID == SHIP_BULLET)
 		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
 	else
 		m_pTransform->Rotation(ROT_X,D3DXToRadian(-1000.f *fTimeDelta));
@@ -154,6 +159,22 @@ void CBullet::Set_ID(BULLET_ID eID)
 		m_fHitRange = 3.f;
 		m_fScale = 10.f;
 	}
+	else if (eID == BULLET_ID::SMALL_CANNONBALL)
+	{
+		m_fHitRange = 3.f;
+		m_fScale = 8.f;
+	}
+	else if (eID == BULLET_ID::MIDDLE_CANNONBALL)
+	{
+		m_fHitRange = 2.f;
+		m_fScale = 9.f;
+	}
+	else if (eID == BULLET_ID::BIG_CANNONBALL)
+	{
+		m_fHitRange = 2.5f;
+		m_fScale = 10.f;
+	}
+
 	else if (eID == BULLET_ID::SHIP_BULLET)
 	{
 		m_fHitRange = 3.f;

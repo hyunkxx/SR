@@ -357,6 +357,28 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL);
 	}
+
+	for (_int i = 0; 200 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::SMALL_CANNONBALL);
+	}
+
+	for (_int i = 0; 200 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::MIDDLE_CANNONBALL);
+	}
+
+	for (_int i = 0; 200 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::BIG_CANNONBALL);
+	}
+
 	for (_int i = 0; 10 > i; i++)
 	{
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
@@ -950,7 +972,7 @@ void CStage::Collison_Object(void)
 							break;
 						}
 					}
-					else if (i == BULLET_ID::CANNONBALL)
+					else if (i == BULLET_ID::CANNONBALL || i == BULLET_ID::SMALL_CANNONBALL || i == BULLET_ID::MIDDLE_CANNONBALL || i == BULLET_ID::BIG_CANNONBALL)
 					{
 						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
@@ -1017,7 +1039,15 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-					dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(30.f);
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
 					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1042,7 +1072,15 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-					dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1068,7 +1106,15 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-					dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
 					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1093,7 +1139,17 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-					dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(30.f);
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(30.f);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
 					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)
 					{
 						(*iters)->Set_Dead(true);
@@ -1105,7 +1161,529 @@ void CStage::Collison_Object(void)
 		}
 	}
 
+	CGameObject* pPlayer = pGameLogic->Get_GameObject(L"PlayerVehicle");
 
+	// 蜡历尔 AI 埃 面倒贸府
+	for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), pPlayer->Get_Dist(), (*iters)->Get_Dist()))
+			continue;
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+		{
+			OBB* A = dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB();
+			OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+			dynamic_cast<CTankSet*>(pPlayer)->OBB_Collision_EX();
+
+
+			if (A->vPos.x > B->vPos.x)
+			{
+				dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(true);
+			}
+			else
+			{
+				dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(false);
+			}
+		}
+	}
+	for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), pPlayer->Get_Dist(), (*iters)->Get_Dist()))
+			continue;
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+		{
+			OBB* A = dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB();
+			OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+			dynamic_cast<CTankSet*>(pPlayer)->OBB_Collision_EX();
+
+			if (A->vPos.x > B->vPos.x)
+			{
+				dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(true);
+			}
+			else
+			{
+				dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
+			}
+		}
+	}
+	for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+	{
+		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), pPlayer->Get_Dist(), (*iters)->Get_Dist()))
+			continue;
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+		{
+			OBB* A = dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB();
+			OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+			dynamic_cast<CTankSet*>(pPlayer)->OBB_Collision_EX();
+
+			if (A->vPos.x > B->vPos.x)
+			{
+				dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(true);
+			}
+			else
+			{
+				dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(false);
+			}
+		}
+	}
+	for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+	{
+
+		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))
+			continue;
+
+		if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), pPlayer->Get_Dist(), (*iters)->Get_Dist()))
+			continue;
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+		{
+			OBB* A = dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB();
+			OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+			dynamic_cast<CTankSet*>(pPlayer)->OBB_Collision_EX();
+
+			if (A->vPos.x > B->vPos.x)
+			{
+				dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(true);
+			}
+			else
+			{
+				dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(false);
+			}
+		}
+
+	}
+
+	for (auto& Dest = DAlly.begin(); Dest < DAlly.end(); ++Dest)
+	{
+		auto iter = Dest;
+		iter++;
+		for (; iter < DAlly.end(); ++iter)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iter))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iter)->Get_Info(), (*Dest)->Get_Dist(), (*iter)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iter)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Ally*>(*iter)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Ally*>(*iter)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		
+		for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+		{
+
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(false);
+				}
+			}
+
+		}
+	}
+
+	for (auto& Dest = BDAlly.begin(); Dest < BDAlly.end(); ++Dest)
+	{
+		auto iter = Dest;
+		iter++;
+		for (; iter < BDAlly.end(); ++iter)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iter))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iter)->Get_Info(), (*Dest)->Get_Dist(), (*iter)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iter)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirAlly*>(*iter)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirAlly*>(*iter)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+	
+		for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+		{
+
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(false);
+				}
+			}
+
+		}
+	}
+
+	for (auto& Dest = BDEnemy.begin(); Dest < BDEnemy.end(); ++Dest)
+	{
+		auto iter = Dest;
+		iter++;
+		for (; iter < BDEnemy.end(); ++iter)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iter))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iter)->Get_Info(), (*Dest)->Get_Dist(), (*iter)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iter)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iter)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iter)->ObjectCol(false);
+				}
+			}
+		}
+
+
+		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+		{
+
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Enermy*>(*iters)->ObjectCol(false);
+				}
+			}
+
+		}
+	}
+
+	for (auto& Dest = DEnemy.begin(); Dest < DEnemy.end(); ++Dest)
+	{
+		auto iter = Dest;
+		iter++;
+
+		for (; iter < DEnemy.end(); ++iter)
+		{
+
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iter))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iter)->Get_Info(), (*Dest)->Get_Dist(), (*iter)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iter)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iter)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Enermy*>(*iter)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Enermy*>(*iter)->ObjectCol(false);
+				}
+			}
+
+		}
+
+		for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CDefault_Ally*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+		{
+			if (!dynamic_cast<ICollisionable*>((*Dest)) || !dynamic_cast<ICollisionable*>(*iters))
+				continue;
+
+			if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*Dest)->Get_Dist(), (*iters)->Get_Dist()))
+				continue;
+
+			if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>((*Dest))->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+			{
+				OBB* A = dynamic_cast<ICollisionable*>((*Dest))->Get_OBB();
+				OBB* B = dynamic_cast<ICollisionable*>(*iters)->Get_OBB();
+
+				if (A->vPos.x > B->vPos.x)
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(true);
+				}
+				else
+				{
+					dynamic_cast<CBottomDirEnermy*>(*iters)->ObjectCol(false);
+				}
+			}
+		}
+
+		
+	}
 }
 
 

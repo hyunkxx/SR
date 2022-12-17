@@ -301,7 +301,16 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
 		m_stInfo.fReloadTime = 0.f;
 
-		if (eID == BULLET_ID::CANNONBALL)
+		
+		if (eID == BULLET_ID::MASHINE_BULLET)
+		{
+			Engine::StopSound(PLAYER_SHOT_SOUND1);
+			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::HUMVEE_SHOOT_EFFECT);
+			pObject->Set_Dead(false);
+			static_cast<CGun_Shoot_Effect*>(pObject)->Set_Target(m_pTransformPosin);
+		}
+		else
 		{
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
@@ -310,14 +319,6 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 			pObject->Set_Scale(10.f);
 			static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformPosin);
 			static_cast<CShootEffect*>(pObject)->Set_Dist(6.f, 0.f, 0.f);
-		}
-		else if (eID == BULLET_ID::MASHINE_BULLET)
-		{
-			Engine::StopSound(PLAYER_SHOT_SOUND1);
-			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::HUMVEE_SHOOT_EFFECT);
-			pObject->Set_Dead(false);
-			static_cast<CGun_Shoot_Effect*>(pObject)->Set_Target(m_pTransformPosin);
 		}
 	}
 
