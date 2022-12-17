@@ -95,7 +95,7 @@ private:
 	//value
 
 	// 델타타임으로 스테이지 제한시간을 만들 정수
-	_int iPlayTime = 183;
+	_int iPlayTime = 599;
 
 	// 시간 카운트 실수
 	_float m_fTime = 0.f;

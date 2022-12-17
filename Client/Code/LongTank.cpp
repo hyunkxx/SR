@@ -264,7 +264,7 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 			Shoot_Bullet(BULLET_ID::CANNONBALL);
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 			Engine::PlaySound_SR(L"Shoot_Fire.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
-			Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
+			//Engine::Get_Object(L"GameLogic", L"ShootEffect")->Set_Dead(false);
 			m_bReLoad = false;
 		}
 

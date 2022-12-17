@@ -42,6 +42,7 @@ void CUI_FontMgr::Time_Font_UI_Update(const _float & fTimeDelta)
 
 	_int iMin = (iPlayTime / 60);
 	errno_t iCheck_TM = _itow_s(iMin, m_szTime_min, sizeof(m_szTime_min) / sizeof(m_szTime_min[0]), 10);
+
 	if (iPlayTime <= 0)	{	lstrcpy(m_szTime_min, L"0");}
 
 	_int iTen_Sec = ((iPlayTime % 60) / 10);
