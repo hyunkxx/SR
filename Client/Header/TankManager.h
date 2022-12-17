@@ -18,6 +18,7 @@ public:
 	void CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType);
 	CGameObject** GetVehicle() { return &m_pVehicle; }
 
+	const float& GetDamage(VEHICLE eType) { return tankData[(UINT)eType].fDamage; }
 	const TANK_STATE& GetData(VEHICLE eType) { return tankData[(UINT)eType]; };
 	const wstring& GetName(VEHICLE eType) { return tankData[(UINT)eType].strName; };
 

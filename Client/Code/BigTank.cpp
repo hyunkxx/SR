@@ -7,6 +7,8 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
+#include "GameMode.h"
+
 CBigTank::CBigTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {
@@ -60,6 +62,7 @@ void CBigTank::LateUpdate_Object(void)
 
 void CBigTank::Render_Object(void)
 {
+
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA)
 	{
 		if (m_bDead)

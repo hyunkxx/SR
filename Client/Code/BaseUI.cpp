@@ -77,6 +77,7 @@ _int CBaseUI::Update_Object(const _float & fTimeDelta)
 		if (curPer <= 0.f)
 		{
 			CGameMode::GetInstance()->m_eGameResult = CGameMode::GAME_RESULT::LOSE;
+			CGameMode::GetInstance()->m_bGameEnd = true;
 		}
 
 		m_bUpdateTransform = true;
@@ -92,6 +93,7 @@ _int CBaseUI::Update_Object(const _float & fTimeDelta)
 		if (curPer <= 0.f)
 		{
 			CGameMode::GetInstance()->m_eGameResult = CGameMode::GAME_RESULT::WIN;
+			CGameMode::GetInstance()->m_bGameEnd = true;
 		}
 
 		m_bUpdateTransform = true;

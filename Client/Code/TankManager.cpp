@@ -86,7 +86,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::HUMVEE].fReload = 0.1f;
 	tankData[(UINT)VEHICLE::HUMVEE].fReloadTime = 0.1f;
 	tankData[(UINT)VEHICLE::HUMVEE].iCannonSpeed = 300;
-	
+
 	tankData[(UINT)VEHICLE::SMALL_TANK].strName = L"A - 44";
 	tankData[(UINT)VEHICLE::SMALL_TANK].fDamage = 100.f;
 	tankData[(UINT)VEHICLE::SMALL_TANK].fMaxHP = 500.f;

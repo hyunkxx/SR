@@ -167,6 +167,9 @@ void CDirButton::KeyInput()
 
 	if (Get_DIKeyState_Custom(DIK_P) == KEY_STATE::TAP)
 	{
+		Engine::StopSound(PAPER_SOUND);
+		Engine::PlaySound_SR(L"Paper.wav", PAPER_SOUND, 1.f);
+
 		if (CGameMode::GetInstance()->m_bOnSelectButton)
 		{
 			ShowCursor(false);

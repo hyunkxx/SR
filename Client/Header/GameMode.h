@@ -6,7 +6,7 @@ BEGIN(Engine)
 class CGameObject;
 END
 
-class CGameMode : public CBase
+class CGameMode
 {
 public:
 	enum class TYPE { ALLY, ENEMY, MAX };
@@ -17,8 +17,6 @@ private:
 	explicit CGameMode();
 	virtual ~CGameMode();
 public:
-	virtual void Free(void);
-public:
 	void Reset();
 	void InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold);
 
@@ -26,6 +24,8 @@ public:
 	bool VictoryCheck();
 public:
 	EData eData = {}; //AI »ý¼º¿ë
+
+	bool m_bGameEnd = false;
 
 	bool m_bGameStart = false;
 	bool m_bGameExit = false;

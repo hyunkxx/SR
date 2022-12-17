@@ -191,6 +191,9 @@ void CButtonUI::KeyInput()
 	if (Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP && fLength <= 250.f
 		|| (pGameObject->Get_Dead() && Get_DIKeyState_Custom(DIK_O) == KEY_STATE::TAP))
 	{
+		Engine::StopSound(PAPER_SOUND);
+		Engine::PlaySound_SR(L"Paper.wav", PAPER_SOUND, 1.f);
+
 		if (CGameMode::GetInstance()->m_bOnCreateButton)
 		{
 			ShowCursor(false);

@@ -45,6 +45,8 @@ void CModeSelectMenu::Free(void)
 
 HRESULT CModeSelectMenu::Ready_Scene(void)
 {
+	ShowCursor(true);
+
 	(Ready_Layer_Environment(L"Background"), E_FAIL);
 	(Ready_Layer_GameLogic(L"GameObject"), E_FAIL);
 	(Ready_Layer_UI(L"UI"), E_FAIL);
@@ -61,7 +63,7 @@ _int CModeSelectMenu::Update_Scene(const _float & fTimeDelta)
 		DestroyWindow(g_hWnd);
 	}
 
-	Engine::PlaySound_SR(L"coh_menu.mp3", SELECT_MENU_BGM, m_fSound);
+	Engine::PlaySound_SR(L"Lobby.mp3", SELECT_MENU_BGM, 0.5f);
 
 	KeyInput();
 
@@ -113,6 +115,8 @@ void CModeSelectMenu::LateUpdate_Scene(void)
 
 void CModeSelectMenu::Render_Scene(void)
 {
+	_vec2 vPos = { WINCX * 0.5f - 120.f, 5.f };
+	Engine::Render_Font(L"Font_RetroBig", L"MODE SELECTION", &vPos, D3DCOLOR_RGBA(255, 255, 255, 255));
 }
 
 HRESULT CModeSelectMenu::Ready_Layer_Environment(const _tchar * pLayerTag)
@@ -162,26 +166,26 @@ HRESULT CModeSelectMenu::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = m_pWarButton = CModeButton::Create(m_pGraphicDev, CModeButton::GMODE::WAR);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"WarButton", pGameObject), E_FAIL);
-	static_cast<CModeButton*>(m_pWarButton)->Set_PosX(220);
-	static_cast<CModeButton*>(m_pWarButton)->Set_PosY(200);
+	static_cast<CModeButton*>(m_pWarButton)->Set_PosX(230);
+	static_cast<CModeButton*>(m_pWarButton)->Set_PosY(210);
 
 	pGameObject = m_pRushButton = CModeButton::Create(m_pGraphicDev, CModeButton::GMODE::RUSH);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RushButton", pGameObject), E_FAIL);
-	static_cast<CModeButton*>(m_pRushButton)->Set_PosX(580);
-	static_cast<CModeButton*>(m_pRushButton)->Set_PosY(200);
+	static_cast<CModeButton*>(m_pRushButton)->Set_PosX(570);
+	static_cast<CModeButton*>(m_pRushButton)->Set_PosY(210);
 
 	pGameObject = m_pStartButton = CGameButton::Create(m_pGraphicDev, CGameButton::TYPE::START);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StartButton", pGameObject), E_FAIL);
 	static_cast<CGameButton*>(m_pStartButton)->Set_PosX(WINCX * 0.5f);
-	static_cast<CGameButton*>(m_pStartButton)->Set_PosY(420);
+	static_cast<CGameButton*>(m_pStartButton)->Set_PosY(430);
 
 	pGameObject = m_pExitButton = CGameButton::Create(m_pGraphicDev, CGameButton::TYPE::EXIT);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExitButton", pGameObject), E_FAIL);
 	static_cast<CGameButton*>(m_pExitButton)->Set_PosX(WINCX * 0.5f);
-	static_cast<CGameButton*>(m_pExitButton)->Set_PosY(490);
+	static_cast<CGameButton*>(m_pExitButton)->Set_PosY(500);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;

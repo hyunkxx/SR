@@ -52,7 +52,7 @@ _int CMainMenu::Update_Scene(const _float & fTimeDelta)
 {
 	_int iExit = CScene::Update_Scene(fTimeDelta);
 
-	Engine::PlaySound_SR(L"coh_menu.mp3", SELECT_MENU_BGM, m_fSound);
+	Engine::PlaySound_SR(L"Lobby.mp3", SELECT_MENU_BGM, 0.5f);
 
 	KeyInput();
 	UpdateCam(fTimeDelta);
@@ -85,6 +85,8 @@ void CMainMenu::LateUpdate_Scene(void)
 
 void CMainMenu::Render_Scene(void)
 {
+	_vec2 vPos = { WINCX * 0.5f - 150.f, 5.f };
+	Engine::Render_Font(L"Font_RetroBig", L"VEHICLE SELECTION", &vPos, D3DCOLOR_RGBA(255, 255, 255, 255));
 }
 
 HRESULT CMainMenu::Ready_Layer_Environment(const _tchar * pLayerTag)

@@ -47,8 +47,6 @@ CGameButton* CGameButton::Create(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType)
 
 HRESULT CGameButton::Ready_Object(void)
 {
-	ShowCursor(true);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 

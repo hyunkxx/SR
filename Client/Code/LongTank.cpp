@@ -9,6 +9,7 @@
 #include "EffectPool.h"
 #include "Boom_Support.h"
 #include "UI_Volume.h"
+#include "GameMode.h"
 
 CLongTank::CLongTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)

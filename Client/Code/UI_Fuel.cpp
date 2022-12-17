@@ -6,12 +6,12 @@
 #include "AimCamera.h"
 #include "UI_FontMgr.h"
 
-
 #include "Humvee.h"
 #include "SmallTank.h"
 #include "MiddleTank.h"
 #include "BigTank.h"
 #include "LongTank.h"
+#include "GameMode.h"
 
 CUI_Fuel::CUI_Fuel(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -51,13 +51,13 @@ HRESULT CUI_Fuel::Ready_Object(void)
 	m_fFOrigin_ScaleY = m_fFScaleY = 65.f;
 	m_fFScaleZ = 1.f;
 
-	m_fFPosX =  225.f;
-	m_fFOrigin_PosY = m_fFPosY =  545.f;
-	m_fFPosZ =  0.02f;
+	m_fFPosX = 225.f;
+	m_fFOrigin_PosY = m_fFPosY = 545.f;
+	m_fFPosZ = 0.02f;
 
 	m_pFTransform->Set_Scale(m_fFScaleX, m_fFScaleY, m_fFScaleZ);
 	m_pFTransform->Set_Pos(m_fFPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fFPosY, m_fFPosZ);
-	
+
 	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
 	if (m_szTankType == L"Humvee")
@@ -103,24 +103,26 @@ void CUI_Fuel::LateUpdate_Object(void)
 
 void CUI_Fuel::Render_Object(void)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
 
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA )
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		m_pFTransform->Set_Scale(m_fFScaleX, m_fFScaleY, m_fFScaleZ);
 		m_pFTransform->Set_Pos(m_fFPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fFPosY, m_fFPosZ);
 
 		//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
-		_matrix	ViewMatrix1 , ViewMatrix2;
+		_matrix	ViewMatrix1, ViewMatrix2;
 		D3DXMatrixIdentity(&ViewMatrix1);
-	
+
 
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix1);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj1);
 
 		m_pTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
-		
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pFTransform->Get_WorldMatrix());
 
 		D3DXMatrixIdentity(&ViewMatrix2);
@@ -130,7 +132,7 @@ void CUI_Fuel::Render_Object(void)
 
 		m_pFTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
-		
+
 
 		//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	}

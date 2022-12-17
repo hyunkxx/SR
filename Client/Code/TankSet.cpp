@@ -6,6 +6,8 @@
 #include "EffectManager.h"
 #include "ShootEffect.h"
 #include "Gun_Shoot_Effect.h"
+#include "GameMode.h"
+
 CTankSet::CTankSet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -25,7 +27,7 @@ _int CTankSet::Update_Object(const _float & fTimeDelta)
 	m_stInfo.fReloadTime += fTimeDelta;
 	m_fDT = fTimeDelta;
 
-	m_pTransformBody->Set_Scale(m_fScale , m_fScale, m_fScale);
+	m_pTransformBody->Set_Scale(m_fScale, m_fScale, m_fScale);
 	m_pTransformHead->Set_Scale(m_fScale, m_fScale, m_fScale);
 	m_pTransformPosin->Set_Scale(m_fScale, m_fScale, m_fScale);
 	__super::Update_Object(fTimeDelta);
@@ -45,6 +47,9 @@ void CTankSet::Render_Object(void)
 {
 	if ((Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA) && !m_bDead)
 	{
+		if (CGameMode::GetInstance()->UseMenu() || CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		// HP UI
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -56,6 +61,9 @@ void CTankSet::Render_Object(void)
 	}
 	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) && !m_bDead)
 	{
+		if (CGameMode::GetInstance()->UseMenu() || CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		// Minimap UI
 		_matrix OldViewMatrix, OldProjMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
@@ -82,7 +90,7 @@ void CTankSet::Render_Object(void)
 	}
 }
 
-void CTankSet::Rotation_Body(ROTATION eID,_float fAngle)
+void CTankSet::Rotation_Body(ROTATION eID, _float fAngle)
 {
 	m_pTransformBody->Rotation(eID, D3DXToRadian(fAngle));
 }
@@ -98,7 +106,7 @@ void CTankSet::Rotation_Posin(ROTATION eID, _float fAngle)
 }
 _float CTankSet::Plus_Advance_AccelSpeed(const _float & fTimeDelta)
 {
-	if(!m_stInfo.bBack)
+	if (!m_stInfo.bBack)
 		m_stInfo.bAdvance = true;
 
 	m_stInfo.fAccum += fTimeDelta;
@@ -108,7 +116,7 @@ _float CTankSet::Plus_Advance_AccelSpeed(const _float & fTimeDelta)
 		return m_stInfo.fSpeed;
 	else
 		Minus_Advance_AccelSpeed(fTimeDelta);
-		
+
 	return m_stInfo.fSpeed;
 }
 
@@ -134,7 +142,7 @@ _float CTankSet::Plus_Back_AccelSpeed(const _float & fTimeDelta)
 		m_stInfo.fAccum = 0.f;
 		m_stInfo.bBack = false;
 	}
-	
+
 	return m_stInfo.fSpeed = (m_stInfo.fAccel_Back * m_fScale) * m_stInfo.fAccum;
 }
 
@@ -269,9 +277,9 @@ HRESULT CTankSet::Add_Component(void)
 
 void CTankSet::Shoot_Bullet(BULLET_ID eID)
 {
-	_vec3 Pos, Dir ,UP;
+	_vec3 Pos, Dir, UP;
 
-	
+
 	if (eID == BULLET_ID::CANNONBALL_RELOAD || eID == BULLET_ID::MASHINE_BULLET_RELOAD)
 	{
 		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
@@ -281,7 +289,7 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 		Pos.y += 1.f * m_fScale;
 		D3DXVec3Normalize(&Dir, &Dir);
 		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
-		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed/10.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
+		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed / 10.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
 	}
 	else
 	{
@@ -301,9 +309,9 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 			pObject->Set_Dead(false);
 			pObject->Set_Scale(10.f);
 			static_cast<CShootEffect*>(pObject)->Set_Target(m_pTransformPosin);
-			static_cast<CShootEffect*>(pObject)->Set_Dist(6.f, 0.f , 0.f);	
+			static_cast<CShootEffect*>(pObject)->Set_Dist(6.f, 0.f, 0.f);
 		}
-		else if(eID == BULLET_ID::MASHINE_BULLET)
+		else if (eID == BULLET_ID::MASHINE_BULLET)
 		{
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 			Engine::PlaySound_SR(L"MACHINEGUN_FIRE.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
@@ -315,7 +323,7 @@ void CTankSet::Shoot_Bullet(BULLET_ID eID)
 
 
 }
-		
+
 
 void CTankSet::Posin_Setting(const _vec3 & _SetPos)
 {

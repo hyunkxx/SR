@@ -12,6 +12,8 @@
 #include "BigTank.h"
 #include "LongTank.h"
 
+#include "GameMode.h"
+
 CUI_Player_Hp::CUI_Player_Hp(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -161,8 +163,10 @@ void CUI_Player_Hp::LateUpdate_Object(void)
 
 void CUI_Player_Hp::Render_Object(void)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
 
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA )
+	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
 		_int iPercent = _int(HP_Percent * 100.f);
 
@@ -207,7 +211,7 @@ void CUI_Player_Hp::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 		m_pBTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
-		
+
 		//m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 		//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 	}

@@ -25,10 +25,6 @@ CGameMode::~CGameMode()
 {
 }
 
-void CGameMode::Free(void)
-{
-}
-
 void CGameMode::InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold)
 {
 	m_nVictoryPoint = nVictoryPoint;

@@ -10,7 +10,7 @@ class CTransform;
 END
 
 class CTankSet :
-	public CGameObject , public ICollisionable
+	public CGameObject, public ICollisionable
 {
 protected:
 	explicit CTankSet(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -25,7 +25,7 @@ public:
 
 	virtual const _vec3	Get_Info(void)override;
 	virtual	void		Move_Info(_vec3 _Info)override;
-	virtual			void		RenderGUI(void)override{}
+	virtual			void		RenderGUI(void)override {}
 	virtual			void		OBB_Collision_EX(void);
 	virtual			void		Update_OBB(void);
 	virtual			OBB*        Get_OBB(void) { return &m_stBody; }
@@ -46,7 +46,7 @@ private:
 public:
 	void				Rotation_Body(ROTATION eID, _float fAngle);
 	void				Rotation_Head(ROTATION eID, _float fAngle);
-	void				Rotation_Posin(ROTATION eID,_float fAngle);
+	void				Rotation_Posin(ROTATION eID, _float fAngle);
 
 	_float				Plus_Advance_AccelSpeed(const _float& fTimeDelta);
 	_float				Minus_Advance_AccelSpeed(const _float& fTimeDelta);
@@ -80,7 +80,7 @@ protected:
 	_float				m_fDT = 0.f;
 
 	_vec3				m_fHitPos;
-//
+	//
 	_int				m_iMotionCount = 0;
 protected:
 	virtual void Free(void) override;

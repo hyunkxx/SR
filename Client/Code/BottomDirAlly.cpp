@@ -248,6 +248,9 @@ void CBottomDirAlly::Render_Object(void)
 	// Minimap UI
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		if (CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);

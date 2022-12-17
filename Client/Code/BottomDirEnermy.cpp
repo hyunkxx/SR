@@ -29,7 +29,6 @@ CBottomDirEnermy::CBottomDirEnermy(const CBottomDirEnermy & rhs)
 
 CBottomDirEnermy::~CBottomDirEnermy()
 {
-	Free();
 	CGameMode::GetInstance()->m_nEnemyCount--;
 }
 
@@ -65,7 +64,6 @@ HRESULT CBottomDirEnermy::Ready_Object(void * pArg)
 {
 	m_EData = (EData*)pArg;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
 
 	switch (m_EData->TankType)
 	{
@@ -253,6 +251,9 @@ void CBottomDirEnermy::Render_Object(void)
 	// Minimap UI
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		if (CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
@@ -1176,7 +1177,7 @@ CBottomDirEnermy* CBottomDirEnermy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("BackGround Create Failed");
 		Safe_Release(pInstance);
 	}
-	
+
 	return pInstance;
 }
 
@@ -1418,7 +1419,7 @@ void CBottomDirEnermy::Update_UI(void)
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
-	
+
 		UI_fScaleY = 0.6f;
 
 		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);

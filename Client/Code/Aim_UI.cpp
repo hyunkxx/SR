@@ -58,7 +58,7 @@ void CAim_UI::LateUpdate_Object(void)
 
 void CAim_UI::Render_Object(void)
 {
-	if (CGameMode::GetInstance()->UseMenu())
+	if (CGameMode::GetInstance()->UseMenu() || CGameMode::GetInstance()->m_bGameEnd)
 		return;
 
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA && Engine::Get_Camera_ID() != CAMERA_ID::TANK_CAMERA)
@@ -85,8 +85,8 @@ void CAim_UI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
-	
-	if(m_bTexture[0])
+
+	if (m_bTexture[0])
 		m_pTextureCom_0->Set_Texture(0);
 	else if (m_bTexture[1])
 		m_pTextureCom_1->Set_Texture(0);
@@ -123,7 +123,7 @@ HRESULT CAim_UI::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	
+
 	return S_OK;
 }
 

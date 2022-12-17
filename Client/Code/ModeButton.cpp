@@ -47,8 +47,6 @@ CModeButton* CModeButton::Create(LPDIRECT3DDEVICE9 pGraphicDev, GMODE eType)
 
 HRESULT CModeButton::Ready_Object(void)
 {
-	ShowCursor(true);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 

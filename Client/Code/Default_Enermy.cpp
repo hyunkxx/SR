@@ -31,8 +31,7 @@ CDefault_Enermy::CDefault_Enermy(const CDefault_Enermy & rhs)
 
 CDefault_Enermy::~CDefault_Enermy()
 {
-	Free();
-	//CGameMode::GetInstance()->m_nEnemyCount--;
+	CGameMode::GetInstance()->m_nEnemyCount--;
 }
 
 HRESULT CDefault_Enermy::Ready_Object(void)
@@ -256,6 +255,9 @@ void CDefault_Enermy::Render_Object(void)
 	// Minimap UI
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		if (CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);

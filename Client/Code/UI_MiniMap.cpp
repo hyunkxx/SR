@@ -9,6 +9,8 @@
 #include "LeftTopLocation.h"
 #include "RightLocation.h"
 #include "RightTopLocation.h"
+#include "GameMode.h"
+
 CUI_MiniMap::CUI_MiniMap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -137,14 +139,15 @@ _int CUI_MiniMap::Update_Object(const _float & fTimeDelta)
 void CUI_MiniMap::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	
+
 	Add_RenderGroup(RENDER_PRIORITY, this);
-	
+
 }
 
 void CUI_MiniMap::Render_Object(void)
 {
-
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{

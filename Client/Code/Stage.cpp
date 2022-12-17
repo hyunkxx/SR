@@ -64,11 +64,12 @@
 #include "AICreateButton.h"
 
 #include "BaseUI.h"
+#include "ResultUI.h"
 
 /* System */
 #include "TankManager.h"
 #include "GameMode.h"
-
+#include "ModeSelectMenu.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -80,6 +81,9 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
+	Engine::StopAll();
+	ShowCursor(false);
+
 	float Start = 10.f;
 	float End = 300.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
@@ -91,7 +95,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 20000, 2000);
+	CGameMode::GetInstance()->InitGameMode(500, 100, 2000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -105,7 +109,29 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
+	Engine::Update_BulletMgr(fTimeDelta);
+	Engine::Update_CSP_EffectMgr(fTimeDelta);
+	Engine::Update_EnermyMgr(fTimeDelta);
+	Engine::Update_CameraMgr(fTimeDelta);
+	_int iExit = __super::Update_Scene(fTimeDelta);
+
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
+
+	if (CGameMode::GetInstance()->m_bGameEnd
+		&& Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
+	{
+		/* ?? 왜안되는데 */
+		Engine::StopSound(STAGE_SOUND);
+		CScene*		pScene = nullptr;
+
+		Engine::StopSound(SELECT_SOUND);
+		Engine::PlaySound_SR(L"enter.mp3", SELECT_SOUND, 1.f);
+
+		pScene = CModeSelectMenu::Create(m_pGraphicDev);
+
+		NULL_CHECK_RETURN(pScene, -1);
+		FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+	}
 
 	if (CGameMode::GetInstance()->m_bOnTrigger)
 	{
@@ -121,14 +147,10 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 		CGameMode::GetInstance()->m_bOnTrigger = false;
 	}
 
-	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
-	Engine::Update_BulletMgr(fTimeDelta);
-	Engine::Update_CSP_EffectMgr(fTimeDelta);
-	Engine::Update_EnermyMgr(fTimeDelta);
-	Engine::Update_CameraMgr(fTimeDelta);
-	__super::Update_Scene(fTimeDelta);
-	return S_OK;
+	Engine::PlaySound_SR(L"WinterBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+
+	return iExit;
 }
 
 void CStage::LateUpdate_Scene(void)
@@ -143,6 +165,9 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
+
 	changeColor += 0.1f;
 
 	if (changeColor >= 1.f)
@@ -171,8 +196,6 @@ void CStage::Render_Scene(void)
 		// 팀 킬 카운트								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_RedTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY * 7.f), CUI_FontMgr::GetInstance()->Get_Hecks_R());
-
-
 	}
 }
 
@@ -191,7 +214,8 @@ void CStage::Free(void)
 	CUI_FontMgr::GetInstance()->DestroyInstance();
 	CGameMode::DestroyInstance();
 
-	Engine::StopAll();
+	StopAll();
+
 	__super::Free();
 }
 
@@ -733,6 +757,9 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"enemy_hp", pGameObject), E_FAIL);
 	static_cast<CBaseUI*>(pGameObject)->Set_PosX(vPos.x);
 
+	pGameObject = CResultUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"game_result", pGameObject), E_FAIL);
 
 	return S_OK;
 }

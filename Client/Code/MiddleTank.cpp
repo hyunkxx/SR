@@ -7,6 +7,8 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
+#include "GameMode.h"
+
 CMiddleTank::CMiddleTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)
 {

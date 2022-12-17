@@ -57,7 +57,6 @@ HRESULT CDefault_Ally::Ready_Object(void)
 
 HRESULT CDefault_Ally::Ready_Object(void * pArg)
 {
-
 	m_EData = (EData*)pArg;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -244,6 +243,9 @@ void CDefault_Ally::Render_Object(void)
 	// Minimap UI
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		if (CGameMode::GetInstance()->m_bGameEnd)
+			return;
+
 		_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);

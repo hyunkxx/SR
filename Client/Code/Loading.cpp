@@ -210,6 +210,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_start", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_start.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"btn_exit", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Button/btn_exit.png", TEX_NORMAL)), E_FAIL);
 
+	/* Result UI */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"game_result", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/game_result.png", TEX_NORMAL)), E_FAIL);
+
 
 	lstrcpy(m_szString, L"Complete");
 

@@ -11,6 +11,7 @@
 #include "MiddleTank.h"
 #include "BigTank.h"
 #include "LongTank.h"
+#include "GameMode.h"
 
 CUI_Speed::CUI_Speed(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -82,6 +83,8 @@ void CUI_Speed::LateUpdate_Object(void)
 
 void CUI_Speed::Render_Object(void)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
@@ -108,9 +111,9 @@ void CUI_Speed::Render_Object(void)
 		m_pFTexture->Set_Texture(0);
 		m_pRcTex->Render_Buffer();
 	}
-	else if (Engine::Get_Camera_ID() ==CAMERA_ID::AIM_CAMERA)
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA)
 	{
-	
+
 	}
 }
 

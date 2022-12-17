@@ -8,6 +8,7 @@
 #include "AimCamera.h"
 #include "Boom_Support.h"
 #include "BattleShip_Support.h"
+#include "GameMode.h"
 
 CHumvee::CHumvee(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTankSet(pGraphicDev)

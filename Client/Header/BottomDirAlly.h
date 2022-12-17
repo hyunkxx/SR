@@ -136,4 +136,4 @@ private:
 public:
 	void						 Update_UI(void);
 	void						 Update_Minimap(void);
-};	
+};

@@ -21,7 +21,6 @@ CLogo::~CLogo()
 HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
@@ -34,7 +33,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 {
 	_int iExit = __super::Update_Scene(fTimeDelta);
 
-	Engine::PlaySound_SR(L"coh_menu.mp3", SELECT_MENU_BGM, 1.f);
+	Engine::PlaySound_SR(L"Lobby.mp3", SELECT_MENU_BGM, 0.5f);
 
 	if (true == m_pLoading->Get_Finish())
 	{
@@ -42,6 +41,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 		{
 			CScene*		pScene = nullptr;
 
+			Engine::StopSound(SELECT_SOUND);
 			Engine::PlaySound_SR(L"enter.mp3", SELECT_SOUND, 1.f);
 
 			pScene = CModeSelectMenu::Create(m_pGraphicDev);
