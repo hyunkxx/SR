@@ -24,6 +24,7 @@ CHumvee::CHumvee(const CHumvee & rhs)
 
 CHumvee::~CHumvee()
 {
+	CGameMode::GetInstance()->m_nKillCount++;
 }
 
 _int CHumvee::Update_Object(const _float & fTimeDelta)

@@ -23,6 +23,7 @@ CBigTank::CBigTank(const CBigTank & rhs)
 
 CBigTank::~CBigTank()
 {
+	CGameMode::GetInstance()->m_nKillCount++;
 }
 
 _int CBigTank::Update_Object(const _float & fTimeDelta)

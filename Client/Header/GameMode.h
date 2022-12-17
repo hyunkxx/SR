@@ -36,6 +36,11 @@ public:
 	int m_nEnemyCount = 0;
 	const int m_nUnitMaxCount = 12;
 
+	int m_nCreateCount = 0;
+	int m_nDestroyCount = 0;
+	int m_nKillCount = 0;
+
+
 	bool m_bOnSoundMenu = false;
 	bool m_bOnSelectButton = false;
 	bool m_bOnCreateButton = false;

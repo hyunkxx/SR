@@ -109,6 +109,8 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
+	Engine::PlaySound_SR(L"WinterBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
@@ -146,9 +148,6 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 		CGameMode::GetInstance()->m_bOnTrigger = false;
 	}
-
-
-	Engine::PlaySound_SR(L"WinterBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	return iExit;
 }

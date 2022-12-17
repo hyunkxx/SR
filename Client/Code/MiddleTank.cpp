@@ -23,6 +23,7 @@ CMiddleTank::CMiddleTank(const CMiddleTank & rhs)
 
 CMiddleTank::~CMiddleTank()
 {
+	CGameMode::GetInstance()->m_nKillCount++;
 }
 
 _int CMiddleTank::Update_Object(const _float & fTimeDelta)

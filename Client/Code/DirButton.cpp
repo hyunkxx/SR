@@ -360,12 +360,14 @@ void CDirButton::CreateVehicle()
 	case DIR::LEFT:
 	{
 		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &eData);
+		CGameMode::GetInstance()->m_nCreateCount++;
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 		break;
 	}
 	case DIR::RIGHT:
 	{
 		CGameObject* pEnermy = CBottomDirAlly::Create(m_pGraphicDev, &eData);
+		CGameMode::GetInstance()->m_nCreateCount++;
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 		break;
 	}

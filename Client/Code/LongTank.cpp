@@ -25,6 +25,7 @@ CLongTank::CLongTank(const CLongTank & rhs)
 
 CLongTank::~CLongTank()
 {
+	CGameMode::GetInstance()->m_nKillCount++;
 }
 
 _int CLongTank::Update_Object(const _float & fTimeDelta)

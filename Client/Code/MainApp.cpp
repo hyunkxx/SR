@@ -84,7 +84,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	Engine::Ready_Font((*ppGraphicDev), L"Font_AnSang6", L"안상수2006가는", 50, 65, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro2", L"Galmuri6 Regular", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro", L"Galmuri7 Regular", 15, 25, FW_HEAVY);
-	Engine::Ready_Font((*ppGraphicDev), L"Font_RetroMiddle", L"Galmuri7 Regular", 25, 38, FW_HEAVY);
+	Engine::Ready_Font((*ppGraphicDev), L"Font_RetroMiddle", L"Galmuri7 Regular", 25, 38, 600);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_RetroBig", L"Galmuri7 Regular", 30, 45, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro3", L"Galmuri7 Regular", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro1", L"Galmuri7 Regular", 25, 35, FW_HEAVY);

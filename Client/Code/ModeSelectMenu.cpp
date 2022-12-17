@@ -47,6 +47,9 @@ HRESULT CModeSelectMenu::Ready_Scene(void)
 {
 	ShowCursor(true);
 
+	Engine::StopSound(SELECT_SOUND);
+	Engine::PlaySound_SR(L"enter.mp3", SELECT_SOUND, 1.f);
+
 	(Ready_Layer_Environment(L"Background"), E_FAIL);
 	(Ready_Layer_GameLogic(L"GameObject"), E_FAIL);
 	(Ready_Layer_UI(L"UI"), E_FAIL);

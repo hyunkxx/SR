@@ -181,9 +181,9 @@ void CResultUI::SetText(const _float & fDeltaTime)
 		break;
 	}
 
-	m_strCreateText = L"»ý¼º Â÷·®";
-	m_strDestroyText = L"ÆÄ±« Â÷·®";
-	m_strKillText = L"Á×Àº È½¼ö";
+	m_strCreateText = L"»ý¼ºÇÑ Â÷·® " + to_wstring(CGameMode::GetInstance()->m_nCreateCount);
+	m_strDestroyText = L"ÆÄ±«ÇÑ Â÷·® " + to_wstring(CGameMode::GetInstance()->m_nDestroyCount);
+	m_strKillText = L"ÆÄ±«µÈ È½¼ö " + to_wstring(CGameMode::GetInstance()->m_nKillCount);
 }
 
 void CResultUI::RenderButton()

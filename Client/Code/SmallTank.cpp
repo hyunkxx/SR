@@ -23,6 +23,7 @@ CSmallTank::CSmallTank(const CSmallTank & rhs)
 
 CSmallTank::~CSmallTank()
 {
+	CGameMode::GetInstance()->m_nKillCount++;
 }
 
 _int CSmallTank::Update_Object(const _float & fTimeDelta)
