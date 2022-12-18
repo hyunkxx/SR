@@ -105,9 +105,11 @@ void CBoomEffect::LateUpdate_Object(void)
 
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 
-	Collision_Object();
+	
 
 	__super::LateUpdate_Object();
+
+	Collision_Object();
 }
 
 void CBoomEffect::Render_Object(void)
@@ -130,7 +132,9 @@ void CBoomEffect::Collision_Object(void)
 	if (!m_bCollision)
 		return;
 
+
 	CGameObject* TempCreateAi = Engine::Get_Object(L"GameLogic", L"CreateAi");
+	vector<CGameObject*> DAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
 	vector<CGameObject*> BDAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
@@ -144,8 +148,9 @@ void CBoomEffect::Collision_Object(void)
 		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(*iters)->Get_Info(), 30.f, (*iters)->Get_Dist()))
 		{
 			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
-
+			
 			dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
+
 			if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
 			{
 				(*iters)->Set_Dead(true);
