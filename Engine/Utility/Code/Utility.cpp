@@ -30,13 +30,13 @@ bool Utility::Cuilling(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	_vec3 vTargetDir = (vPos - vCamPos) - (vCamDir) * 2.f;
 	float fLength = D3DXVec3Length(&vTargetDir);
 
-	if (fLength > 200.f)
+	if (fLength > 180.f)
 		return true;
 
 	D3DXVec3Normalize(&vTargetDir, &vTargetDir);
 	float value = D3DXVec3Dot(&vCamDir, &vTargetDir);
 
-	if (value < 0.8f)
+	if (value < 0.7f)
 		return true;
 	else
 		return false;

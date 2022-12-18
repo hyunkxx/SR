@@ -39,7 +39,8 @@ public:
 private:
 	void KeyInput();
 	void UpdateTransform();
-	void SetText(const _float& fDeltaTime);
+	void SetWinText(const _float& fDeltaTime);
+	void SetLoseText(const _float& fDeltaTime);
 	void RenderButton();
 private: /* UI value */
 	float m_fSmoothStart = 0.f;
@@ -78,6 +79,7 @@ private:
 	_float	m_fTextTimer = 0.f;
 
 	wstring m_strText[4];
+	wstring m_strLose[4];
 	wstring m_strBuff;
 
 	wstring m_strCreateText = L"";

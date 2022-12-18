@@ -32,6 +32,7 @@ CDefault_Enermy::CDefault_Enermy(const CDefault_Enermy & rhs)
 CDefault_Enermy::~CDefault_Enermy()
 {
 	CGameMode::GetInstance()->m_nEnemyCount--;
+	CGameMode::GetInstance()->m_nDestroyCount++;
 }
 
 HRESULT CDefault_Enermy::Ready_Object(void)

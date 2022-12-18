@@ -93,7 +93,8 @@ _uint CLoading::Loading_ForStage(void)
 	// component
 
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Sand.jpg", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainSandTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Sand.jpg", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainGrassTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_001.jpg", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Location", Engine::CLocation::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_CubeTex", Engine::CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_CubeTexture", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/desert.dds", TEX_CUBE)), E_FAIL);
@@ -212,6 +213,10 @@ _uint CLoading::Loading_ForStage(void)
 
 	/* Result UI */
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"game_result", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/game_result.png", TEX_NORMAL)), E_FAIL);
+
+	/* Grass */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Grass", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Grass2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass2.png", TEX_NORMAL)), E_FAIL);
 
 
 	lstrcpy(m_szString, L"Complete");

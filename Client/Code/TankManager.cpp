@@ -64,7 +64,7 @@ void CTankManager::CreateVehicle(LPDIRECT3DDEVICE9 pGraphic, VEHICLE eType)
 void CTankManager::InitalizeData()
 {
 	tankData[(UINT)VEHICLE::HUMVEE].strName = L"Humvee";
-	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 5.f;
+	tankData[(UINT)VEHICLE::HUMVEE].fDamage = 20.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fMaxHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fCurHP = 300.f;
 	tankData[(UINT)VEHICLE::HUMVEE].fSpeed = 0.f;;

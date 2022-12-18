@@ -61,6 +61,11 @@ HRESULT CResultUI::Ready_Object(void)
 	m_strText[2] = L" CHICKEN";
 	m_strText[3] = L" DINNER!";
 
+	m_strLose[0] = L"괜찮아, ";
+	m_strLose[1] = L"이런 날도 ";
+	m_strLose[2] = L"있는 거지 ";
+	m_strLose[3] = L"뭐...";
+
 	return S_OK;
 }
 
@@ -73,8 +78,16 @@ _int CResultUI::Update_Object(const _float & fTimeDelta)
 
 	if (CGameMode::GetInstance()->m_eGameResult == CGameMode::GAME_RESULT::WIN)
 	{
+		StopSound(STAGE_SOUND);
 		Engine::PlaySound_SR(L"Victory.mp3", POPUP_SOUND, 1.f);
-		SetText(fTimeDelta);
+		SetWinText(fTimeDelta);
+	}
+
+	if (CGameMode::GetInstance()->m_eGameResult == CGameMode::GAME_RESULT::LOSE)
+	{
+		StopSound(STAGE_SOUND);
+		Engine::PlaySound_SR(L"Defeat.mp3", POPUP_SOUND, 1.f);
+		SetLoseText(fTimeDelta);
 	}
 
 	return 0;
@@ -130,7 +143,7 @@ void CResultUI::UpdateTransform()
 	}
 }
 
-void CResultUI::SetText(const _float & fDeltaTime)
+void CResultUI::SetWinText(const _float & fDeltaTime)
 {
 	if (m_nTitleCount < 4)
 		m_fTitleTimer += fDeltaTime;
@@ -178,6 +191,63 @@ void CResultUI::SetText(const _float & fDeltaTime)
 		break;
 	case 4:
 		m_strBuff = m_strText[0] + m_strText[1] + m_strText[2] + m_strText[3];
+		break;
+	}
+
+	m_strCreateText = L"생성한 차량 " + to_wstring(CGameMode::GetInstance()->m_nCreateCount);
+	m_strDestroyText = L"파괴한 차량 " + to_wstring(CGameMode::GetInstance()->m_nDestroyCount);
+	m_strKillText = L"파괴된 횟수 " + to_wstring(CGameMode::GetInstance()->m_nKillCount);
+}
+
+
+void CResultUI::SetLoseText(const _float & fDeltaTime)
+{
+	if (m_nTitleCount < 4)
+		m_fTitleTimer += fDeltaTime;
+
+	if (m_fTitleTimer >= 0.3f)
+	{
+		if (m_nTitleCount >= 4)
+			return;
+
+		m_nTitleCount++;
+		m_fTitleTimer = 0.f;
+	}
+
+	if (m_nTitleCount >= 4)
+	{
+		if (m_nTextCount < 3)
+			m_fTextTimer += fDeltaTime;
+
+		if (m_fTextTimer > 0.3f)
+		{
+			if (m_nTextCount >= 3)
+				return;
+
+			Engine::StopSound(PAPER_SOUND);
+			Engine::PlaySound_SR(L"Paper.wav", PAPER_SOUND, 1.f);
+
+			m_nTextCount++;
+			m_fTextTimer = 0.f;
+		}
+	}
+
+	switch (m_nTitleCount)
+	{
+	case 0:
+		m_strBuff = L"";
+		break;
+	case 1:
+		m_strBuff = m_strLose[0];
+		break;
+	case 2:
+		m_strBuff = m_strLose[0] + m_strLose[1];
+		break;
+	case 3:
+		m_strBuff = m_strLose[0] + m_strLose[1] + m_strLose[2];
+		break;
+	case 4:
+		m_strBuff = m_strLose[0] + m_strLose[1] + m_strLose[2] + m_strLose[3];
 		break;
 	}
 
@@ -240,6 +310,50 @@ void CResultUI::RenderButton()
 			Render_Font(L"Font_RetroMiddle", m_strKillText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
 		}
 	}
+
+	if (CGameMode::GetInstance()->m_eGameResult == CGameMode::GAME_RESULT::LOSE)
+	{
+		m_pNonClickTexture->Set_Texture(0);
+		m_pRcTex->Render_Buffer();
+
+		_vec2 vPos{ 50.f, 50.f };
+		Render_Font(L"Font_RetroBig", L"BATTLE RESULT", &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		vPos = { 50.f, 100.f };
+		Render_Font(L"Font_RetroBig", m_strBuff.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
+
+		if (m_nTextCount == 1)
+		{
+			/* 생성한 차량 수 */
+			vPos = { 50.f, 170.f };
+			Render_Font(L"Font_RetroMiddle", m_strCreateText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+		}
+		else if (m_nTextCount == 2)
+		{
+			/* 생성한 차량 수 */
+			vPos = { 50.f, 170.f };
+			Render_Font(L"Font_RetroMiddle", m_strCreateText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+
+			/* 파괴한 차량 수 */
+			vPos = { 50.f, 230.f };
+			Render_Font(L"Font_RetroMiddle", m_strDestroyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+		}
+		else if (m_nTextCount == 3)
+		{
+			/* 생성한 차량 수 */
+			vPos = { 50.f, 170.f };
+			Render_Font(L"Font_RetroMiddle", m_strCreateText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+
+			/* 파괴한 차량 수 */
+			vPos = { 50.f, 230.f };
+			Render_Font(L"Font_RetroMiddle", m_strDestroyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+
+			/* 죽은 횟수*/
+			vPos = { 50.f, 290.f };
+			Render_Font(L"Font_RetroMiddle", m_strKillText.c_str(), &vPos, D3DCOLOR_ARGB(255, 240, 240, 240));
+		}
+	}
+
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);

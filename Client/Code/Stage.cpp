@@ -66,6 +66,8 @@
 #include "BaseUI.h"
 #include "ResultUI.h"
 
+#include "Grass.h"
+
 /* System */
 #include "TankManager.h"
 #include "GameMode.h"
@@ -95,7 +97,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 100, 2000);
+	CGameMode::GetInstance()->InitGameMode(500, 10000, 2000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -109,7 +111,8 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
-	Engine::PlaySound_SR(L"WinterBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+	Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+	Engine::PlaySound_SR(L"BattleEffect.mp3", STAGE_EFFECT, CUI_Volume::s_fBGMSound * 0.2f);
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
@@ -122,7 +125,6 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	if (CGameMode::GetInstance()->m_bGameEnd
 		&& Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
 	{
-		/* ?? 왜안되는데 */
 		Engine::StopSound(STAGE_SOUND);
 		CScene*		pScene = nullptr;
 
@@ -145,7 +147,6 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 		{
 			CCameraMgr::GetInstance()->Get_Camera()->Set_MouseFix(false);
 		}
-
 		CGameMode::GetInstance()->m_bOnTrigger = false;
 	}
 
@@ -212,6 +213,7 @@ void CStage::Free(void)
 {
 	CUI_FontMgr::GetInstance()->DestroyInstance();
 	CGameMode::DestroyInstance();
+	CEnermyMgr::DestroyInstance();
 
 	StopAll();
 
@@ -225,9 +227,28 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
+	for (int i = 0; i < 120; i++)
+	{
+		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS1);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+			static_cast<CGrass*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		_vec3 vPos = { (float)(rand() % 700 - 100), (float)(rand() % 2), (float)(rand() % 700 - 100) };
+		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
+	}
+
+	for (int i = 0; i < 120; i++)
+	{
+		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS2);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+			static_cast<CGrass*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		_vec3 vPos = { (float)(rand() % 700 - 100), (float)(rand() % 3), (float)(rand() % 700 - 100) };
+		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
+	}
 
 	// CTerrain
-	pGameObject = CTerrain::Create(m_pGraphicDev);
+	pGameObject = CTerrain::Create(m_pGraphicDev, CTerrain::TYPE::SAND);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 

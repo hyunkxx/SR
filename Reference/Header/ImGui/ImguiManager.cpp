@@ -39,14 +39,14 @@ void ImguiManager::NewFrame()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	//{		
-	//	ImGui::SetNextWindowPos(ImVec2(400,0));
-	//	ImGui::SetNextWindowSize(ImVec2(210, 20));
-	//	ImGui::Begin("Frame", nullptr , ImGuiWindowFlags_NoBackground |ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
-	//	ImGui::SameLine();
-	//	ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	//	ImGui::End();
-	//}
+	{		
+		ImGui::SetNextWindowPos(ImVec2(0,0));
+		ImGui::SetNextWindowSize(ImVec2(210, 20));
+		ImGui::Begin("Frame", nullptr , ImGuiWindowFlags_NoBackground |ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+		ImGui::SameLine();
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::End();
+	}
 }
 
 void ImguiManager::Render()

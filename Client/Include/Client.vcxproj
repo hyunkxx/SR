@@ -192,6 +192,7 @@
     <ClInclude Include="..\Header\EffectManager.h" />
     <ClInclude Include="..\Header\GameButton.h" />
     <ClInclude Include="..\Header\GameMode.h" />
+    <ClInclude Include="..\Header\Grass.h" />
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h" />
     <ClInclude Include="..\Header\Humvee.h" />
     <ClInclude Include="..\Header\LeftLocation.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="..\Code\EffectManager.cpp" />
     <ClCompile Include="..\Code\GameButton.cpp" />
     <ClCompile Include="..\Code\GameMode.cpp" />
+    <ClCompile Include="..\Code\Grass.cpp" />
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\Humvee.cpp" />
     <ClCompile Include="..\Code\LeftLocation.cpp" />

@@ -4,8 +4,9 @@
 #include "Export_Function.h"
 #include "FloorTex.h"
 
-CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType)
 	: Engine::CGameObject(pGraphicDev)
+	, m_eType(eType)
 {
 }
 
@@ -70,9 +71,9 @@ void CTerrain::Free(void)
 	__super::Free();
 }
 
-CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType)
 {
-	CTerrain*		pInstance = new CTerrain(pGraphicDev);
+	CTerrain*		pInstance = new CTerrain(pGraphicDev, eType);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{
@@ -91,13 +92,31 @@ HRESULT CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainTexture"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_1", pComponent });
+	switch (m_eType)
+	{
+	case TYPE::SAND:
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainSandTexture"));
+		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_1", pComponent });
 
-	pComponent = m_pBackground = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainTexture"));
-	NULL_CHECK_RETURN(m_pBackground, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_2", pComponent });
+		pComponent = m_pBackground = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainSandTexture"));
+		NULL_CHECK_RETURN(m_pBackground, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_2", pComponent });
+
+		break;
+	case TYPE::GRASS:
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainGrassTexture"));
+		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_1", pComponent });
+
+		pComponent = m_pBackground = dynamic_cast<CTexture*>(Clone_Prototype(L"Proto_TerrainGrassTexture"));
+		NULL_CHECK_RETURN(m_pBackground, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_Texture_2", pComponent });
+
+		break;
+	default:
+		break;
+	}
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);

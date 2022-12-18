@@ -30,6 +30,7 @@ CBottomDirEnermy::CBottomDirEnermy(const CBottomDirEnermy & rhs)
 CBottomDirEnermy::~CBottomDirEnermy()
 {
 	CGameMode::GetInstance()->m_nEnemyCount--;
+	CGameMode::GetInstance()->m_nDestroyCount++;
 }
 
 HRESULT CBottomDirEnermy::Ready_Object(void)

@@ -52,6 +52,8 @@
 #include "ShootSmoke.h"
 
 #include "BaseUI.h"
+#include "Grass.h"
+#include "Terrain.h"
 
 /* System */
 #include "TankManager.h"
@@ -92,9 +94,10 @@ HRESULT CRush::Ready_Scene(void)
 
 _int CRush::Update_Scene(const _float& fTimeDelta)
 {
-	Engine::PlaySound_SR(L"ingameBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+	Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	__super::Update_Scene(fTimeDelta);
+
 	return S_OK;
 }
 
@@ -188,6 +191,31 @@ HRESULT CRush::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"ShipCamera", pCameraObject), E_FAIL);
 
+	for (int i = 0; i < 120; i++)
+	{
+		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS1);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+			static_cast<CGrass*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		_vec3 vPos = { (float)(rand() % 700 - 100), (float)(rand() % 2), (float)(rand() % 700 - 100) };
+		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
+	}
+
+	for (int i = 0; i < 120; i++)
+	{
+		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS2);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+			static_cast<CGrass*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		_vec3 vPos = { (float)(rand() % 700 - 100), (float)(rand() % 3), (float)(rand() % 700 - 100) };
+		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
+	}
+
+	// CTerrain
+	pGameObject = CTerrain::Create(m_pGraphicDev, CTerrain::TYPE::GRASS);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -203,7 +231,6 @@ HRESULT CRush::Ready_Layer_Environment_Object(const _tchar * pLayerTag)
 	pGameObject = m_pEffectManager = CEffectManager::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EffectManager", pGameObject), E_FAIL);
-
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 

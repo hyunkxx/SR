@@ -10,10 +10,12 @@ class CTransform;
 
 END
 
-class CTerrain :	public Engine::CGameObject
+class CTerrain : public Engine::CGameObject
 {
+public:
+	enum class TYPE { SAND, GRASS };
 private:
-	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType);
 	explicit CTerrain(const CTerrain& rhs);
 	virtual ~CTerrain();
 
@@ -28,9 +30,8 @@ private:
 	HRESULT		Add_Component(void);
 	HRESULT		SetUp_Material(void);
 	void		Key_Input(const _float& fTimeDelta);
-
-
 private:
+	TYPE				m_eType;
 	CTerrainTex*		m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
@@ -40,7 +41,7 @@ private:
 	CFloorTex*			m_pBackgroundRect;
 	_matrix				m_matBackground;
 public:
-	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType);
 private:
 	virtual void Free(void) override;
 
