@@ -27,6 +27,7 @@ CBottomDirAlly::CBottomDirAlly(const CBottomDirAlly & rhs)
 CBottomDirAlly::~CBottomDirAlly()
 {
 	CGameMode::GetInstance()->m_nAllyCount--;
+	Free();
 }
 
 HRESULT CBottomDirAlly::Ready_Object(void)
@@ -1395,7 +1396,7 @@ HRESULT CBottomDirAlly::Add_Component(void)
 
 void CBottomDirAlly::Free(void)
 {
-	__super::Free();
+	CGameObject::Free();
 }
 
 

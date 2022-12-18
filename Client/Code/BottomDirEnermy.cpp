@@ -31,6 +31,7 @@ CBottomDirEnermy::~CBottomDirEnermy()
 {
 	CGameMode::GetInstance()->m_nEnemyCount--;
 	CGameMode::GetInstance()->m_nDestroyCount++;
+	Free();
 }
 
 HRESULT CBottomDirEnermy::Ready_Object(void)
@@ -1577,7 +1578,7 @@ HRESULT CBottomDirEnermy::Add_Component(void)
 
 void CBottomDirEnermy::Free(void)
 {
-	__super::Free();
+	CGameObject::Free();
 }
 
 void CBottomDirEnermy::Update_UI(void)

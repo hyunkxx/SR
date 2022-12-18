@@ -1596,7 +1596,7 @@ void CDefault_Ally::Update_UI(void)
 void CDefault_Ally::Free(void)
 {
 
-	__super::Free();
+	CGameObject::Free();
 }
 
 

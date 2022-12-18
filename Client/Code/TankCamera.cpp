@@ -157,5 +157,5 @@ CTankCamera * CTankCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * p
 
 void CTankCamera::Free(void)
 {
-	CGameObject::Free();
+	__super::Free();
 }

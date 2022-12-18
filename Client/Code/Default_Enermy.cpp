@@ -33,6 +33,7 @@ CDefault_Enermy::~CDefault_Enermy()
 {
 	CGameMode::GetInstance()->m_nEnemyCount--;
 	CGameMode::GetInstance()->m_nDestroyCount++;
+	Free();
 }
 
 HRESULT CDefault_Enermy::Ready_Object(void)
@@ -1546,7 +1547,7 @@ HRESULT CDefault_Enermy::Add_Component(void)
 
 void CDefault_Enermy::Free(void)
 {
-	__super::Free();
+	CGameObject::Free();
 }
 void CDefault_Enermy::Update_UI(void)
 {

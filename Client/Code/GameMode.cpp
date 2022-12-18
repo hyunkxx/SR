@@ -12,6 +12,10 @@
 IMPLEMENT_SINGLETON(CGameMode)
 
 CGameMode::CGameMode()
+	:m_bGameEnd(false)
+	, m_nCreateCount(0)
+	, m_nDestroyCount(0)
+	, m_nKillCount(0)
 {
 	ZeroMemory(&m_nGold, sizeof(m_nGold));
 	ZeroMemory(&m_nPoint, sizeof(m_nPoint));
@@ -23,10 +27,32 @@ CGameMode::CGameMode()
 
 CGameMode::~CGameMode()
 {
+
 }
 
 void CGameMode::InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold)
 {
+	ZeroMemory(&m_nGold, sizeof(m_nGold));
+	ZeroMemory(&m_nPoint, sizeof(m_nPoint));
+	ZeroMemory(&m_nVictoryPoint, sizeof(m_nVictoryPoint));
+	ZeroMemory(&m_fBaseCurHP, sizeof(m_fBaseCurHP));
+	ZeroMemory(&m_fBaseMaxHP, sizeof(m_fBaseMaxHP));
+	ZeroMemory(&eData, sizeof(EData));
+	m_bGameStart = false;
+	m_bGameExit = false;
+	m_bWarPressed = false;
+	m_bRushPressed = false;
+
+	m_nAllyCount = 0;
+	m_nEnemyCount = 0;
+	m_bOnSoundMenu = false;
+	m_bOnSelectButton = false;
+	m_bOnCreateButton = false;
+	m_bGameEnd = false;
+	m_bOnTrigger = false;
+	m_nCreateCount = 0;
+	m_nDestroyCount = 0;
+	m_nKillCount = 0;
 	m_nVictoryPoint = nVictoryPoint;
 
 	m_nPoint[(UINT)TYPE::ALLY] = 0;
@@ -38,6 +64,8 @@ void CGameMode::InitGameMode(_int nVictoryPoint, _float nBaseHP, _int nStartGold
 
 	m_nGold[(UINT)TYPE::ALLY] = nStartGold;
 	m_nGold[(UINT)TYPE::ENEMY] = nStartGold;
+
+	
 }
 
 bool CGameMode::VictoryCheck()

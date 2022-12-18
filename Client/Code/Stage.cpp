@@ -214,7 +214,7 @@ void CStage::Free(void)
 	CUI_FontMgr::GetInstance()->DestroyInstance();
 	CGameMode::DestroyInstance();
 	CEnermyMgr::DestroyInstance();
-
+	CCameraMgr::DestroyInstance();
 	StopAll();
 
 	__super::Free();
