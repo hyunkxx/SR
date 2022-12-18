@@ -89,18 +89,14 @@ void CRightTopLocation::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CRightTopLocation::Render_Object(void)
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pLocationCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CRightTopLocation::CheckObject(_int _ObjID)

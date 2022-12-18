@@ -53,7 +53,7 @@ public:
 	void  Set_DisCountLocation();
 	_bool Get_CreateCheck(void) { return CreateCheck; }
 	void Set_CreateCheck(_bool _true) { CreateCheck = _true; }
-	void AiMove(_float fTimeDelta);
+	void Dead_Motion(const _float & fTimeDelta);
 public:
 	//에너미에서 사용하는 함수
 	void Basic(_float fTimeDelta);
@@ -69,6 +69,7 @@ public:
 	void Plus_HP_UI(_float HP_plus) { fCurHp += HP_plus; }
 	_float GetHp(void) { return fCurHp; }
 	void 	ColObject(_float fTimeDelta);
+	void  Set_DeadMotionPlay() { Deadtest = true; }	
 private:
 	HRESULT		Add_Component(void);
 	EData*      m_EData;
@@ -87,7 +88,7 @@ private:
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
-	_float PreHp = 0.f;
+	
 	_bool m_bRightLocationCount = false
 		, m_bRightTopLocationCount = false
 		, m_bLeftLocationCount = false
@@ -109,6 +110,10 @@ private:
 	_bool bLeft;
 	_bool CreateCheck = false;
 	_float re = 0.f;
+	_bool DeadMotionCheck = false;
+	_int m_iMotionCount = 0;
+	_float fAccum = 0.f;
+	_bool   Deadtest = false;
 	//탱크 정보
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

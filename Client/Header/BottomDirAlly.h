@@ -61,7 +61,7 @@ public:
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void   Run(_float fTimeDelta);
 	void     	ColObject(_float fTimeDelta);
-
+	void Dead_Motion(const _float & fTimeDelta);
 	void						Minus_HP_UI(_float HP_minus) { fCurHp -= HP_minus; }
 	void						Plus_HP_UI(_float HP_plus) { fCurHp += HP_plus; }
 	_float GetHp(void) { return fCurHp; }
@@ -80,6 +80,10 @@ private:
 	CTransform*			m_pTransformPosin = nullptr;
 	CTransform*        m_PreTransformCom = nullptr;
 	EData*       m_EData;
+	_bool DeadMotionCheck = false;
+	_int m_iMotionCount = 0;
+	_float fAccum = 0.f;
+	_bool   Deadtest = false;
 	_float       preDist;
 	_bool		m_bonce = false;
 	_float     Range = 0.f;

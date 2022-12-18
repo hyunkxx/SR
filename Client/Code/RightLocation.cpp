@@ -39,6 +39,7 @@ HRESULT CRightLocation::Ready_Object(void)
 _int CRightLocation::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
+
 	if (m_Test == false)
 	{
 		m_Test = true;
@@ -66,26 +67,27 @@ _int CRightLocation::Update_Object(const _float& fTimeDelta)
 				}
 			}
 		}
-		
-			if (m_AllyOccupation > 0)
-			{
-				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
-			}
-			else
-			{
-				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
-			}
-	
-		
-			if (m_EnermyOccupation > 0)
-			{
-				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
-			}
-			else
-			{
-				m_AllyOccupation += fTimeDelta*m_iAllyCount;
-			}
-		
+
+
+		if (m_AllyOccupation > 0)
+		{
+			m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
+		}
+		else
+		{
+			m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
+		}
+
+
+		if (m_EnermyOccupation > 0)
+		{
+			m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
+		}
+		else
+		{
+			m_AllyOccupation += fTimeDelta*m_iAllyCount;
+		}
+
 		if (m_EnermyOccupation >= 100.f)
 		{
 			m_EnermyOccupation = 100.f;
@@ -105,18 +107,14 @@ void CRightLocation::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CRightLocation::Render_Object(void)
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pLocationCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 

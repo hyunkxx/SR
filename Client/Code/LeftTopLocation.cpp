@@ -36,10 +36,7 @@ HRESULT CLeftTopLocation::Ready_Object(void)
 
 _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 {
-	if (GetKeyState('L') & 8000)
-	{
-		_int a = 10;
-	}
+
 
 	__super::Update_Object(fTimeDelta);
 	if (m_Test == false)
@@ -60,37 +57,37 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 			CheckObject(OBJID::OBJID_DEFAULT_ALLY);
 		}
 
-		
-			if (m_AllyOccupation > 0)
-			{
-				m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
-			}
-			else
-			{
-				m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
-			}
 
-	
-			if (m_EnermyOccupation > 0)
-			{
-				m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
-			}
-			else
-			{
-				m_AllyOccupation += fTimeDelta*m_iAllyCount;
-			}
-		}
-		if (m_EnermyOccupation >= 100.f)
+		if (m_AllyOccupation > 0)
 		{
-			m_EnermyOccupation = 100.f;
-			m_LocationState = LOCATIONSTATE::STATE_ENERMY;
+			m_AllyOccupation -= fTimeDelta*m_iEnermyCount;
 		}
-		if (m_AllyOccupation >= 100.f)
+		else
 		{
-			m_AllyOccupation = 100.f;
-			m_LocationState = LOCATIONSTATE::STATE_ALLY;
+			m_EnermyOccupation += fTimeDelta*m_iEnermyCount;
 		}
-	
+
+
+		if (m_EnermyOccupation > 0)
+		{
+			m_EnermyOccupation -= fTimeDelta*m_iAllyCount;
+		}
+		else
+		{
+			m_AllyOccupation += fTimeDelta*m_iAllyCount*30.f;
+		}
+	}
+	if (m_EnermyOccupation >= 100.f)
+	{
+		m_EnermyOccupation = 100.f;
+		m_LocationState = LOCATIONSTATE::STATE_ENERMY;
+	}
+	if (m_AllyOccupation >= 100.f)
+	{
+		m_AllyOccupation = 100.f;
+		m_LocationState = LOCATIONSTATE::STATE_ALLY;
+	}
+
 	return OBJ_NOEVENT;
 }
 
@@ -98,7 +95,7 @@ void CLeftTopLocation::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CLeftTopLocation::Render_Object(void)
@@ -106,11 +103,6 @@ void CLeftTopLocation::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pLocationCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 

@@ -59,6 +59,7 @@ public:
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void Run(_float fTimeDelta);
 	_bool Get_CreateCheck(void) { return CreateCheck; }
+	void Dead_Motion(const _float & fTimeDelta);
 	void Set_CreateCheck(_bool _true) { CreateCheck = _true; }
 public:
 	//에너미에서 사용하는 함수
@@ -115,6 +116,10 @@ private:
 	_bool bLeft;
 	_float re = 0.f;
 	_bool CreateCheck = false;
+	_bool DeadMotionCheck = false;
+	_int m_iMotionCount = 0;
+	_float fAccum = 0.f;
+	_bool   Deadtest = false;
 	//탱크 정보
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

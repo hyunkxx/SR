@@ -26,7 +26,6 @@ CBottomDirAlly::CBottomDirAlly(const CBottomDirAlly & rhs)
 
 CBottomDirAlly::~CBottomDirAlly()
 {
-	Free();
 	CGameMode::GetInstance()->m_nAllyCount--;
 }
 
@@ -79,6 +78,12 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 50.f;
+		m_pTransformCom->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
@@ -87,13 +92,19 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 65.f;
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::MIDDLE_TANK:
@@ -102,13 +113,19 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 75.f;
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::BIG_TANK:
@@ -117,13 +134,19 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 85.f;
+		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -132,7 +155,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
@@ -144,12 +167,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		break;
 
 	}
-	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
-	m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
-	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+	
 
 	//UI_HP
 
@@ -182,31 +200,88 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-
-	m_fReloadTime += fTimeDelta;
-
-	if (m_iLocationState == LOCATIONSTATE::STATE_ENERMYHQ)
+	if (!m_bDead&&DeadMotionCheck)
 	{
-		fCurHp += 0.0001f*fTimeDelta;
-		if (fCurHp >= m_fMaxHp)
+		Dead_Motion(fTimeDelta);
+	}
+	else
+	{
+		m_fReloadTime += fTimeDelta;
+
+		StateCheck();
+		/*if (m_iLocationState == LOCATIONSTATE::STATE_ALLY || m_iLocationState == LOCATIONSTATE::STATE_ALLYHQ)
 		{
-			fCurHp = m_fMaxHp;
+		vector<CGameObject*>Defualt = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
+		vector<CGameObject*>Bottom = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
+		if (Bottom.size() != 0)
+		{
+		CTransform* EnemyTransform = nullptr;
+		_vec3 vEnemyPos, vPos, vLook, vDir;
+		for (auto& iter = Bottom.begin(); iter < Bottom.end(); ++iter)
+		{
+		CBottomDirEnermy* Temp = dynamic_cast<CBottomDirEnermy*>(*iter);
+		NULL_CHECK_RETURN(Temp, OBJ_NOEVENT);
+		if (Temp->Get_LocationCheck() == m_iLocationCheck)
+		{
+		EnemyTransform = static_cast<CTransform*>(Temp->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 		}
+		}
+		if (EnemyTransform != nullptr)
+		{
+		EnemyTransform->Get_Info(INFO::INFO_POS, &vEnemyPos);
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vPos);
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+		vDir = vEnemyPos - vPos;
+		_float Dist = D3DXVec3Length(&vDir);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		Left_RightCheck(vDir, vLook);
+
+		_float Dot = D3DXVec3Dot(&vLook, &vDir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+		Angle = 0;
+		}
+
+		if (LeftCheck == false)
+		{
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 2.f);
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		}
+		else
+		{
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 2.f);
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		}
+		if (Dist > Range)
+		{
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
+		}
+		}
+		}
+		}*/
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			Detect(fTimeDelta);
+		}
+		Basic(fTimeDelta);
+
+		_vec3 vTrans;
+		m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
+		m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
+		m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	}
-
-	PreHp = fCurHp;//체력 순서 중요
-
-	StateCheck();
-	if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+	if (m_bDeadTime >= 3.f)
 	{
-		Detect(fTimeDelta);
+		DeadMotionCheck = false;
+		m_bDead = true;
 	}
-	Basic(fTimeDelta);
-
-	_vec3 vTrans;
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
-	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
-	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Update_OBB();
 
@@ -216,9 +291,22 @@ _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 void CBottomDirAlly::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
-	if (PreHp != fCurHp)
+	if (fCurHp / m_fMaxHp<0.2f)
 	{
-		//m_iAction = AIACTION::AIACTION_RUN;
+		m_iAction = AIACTION::AIACTION_RUN;
+	}
+	if (m_bDead && !Deadtest)
+	{
+		Deadtest = true;
+		m_bDead = false;
+		DeadMotionCheck = true;
+		m_stBody.fLen[x] = 0.f;
+		m_stBody.fLen[y] = 0.f;
+		m_stBody.fLen[z] = 0.f;
+
+		m_stHead.fLen[x] = 0.f;
+		m_stHead.fLen[y] = 0.f;
+		m_stHead.fLen[z] = 0.f;
 	}
 	Update_UI();
 	Update_Minimap();
@@ -226,6 +314,12 @@ void CBottomDirAlly::LateUpdate_Object(void)
 
 void CBottomDirAlly::Render_Object(void)
 {
+	if (DeadMotionCheck)
+	{
+		m_pHead->Change_Color_Dead();
+		m_pBody->Change_Color_Dead();
+		m_pPosin->Change_Color_Dead();
+	}
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
 
@@ -263,6 +357,12 @@ void CBottomDirAlly::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 	}
+	if (DeadMotionCheck)
+	{
+		m_pHead->Return_Color();
+		m_pBody->Return_Color();
+		m_pPosin->Return_Color();
+	}
 }
 
 void CBottomDirAlly::StateCheck()
@@ -277,9 +377,9 @@ void CBottomDirAlly::StateCheck()
 	{
 		if (m_bRightLocationCount == false)
 		{
-			m_vPatrol.x = (_float)(VTXITV* VTXCNTX*0.5 + rand() % 210 + 30.f);
+			m_vPatrol.x = (_float)(VTXITV* VTXCNTX*0.5 + rand() % 200 + 30.f);
 			m_vPatrol.y = 0.f;
-			m_vPatrol.z = (_float)(VTXITV* VTXCNTX*0.5 - rand() % 110 - 140.f);
+			m_vPatrol.z = (_float)(VTXITV* VTXCNTX*0.5 - rand() % 90 - 110.f);
 			m_bRightLocationCount = true;
 		}
 		m_bRightTopLocationCount = false;
@@ -303,7 +403,7 @@ void CBottomDirAlly::StateCheck()
 	}
 
 	//LeftLocation
-	else if (vPos.x < (VTXITV*VTXCNTX) / 2.f && vPos.z < (VTXITV*VTXCNTZ) / 2.f)
+	else if (vPos.x <= (VTXITV*VTXCNTX) / 2.f && vPos.z <= (VTXITV*VTXCNTZ) / 2.f)
 	{
 
 		if (m_bLeftLocationCount == false)
@@ -332,13 +432,13 @@ void CBottomDirAlly::StateCheck()
 		}
 	}
 	//RightTopLocation
-	else if (vPos.x >VTXITV*VTXCNTX / 2.f && vPos.z >VTXITV*VTXCNTZ / 2.f)
+	else if (vPos.x >= VTXITV*VTXCNTX / 2.f && vPos.z >= VTXITV*VTXCNTZ / 2.f)
 	{
 		if (m_bRightTopLocationCount == false)
 		{
-			m_vPatrol.x = VTXITV* VTXCNTX - rand() % 20 - 40.f;
+			m_vPatrol.x = VTXITV* VTXCNTX - rand() % 45 - 45.f;
 			m_vPatrol.y = 0;
-			m_vPatrol.z = VTXITV* VTXCNTX - rand() % 20 - 40.f;
+			m_vPatrol.z = VTXITV* VTXCNTX - rand() % 45 - 45.f;
 
 			m_bRightTopLocationCount = true;
 		}
@@ -393,6 +493,7 @@ void CBottomDirAlly::StateCheck()
 		}
 	}
 }
+
 
 const _vec3 CBottomDirAlly::Get_Info(void)
 {
@@ -497,6 +598,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 	_float fSourCol = 3000.f;
 	CTransform* pCompareTransform = nullptr;
 	CTransform* pSourCompareTransform = nullptr;
+
 	if (Temps.size() != 0)
 	{
 		_bool bReady = false;
@@ -592,7 +694,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 						m_fReloadTime = 0.f;
 					}
 				}
-				else if (m_fReloadTime > m_fReload&&TempBullet != 1)
+				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
@@ -645,7 +747,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 				Pos += Dir* 3.f*fPosinDist;
 
-				if (m_fReloadTime > m_fReload&&TempBullet == 1)
+				if (m_fReloadTime > m_fReload &&TempBullet == 1)
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
@@ -653,7 +755,7 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 						m_fReloadTime = 0.f;
 					}
 				}
-				else if (m_fReloadTime > m_fReload + 5.f&&TempBullet != 1)
+				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
@@ -666,6 +768,69 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 					m_iAction = AIACTION::AIACTION_OCCOPATION;
 				}
 			}
+		}
+	}
+
+	_vec3 vBasePos = { 596.f + rand() % 15, 0.f, 596.f + rand() % 15 };
+	_vec3  vPos, vCol;
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
+	vCol = vPos - vBasePos;
+	_float Dist = D3DXVec3Length(&vCol);
+	if (Dist < Range)
+	{
+		m_iAction = AIACTION::AIACTION_BATTLE;
+		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+		Dir = vBasePos - vEHPos;
+
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&Dir, &Dir);
+
+		Left_RightCheck(Dir, vLook);
+		_float Dot = D3DXVec3Dot(&vLook, &Dir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+			Angle = 0;
+		}
+		if (LeftCheck == false)
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		}
+		else
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		}
+		m_pTransformHead->Get_Info(INFO_POS, &Pos);
+		m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+		Dir = vBasePos - Pos;
+		D3DXVec3Normalize(&Dir, &Dir);
+		D3DXVec3Normalize(&vLook, &vLook);
+		Pos += Dir* 3.f*fPosinDist;
+
+		if (m_fReloadTime > m_fReload &&TempBullet == 1)
+		{
+			if (abs(D3DXToDegree(Angle)) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+				m_fReloadTime = 0.f;
+			}
+		}
+		else if (m_fReloadTime > m_fReload &&TempBullet != 1)
+		{
+			if (abs(D3DXToDegree(Angle)) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				m_fReloadTime = 0.f;
+			}
+		}
+		else
+		{
+			m_iAction = AIACTION::AIACTION_OCCOPATION;
 		}
 	}
 }
@@ -731,24 +896,24 @@ _bool CBottomDirAlly::Left_RightCheck(_vec3 _vDir, _vec3 _vLook)
 
 void CBottomDirAlly::Run(_float fTimeDelta)
 {
-	if (fCurHp < 290.f)
+	_vec3 vTemp, vSour, vLook, vDir;
+	_float Dot, Angle;
+
+	vTemp = { (rand() % 80 + 30.f),0.f,(rand() % 80 + 30.f) };
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
+	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+	vDir = vTemp - vSour;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	Left_RightCheck(vDir, vLook);
+
+	Dot = D3DXVec3Dot(&vDir, &vLook);
+
+	Angle = (float)acosf(Dot);
+	if (vSour.x > vTemp.x + 3.f&&vSour.z > vTemp.z + 3)
 	{
-		_vec3 vTemp, vSour, vLook, vDir;
-		_float Dot, Angle;
-
-		vTemp = { (_float)(rand() % 140),0.f,(_float)(rand() % 90) };
-		m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
-		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		vDir = vTemp - vSour;
-
-		D3DXVec3Normalize(&vDir, &vDir);
-		D3DXVec3Normalize(&vLook, &vLook);
-
-		Left_RightCheck(vDir, vLook);
-
-		Dot = D3DXVec3Dot(&vDir, &vLook);
-
-		Angle = (float)acosf(Dot);
 		if (isnan(Angle))
 			Angle = 0;
 		if (LeftCheck == false)
@@ -759,11 +924,20 @@ void CBottomDirAlly::Run(_float fTimeDelta)
 		{
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
 		}
-
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
 	}
-	if (fCurHp >= m_fMaxHp)
+	else
+	{
+		{
+			fCurHp += 10.f*fTimeDelta;
+			if (fCurHp >= m_fMaxHp)
+			{
+				fCurHp = m_fMaxHp;
+			}
+		}
+	}
+	if (fCurHp / m_fMaxHp >= 0.7f)
 	{
 		m_iAction = AIACTION::AIACTION_END;
 	}
@@ -772,58 +946,96 @@ void CBottomDirAlly::Run(_float fTimeDelta)
 void CBottomDirAlly::ColObject(_float fTimeDelta)
 {
 	re += fTimeDelta;
-	if (re <= 1)
+
+	if (re <= 1.f)
 	{
 		if (bLeft)
 		{
 			m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
-			ColBuild = true;
 		}
 		else
 		{
-			ColBuild = true;
+
 			m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 		}
-		_vec3 vLook;
-		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(-vLook*fAccel_top_speed*fTimeDelta*0.8f));
-
 	}
-	else if (re <= 2)
+	else if (re <= 2.f)
 	{
 		_vec3 vLook;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta*1.3f));
+		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta));
 	}
-	if (re >= 2)
+	if (re >= 2.f)
 	{
 		re = 0.f;
 		m_iAction = AIACTION::AIACTION_END;
 	}
 }
+void CBottomDirAlly::Dead_Motion(const _float & fTimeDelta)
+{
+	_vec3 Pos;
+	m_pTransformHead->Get_Info(INFO_POS, &Pos);
+	m_bDeadTime += fTimeDelta;
+	fAccum += fTimeDelta;
+	if (0.4f < Pos.y && 0 == m_iMotionCount)
+	{
 
+		_float x = 5.f * fTimeDelta;
+		_float y = (100.f * fTimeDelta) - (0.5f * 9.8f * fAccum*fAccum);
+		_vec3 Move = { x , y ,0.f };
+		m_pTransformHead->Move_Pos(&Move);
+		m_pTransformPosin->Move_Pos(&Move);
+		m_pTransformHead->Rotation(ROT_X, 500 * fTimeDelta);
+		m_pTransformPosin->Rotation(ROT_X, 500 * fTimeDelta);
+	}
+
+	else
+	{
+		m_iMotionCount++;
+		Pos.y = 0.8f;
+		m_pTransformHead->Set_Pos(Pos.x, Pos.y, Pos.z);
+		m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+	}
+}
 void CBottomDirAlly::Occupation(_float fTimeDelta)
 {
 
 	_vec3  vPos, vLook, vDir;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-	if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+	if (m_iLocationCheck != LOCATIONCHECK::LOCATIONCHECK_RIGHTTOP)
 	{
-		vPatrolRange.x = m_vPatrol.x + 40.f + rand() % 30;
-		vPatrolRange.y = 0;
-		vPatrolRange.z = m_vPatrol.z + rand() % 40;
-		m_bPatrol = true;
+		if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+		{
+			vPatrolRange.x = m_vPatrol.x + 40.f + rand() % 40;
+			vPatrolRange.y = 0;
+			vPatrolRange.z = m_vPatrol.z + rand() % 40 + 50.f;
+			m_bPatrol = true;
+		}
+		if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+		{
+			m_bPatrol = false;
+		}
 	}
-	if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+	else if (m_iLocationCheck == LOCATIONCHECK::LOCATIONCHECK_RIGHTTOP)
 	{
 		m_bPatrol = false;
+		/*if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+		{
+		vPatrolRange.x = m_vPatrol.x - 40.f - rand() % 40;
+		vPatrolRange.y = 0;
+		vPatrolRange.z = m_vPatrol.z - rand() % 40 - 50.f;
+		m_bPatrol = true;
+		}
+		if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+		{
+		m_bPatrol = false;
+		}*/
 	}
 	if (!m_bPatrol)
 	{
@@ -903,9 +1115,6 @@ void CBottomDirAlly::Wait(_float fTimeDelta)
 		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 	}
-
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-	m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 	break;
 	}
 	case LOCATIONCHECK::LOCATIONCHECK_LEFT:
@@ -937,8 +1146,7 @@ void CBottomDirAlly::Wait(_float fTimeDelta)
 		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 	}
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-	m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
+
 
 	break;
 	}
@@ -971,14 +1179,13 @@ void CBottomDirAlly::Wait(_float fTimeDelta)
 		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 3);
 	}
-	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
-	m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
-
 	break;
 	}
 	default:
 		break;
 	}
+	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vTrans2);
+	m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 }
 void CBottomDirAlly::Enermy_In_Area(_float fTimeDelta)
 {

@@ -83,6 +83,12 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 50.f;
+		m_pTransformCom->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
@@ -91,13 +97,19 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 65.f;
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::MIDDLE_TANK:
@@ -106,13 +118,19 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 75.f;
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::BIG_TANK:
@@ -121,13 +139,19 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 85.f;
+		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -136,7 +160,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
-		fAccel_top_speed = data.fAccel_top_speed*0.5f;
+		fAccel_top_speed = data.fAccel_top_speed*0.8f;
 		RotSpped = data.RotSpeed;
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
@@ -148,15 +172,8 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 		break;
 
 	}
-
-	m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
-
-	m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
-
-	m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+	//스케일 받아오기
+	
 	m_stBody.fLen[x] = 1.5f;
 	m_stBody.fLen[y] = 2.f;
 	m_stBody.fLen[z] = 2.5f;
@@ -166,7 +183,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	m_stHead.fLen[z] = 1.9f;
 	//UI_HP
 
-	PreHp = fCurHp;
+	
 	UI_fOrgin_ScaleX = UI_fScaleX = 3.f;
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
@@ -186,31 +203,89 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-	__super::Update_Object(fTimeDelta);
 
-	m_fReloadTime += fTimeDelta;
-
-	if (m_iLocationState == LOCATIONSTATE::STATE_ENERMYHQ)
+	if (DeadMotionCheck)
 	{
-		fCurHp += 0.0001f*fTimeDelta;
-		if (fCurHp >= m_fMaxHp)
+		Dead_Motion(fTimeDelta);
+	}
+	else
+	{
+		m_fReloadTime += fTimeDelta;
+
+		StateCheck();
+		/*if (m_iLocationState == LOCATIONSTATE::STATE_ENERMY || m_iLocationState == LOCATIONSTATE::STATE_ENERMYHQ)
 		{
-			fCurHp = m_fMaxHp;
+		vector<CGameObject*>Defualt = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
+		vector<CGameObject*>Bottom = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
+		if (Defualt.size() != 0)
+		{
+		CTransform* EnemyTransform = nullptr;
+		_vec3 vEnemyPos, vPos, vLook, vDir;
+		for (auto& iter = Defualt.begin(); iter < Defualt.end(); ++iter)
+		{
+		CDefault_Ally* Temp = dynamic_cast<CDefault_Ally*>(*iter);
+		NULL_CHECK(Temp);
+		if (Temp->Get_LocationCheck() == m_iLocationCheck)
+		{
+		EnemyTransform = static_cast<CTransform*>(Temp->Get_Component(L"Proto_Transform", ID_DYNAMIC));
 		}
+		}
+		if (EnemyTransform != nullptr)
+		{
+		EnemyTransform->Get_Info(INFO::INFO_POS, &vEnemyPos);
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vPos);
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+		vDir = vEnemyPos - vPos;
+		_float Dist = D3DXVec3Length(&vDir);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		Left_RightCheck(vDir, vLook);
+
+		_float Dot = D3DXVec3Dot(&vLook, &vDir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+		Angle = 0;
+		}
+
+		if (LeftCheck == false)
+		{
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 2.f);
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		}
+		else
+		{
+		m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 2.f);
+		m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		}
+		if (Dist > Range)
+		{
+		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
+		}
+		}
+		}
+		}*/
+		if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+		{
+			Detect(fTimeDelta);
+		}
+		Basic(fTimeDelta);
+		_vec3 vTrans;
+		m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
+		m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
+		m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	}
-
-	PreHp = fCurHp;//체력 순서 중요
-
-	StateCheck();
-	if (m_iAction != AIACTION::AIACTION_RUN&&m_iAction != AIACTION::AIACTION_OBJECTCOL)
+	if (m_bDeadTime >= 3.f)
 	{
-		Detect(fTimeDelta);
+		DeadMotionCheck = false;
+		m_bDead = true;
+
 	}
-	Basic(fTimeDelta);
-	_vec3 vTrans;
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTrans);
-	m_pTransformHead->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
-	m_pTransformPosin->Set_Pos(vTrans.x, vTrans.y, vTrans.z);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Update_OBB();
 
@@ -221,9 +296,21 @@ void CDefault_Enermy::LateUpdate_Object(void)
 {
 
 	__super::LateUpdate_Object();
-	if (PreHp != fCurHp)
+	if (fCurHp / m_fMaxHp<0.2f)
 	{
-		//m_iAction = AIACTION::AIACTION_RUN;
+		m_iAction = AIACTION::AIACTION_RUN;
+	}
+	if (Deadtest)
+	{
+
+		DeadMotionCheck = true;
+		m_stBody.fLen[x] = 0.f;
+		m_stBody.fLen[y] = 0.f;
+		m_stBody.fLen[z] = 0.f;
+
+		m_stHead.fLen[x] = 0.f;
+		m_stHead.fLen[y] = 0.f;
+		m_stHead.fLen[z] = 0.f;
 	}
 
 	Update_UI();
@@ -233,6 +320,12 @@ void CDefault_Enermy::LateUpdate_Object(void)
 
 void CDefault_Enermy::Render_Object(void)
 {
+	if (DeadMotionCheck)
+	{
+		m_pHead->Change_Color_Dead();
+		m_pBody->Change_Color_Dead();
+		m_pPosin->Change_Color_Dead();
+	}
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pBody->Render(m_pTransformCom->Get_WorldMatrix());
 
@@ -269,6 +362,12 @@ void CDefault_Enermy::Render_Object(void)
 		m_pMinimap_RcTex->Render_Buffer();
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	}
+	if (DeadMotionCheck)
+	{
+		m_pHead->Return_Color();
+		m_pBody->Return_Color();
+		m_pPosin->Return_Color();
 	}
 }
 
@@ -347,15 +446,15 @@ void CDefault_Enermy::StateCheck()
 		}
 	}
 	//LeftLocation
-	else if (vPos.x < VTXITV*VTXCNTX / 2.f && vPos.z < VTXITV*VTXCNTZ / 2.f)
+	else if (vPos.x <= VTXITV*VTXCNTX / 2.f && vPos.z <= VTXITV*VTXCNTZ / 2.f)
 	{
 		if (m_bLeftLocationCount == false)
 		{
 			m_bLeftLocationCount = true;
 
-			m_vPatrol.x = (float)(rand() % 150 + 1);
+			m_vPatrol.x = (float)(rand() % 45 + 45.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (float)(rand() % 100 + 1);
+			m_vPatrol.z = (float)(rand() % 45 + 45.f);
 		}
 		m_bRightTopLocationCount = false;
 		m_bRightLocationCount = false;
@@ -376,7 +475,7 @@ void CDefault_Enermy::StateCheck()
 		}
 	}
 	//RightTopLocation
-	else if (vPos.x >VTXITV*VTXCNTX / 2.f && vPos.z >VTXITV*VTXCNTZ / 2.f)
+	else if (vPos.x >= VTXITV*VTXCNTX / 2.f && vPos.z >= VTXITV*VTXCNTZ / 2.f)
 	{
 		if (m_bRightTopLocationCount == false)
 		{
@@ -411,9 +510,9 @@ void CDefault_Enermy::StateCheck()
 	{
 		if (m_bLeftTopLocationCount == false)
 		{
-			m_vPatrol.x = (VTXITV*VTXCNTX / 2.f - rand() % 220 - 30.f);
+			m_vPatrol.x = (VTXITV*VTXCNTX / 2.f - rand() % 200 - 30.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (rand() % 170 + VTXITV*VTXCNTZ / 2.f + 70.f);
+			m_vPatrol.z = (rand() % 170 + VTXITV*VTXCNTZ / 2.f + 110.f);
 
 			m_bLeftTopLocationCount = true;
 		}
@@ -732,6 +831,69 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 			}
 		}
 	}
+
+	_vec3 vBasePos = { 10.f + rand() % 11, 0.f, 10.f + rand() % 11 };
+	_vec3  vPos, vCol;
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
+	vCol = vPos - vBasePos;
+	_float Dist = D3DXVec3Length(&vCol);
+	if (Dist < Range)
+	{
+		m_iAction = AIACTION::AIACTION_BATTLE;
+		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+		m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+		Dir = vBasePos - vEHPos;
+
+		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&Dir, &Dir);
+
+		Left_RightCheck(Dir, vLook);
+		_float Dot = D3DXVec3Dot(&vLook, &Dir);
+		_float Angle = (float)acosf(Dot);
+		if (isnan(Angle))
+		{
+			Angle = 0;
+		}
+		if (LeftCheck == false)
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+		}
+		else
+		{
+			m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+		}
+		m_pTransformHead->Get_Info(INFO_POS, &Pos);
+		m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+		Dir = vBasePos - Pos;
+		D3DXVec3Normalize(&Dir, &Dir);
+		D3DXVec3Normalize(&vLook, &vLook);
+		Pos += Dir* 3.f*fPosinDist;
+
+		if (m_fReloadTime > m_fReload &&TempBullet == 1)
+		{
+			if (abs(D3DXToDegree(Angle)) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
+				m_fReloadTime = 0.f;
+			}
+		}
+		else if (m_fReloadTime > m_fReload &&TempBullet != 1)
+		{
+			if (abs(D3DXToDegree(Angle)) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				m_fReloadTime = 0.f;
+			}
+		}
+		else
+		{
+			m_iAction = AIACTION::AIACTION_OCCOPATION;
+		}
+	}
 }
 
 
@@ -771,16 +933,39 @@ void CDefault_Enermy::Set_DisCountLocation()
 	}
 
 }
+void CDefault_Enermy::Dead_Motion(const _float & fTimeDelta)
+{
+	_vec3 Pos;
+	m_pTransformHead->Get_Info(INFO_POS, &Pos);
+	m_bDeadTime += fTimeDelta;
+	fAccum += fTimeDelta;
+	if (0.4f < Pos.y && 0 == m_iMotionCount)
+	{
 
+		_float x = 5.f * fTimeDelta;
+		_float y = (100.f * fTimeDelta) - (0.5f * 9.8f * fAccum*fAccum);
+		_vec3 Move = { x , y ,0.f };
+		m_pTransformHead->Move_Pos(&Move);
+		m_pTransformPosin->Move_Pos(&Move);
+		m_pTransformHead->Rotation(ROT_X, 500 * fTimeDelta);
+		m_pTransformPosin->Rotation(ROT_X, 500 * fTimeDelta);
+	}
+
+	else
+	{
+		m_iMotionCount++;
+		Pos.y = 0.8f;
+		m_pTransformHead->Set_Pos(Pos.x, Pos.y, Pos.z);
+		m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+	}
+}
 
 
 
 void CDefault_Enermy::Basic(_float fTimeDelta)
 {
-
 	switch (m_iAction)
 	{
-
 	case AIACTION::AIACTION_WAIT:
 		Wait(fTimeDelta);
 		break;
@@ -889,24 +1074,24 @@ void CDefault_Enermy::Run(_float fTimeDelta)
 		}
 	}
 
-	if (fCurHp < 290.f)
+	_vec3 vTemp, vSour, vLook, vDir;
+	_float Dot, Angle;
+
+	vTemp = { (_float)(rand() % 40) + 550.f,0.f,(_float)(rand() % 40) + 550.f };
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
+	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
+	vDir = vTemp - vSour;
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	Left_RightCheck(vDir, vLook);
+
+	Dot = D3DXVec3Dot(&vDir, &vLook);
+
+	Angle = (float)acosf(Dot);
+	if (vSour.x < vTemp.x - 3.f&&vSour.z < vTemp.z - 3)
 	{
-		_vec3 vTemp, vSour, vLook, vDir;
-		_float Dot, Angle;
-
-		vTemp = { (_float)((VTXCNTX*VTXITV) - rand() % 80 - 60),0.f,(_float)((VTXCNTX*VTXITV) - rand() % 100 - 40) };
-		m_pTransformCom->Get_Info(INFO::INFO_POS, &vSour);
-		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		vDir = vTemp - vSour;
-
-		D3DXVec3Normalize(&vDir, &vDir);
-		D3DXVec3Normalize(&vLook, &vLook);
-
-		Left_RightCheck(vDir, vLook);
-
-		Dot = D3DXVec3Dot(&vDir, &vLook);
-
-		Angle = (float)acosf(Dot);
 		if (isnan(Angle))
 			Angle = 0;
 		if (LeftCheck == false)
@@ -917,10 +1102,20 @@ void CDefault_Enermy::Run(_float fTimeDelta)
 		{
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
 		}
-
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		m_pTransformCom->Move_Pos(&(vLook*fTimeDelta*fAccel_top_speed));
-
+	}
+	else
+	{
+		fCurHp += 30.f*fTimeDelta;
+		if (fCurHp >= m_fMaxHp)
+		{
+			fCurHp = m_fMaxHp;
+		}
+	}
+	if (fCurHp / m_fMaxHp >= 0.7f)
+	{
+		m_iAction = AIACTION::AIACTION_END;
 	}
 }
 
@@ -929,17 +1124,34 @@ void CDefault_Enermy::Occupation(_float fTimeDelta)//이거 케이스별로나구기
 	_vec3  vPos, vLook, vDir;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
 	m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-
-	if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+	if (m_iLocationCheck != LOCATIONCHECK::LOCATIONCHECK_LEFT)
 	{
-		vPatrolRange.x = m_vPatrol.x - 40.f - rand() % 25;
-		vPatrolRange.y = 0;
-		vPatrolRange.z = m_vPatrol.z - rand() % 45 - 20.f;
-		m_bPatrol = true;
+		if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+		{
+			vPatrolRange.x = m_vPatrol.x - 45.f - rand() % 40;
+			vPatrolRange.y = 0;
+			vPatrolRange.z = m_vPatrol.z - rand() % 25;
+			m_bPatrol = true;
+		}
+		if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+		{
+			m_bPatrol = false;
+		}
 	}
-	if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+	else
 	{
 		m_bPatrol = false;
+		/*if ((m_vPatrol.x - 3.f <= vPos.x && m_vPatrol.z - 3.f <= vPos.z) && (m_vPatrol.x + 3.f >= vPos.x&&m_vPatrol.z + 3.f >= vPos.z))
+		{
+		vPatrolRange.x = m_vPatrol.x + 45.f + rand() % 25;
+		vPatrolRange.y = 0;
+		vPatrolRange.z = m_vPatrol.z + rand() % 25 + 45.f;
+		m_bPatrol = true;
+		}
+		if ((vPatrolRange.x - 3.f <= vPos.x && vPatrolRange.z - 3.f <= vPos.z) && (vPatrolRange.x + 3.f >= vPos.x&&vPatrolRange.z + 3.f >= vPos.z))
+		{
+		m_bPatrol = false;
+		}*/
 	}
 	if (!m_bPatrol)
 	{
@@ -1147,7 +1359,6 @@ void CDefault_Enermy::Enermy_In_Area(_float fTimeDelta)
 		m_pTransformCom->Move_Pos(&(vTrans2*fTimeDelta*fAccel_top_speed));
 
 	}
-
 }
 
 CDefault_Enermy* CDefault_Enermy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -1180,36 +1391,30 @@ void CDefault_Enermy::ColObject(_float fTimeDelta)
 {
 	re += fTimeDelta;
 
-	if (re <= 1)
+	if (re <= 1.f)
 	{
 		if (bLeft)
 		{
 			m_pTransformHead->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -D3DXToRadian(90.f*fTimeDelta));
-			ColBuild = true;
 		}
 		else
 		{
-			ColBuild = true;
+
 			m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(90.f*fTimeDelta));
 		}
-
-		_vec3 vLook;
-		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
-		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(-vLook * fAccel_top_speed * fTimeDelta * 1.1f));
 	}
-	else if (re <= 2)
+	else if (re <= 2.f)
 	{
 		_vec3 vLook;
 		m_pTransformCom->Get_Info(INFO::INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransformCom->Move_Pos(&(vLook * fAccel_top_speed * fTimeDelta * 1.1f));
+		m_pTransformCom->Move_Pos(&(vLook*fAccel_top_speed*fTimeDelta));
 	}
-	if (re >= 2)
+	if (re >= 2.f)
 	{
 		re = 0.f;
 		m_iAction = AIACTION::AIACTION_END;

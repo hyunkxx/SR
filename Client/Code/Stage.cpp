@@ -1079,7 +1079,7 @@ void CStage::Collison_Object(void)
 
 					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 					{
-						(*iters)->Set_Dead(true);
+						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DeadMotionPlay();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
 						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
 					}

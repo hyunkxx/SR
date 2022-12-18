@@ -61,7 +61,7 @@ public:
 	void Detect(_float fTimeDelta);
 	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	void Run(_float fTimeDelta);
-
+	void Dead_Motion(const _float & fTimeDelta);
 	_float GetHp(void) { return fCurHp; }
 	void						Minus_HP_UI(_float HP_minus) { fCurHp -= HP_minus; }
 	void						Plus_HP_UI(_float HP_plus) { fCurHp += HP_plus; }
@@ -80,7 +80,10 @@ private:
 	CTransform*			m_pTransformPosin = nullptr;
 	_bool bLeft;
 	EData*       m_EData;
-
+	_bool DeadMotionCheck = false;
+	_int m_iMotionCount = 0;
+	_float fAccum = 0.f;
+	_bool   Deadtest = false;
 private:
 
 	_int  m_iLocationState;
