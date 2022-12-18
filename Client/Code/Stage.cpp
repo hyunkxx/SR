@@ -835,7 +835,9 @@ void CStage::Collison_Object(void)
 	_vec3 vPlayerPos;
 	pPlayerpos->Get_Info(INFO::INFO_POS, &vPlayerPos);
 	
-	_tchar Hit_Sound[32] = L"HIT_SOUND.mp3";
+	// 도탄 사운드
+	_tchar Hit_Sound[32] = L"도탄.mp3";
+	_tchar HitShell_Sound[32] = L"포탄도탄2.mp3";
 
 
 	vector<CGameObject*> DAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
@@ -1037,15 +1039,19 @@ void CStage::Collison_Object(void)
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
 					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::CANNONBALL)
+					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(30.f);
+
+						// 플레이어 피격 사운드(포탄)
+						Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, CUI_Volume::s_fShotSound);
+					}
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
 
-
-					// 플레이어 피격 사운드
-					Engine::StopSound(HIT_SOUND);
-					Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
-
+						// 플레이어 피격사운드(총알)
+						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
+					}
 
 					if (dynamic_cast<CTankSet*>((*Dest).second)->Get_HP() <= 0)
 						(*Dest).second->Set_Dead(true);
@@ -1081,22 +1087,27 @@ void CStage::Collison_Object(void)
 						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
 					
-					// 거리에 따라 소리 크기 및  거리 150이하만 들리게-------- 여기 전체 함수-> 벡터 선언 쪽에 [사운드 파일] 이름 수정
+					// 소리 거리
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
-
-					if (fPlayer_obj_dist_Sound <= 150.f)
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
-						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 300.f);
-						if (fPlayer_obj_dist_Sound <= 0.f)
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
-							fPlayer_obj_dist_Sound = 0.1f;
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
 						}
-						else if (fPlayer_obj_dist_Sound >= 1.f)
+						else
 						{
-							fPlayer_obj_dist_Sound = 1.f;
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
-						Engine::StopSound(HIT_SOUND);
-						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
 
@@ -1133,23 +1144,27 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
-					
-					// 거리에 따라 소리 크기 및  거리 150이하만 들리게
+					// 소리 거리
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
-
-					if (fPlayer_obj_dist_Sound <= 150.f)
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
-						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 300.f);
-						if (fPlayer_obj_dist_Sound <= 0.f)
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
-							fPlayer_obj_dist_Sound = 0.1f;
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
 						}
-						else if (fPlayer_obj_dist_Sound >= 1.f)
+						else
 						{
-							fPlayer_obj_dist_Sound = 1.f;
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
-						Engine::StopSound(HIT_SOUND);
-						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
@@ -1186,22 +1201,27 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
-					// 거리에 따라 소리 크기 및  거리 150이하만 들리게
+					// 소리 거리
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
-
-					if (fPlayer_obj_dist_Sound <= 150.f)
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
-						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 300.f);
-						if (fPlayer_obj_dist_Sound <= 0.f)
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
-							fPlayer_obj_dist_Sound = 0.1f;
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
 						}
-						else if (fPlayer_obj_dist_Sound >= 1.f)
+						else
 						{
-							fPlayer_obj_dist_Sound = 1.f;
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
-						Engine::StopSound(HIT_SOUND);
-						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
 					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
@@ -1239,22 +1259,27 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
-					// 거리에 따라 소리 크기 및  거리 150이하만 들리게
+					// 소리 거리
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
-
-					if (fPlayer_obj_dist_Sound <= 150.f)
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
-						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 300.f);
-						if (fPlayer_obj_dist_Sound <= 0.f)
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
-							fPlayer_obj_dist_Sound = 0.1f;
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
 						}
-						else if (fPlayer_obj_dist_Sound >= 1.f)
+						else
 						{
-							fPlayer_obj_dist_Sound = 1.f;
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
-						Engine::StopSound(HIT_SOUND);
-						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
 					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)
