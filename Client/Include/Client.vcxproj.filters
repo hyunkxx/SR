@@ -68,253 +68,253 @@
     <Filter Include="01. Scene\03. Stage\Rush">
       <UniqueIdentifier>{47095455-fb79-4c90-bbe3-31dfa3b6520e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject">
+    <Filter Include="01. Scene\02. GameObject">
       <UniqueIdentifier>{fc356117-903d-4074-91e0-d4cdbea5873a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain">
       <UniqueIdentifier>{48dcb4b5-04b4-4b4f-a895-79f8193cdf71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location">
       <UniqueIdentifier>{0dc37c68-be67-4632-9dad-e4e18ed32356}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location\LeftTopLocation">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location\LeftTopLocation">
       <UniqueIdentifier>{aa7dca77-0b51-41c0-a700-d936dec929f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location\LeftLocation">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location\LeftLocation">
       <UniqueIdentifier>{d981b72f-d269-4748-96eb-2461cad3e6ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location\RightLocation">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location\RightLocation">
       <UniqueIdentifier>{d83fb874-25b8-4646-9e1b-bc6cdc4b217b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location\RightTopLocation">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location\RightTopLocation">
       <UniqueIdentifier>{82a2f526-12da-477b-9be9-1bec57e9af9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\03. Terrain\Location\OccupationScore">
+    <Filter Include="01. Scene\02. GameObject\03. Terrain\Location\OccupationScore">
       <UniqueIdentifier>{90411c91-8b4f-4be7-8520-57e786906352}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera">
       <UniqueIdentifier>{db2b4989-b3a9-43b5-93c3-5ba931707868}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\04. DynamicCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\04. DynamicCamera">
       <UniqueIdentifier>{c5782fda-a258-42f6-bf88-77d65092a527}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\05. StaticCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\05. StaticCamera">
       <UniqueIdentifier>{fb7be3a0-8641-4ef9-93fd-313e10c79edb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\06.TankCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\06.TankCamera">
       <UniqueIdentifier>{85aae596-a18b-4d0a-b35c-d6c1d2de28da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\00. SimpleCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\00. SimpleCamera">
       <UniqueIdentifier>{cefec0ba-6ab1-4c03-98e2-96420665bf0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\07.AimCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\07.AimCamera">
       <UniqueIdentifier>{38fde110-f223-43b0-9f4a-2a5949afd01a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\08.DroneCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\08.DroneCamera">
       <UniqueIdentifier>{0856b73d-430b-43a2-9f92-164e7f9c8df4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\09.BoomCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\09.BoomCamera">
       <UniqueIdentifier>{2fb5ce0e-9729-40be-89ba-1b8949077ce2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\10.MonnWalk_Camera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\10.MonnWalk_Camera">
       <UniqueIdentifier>{e5a81ef7-2c95-417a-9e2c-6503f2a2212f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\04.Camera\11.ShipCamera">
+    <Filter Include="01. Scene\02. GameObject\04.Camera\11.ShipCamera">
       <UniqueIdentifier>{ba3ba270-7c02-4359-b09f-7a8826ab8423}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\05. SkyBox">
+    <Filter Include="01. Scene\02. GameObject\05. SkyBox">
       <UniqueIdentifier>{b27cad13-87b1-4f90-903b-ffa8424972cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\06.TestBox">
+    <Filter Include="01. Scene\02. GameObject\06.TestBox">
       <UniqueIdentifier>{2b211184-e139-4a04-866f-b9fbf76691a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank">
+    <Filter Include="01. Scene\02. GameObject\00. Tank">
       <UniqueIdentifier>{2cdd3ee2-a879-422d-9f42-97a38ddbf6f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\00.base">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\00.base">
       <UniqueIdentifier>{de8ae730-2311-4c78-91ea-385f38443f62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI">
       <UniqueIdentifier>{cc912ac5-5860-431f-8c90-9251f02e7a80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI\Ally">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI\Ally">
       <UniqueIdentifier>{781bc3aa-383c-4ea1-a420-242443e6e3c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly">
       <UniqueIdentifier>{9e0c3df1-dc06-43d7-ba63-151794cde965}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI\Enermy">
       <UniqueIdentifier>{2897ffd8-ca1c-45a4-b1db-bbd8bdf32295}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy">
       <UniqueIdentifier>{59935591-9279-4467-ae7e-c4ba5344e9c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\01. AI\CreateAi">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\01. AI\CreateAi">
       <UniqueIdentifier>{3f69e06c-f544-4755-95b1-54c0cc29ced8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle">
       <UniqueIdentifier>{1ec58633-3f2d-4caf-a0ed-c7f63924f933}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle\01. SmallTank">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle\01. SmallTank">
       <UniqueIdentifier>{f5269698-2b4e-482d-8731-3ded400592e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle\00. Humvee">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle\00. Humvee">
       <UniqueIdentifier>{11b13a53-c6fe-4d1e-8ed2-85c6f1e0a8e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank">
       <UniqueIdentifier>{dea67738-7bfa-4f2a-8988-8d8c2106237b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle\03. BigTank">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle\03. BigTank">
       <UniqueIdentifier>{d359439e-afb3-4b6c-97e8-8234a37b9860}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\00. Tank\02. Vehicle\04. LongTank">
+    <Filter Include="01. Scene\02. GameObject\00. Tank\02. Vehicle\04. LongTank">
       <UniqueIdentifier>{3dc69949-5ab9-424e-837a-10c1cdc0fc4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\07. Building">
+    <Filter Include="01. Scene\02. GameObject\07. Building">
       <UniqueIdentifier>{2a388c38-b057-4880-a0db-73eec77a08ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect">
+    <Filter Include="01. Scene\02. GameObject\08.Effect">
       <UniqueIdentifier>{c6e167ea-ed33-4180-ab2b-db944452eab8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect\ShootEffect">
+    <Filter Include="01. Scene\02. GameObject\08.Effect\ShootEffect">
       <UniqueIdentifier>{ade2390e-f5a9-45c4-9c39-f4c3851a3e36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect\Gun_Shoot_Effect">
+    <Filter Include="01. Scene\02. GameObject\08.Effect\Gun_Shoot_Effect">
       <UniqueIdentifier>{4e4b1f4f-5290-4410-91be-fb5517c8491f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect\Boom_Effect">
+    <Filter Include="01. Scene\02. GameObject\08.Effect\Boom_Effect">
       <UniqueIdentifier>{e1a87847-9635-4d49-bb69-c821e990dfd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect\EffectManager">
+    <Filter Include="01. Scene\02. GameObject\08.Effect\EffectManager">
       <UniqueIdentifier>{bec1f1b8-ba87-4fd1-8d82-97cd95530f89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\08.Effect\ShootSmoke">
+    <Filter Include="01. Scene\02. GameObject\08.Effect\ShootSmoke">
       <UniqueIdentifier>{ac794216-becb-42d0-a5cb-4139c6bdf607}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI">
       <UniqueIdentifier>{e5350554-cbf9-428a-81f8-827ef349513c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\01.Chatting">
+    <Filter Include="01. Scene\02. GameObject\93.UI\01.Chatting">
       <UniqueIdentifier>{92d68a21-eae2-4db3-b858-c7f6fd1e0b3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\01.Chatting\00.Player_Chat">
+    <Filter Include="01. Scene\02. GameObject\93.UI\01.Chatting\00.Player_Chat">
       <UniqueIdentifier>{fdf9cd83-e1f8-49b8-8ec8-11586f526251}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log">
+    <Filter Include="01. Scene\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log">
       <UniqueIdentifier>{745537e2-0ad4-4ee1-ae75-0717b28b7c37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble">
+    <Filter Include="01. Scene\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble">
       <UniqueIdentifier>{4b0fc61d-fef4-4fa3-ba7b-e4254779657a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI">
       <UniqueIdentifier>{9ed29545-f5a5-4704-aa69-81df56be7015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI">
       <UniqueIdentifier>{e2de16c5-fc46-4917-9db0-8bc5437e916b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI">
       <UniqueIdentifier>{4ab70662-c0c6-4f6e-83dc-fe2ead9796ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI">
       <UniqueIdentifier>{ed90980a-2602-4dc6-b313-820f8d1132d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho">
       <UniqueIdentifier>{71cc8dda-1dfb-45ff-b475-56ad7b7b8ef5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers">
+    <Filter Include="01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers">
       <UniqueIdentifier>{b12c8642-d0d9-408a-9cdb-ae9e5c8416e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI">
       <UniqueIdentifier>{1d4515e8-f7e3-439d-8c1c-eb057c5c6496}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI">
       <UniqueIdentifier>{0e5875c3-2f38-4621-a65e-2df0bf836862}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP">
       <UniqueIdentifier>{f909f861-75b1-4803-9c11-5d666b56fe40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel">
       <UniqueIdentifier>{5d5ecb7f-bc9e-4dbf-bbc1-0f813b867cc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed">
       <UniqueIdentifier>{1949959f-569d-4adb-a361-62a35380be80}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\01.World_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\01.World_UI">
       <UniqueIdentifier>{f0970058-44d1-4820-9a14-f66f88ebd418}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI">
       <UniqueIdentifier>{0d14e78e-2813-4168-8717-7664f3029bc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\04.Item_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\04.Item_UI">
       <UniqueIdentifier>{0e847c98-8fd8-456b-9908-b3587e4d7ba4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\00.Speed_Item_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\00.Speed_Item_UI">
       <UniqueIdentifier>{1ea0acb4-3975-4ab5-af66-cc098bb23215}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\01.Power_Item_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\01.Power_Item_UI">
       <UniqueIdentifier>{e8018326-8b59-43d9-be3a-767fc3dffdf3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\02.Amor_Item_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\04.Item_UI\02.Amor_Item_UI">
       <UniqueIdentifier>{7be58390-f223-49e4-941c-a5d0f582b638}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI">
       <UniqueIdentifier>{4e4b2674-bfba-438a-9392-9f71cb2bb4dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI">
       <UniqueIdentifier>{4f691c53-39c1-40fc-aefd-6fddd5973179}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back">
       <UniqueIdentifier>{59845011-0e08-4786-91c0-00fc78e4bb84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\01.Option_Rotation_UI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\01.Option_Rotation_UI">
       <UniqueIdentifier>{b413fa94-a97b-4965-a84f-60316e596a7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap">
+    <Filter Include="01. Scene\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap">
       <UniqueIdentifier>{07b20f6c-8431-4b2a-834e-ceae4fe3185b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\93.ETC">
+    <Filter Include="01. Scene\02. GameObject\93.UI\93.ETC">
       <UniqueIdentifier>{ae7b3ac1-0933-4b80-98c5-07b99000222d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\00.Font_TIME_UI_Mgr">
+    <Filter Include="01. Scene\02. GameObject\93.UI\00.Font_TIME_UI_Mgr">
       <UniqueIdentifier>{ca46fe84-b050-42b1-b517-b9d271fd2fa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\10. VehicleInfoUI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\10. VehicleInfoUI">
       <UniqueIdentifier>{76948a32-7736-4d0d-8661-30abd00be911}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\11. FectoryUI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\11. FectoryUI">
       <UniqueIdentifier>{1f728917-f1b1-43f3-9c1d-ee48733b32ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\11. FectoryUI\Player">
+    <Filter Include="01. Scene\02. GameObject\93.UI\11. FectoryUI\Player">
       <UniqueIdentifier>{40bfa328-046a-441f-b3f1-f9f7840841c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\11. FectoryUI\AI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\11. FectoryUI\AI">
       <UniqueIdentifier>{ec5e4827-f62b-4b53-83b8-c53264b7e892}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\12. BaseUI">
+    <Filter Include="01. Scene\02. GameObject\93.UI\12. BaseUI">
       <UniqueIdentifier>{2b269022-7699-437c-88e0-115242807964}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\93.UI\13 Buttons">
+    <Filter Include="01. Scene\02. GameObject\93.UI\13 Buttons">
       <UniqueIdentifier>{c50d370d-540e-4e9e-89d9-ee137a8023c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill">
+    <Filter Include="01. Scene\02. GameObject\09.Skill">
       <UniqueIdentifier>{60863a86-adc1-4c57-a764-2ab76d533f4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill\Bomber">
+    <Filter Include="01. Scene\02. GameObject\09.Skill\Bomber">
       <UniqueIdentifier>{b9109e8d-41d0-457a-836e-a94f515ca7fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill\Bomber\Boom_Support">
+    <Filter Include="01. Scene\02. GameObject\09.Skill\Bomber\Boom_Support">
       <UniqueIdentifier>{5ce7a8c3-ac5b-4efe-871a-a55a95372fb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill\BattleShip">
+    <Filter Include="01. Scene\02. GameObject\09.Skill\BattleShip">
       <UniqueIdentifier>{690e699d-50f2-488e-bc40-8e519e9facf5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShip_Support">
+    <Filter Include="01. Scene\02. GameObject\09.Skill\BattleShip\BattleShip_Support">
       <UniqueIdentifier>{eb9d7680-4dff-4fdc-bef1-ad5ce4b6a899}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShipBullet">
+    <Filter Include="01. Scene\02. GameObject\09.Skill\BattleShip\BattleShipBullet">
       <UniqueIdentifier>{1d86119b-f863-4b69-a096-1ce35c4a8081}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. GameSystem\02. GameObject\02. BackGround">
+    <Filter Include="01. Scene\02. GameObject\02. BackGround">
       <UniqueIdentifier>{d92e7e0d-4d14-4ef4-a6d9-107e29ec884d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -326,22 +326,22 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
-      <Filter>03. GameSystem\02. GameObject\02. BackGround</Filter>
+      <Filter>01. Scene\02. GameObject\02. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DynamicCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\04. DynamicCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\04. DynamicCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkyBox.h">
-      <Filter>03. GameSystem\02. GameObject\05. SkyBox</Filter>
+      <Filter>01. Scene\02. GameObject\05. SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\StaticCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\05. StaticCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\05. StaticCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TankCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\06.TankCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\06.TankCamera</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>_config\pch</Filter>
@@ -383,175 +383,175 @@
       <Filter>_config\ImGui\manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Default_Enermy.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Enermy</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LeftLocation.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\LeftLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\LeftLocation</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\RightTopLocation.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\RightTopLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\RightTopLocation</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\RightLocation.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\RightLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\RightLocation</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LeftTopLocation.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\LeftTopLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\LeftTopLocation</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TestBox.h">
-      <Filter>03. GameSystem\02. GameObject\06.TestBox</Filter>
+      <Filter>01. Scene\02. GameObject\06.TestBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\AimCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\07.AimCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\07.AimCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Humvee.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Default_Ally.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Ally</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ObjectMesh.h">
       <Filter>01. Scene\02. MainMenu\VehicleSelectMenu\ObjectMesh</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SimpleCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\00. SimpleCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\00. SimpleCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BottomDirEnermy.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Chatting.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Posin_UI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_FontMgr.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\00.Font_TIME_UI_Mgr</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\00.Font_TIME_UI_Mgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Log_Back.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Loading.h">
       <Filter>01. Scene\00. Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_World_Bubble.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Building.h">
-      <Filter>03. GameSystem\02. GameObject\07. Building</Filter>
+      <Filter>01. Scene\02. GameObject\07. Building</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Aim_UI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ShootEffect.h">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\ShootEffect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\ShootEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Aim_UI_Pers.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TankManager.h">
       <Filter>03. GameSystem\TankManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TankSet.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\00.base</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\00.base</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SmallTank.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiddleTank.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigTank.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LongTank.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TempOccupationScore.h">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\OccupationScore</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\OccupationScore</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\VehicleInfoUI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\10. VehicleInfoUI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BottomDirAlly.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Volume.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Gun_Shoot_Effect.h">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bomber.h">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\Bomber</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\Bomber</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Boom_Support.h">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DroneCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\08.DroneCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\08.DroneCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BoomCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\09.BoomCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\09.BoomCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MoonWalkCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BoomEffect.h">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\Boom_Effect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\Boom_Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\EffectManager.h">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\EffectManager</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\EffectManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Start.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Compass.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BattleShip_Support.h">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BattleShip.h">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GameMode.h">
       <Filter>03. GameSystem\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Fuel.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Speed.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_MiniMap.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_Player_Hp.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ShipCamera.h">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\11.ShipCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\11.ShipCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ShipBullet.h">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ShootSmoke.h">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\ShootSmoke</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\ShootSmoke</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ButtonUI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\Player</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DirButton.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\AICreateButton.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CreateAi.h">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\CreateAi</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\CreateAi</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BaseUI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\12. BaseUI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\12. BaseUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MainMenu.h">
       <Filter>01. Scene\02. MainMenu\VehicleSelectMenu</Filter>
@@ -566,16 +566,16 @@
       <Filter>01. Scene\03. Stage\Rush</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GameButton.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ModeButton.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ResultUI.h">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Grass.h">
-      <Filter>03. GameSystem\02. GameObject\07. Building</Filter>
+      <Filter>01. Scene\02. GameObject\07. Building</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -586,22 +586,22 @@
       <Filter>01. Scene\01. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
-      <Filter>03. GameSystem\02. GameObject\02. BackGround</Filter>
+      <Filter>01. Scene\02. GameObject\02. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\04. DynamicCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\04. DynamicCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>03. GameSystem\02. GameObject\05. SkyBox</Filter>
+      <Filter>01. Scene\02. GameObject\05. SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StaticCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\05. StaticCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\05. StaticCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TankCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\06.TankCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\06.TankCamera</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>_config\pch</Filter>
@@ -634,175 +634,175 @@
       <Filter>_config\ImGui\manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Default_Enermy.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Enermy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LeftLocation.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\LeftLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\LeftLocation</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\RightTopLocation.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\RightTopLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\RightTopLocation</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\RightLocation.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\RightLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\RightLocation</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LeftTopLocation.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\LeftTopLocation</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\LeftTopLocation</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestBox.cpp">
-      <Filter>03. GameSystem\02. GameObject\06.TestBox</Filter>
+      <Filter>01. Scene\02. GameObject\06.TestBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AimCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\07.AimCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\07.AimCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Humvee.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\00. Humvee</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Default_Ally.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Ally</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Ally</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ObjectMesh.cpp">
       <Filter>01. Scene\02. MainMenu\VehicleSelectMenu\ObjectMesh</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SimpleCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\00. SimpleCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\00. SimpleCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BottomDirEnermy.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Enermy\BottomDirEnermy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Chatting.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\00.Player_Chat</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Posin_UI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\00.Posin_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_FontMgr.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\00.Font_TIME_UI_Mgr</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\00.Font_TIME_UI_Mgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Log_Back.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\01.World_Chat_Log</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Loading.cpp">
       <Filter>01. Scene\00. Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_World_Bubble.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\01.Chatting\02.UI_World_Bubble</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Building.cpp">
-      <Filter>03. GameSystem\02. GameObject\07. Building</Filter>
+      <Filter>01. Scene\02. GameObject\07. Building</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Aim_UI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Ortho</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShootEffect.cpp">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\ShootEffect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\ShootEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Aim_UI_Pers.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\02.Aim_UI\Pers</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TankManager.cpp">
       <Filter>03. GameSystem\TankManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TankSet.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\00.base</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\00.base</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SmallTank.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\01. SmallTank</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MiddleTank.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\02. MiddleTank</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigTank.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\03. BigTank</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LongTank.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\02. Vehicle\04. LongTank</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TempOccupationScore.cpp">
-      <Filter>03. GameSystem\02. GameObject\03. Terrain\Location\OccupationScore</Filter>
+      <Filter>01. Scene\02. GameObject\03. Terrain\Location\OccupationScore</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\VehicleInfoUI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\10. VehicleInfoUI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\10. VehicleInfoUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BottomDirAlly.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\Ally\BottomDirAlly</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Volume.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\05.INFO_UI\06.Option_UI\00.Option_Back</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Gun_Shoot_Effect.cpp">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\Gun_Shoot_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bomber.cpp">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\Bomber</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\Bomber</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Boom_Support.cpp">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\Bomber\Boom_Support</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DroneCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\08.DroneCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\08.DroneCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BoomEffect.cpp">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\Boom_Effect</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\Boom_Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BoomCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\09.BoomCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\09.BoomCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MoonWalkCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\10.MonnWalk_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\EffectManager.cpp">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\EffectManager</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\EffectManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Start.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Compass.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\03.AimCamera_UI\01.Rotation_UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BattleShip_Support.cpp">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip\BattleShip_Support</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BattleShip.cpp">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GameMode.cpp">
       <Filter>03. GameSystem\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Fuel.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Speed.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_MiniMap.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\03.UI_MiniMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Player_Hp.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShipCamera.cpp">
-      <Filter>03. GameSystem\02. GameObject\04.Camera\11.ShipCamera</Filter>
+      <Filter>01. Scene\02. GameObject\04.Camera\11.ShipCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShipBullet.cpp">
-      <Filter>03. GameSystem\02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
+      <Filter>01. Scene\02. GameObject\09.Skill\BattleShip\BattleShipBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShootSmoke.cpp">
-      <Filter>03. GameSystem\02. GameObject\08.Effect\ShootSmoke</Filter>
+      <Filter>01. Scene\02. GameObject\08.Effect\ShootSmoke</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ButtonUI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\Player</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DirButton.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\AICreateButton.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\11. FectoryUI\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CreateAi.cpp">
-      <Filter>03. GameSystem\02. GameObject\00. Tank\01. AI\CreateAi</Filter>
+      <Filter>01. Scene\02. GameObject\00. Tank\01. AI\CreateAi</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseUI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\12. BaseUI</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\12. BaseUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainMenu.cpp">
       <Filter>01. Scene\02. MainMenu\VehicleSelectMenu</Filter>
@@ -817,16 +817,16 @@
       <Filter>01. Scene\03. Stage\Rush</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GameButton.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ModeButton.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ResultUI.cpp">
-      <Filter>03. GameSystem\02. GameObject\93.UI\13 Buttons</Filter>
+      <Filter>01. Scene\02. GameObject\93.UI\13 Buttons</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Grass.cpp">
-      <Filter>03. GameSystem\02. GameObject\07. Building</Filter>
+      <Filter>01. Scene\02. GameObject\07. Building</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

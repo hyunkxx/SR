@@ -835,7 +835,7 @@ void CStage::Collison_Object(void)
 	_vec3 vPlayerPos;
 	pPlayerpos->Get_Info(INFO::INFO_POS, &vPlayerPos);
 	
-	_tchar Hit_Sound[32] = L"HIT_SOUND.wav";
+	_tchar Hit_Sound[32] = L"HIT_SOUND.mp3";
 
 
 	vector<CGameObject*> DAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
@@ -1043,6 +1043,7 @@ void CStage::Collison_Object(void)
 
 
 					// 플레이어 피격 사운드
+					Engine::StopSound(HIT_SOUND);
 					Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 
 
@@ -1094,6 +1095,7 @@ void CStage::Collison_Object(void)
 						{
 							fPlayer_obj_dist_Sound = 1.f;
 						}
+						Engine::StopSound(HIT_SOUND);
 						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
@@ -1146,6 +1148,7 @@ void CStage::Collison_Object(void)
 						{
 							fPlayer_obj_dist_Sound = 1.f;
 						}
+						Engine::StopSound(HIT_SOUND);
 						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
@@ -1197,6 +1200,7 @@ void CStage::Collison_Object(void)
 						{
 							fPlayer_obj_dist_Sound = 1.f;
 						}
+						Engine::StopSound(HIT_SOUND);
 						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 
@@ -1249,6 +1253,7 @@ void CStage::Collison_Object(void)
 						{
 							fPlayer_obj_dist_Sound = 1.f;
 						}
+						Engine::StopSound(HIT_SOUND);
 						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
 					}
 

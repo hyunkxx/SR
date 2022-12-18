@@ -1520,9 +1520,9 @@ HRESULT CDefault_Enermy::Add_Component(void)
 	NULL_CHECK_RETURN(m_pRcTexF, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
+	pComponent = m_pTextureF = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex_2"));
 	NULL_CHECK_RETURN(m_pTextureF, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_World_Hp_Tex_2", pComponent });
 
 	pComponent = m_pTransformHP_UI = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformHP_UI, E_FAIL);

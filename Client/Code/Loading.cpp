@@ -109,6 +109,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Back_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/player_HP2.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Player_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Player_HP_Bar.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/WHP.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_World_Hp_Tex_2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/WHP_2.png", TEX_NORMAL)), E_FAIL);
 	// HP->Reload
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Reload_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Reload_Bar%d.png", TEX_NORMAL, 2)), E_FAIL);
 
