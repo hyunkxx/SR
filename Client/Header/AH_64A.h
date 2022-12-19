@@ -21,7 +21,7 @@ public:
 	virtual void		RenderGUI(void)override;
 
 	void				Key_Input(const _float& fTimeDleta);
-private:	
+private:
 	_float				Plus_Advance_AccelSpeed(const _float & fTimeDelta);
 	_float				Minus_Advance_AccelSpeed(const _float & fTimeDelta);
 
@@ -55,18 +55,19 @@ private:
 
 	_float m_fAccum = 0.f;
 
-	
+
 	_float m_fRot[ROT_END];
 
 	_bool m_bLock = false;
 	_bool m_bRight_Shoot = true;
 
-	_float m_fAdSpeed  = 0.f;
+	_float m_fAdSpeed = 0.f;
 	_float m_fRightSpeed = 0.f;
 	_float m_fReloadTime = 0.f;
 
 	_float m_fPlayCount = 0.f;
-
+	_bool m_bDeadCounting = false;
+	_float m_fDeadCount = 0.f;
 	_float m_fSoundCount = 30.f;
 	_float m_fInSoundCount = 0.f;
 	_bool m_In_Sound = false;

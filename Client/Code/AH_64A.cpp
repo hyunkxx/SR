@@ -6,6 +6,7 @@
 #include "AH_64A_AimCamera.h"
 #include "TankSet.h"
 #include "AH_64A_Shoot_Effect.h"
+#include "AH_64A_EndCamera.h"
 
 CAH_64A::CAH_64A(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -25,17 +26,39 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 		return 0;
+	if (m_bDeadCounting)
+		m_fDeadCount += fTimeDelta;
+
 	m_fReloadTime += fTimeDelta;
 	m_fPlayCount += fTimeDelta;
+
 	play_Voice();
-	if (!m_In_Sound)
+
+
+
+	if (8.f < m_fDeadCount)
+	{
+		m_bDead = true;
+		for (_int i = 0; ROT_END > (ROTATION)i; i++)
+		{
+			m_fRot[(ROTATION)i] = 0.f;
+		}
+		m_fDeadCount = 0.f;
+		m_vInfo[INFO_POS] = { 100.f, 50.f , -300.f };
+		m_vInfo[INFO_RIGHT] = { 1.f, 0.f , 0.f };
+		m_vInfo[INFO_UP] = { 0.f, 1.f , 0.f };
+		m_vInfo[INFO_LOOK] = { 0.f, 0.f , 1.f };
+
+	}
+
+	if (!m_In_Sound && !m_bDeadCounting)
 	{
 		m_fSoundCount += fTimeDelta;
 
 		if (0.5f < m_fSoundCount)
 		{
 			// 사운드 다시 재생
-			
+
 			m_fSoundCount = 0.f;
 			Engine::PlaySound_SR(L"AH_64A_SOUND2.mp3", AH_64A_SOUND, 1.f);
 		}
@@ -52,24 +75,15 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 		}
 	}
 
-	if (m_fPlayCount > 60.f)
+	if (m_fPlayCount > 60.f && !m_bDeadCounting)
 	{
-		Engine::Camera_Change(L"TankCamera");
+		Engine::Camera_Change(L"AH_64A_EndCamera");
+		Engine::StopSound(AH_64A_VOICE2);
+		Engine::PlaySound_SR(L"AH_64A_End.mp3", AH_64A_VOICE2, 0.5f);
+		static_cast<CAH_64A_EndCamera*>(Engine::Get_Camera())->Camera_Setting(m_vInfo[INFO_POS]);
 		m_bLock = true;
-		m_bDead = true;
-
+		m_bDeadCounting = true;
 		Engine::StopSound(AH_64A_SOUND);
-		
-		for (_int i = 0; ROT_END > (ROTATION)i; i++)
-		{
-			m_fRot[(ROTATION)i] = 0.f;
-		}
-
-		m_vInfo[INFO_POS] = { 100.f, 50.f , -300.f };
-		m_vInfo[INFO_RIGHT] = { 1.f, 0.f , 0.f };
-		m_vInfo[INFO_UP] = { 0.f, 1.f , 0.f };
-		m_vInfo[INFO_LOOK] = { 0.f, 0.f , 1.f };
-		static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Set_Rock(false);
 	}
 
 	m_fAccum += 200.f * fTimeDelta;
@@ -255,14 +269,14 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 			else
 				Plus_Advance_AccelSpeed(fTimeDleta);
 		}
-		
+
 	}
 
 	if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD && 0.08f < m_fReloadTime)
 	{
 		if (m_bRight_Shoot)
 		{
-			_vec3 Pos, Dir, Right , Up;
+			_vec3 Pos, Dir, Right, Up;
 			Pos = m_vInfo[INFO_POS];
 			Dir = m_vInfo[INFO_LOOK];
 			Right = m_vInfo[INFO_RIGHT];
@@ -271,13 +285,13 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 			D3DXVec3Normalize(&Dir, &Dir);
 			Pos += Dir * 5 * m_fScale;
 
-			Engine::Reuse_Object((Pos + (4 * Right)-(3*Up)), Dir, 800.f, m_fRot[ROT_X], D3DXToRadian(m_fRot[ROT_Y]), BULLET_ID::AH_64A_BULLET);
+			Engine::Reuse_Object((Pos + (4 * Right) - (3 * Up)), Dir, 800.f, m_fRot[ROT_X], D3DXToRadian(m_fRot[ROT_Y]), BULLET_ID::AH_64A_BULLET);
 			m_fReloadTime = 0.f;
 
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 
-			if(m_In_Sound)
-				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound/3.f);
+			if (m_In_Sound)
+				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound / 3.f);
 			else
 				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
 
@@ -289,7 +303,7 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 		}
 		else
 		{
-			_vec3 Pos, Dir, Right , Up;
+			_vec3 Pos, Dir, Right, Up;
 			Pos = m_vInfo[INFO_POS];
 			Dir = m_vInfo[INFO_LOOK];
 			Up = m_vInfo[INFO_UP];
@@ -297,7 +311,7 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 			Pos.y += 2.f * m_fScale;
 			D3DXVec3Normalize(&Dir, &Dir);
 			Pos += Dir * 5 * m_fScale;
-			Engine::Reuse_Object((Pos - (4 * Right) -(3 * Up)), Dir, 800.f, m_fRot[ROT_X],D3DXToRadian(m_fRot[ROT_Y]), BULLET_ID::AH_64A_BULLET);
+			Engine::Reuse_Object((Pos - (4 * Right) - (3 * Up)), Dir, 800.f, m_fRot[ROT_X], D3DXToRadian(m_fRot[ROT_Y]), BULLET_ID::AH_64A_BULLET);
 			m_fReloadTime = 0.f;
 
 			Engine::StopSound(PLAYER_SHOT_SOUND2);
@@ -306,19 +320,19 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND2, CUI_Volume::s_fShotSound / 3.f);
 			else
 				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND2, CUI_Volume::s_fShotSound);
-			
+
 			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::AH_64A_EFFECT);
 			pObject->Set_Dead(false);
 			static_cast<CAH_64A_Shoot_Effect*>(pObject)->Set_Target(m_pTransformBody);
 			static_cast<CAH_64A_Shoot_Effect*>(pObject)->Set_Left_Effect(false);
 			m_bRight_Shoot = true;
 		}
-		
+
 	}
 
 	if (Engine::Get_DIMouseState_Custom(DIM_RB) == KEY_STATE::TAP)
 	{
-		if(dynamic_cast<CAH_64A_AimCamera*>(Engine::Get_Camera()))
+		if (dynamic_cast<CAH_64A_AimCamera*>(Engine::Get_Camera()))
 		{
 			Engine::Camera_Change(L"AH_64A_Camera");
 			dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera())->Set_Pos(m_vInfo[INFO_POS]);
@@ -332,7 +346,7 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 			m_In_Sound = true;
 			Engine::StopSound(AH_64A_SOUND);
 			Engine::PlaySound_SR(L"AH_64A_IN_SOUND2.mp3", AH_64A_SOUND, 1.f);
-			m_fInSoundCount = 0.f;	
+			m_fInSoundCount = 0.f;
 		}
 	}
 	_vec3 vLook = m_vInfo[INFO_LOOK];
@@ -340,7 +354,7 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 	vLook.y = 0.f;
 	vRight.y = 0.f;
 
-	D3DXVec3Normalize(&vLook,&vLook);
+	D3DXVec3Normalize(&vLook, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
 
 	m_vInfo[INFO_POS] += vLook * m_fAdSpeed * fTimeDleta;
@@ -351,10 +365,11 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 void CAH_64A::Start_AH_64A(void)
 {
 	m_fScale = 1.f;
+	m_fDeadCount = 0.f;
 	m_bDead = false;
 	m_bLock = true;
 	m_bAppear = true;
-	m_vInfo[INFO_POS] = { 100.f, 50.f , -300.f };
+	m_vInfo[INFO_POS] = { 100.f, 50.f , -400.f };
 	m_vInfo[INFO_RIGHT] = { 10.f, 0.f , 0.f };
 	m_vInfo[INFO_UP] = { 0.f, 1.f , 0.f };
 	m_vInfo[INFO_LOOK] = { 0.f, 0.f , 1.f };
@@ -374,12 +389,12 @@ void CAH_64A::Start_AH_64A(void)
 	Engine::StopSound(AH_64A_VOICE3);
 
 
-	Engine::PlaySound_SR(L"AH_64A_START_2.mp3", AH_64A_VOICE2,1.f);
+	Engine::PlaySound_SR(L"AH_64A_START_2.mp3", AH_64A_VOICE2, 1.f);
 	Engine::Camera_Change(L"AH_64A_Camera");
 	if (dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera")))
 	{
 		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Set_Target(m_pTransformBody);
-		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Camera_Setting(_vec3{ 400.f, 0.f, 0 });
+		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Camera_Setting(_vec3{ 200.f, 100.f , 0.f });
 		Engine::Get_Camera()->Shake_On();
 	}
 }
@@ -394,7 +409,7 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 
 	_matrix matWorld, matScale, matRot[ROT_END], matTrans;
 	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixScaling(&matScale, m_fScale, m_fScale , m_fScale)
+	D3DXMatrixScaling(&matScale, m_fScale, m_fScale, m_fScale)
 		;
 	D3DXVec3Cross(&m_vInfo[INFO_RIGHT], &Up, &m_vInfo[INFO_LOOK]);
 	D3DXVec3Normalize(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT]);
@@ -402,8 +417,8 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXVec3Cross(&m_vInfo[INFO_UP], &m_vInfo[INFO_LOOK], &m_vInfo[INFO_RIGHT]);
 	D3DXVec3Normalize(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP]);
 
-	
-//	_float RadianX =  acosf(D3DXVec3Dot(&m_vInfo[INFO_UP], &Up));
+
+	//	_float RadianX =  acosf(D3DXVec3Dot(&m_vInfo[INFO_UP], &Up));
 	_vec3 NewLook;
 	NewLook = m_vInfo[INFO_LOOK];
 	NewLook.y = 0.f;
@@ -421,9 +436,9 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXMatrixRotationX(&matRot[ROT_X], D3DXToRadian(m_fRot[ROT_X]));
 	D3DXMatrixRotationZ(&matRot[ROT_Z], D3DXToRadian(m_fRot[ROT_Z]));
 	//D3DXMatrixTranslation(&matTrans,0, 0, 0);
-		D3DXMatrixTranslation(&matTrans,m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
-	matWorld = matScale  * matRot[ROT_Z] * matRot[ROT_X] *matRot[ROT_Y]  * matTrans;
+	matWorld = matScale  * matRot[ROT_Z] * matRot[ROT_X] * matRot[ROT_Y] * matTrans;
 	m_pTransformBody->m_matWorld = matWorld;
 
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -434,15 +449,15 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXMatrixScaling(&matScale2, m_fScale * 1.5f, m_fScale* 1.5f, m_fScale* 1.5f);
 
 	D3DXMatrixRotationY(&matRot2[ROT_Y], m_fAccum);
-	D3DXMatrixTranslation(&matTrans2, 0, -(3 * m_fScale),-(2 * m_fScale));
+	D3DXMatrixTranslation(&matTrans2, 0, -(3 * m_fScale), -(2 * m_fScale));
 
 	matWorld2 = matScale2 * matRot2[ROT_Y] * matTrans2  * matWorld;
 
 	m_pTransformHead->m_matWorld = matWorld2;
 
 	////////////////////////////////////////////////////////////////////////////////////////
-	
-	
+
+
 	_matrix matWorld3, matScale3, matRot3[ROT_END], matTrans3;
 
 	D3DXMatrixIdentity(&matWorld3);
@@ -452,7 +467,7 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXMatrixTranslation(&matTrans3, -1.f * m_fScale, 1.f * m_fScale, -17.f* m_fScale);
 
 	matWorld3 = matScale3 * matRot3[ROT_X] * matTrans3  * matWorld;
-	
+
 	m_pTransformTail->m_matWorld = matWorld3;
 
 	memcpy(m_vInfo[INFO_LOOK], &(*m_pTransformBody->Get_WorldMatrix()).m[INFO_LOOK][0], sizeof(_vec3));
@@ -506,7 +521,7 @@ HRESULT CAH_64A::Ready_Object(void)
 
 	m_fAdSpeed = 0.f;
 	m_fRightSpeed = 0.f;
-	for (int i = 0; i <  ROT_END; i++)
+	for (int i = 0; i < ROT_END; i++)
 	{
 		m_fRot[i] = 0.f;
 	}
@@ -552,7 +567,7 @@ _float CAH_64A::Plus_Advance_AccelSpeed(const _float & fTimeDelta)
 		m_fAdSpeed = 0.f;
 		m_fAdAccum = 0.f;
 	}
-		
+
 
 	return m_fAdSpeed;
 }
@@ -562,7 +577,7 @@ _float CAH_64A::Minus_Advance_AccelSpeed(const _float & fTimeDelta)
 	_bool back;
 
 	if (m_fAdSpeed < 0.f)
-		 back = true;
+		back = true;
 	else
 		back = false;
 
@@ -570,7 +585,7 @@ _float CAH_64A::Minus_Advance_AccelSpeed(const _float & fTimeDelta)
 
 	m_fAdSpeed = (30.f) * m_fAdAccum;
 
-	if(-50.f > m_fAdSpeed)
+	if (-50.f > m_fAdSpeed)
 		m_fAdSpeed = -50.f;
 	else if (50.f < m_fAdSpeed)
 		m_fAdSpeed = 50.f;
@@ -628,7 +643,7 @@ _float CAH_64A::Minus_Right_AccelSpeed(const _float & fTimeDelta)
 	if (-40.f * m_fScale > m_fRightSpeed)
 		m_fRightSpeed = -40.f;
 	else if (40.f < m_fRightSpeed)
-		m_fRightSpeed = 40.f; 
+		m_fRightSpeed = 40.f;
 
 	if (m_fRightSpeed > 0.f && back)
 	{
@@ -651,5 +666,18 @@ void CAH_64A::play_Voice(void)
 		Engine::PlaySound_SR(L"AH_64A_FUN.mp3", AH_64A_VOICE2, 0.5f);
 	}
 
+	if (m_fPlayCount > 25.f && 26.f > m_fPlayCount)
+	{
+		Engine::PlaySound_SR(L"AH_64A_VOICE2.mp3", AH_64A_VOICE2, 0.5f);
+	}
 
+	if (m_fPlayCount > 35.f && 35.5f > m_fPlayCount)
+	{
+		Engine::PlaySound_SR(L"AH_64A_GO.mp3", AH_64A_VOICE2, 0.5f);
+	}
+
+	if (m_fPlayCount > 45.f && 46.f > m_fPlayCount)
+	{
+		Engine::PlaySound_SR(L"AH_64A_OK.mp3", AH_64A_VOICE2, 0.5f);
+	}
 }

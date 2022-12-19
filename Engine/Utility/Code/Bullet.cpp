@@ -27,6 +27,14 @@ HRESULT CBullet::Ready_Object(void)
 	m_stBody.fLen[y] = 0.1f * m_fScale;
 	m_stBody.fLen[z] = 1.f * m_fScale;
 
+	if (m_eID == BULLET_ID::AH_64A_BULLET)
+	{
+		m_stBody.fLen[x] = 2.f * m_fScale;
+		m_stBody.fLen[y] = 2.f  * m_fScale;
+		m_stBody.fLen[z] = 2.f * m_fScale;
+
+	}
+
 	CGameObject::Ready_Object();
 
 	return S_OK;
@@ -192,6 +200,9 @@ void CBullet::Set_ID(BULLET_ID eID)
 	{
 		m_fHitRange = 0.f;
 		m_fScale = 5.f;
+		m_stBody.fLen[x] = 2.f * m_fScale;
+		m_stBody.fLen[y] = 2.f  * m_fScale;
+		m_stBody.fLen[z] = 2.f * m_fScale;
 	}
 	else if (eID == BULLET_ID::SHIP_BULLET)
 	{

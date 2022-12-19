@@ -46,6 +46,10 @@ private:
 	_vec3		m_vLook;
 	CTransform* m_pTarget_Trans = nullptr;
 
+
+	_bool		m_vType = false;
+	_float		m_fTypeCount = 0.f;
+	_float		m_fCameraDist = -30.f;
 private:
 	virtual void Free(void) override;
 };

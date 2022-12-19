@@ -24,7 +24,7 @@
 #include "ShipCamera.h"
 #include "AH_64A_Camera.h"
 #include "AH_64A_AimCamera.h"
-
+#include "AH_64A_EndCamera.h"
 // ai
 #include"RightLocation.h"
 #include"RightTopLocation.h"
@@ -345,6 +345,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AH_64A_AimCamera", pCameraObject), E_FAIL);
+
+	pCameraObject = CAH_64A_EndCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AH_64A_EndCamera", pCameraObject), E_FAIL);
 
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
@@ -1292,7 +1300,7 @@ void CStage::Collison_Object(void)
 					{
 						Engine::StopSound(AH_64A_VOICE3);
 						Engine::PlaySound_SR(L"AH_64A_GOOD.mp3", AH_64A_VOICE3, 0.5f);
-						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(3000.f);
 					}
 
 					// 소리 거리
@@ -1355,7 +1363,7 @@ void CStage::Collison_Object(void)
 					{
 						Engine::StopSound(AH_64A_VOICE3);
 						Engine::PlaySound_SR(L"AH_64A_GOOD.mp3",AH_64A_VOICE3,0.5f);
-						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(1000.f);
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(3000.f);
 					}
 						
 

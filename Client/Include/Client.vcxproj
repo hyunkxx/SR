@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\AH_64A.h" />
     <ClInclude Include="..\Header\AH_64A_AimCamera.h" />
     <ClInclude Include="..\Header\AH_64A_Camera.h" />
+    <ClInclude Include="..\Header\AH_64A_EndCamera.h" />
     <ClInclude Include="..\Header\AH_64A_Shoot_Effect.h" />
     <ClInclude Include="..\Header\AICreateButton.h" />
     <ClInclude Include="..\Header\AimCamera.h" />
@@ -275,6 +276,7 @@
     <ClCompile Include="..\Code\AH_64A.cpp" />
     <ClCompile Include="..\Code\AH_64A_AimCamera.cpp" />
     <ClCompile Include="..\Code\AH_64A_Camera.cpp" />
+    <ClCompile Include="..\Code\AH_64A_EndCamera.cpp" />
     <ClCompile Include="..\Code\AH_64A_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\AICreateButton.cpp" />
     <ClCompile Include="..\Code\AimCamera.cpp" />

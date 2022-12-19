@@ -27,7 +27,7 @@ _int CBomber::Update_Object(const _float & fTimeDelta)
 
 	m_fStrike_Count += fTimeDelta;
 
-	m_fScale = 10.f;
+	m_fScale = 3.f;
 	m_vMileage += m_vDir * m_fSpeed * fTimeDelta;
 	m_pTransformBody->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));
 

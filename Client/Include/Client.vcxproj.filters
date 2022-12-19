@@ -332,6 +332,9 @@
     <Filter Include="02. GameObject\00. Tank\RushTank">
       <UniqueIdentifier>{e0b9a1a4-25f6-4e10-86b3-908b60a34aeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04.Camera\14.AH_64A_EndCamera">
+      <UniqueIdentifier>{c8737080-b5e1-47eb-9b6a-b2605aa4bacc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -607,6 +610,9 @@
     <ClInclude Include="..\Header\RushTank.h">
       <Filter>02. GameObject\00. Tank\RushTank</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\AH_64A_EndCamera.h">
+      <Filter>02. GameObject\04.Camera\14.AH_64A_EndCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -872,6 +878,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RushTank.cpp">
       <Filter>02. GameObject\00. Tank\RushTank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AH_64A_EndCamera.cpp">
+      <Filter>02. GameObject\04.Camera\14.AH_64A_EndCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
