@@ -234,7 +234,7 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 				m_bStart = true;
 		}
 
-		if (Engine::Get_DIKeyState_Custom(DIM_LB) == KEY_STATE::HOLD
+		if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{

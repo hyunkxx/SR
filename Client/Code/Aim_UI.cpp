@@ -4,6 +4,7 @@
 #include  "Export_Function.h"
 #include "UI_Start.h"
 #include "GameMode.h"
+#include "RushTank.h"
 
 CAim_UI::CAim_UI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -64,11 +65,14 @@ void CAim_UI::Render_Object(void)
 	if (Engine::Get_Camera_ID() != CAMERA_ID::AIM_CAMERA && Engine::Get_Camera_ID() != CAMERA_ID::TANK_CAMERA)
 		return;
 
-	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
-	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
+	if (!dynamic_cast<CRushTank*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle")))
+	{
+		CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+		_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
-	if (showF1Win)
-		return;
+		if (showF1Win)
+			return;
+	}
 
 	_matrix OldViewMatrix, OldProjMatrix;
 

@@ -255,7 +255,7 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 		}
 
 
-		if (Get_DIMouseState(DIM_LB) & 0x80
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload
 			&& m_stInfo.fSpeed < 0.001f)

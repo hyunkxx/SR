@@ -228,7 +228,7 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
 		}
 
-		if (Engine::Get_DIKeyState_Custom(DIM_LB) == KEY_STATE::HOLD
+		if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{

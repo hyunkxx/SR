@@ -338,7 +338,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AH_64A_Camera", pCameraObject), E_FAIL);
 
-
 	pCameraObject = CAH_64A_AimCamera::Create(m_pGraphicDev,
 		&_vec3(0.f, 2.f, -5.f),
 		&_vec3(0.f, 1.f, 1.f),

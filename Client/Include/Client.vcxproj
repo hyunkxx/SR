@@ -213,6 +213,7 @@
     <ClInclude Include="..\Header\ObjectMesh.h" />
     <ClInclude Include="..\Header\ResultUI.h" />
     <ClInclude Include="..\Header\Rush.h" />
+    <ClInclude Include="..\Header\RushTank.h" />
     <ClInclude Include="..\Header\ShipBullet.h" />
     <ClInclude Include="..\Header\ShipCamera.h" />
     <ClInclude Include="..\Header\ShootSmoke.h" />
@@ -318,6 +319,7 @@
     <ClCompile Include="..\Code\ObjectMesh.cpp" />
     <ClCompile Include="..\Code\ResultUI.cpp" />
     <ClCompile Include="..\Code\Rush.cpp" />
+    <ClCompile Include="..\Code\RushTank.cpp" />
     <ClCompile Include="..\Code\ShipBullet.cpp" />
     <ClCompile Include="..\Code\ShipCamera.cpp" />
     <ClCompile Include="..\Code\ShootSmoke.cpp" />

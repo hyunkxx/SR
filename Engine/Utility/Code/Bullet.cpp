@@ -92,12 +92,11 @@ void CBullet::LateUpdate_Object(void)
 
 	if (BULLET_ID::AH_64A_BULLET == m_eID)
 	{
-		if (m_vPos.z < 0.f || m_vPos.z > 1000.f)
+		if (m_vPos.z < 0.f || m_vPos.z > 5000.f)
 			m_bDead = true;
-		if (m_vPos.x < 0.f || m_vPos.x > 1000.f)
+		if (m_vPos.x < 0.f || m_vPos.x > 5000.f)
 			m_bDead = true;
 	}
-
 }
 
 void CBullet::Render_Object(void)
