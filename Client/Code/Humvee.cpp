@@ -146,9 +146,9 @@ HRESULT CHumvee::Add_Component(void)
 	//Body_Setting(_vec3(0.f, 4.f, -0.3f));
 
 	/* 동현 세팅 발사위치는 어디? */
-	Posin_Setting(_vec3(50.f, 1.2f, 50.f));
-	Head_Setting(_vec3(50.f, 1.2f, 50.f));
-	Body_Setting(_vec3(50.f, 1.2f, 50.f));
+	Posin_Setting(_vec3(50.f, 1.7f, 50.f));
+	Head_Setting(_vec3(50.f, 1.7f, 50.f));
+	Body_Setting(_vec3(50.f, 1.7f, 50.f));
 
 
 	return S_OK;
@@ -171,7 +171,7 @@ HRESULT CHumvee::Ready_Object(void)
 
 	m_stInfo.fReloadTime = tankData.fReloadTime;
 	m_stInfo.iCannonSpeed = tankData.iCannonSpeed;
-	m_fScale = 0.7f;
+	m_fScale = 1.f;
 	m_stInfo.RotSpeed = tankData.RotSpeed;
 
 	m_stInfo.fLowAngle = tankData.fLowAngle;

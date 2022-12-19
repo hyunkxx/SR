@@ -1617,7 +1617,7 @@ void CBottomDirEnermy::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
@@ -1630,7 +1630,7 @@ void CBottomDirEnermy::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z + 3.f };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
@@ -1644,7 +1644,7 @@ void CBottomDirEnermy::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}

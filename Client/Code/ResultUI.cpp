@@ -276,6 +276,9 @@ void CResultUI::RenderButton()
 		_vec2 vPos{ 50.f, 50.f };
 		Render_Font(L"Font_RetroBig", L"BATTLE RESULT", &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
 
+		vPos = { 315.f, 50.f };
+		Render_Font(L"Font_RetroBig", L"VICTORY", &vPos, D3DCOLOR_ARGB(255, 60, 210, 230));
+
 		vPos = { 50.f, 100.f };
 		Render_Font(L"Font_RetroBig", m_strBuff.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));
 
@@ -318,6 +321,9 @@ void CResultUI::RenderButton()
 
 		_vec2 vPos{ 50.f, 50.f };
 		Render_Font(L"Font_RetroBig", L"BATTLE RESULT", &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+
+		vPos = { 315.f, 50.f };
+		Render_Font(L"Font_RetroBig", L"DEFEAT", &vPos, D3DCOLOR_ARGB(255, 255, 90, 90));
 
 		vPos = { 50.f, 100.f };
 		Render_Font(L"Font_RetroBig", m_strBuff.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 0));

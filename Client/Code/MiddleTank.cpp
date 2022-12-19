@@ -174,9 +174,9 @@ HRESULT CMiddleTank::Ready_Object(void)
 	m_fRader = 6.f;
 
 
-	m_stBody.fLen[x] = 2.5f  * m_fScale;
-	m_stBody.fLen[y] = 3.f  * m_fScale;
-	m_stBody.fLen[z] = 4.5f * m_fScale;
+	m_stBody.fLen[x] = 3.0f  * m_fScale;
+	m_stBody.fLen[y] = 4.0f  * m_fScale;
+	m_stBody.fLen[z] = 4.8f * m_fScale;
 
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);

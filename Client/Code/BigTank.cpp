@@ -177,9 +177,9 @@ HRESULT CBigTank::Ready_Object(void)
 	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
 	m_pRader_Transform->Set_Scale(m_fRader, m_fRader, m_fMinimap[SCALEZ]);
 
-	m_stBody.fLen[x] = 2.5f  * m_fScale;
-	m_stBody.fLen[y] = 4.f  * m_fScale;
-	m_stBody.fLen[z] = 4.5f * m_fScale;
+	m_stBody.fLen[x] = 3.5f  * m_fScale;
+	m_stBody.fLen[y] = 4.0f  * m_fScale;
+	m_stBody.fLen[z] = 5.0f * m_fScale;
 
 	CGameObject::Ready_Object();
 	return S_OK;
@@ -640,7 +640,7 @@ void CBigTank::Update_UI(void)
 	_float fScale[ROT_END];
 	//중전차 높이
 
-	vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+	vUI_HPF = { vTankPos.x, vTankPos.y + 5.5f, vTankPos.z + 3.f };
 
 	fScale[ROT_X] = UI_fScaleX;
 	fScale[ROT_Y] = UI_fScaleY;

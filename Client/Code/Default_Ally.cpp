@@ -75,12 +75,12 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 50.f;
-		m_pTransformCom->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
-		m_pTransformHead->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
-		m_pTransformPosin->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
@@ -1415,7 +1415,7 @@ void CDefault_Ally::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
@@ -1428,7 +1428,7 @@ void CDefault_Ally::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.5f, vTankPos.z + 3.f };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z + 3.f };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
@@ -1441,7 +1441,7 @@ void CDefault_Ally::Update_UI(void)
 
 		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
 
-		vUI_HPF = { vTankPos.x, vTankPos.y + 3.f, vTankPos.z };
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z };
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
