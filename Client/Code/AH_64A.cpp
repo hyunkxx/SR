@@ -27,7 +27,7 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 		return 0;
 	m_fReloadTime += fTimeDelta;
 	m_fPlayCount += fTimeDelta;
-
+	play_Voice();
 	if (!m_In_Sound)
 	{
 		m_fSoundCount += fTimeDelta;
@@ -369,7 +369,12 @@ void CAH_64A::Start_AH_64A(void)
 
 	m_fSound = 0.f;
 	m_fRot[ROT_X] = 30.f;
+	Engine::StopSound(AH_64A_VOICE);
+	Engine::StopSound(AH_64A_VOICE2);
+	Engine::StopSound(AH_64A_VOICE3);
 
+
+	Engine::PlaySound_SR(L"AH_64A_START_2.mp3", AH_64A_VOICE2,1.f);
 	Engine::Camera_Change(L"AH_64A_Camera");
 	if (dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera")))
 	{
@@ -632,4 +637,19 @@ _float CAH_64A::Minus_Right_AccelSpeed(const _float & fTimeDelta)
 	}
 
 	return m_fRightSpeed;
+}
+
+void CAH_64A::play_Voice(void)
+{
+	if (m_fPlayCount > 1.5f && 2.f > m_fPlayCount)
+	{
+		Engine::PlaySound_SR(L"AH_64A_START.mp3", AH_64A_VOICE, 0.5f);
+	}
+
+	if (m_fPlayCount > 15.f && 16.f > m_fPlayCount)
+	{
+		Engine::PlaySound_SR(L"AH_64A_FUN.mp3", AH_64A_VOICE2, 0.5f);
+	}
+
+
 }

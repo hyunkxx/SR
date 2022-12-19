@@ -1290,7 +1290,11 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::AH_64A_BULLET)
+					{
+						Engine::StopSound(AH_64A_VOICE3);
+						Engine::PlaySound_SR(L"AH_64A_GOOD.mp3", AH_64A_VOICE3, 0.5f);
 						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+					}
 
 					// 家府 芭府
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
@@ -1349,7 +1353,12 @@ void CStage::Collison_Object(void)
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::AH_64A_BULLET)
-						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+					{
+						Engine::StopSound(AH_64A_VOICE3);
+						Engine::PlaySound_SR(L"AH_64A_GOOD.mp3",AH_64A_VOICE3,0.5f);
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(1000.f);
+					}
+						
 
 					// 家府 芭府
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));

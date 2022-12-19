@@ -27,7 +27,7 @@ private:
 
 	_float				Plus_Right_AccelSpeed(const _float & fTimeDelta);
 	_float				Minus_Right_AccelSpeed(const _float & fTimeDelta);
-
+	void				play_Voice(void);
 public:
 	void				Start_AH_64A(void);
 	_vec3				Get_Info(INFO Info) { return m_vInfo[Info]; }
