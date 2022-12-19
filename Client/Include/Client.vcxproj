@@ -166,6 +166,10 @@
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h" />
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\Header\AH_64A.h" />
+    <ClInclude Include="..\Header\AH_64A_AimCamera.h" />
+    <ClInclude Include="..\Header\AH_64A_Camera.h" />
+    <ClInclude Include="..\Header\AH_64A_Shoot_Effect.h" />
     <ClInclude Include="..\Header\AICreateButton.h" />
     <ClInclude Include="..\Header\AimCamera.h" />
     <ClInclude Include="..\Header\Aim_UI.h" />
@@ -267,6 +271,10 @@
     <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Code\AH_64A.cpp" />
+    <ClCompile Include="..\Code\AH_64A_AimCamera.cpp" />
+    <ClCompile Include="..\Code\AH_64A_Camera.cpp" />
+    <ClCompile Include="..\Code\AH_64A_Shoot_Effect.cpp" />
     <ClCompile Include="..\Code\AICreateButton.cpp" />
     <ClCompile Include="..\Code\AimCamera.cpp" />
     <ClCompile Include="..\Code\Aim_UI.cpp" />

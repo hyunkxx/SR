@@ -6,6 +6,8 @@
 #include "StaticCamera.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "AH_64A.h"
+#include "BattleShip_Support.h"
 #include "Boom_Support.h"
 #include "GameMode.h"
 
@@ -197,23 +199,7 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 				m_bDead = true;
 		}
 
-		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
-		{
-			if (m_bStart)
-				m_bStart = false;
-			else
-				m_bStart = true;
-		}
-
-		if (Get_DIMouseState(DIM_LB) & 0x80
-			&& !CTankManager::GetInstance()->IsLock()
-			&& m_stInfo.fReloadTime > m_stInfo.fReload)
-		{
-			m_bPosinShake = true;
-			Shoot_Bullet(BULLET_ID::BIG_CANNONBALL);
-			m_bReLoad = false;
-		}
-		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+		if (Get_DIKeyState_Custom(DIK_3) == KEY_STATE::TAP)
 		{
 			CTankManager::GetInstance()->MouseLBTLock(true);
 
@@ -223,6 +209,42 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 			m_pTransformBody->Get_Info(INFO_POS, &Pos);
 			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
 				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
+		}
+		if (Get_DIKeyState_Custom(DIK_4) == KEY_STATE::TAP)
+		{
+
+			m_bStart = false;
+			m_fEngineCount = 0.f;
+			_vec3 Pos;
+			m_pTransformBody->Get_Info(INFO_POS, &Pos);
+			if (dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support")))
+				dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support"))->Air_Rain(Pos);
+		}
+		if (Get_DIKeyState_Custom(DIK_5) == KEY_STATE::TAP)
+		{
+			m_bRock = true;
+			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
+		}
+
+		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		{
+			if (m_bStart)
+				m_bStart = false;
+			else
+				m_bStart = true;
+		}
+
+		if (Engine::Get_DIKeyState_Custom(DIM_LB) == KEY_STATE::HOLD
+			&& !CTankManager::GetInstance()->IsLock()
+			&& m_stInfo.fReloadTime > m_stInfo.fReload)
+		{
+			m_bPosinShake = true;
+			Shoot_Bullet(BULLET_ID::BIG_CANNONBALL);
+			m_bReLoad = false;
+		}
+		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+		{
+
 		}
 		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 			Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);

@@ -7,6 +7,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "Boom_Support.h"
+#include "AH_64A.h"
 #include "BattleShip_Support.h"
 #include "GameMode.h"
 
@@ -219,7 +220,7 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			if (!m_bDead)
 				m_bDead = true;
 		}
-		if (Get_DIMouseState(DIM_LB) & 0x80
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{
@@ -227,16 +228,19 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			Shoot_Bullet(BULLET_ID::MASHINE_BULLET);
 			Shoot_Bullet(BULLET_ID::MASHINE_BULLET_RELOAD);
 		}
-		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		if (Get_DIKeyState_Custom(DIK_3) == KEY_STATE::TAP)
 		{
-			if (!m_bStart)
-			{
-				m_bStart = true;
-				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
-			}
+		
+			CTankManager::GetInstance()->MouseLBTLock(true);
 
+			m_bStart = false;
+			m_fEngineCount = 0.f;
+			_vec3 Pos;
+			m_pTransformBody->Get_Info(INFO_POS, &Pos);
+			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
+				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
 		}
-		if (Get_DIKeyState_Custom(DIK_J) == KEY_STATE::TAP)
+		if (Get_DIKeyState_Custom(DIK_4) == KEY_STATE::TAP)
 		{
 
 			m_bStart = false;
@@ -246,16 +250,18 @@ void CHumvee::Key_Input(const _float & fTimeDelta)
 			if (dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support")))
 				dynamic_cast<CBattleShip_Support*>(Engine::Get_Object(L"GameLogic", L"BattleShip_Support"))->Air_Rain(Pos);
 		}
-		if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+		if (Get_DIKeyState_Custom(DIK_5) == KEY_STATE::TAP)
 		{
-			CTankManager::GetInstance()->MouseLBTLock(true);
-
-			m_bStart = false;
-			m_fEngineCount = 0.f;
-			_vec3 Pos;
-			m_pTransformBody->Get_Info(INFO_POS, &Pos);
-			if (dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support")))
-				dynamic_cast<CBoom_Support*>(Engine::Get_Object(L"GameLogic", L"Boom_Support"))->Air_Rain(Pos);
+			m_bRock = true;
+			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
+		}
+		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)
+		{
+			if (!m_bStart)
+			{
+				m_bStart = true;
+				Engine::PlaySound_SR(L"Start_the_Tank.wav", PLAYER_MOVE_SOUND2, CUI_Volume::s_fShotSound);
+			}
 		}
 
 		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)

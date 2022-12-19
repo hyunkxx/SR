@@ -14,7 +14,6 @@
 #include "Building.h"
 #include "BattleShip.h"
 #include "ShipBullet.h"
-
 //camera
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -23,6 +22,9 @@
 #include "DroneCamera.h"
 #include "BoomCamera.h"
 #include "ShipCamera.h"
+#include "AH_64A_Camera.h"
+#include "AH_64A_AimCamera.h"
+
 // ai
 #include"RightLocation.h"
 #include"RightTopLocation.h"
@@ -34,7 +36,7 @@
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
 #include "UI_Log_Back.h"
-#include "UI_FontMgr.h"
+#include "UI_FontMgr.h"	
 #include "UI_Player_Hp.h"
 #include "UI_World_Bubble.h"
 #include "UI_Volume.h"
@@ -57,6 +59,8 @@
 #include "EffectPool.h"
 #include "EffectManager.h"
 #include "ShootSmoke.h"
+#include "AH_64A.h"
+#include "AH_64A_Shoot_Effect.h"
 
 /* Button */
 #include "ButtonUI.h"
@@ -326,6 +330,24 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"ShipCamera", pCameraObject), E_FAIL);
 
+	pCameraObject = CAH_64A_Camera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AH_64A_Camera", pCameraObject), E_FAIL);
+
+
+	pCameraObject = CAH_64A_AimCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"AH_64A_AimCamera", pCameraObject), E_FAIL);
+
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -371,45 +393,19 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BattleShip", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
 
-	for (_int i = 0; 200 > i; i++)
-	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL);
-	}
+	pGameObject = CAH_64A::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AH_64A", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
 
-	for (_int i = 0; 200 > i; i++)
+	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::SMALL_CANNONBALL);
-	}
-
-	for (_int i = 0; 200 > i; i++)
-	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::MIDDLE_CANNONBALL);
-	}
-
-	for (_int i = 0; 200 > i; i++)
-	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::BIG_CANNONBALL);
-	}
-
-	for (_int i = 0; 10 > i; i++)
-	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_BULLET);
-	}
-	for (_int i = 0; 1000 > i; i++)
-	{
-		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pBullet, E_FAIL);
-		Engine::Bullet_Supply(pBullet, BULLET_ID::MASHINE_BULLET);
+		for (_int j = 0; j < 200; j++)
+		{
+			CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pBullet, E_FAIL);
+			Engine::Bullet_Supply(pBullet, (BULLET_ID)i);
+		}
 	}
 
 	for (_int i = 0; 1000 > i; i++)
@@ -423,6 +419,13 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::CANNONBALL_RELOAD);
+	}
+
+	for (_int i = 0; 10 > i; i++)
+	{
+		CGameObject* pBullet = CBullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_BULLET);
 	}
 
 	for (_int i = 0; 5 > i; i++)
@@ -445,6 +448,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		static_cast<CShipBullet*>(pBullet)->Set_ID(BULLET_ID::SHIP_REAL_BULLET);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_REAL_BULLET);
 	}
+
+
+
 	// Skill
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -629,6 +635,14 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		Engine::Effect_Supply(pGameObject, EFFECT_ID::HUMVEE_SHOOT_EFFECT);
 	}
+
+	for (_int i = 0; 30 > i; i++)
+	{
+		pGameObject = CAH_64A_Shoot_Effect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Engine::Effect_Supply(pGameObject, EFFECT_ID::AH_64A_EFFECT);
+	}
+
 	for (_int i = 0; 10 > i; i++)
 	{
 		pGameObject = CShootSmoke::Create(m_pGraphicDev);
@@ -845,6 +859,7 @@ void CStage::Collison_Object(void)
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
 	CGameObject* TempCreateAi = pGameLogic->Get_GameObject(L"CreateAi");
+
 	for (auto&iter = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != iter; iter++)
 	{
 		for (auto&Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
@@ -951,8 +966,429 @@ void CStage::Collison_Object(void)
 			}
 		}
 	}
+	// 적군 총알
+	for (_int i = 5; BULLET_ID::MASHINE_BULLET > i; i++)
+	{
 
-	//예시) 총알과 충돌처리 하고 싶은애들 이렇게 추가하면 됨
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+		
+			if ((*iter)->Get_Dead())
+				continue;
+
+			CBullet* pBullet = dynamic_cast<CBullet*>(*iter);
+			if (pBullet)
+			{
+				_vec3 vPos = pBullet->Get_Info();
+
+				if (vPos.y <= 0.5f)
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+			}
+
+			// 환경 오브젝트들과 총알 충돌
+			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+
+					if (i == BULLET_ID::ENEMY_MASHINE_BULLET)
+					{
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 100.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 100.f;
+							break;
+						default:
+							break;
+						}
+					}
+					else if (i == BULLET_ID::ENEMY_CANNONBALL || i == BULLET_ID::ENEMY_SMALL_CANNONBALL || i == BULLET_ID::ENEMY_MIDDLE_CANNONBALL || i == BULLET_ID::ENEMY_BIG_CANNONBALL)
+					{
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 500.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 500.f;
+							break;
+						default:
+							break;
+						}
+					}
+
+					(*iter)->Set_Dead(true);
+					continue;
+				}
+
+			}
+			// 유저와 적군 총알 충돌
+			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+				
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
+
+						// 플레이어 피격사운드(총알)
+						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
+					}
+					else
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(30.f);
+
+						// 플레이어 피격 사운드(포탄)
+						Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, CUI_Volume::s_fShotSound);
+					}
+
+					if (dynamic_cast<CTankSet*>((*Dest).second)->Get_HP() <= 0)
+						(*Dest).second->Set_Dead(true);
+
+					(*iter)->Set_Dead(true);
+					continue;
+				}
+			}
+			//아군 Ai와 적군 총알 충돌
+			for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
+						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
+					// 소리 거리
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
+					{
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
+						{
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
+						}
+						else
+						{
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+					}
+
+					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CDefault_Ally*>(*iters)->Set_DisCountLocation();
+					}
+					continue;
+				}
+			}
+			for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
+						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
+					// 소리 거리
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
+					{
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
+						{
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
+						}
+						else
+						{
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+					}
+
+					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CBottomDirAlly*>(*iters)->Set_DisCountLocation();
+					}
+					continue;
+				}
+			}
+		}
+	}
+	// 아군 총알
+	for (_int i = 5; BULLET_ID::BOOM_BULLET > i; i++)
+	{
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+			if ((*iter)->Get_Dead())
+				continue;
+
+			CBullet* pBullet = dynamic_cast<CBullet*>(*iter);
+
+			if (pBullet)
+			{
+				_vec3 vPos = pBullet->Get_Info();
+
+				if (vPos.y <= 0.5f)
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+			}
+			// 총알과 환경오브젝트 충돌 
+			for (auto& Dest = pEnvironment_Object->Get_mapObject()->begin(); pEnvironment_Object->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+
+					if (i == BULLET_ID::MASHINE_BULLET)
+					{
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 100.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 100.f;
+							break;
+						default:
+							break;
+						}
+					}
+					else if (i == BULLET_ID::CANNONBALL || i == BULLET_ID::SMALL_CANNONBALL || i == BULLET_ID::MIDDLE_CANNONBALL || i == BULLET_ID::BIG_CANNONBALL)
+					{
+						static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
+
+						const CBuilding::TYPE& eType = static_cast<CBuilding*>(Dest->second)->GetType();
+
+						switch (eType)
+						{
+						case CBuilding::TYPE::BASE_ALLY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 500.f;
+							break;
+						case CBuilding::TYPE::BASE_ENEMY:
+							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 500.f;
+							break;
+						default:
+							break;
+						}
+					}
+
+					(*iter)->Set_Dead(true);
+					continue;
+				}
+
+			}
+			// 총알과 적군 충돌
+			for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::AH_64A_BULLET)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+
+					// 소리 거리
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
+					{
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						{
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
+						}
+						else
+						{
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+					}
+
+
+					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
+					{
+						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DeadMotionPlay();
+						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//죽을때 끼워팔기
+						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+					}
+					continue;
+				}
+			}
+			for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::AH_64A_BULLET)
+						dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+
+					// 소리 거리
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					// 소리 거리제한
+					if (fPlayer_obj_dist_Sound <= 100.f)
+					{
+						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						{
+							if (fPlayer_obj_dist_Sound <= 75.f)
+							{
+								// 총알 피격 사운드
+								Engine::StopSound(HIT_SOUND);
+								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
+								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
+							}
+						}
+						else
+						{
+							// 포탄 피격 사운드
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+					}
+
+					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
+					{
+						(*iters)->Set_Dead(true);
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//죽을때 끼워팔기
+					}
+					continue;
+				}
+			}
+		
+		}
+	}
+	
+	// 옛날 코드 (총알 구분 안되어 있을때)
+	/*//예시) 총알과 충돌처리 하고 싶은애들 이렇게 추가하면 됨
 	for (int i = 0; BULLET_ID::MASHINE_BULLET_RELOAD > i; i++)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
@@ -1292,6 +1728,8 @@ void CStage::Collison_Object(void)
 			}
 		}
 	}
+	*/
+
 
 	CGameObject* pPlayer = pGameLogic->Get_GameObject(L"PlayerVehicle");
 
@@ -1399,7 +1837,7 @@ void CStage::Collison_Object(void)
 		}
 
 	}
-
+	//AI 간 충돌처리
 	for (auto& Dest = DAlly.begin(); Dest < DAlly.end(); ++Dest)
 	{
 		auto iter = Dest;

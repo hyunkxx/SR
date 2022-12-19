@@ -80,6 +80,12 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"Ham_posin.bin", L"Ham_posin");
 	LoadMesh(L"Ham_head.bin", L"Ham_head2");
 	LoadMesh(L"Ham_posin.bin", L"Ham_posin2");
+
+	//AH_64A
+	LoadMesh(L"AH_64A_body.bin", L"AH_64A_body");
+	LoadMesh(L"AH_64A_head.bin", L"AH_64A_head");
+	LoadMesh(L"AH_64A_object.bin", L"AH_64A_object");
+
 	//Bomber
 	LoadMesh(L"air_ally_body.bin", L"air_ally_body");
 	//Boom

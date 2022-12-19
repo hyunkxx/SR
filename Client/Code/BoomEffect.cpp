@@ -134,30 +134,10 @@ void CBoomEffect::Collision_Object(void)
 
 
 	CGameObject* TempCreateAi = Engine::Get_Object(L"GameLogic", L"CreateAi");
-	vector<CGameObject*> DAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
-	vector<CGameObject*> BDAlly = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
 	CGameObject* m_pEffectManager = Engine::Get_Object(L"Environment_Object", L"EffectManager");
 
-	for (auto& iters = BDAlly.begin(); iters < BDAlly.end(); ++iters)
-	{
-		if (!dynamic_cast<ICollisionable*>(*iters))
-			continue;
-
-		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(*iters)->Get_Info(), 30.f, (*iters)->Get_Dist()))
-		{
-			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
-			
-			dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(30.f);
-
-			if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
-			{
-				(*iters)->Set_Dead(true);
-				dynamic_cast<CDefault_Ally*>(*iters)->Set_DisCountLocation();
-			}
-		}
-	}
 	for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
 	{
 		if (!dynamic_cast<ICollisionable*>(*iters))
@@ -167,7 +147,7 @@ void CBoomEffect::Collision_Object(void)
 		{
 			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
 
-			dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1.f);
+			dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
 			if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 			{
 				(*iters)->Set_Dead(true);
@@ -186,7 +166,7 @@ void CBoomEffect::Collision_Object(void)
 		{
 			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
 
-			dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(30.f);
+			dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(1000.f);
 			if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 			{
 				(*iters)->Set_Dead(true);

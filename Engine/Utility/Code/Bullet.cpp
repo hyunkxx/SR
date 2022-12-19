@@ -58,11 +58,17 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	if (Dir2.y < Dir1.y)
 		Scalar *= -1;
 
-	
-	if(m_eID == CANNONBALL || m_eID == SMALL_CANNONBALL || m_eID == MIDDLE_CANNONBALL || m_eID == BIG_CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET || m_eID == SHIP_BULLET)
-		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
-	else
+	if(m_eID == CANNONBALL_RELOAD || m_eID == MASHINE_BULLET_RELOAD)
 		m_pTransform->Rotation(ROT_X,D3DXToRadian(-1000.f *fTimeDelta));
+	else if (m_eID == AH_64A_BULLET)
+		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) + Scalar);
+	else
+		m_pTransform->Rotation(ROT_X, -(m_pTransform->Get_Angle(ROT_X)) - Scalar);
+
+	if (m_eID == BULLET_ID::AH_64A_BULLET)
+	{
+		Move = m_vDir * m_fSpeed * fTimeDelta;
+	}
 
 	m_pTransform->Move_Pos(&Move);
 	__super::Update_Object(fTimeDelta);
@@ -84,6 +90,14 @@ void CBullet::LateUpdate_Object(void)
 	if (m_vPos.y < 0.f)
 		m_bDead = true;
 
+	if (BULLET_ID::AH_64A_BULLET == m_eID)
+	{
+		if (m_vPos.z < 0.f || m_vPos.z > 1000.f)
+			m_bDead = true;
+		if (m_vPos.x < 0.f || m_vPos.x > 1000.f)
+			m_bDead = true;
+	}
+
 }
 
 void CBullet::Render_Object(void)
@@ -92,10 +106,11 @@ void CBullet::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
-	if (m_eID == CANNONBALL || m_eID == BULLET_ID::MASHINE_BULLET)
-		m_pBUlletBuffer->Render_Buffer();
-	else
+
+	if(m_eID == CANNONBALL_RELOAD || m_eID == MASHINE_BULLET_RELOAD)
 		m_pBUllet_Re_Buffer->Render_Buffer();
+	else
+		m_pBUlletBuffer->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -149,32 +164,36 @@ void CBullet::Update_OBB(void)
 void CBullet::Set_ID(BULLET_ID eID)
 {
 	m_eID = eID;
-	if (eID == BULLET_ID::MASHINE_BULLET)
+	if (eID == BULLET_ID::MASHINE_BULLET || eID == BULLET_ID::ENEMY_MASHINE_BULLET)
 	{
 		m_fHitRange = 0.f;
 		m_fScale = 2.f;
 	}
-	else if (eID == BULLET_ID::CANNONBALL)
+	else if (eID == BULLET_ID::CANNONBALL || eID == BULLET_ID::ENEMY_CANNONBALL)
 	{
 		m_fHitRange = 3.f;
 		m_fScale = 10.f;
 	}
-	else if (eID == BULLET_ID::SMALL_CANNONBALL)
+	else if (eID == BULLET_ID::SMALL_CANNONBALL|| eID == BULLET_ID::ENEMY_SMALL_CANNONBALL)
 	{
 		m_fHitRange = 3.f;
 		m_fScale = 8.f;
 	}
-	else if (eID == BULLET_ID::MIDDLE_CANNONBALL)
+	else if (eID == BULLET_ID::MIDDLE_CANNONBALL  ||eID == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
 	{
 		m_fHitRange = 2.f;
 		m_fScale = 9.f;
 	}
-	else if (eID == BULLET_ID::BIG_CANNONBALL)
+	else if (eID == BULLET_ID::BIG_CANNONBALL || eID == BULLET_ID::ENEMY_BIG_CANNONBALL)
 	{
 		m_fHitRange = 2.5f;
 		m_fScale = 10.f;
 	}
-
+	else if (eID == BULLET_ID::AH_64A_BULLET)
+	{
+		m_fHitRange = 0.f;
+		m_fScale = 5.f;
+	}
 	else if (eID == BULLET_ID::SHIP_BULLET)
 	{
 		m_fHitRange = 3.f;
