@@ -88,7 +88,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	Engine::Ready_Font((*ppGraphicDev), L"Font_RetroBig", L"Galmuri7 Regular", 30, 45, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro3", L"Galmuri7 Regular", 10, 15, FW_HEAVY);
 	Engine::Ready_Font((*ppGraphicDev), L"Font_Retro1", L"Galmuri7 Regular", 25, 35, FW_HEAVY);
-
+	Engine::Ready_Font((*ppGraphicDev), L"Font_Occupation", L"안상수2006가는", 10, 30, FW_HEAVY);
 	//(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, TRUE);		// 조명에 의한 반사 연산 수행 여부
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);			// z버퍼에 무조건 깊이 값을 기록하되 정렬을 수행하지 말지 판다하는 옵션
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);	// Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정하는 문법

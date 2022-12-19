@@ -45,8 +45,8 @@ HRESULT CBaseUI::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
-	m_fScaleX = 150.f;
-	m_fScaleY = 10.f;
+	m_fScaleX = 170.f;
+	m_fScaleY = 32.f;
 	m_fScaleZ = 0.01f;
 
 	m_fPosX = WINCX * 0.5f;
@@ -55,36 +55,7 @@ HRESULT CBaseUI::Ready_Object(void)
 
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 
-
-	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
-	m_pTransform2->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
-
-	switch (m_eType)
-	{
-	case CBaseUI::TYPE::ALLY:
-	{
-		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ALLY]) * 150.f;
-
-		m_fScaleX = curPer;
-		_float fX = 150.f - m_fScaleX;
-		m_fPosX = 200.f - fX;
-
-		m_bUpdateTransform = true;
-		break;
-	}
-	case CBaseUI::TYPE::ENEMY:
-	{
-		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ENEMY]) * 150.f;
-		m_fScaleX = curPer;
-		_float fX = 150.f - m_fScaleX;
-		m_fPosX = 600.f + fX;
-
-		m_bUpdateTransform = true;
-		break;
-	}
-	}
-	m_pTransform2->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
-	m_pTransform2->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
+	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, 0.1f);
 
 	return S_OK;
 }
@@ -97,10 +68,10 @@ _int CBaseUI::Update_Object(const _float & fTimeDelta)
 	{
 	case CBaseUI::TYPE::ALLY:
 	{
-		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ALLY]) * 150.f;
+		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ALLY]) * 200.f;
 
 		m_fScaleX = curPer;
-		_float fX = 150.f - m_fScaleX;
+		_float fX = m_fScaleX - 200.f;
 		m_fPosX = 200.f - fX;
 
 		if (curPer <= 0.f)
@@ -114,9 +85,9 @@ _int CBaseUI::Update_Object(const _float & fTimeDelta)
 	}
 	case CBaseUI::TYPE::ENEMY:
 	{
-		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ENEMY]) * 150.f;
+		curPer = (CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] / CGameMode::GetInstance()->m_fBaseMaxHP[(UINT)CGameMode::TYPE::ENEMY]) * 200.f;
 		m_fScaleX = curPer;
-		_float fX = 150.f - m_fScaleX;
+		_float fX = m_fScaleX - 200.f;
 		m_fPosX = 600.f + fX;
 
 		if (curPer <= 0.f)
@@ -131,7 +102,7 @@ _int CBaseUI::Update_Object(const _float & fTimeDelta)
 	}
 
 	UpdateTransform();
-
+	Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 
@@ -139,7 +110,7 @@ void CBaseUI::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_UI, this);
+
 }
 
 void CBaseUI::Render_Object(void)
@@ -160,17 +131,10 @@ HRESULT CBaseUI::Add_Component(void)
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"rect_texture", pComponent });
 
-	pComponent = m_pRcTex2 = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
-	NULL_CHECK_RETURN(m_pRcTex2, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"rect_texture2", pComponent });
-
 	pComponent = m_pTransform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"transform", pComponent });
 
-	pComponent = m_pTransform2 = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
-	NULL_CHECK_RETURN(m_pTransform2, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"transform2", pComponent });
 
 	switch (m_eType)
 	{
@@ -212,34 +176,20 @@ void CBaseUI::UpdateTransform()
 
 void CBaseUI::RenderUI()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
-
-
-	_matrix	ViewMatrix, OldProjection, OldView;
+	_matrix	ViewMatrix, OldProjection;
 	D3DXMatrixIdentity(&ViewMatrix);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjection);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform2->Get_WorldMatrix());
 	m_pBack->Set_Texture(0);
-	m_pRcTex2->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
+	m_pRcTex->Render_Buffer();
 
 	m_pFront->Set_Texture(0);
 	m_pRcTex->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

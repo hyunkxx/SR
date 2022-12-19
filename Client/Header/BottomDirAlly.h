@@ -91,6 +91,7 @@ private:
 	_float re = 0.f;
 	_bool bLeft = false;
 	_bool m_bTest = false;
+	BULLET_ID Temp;
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;

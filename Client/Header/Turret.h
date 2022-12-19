@@ -1,13 +1,16 @@
 #pragma once
-#include "TankSet.h"
-
+#include "GameObject.h"
+#include "Voxel.h"
 BEGIN(Engine)
-class CVoxel;
+
 class CEffectPool;
+class CTransform;
+class CVoxel;
+
 END
 
-class CTurret :
-	public CTankSet
+
+class CTurret :public CGameObject
 {
 public:
 	explicit CTurret(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -15,28 +18,37 @@ public:
 	virtual ~CTurret();
 
 public:
+	virtual HRESULT		Ready_Object(void) override;
+	HRESULT Ready_Object(void* pArg);
 	virtual _int		Update_Object(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
-	virtual void RenderGUI(void) override;
-
 public:
+	void Detect(_float fTimeDelta);
+	_float Dist(CTransform * _Target);
+	_bool  Left_RightCheck(_vec3 _vDir, _vec3 _vLook);
 	virtual	HRESULT		Add_Component(void);
-	virtual HRESULT		Ready_Object(void);
-
-public:
-	void		Target_Find(const _float& fTimeDelta);
-	void		Posin_Shake(const _float& fTimeDelta);
 
 private:
-	_float		m_fPosinAccum = 0.f;
-	_bool		m_bPosinShake = false;
-	_bool		m_bTarget = false;
-private:
-	CEffectPool*			m_pEffectPool = nullptr;
+	CTransform* m_pTransformCom = nullptr;
+	CTransform* m_pTransformHead = nullptr;
+	CTransform* m_pTransformPosin = nullptr;
 
+	CVoxel*				m_pBody = nullptr;
+	CVoxel*				m_pHead = nullptr;
+	CVoxel*				m_pPosin = nullptr;
+private:
+	_float m_fTime = 0.f;
+	_bool  m_bTurn = false;
+	_float Range = 70.f;
+	_bool LeftCheck;
+	_vec3* vPos = {};
+	_float m_fReloadTime = 0.f, m_fReload = 0.5f, fPosinDist = 3.f, m_iCannonSpeed = 400.f;
+	_bool bBugCancle = false;
+	AIACTION m_Action = AIACTION::AIACTION_END;
 public:
 	static CTurret*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTurret*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
 private:
 	virtual void Free(void) override;
 };

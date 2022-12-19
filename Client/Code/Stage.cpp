@@ -31,7 +31,9 @@
 #include"LeftTopLocation.h"
 #include"LeftLocation.h"
 #include"CreateAi.h"
-
+#include"Turret.h"
+#include"EnemyTurret.h"
+#include"ScoreBoard.h"
 // ui
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
@@ -192,10 +194,10 @@ void CStage::Render_Scene(void)
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		// 스테이지 제한 시간
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + PERCENTX * 2, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + PERCENTX * 4, PERCENTY), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - 22.f, PERCENTY+50.f), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF - 10.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + 15.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + 30.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
 
 		// 팀 킬 카운트								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
@@ -404,6 +406,26 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AH_64A", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
+
+	_vec3 vpos = { 580.f,0.f,600.f };
+	pGameObject = CEnemyTurret::Create(m_pGraphicDev, vpos);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EnemyTurret", pGameObject), E_FAIL);
+
+	vpos = { 605.f,0.f,580.f };
+	pGameObject = CEnemyTurret::Create(m_pGraphicDev, vpos);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EnemyTurret2", pGameObject), E_FAIL);
+
+	vpos = { 50.f,0.f,20.f };
+	pGameObject = CTurret::Create(m_pGraphicDev, vpos);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Turret", pGameObject), E_FAIL);
+
+	vpos = { 20.f,0.f,50.f };
+	pGameObject = CTurret::Create(m_pGraphicDev, vpos);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Turret2", pGameObject), E_FAIL);
 
 	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
@@ -676,6 +698,11 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CTempOccupationScore::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
+
+	pGameObject = CScoreBoard::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ScoreBoard", pGameObject), E_FAIL);
+
 
 	pGameObject = CPlayer_Chatting::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

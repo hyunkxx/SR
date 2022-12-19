@@ -136,6 +136,7 @@ _uint CLoading::Loading_ForStage(void)
 	// Stage UI
 	// Á¡·É
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_ScoreBoard", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/ScoreBoard.png", TEX_NORMAL)), E_FAIL);
 	// ¹Ì´Ï¸Ê
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_MiniMap_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Mini_map2.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Minimap_P_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_2.png", TEX_NORMAL)), E_FAIL);

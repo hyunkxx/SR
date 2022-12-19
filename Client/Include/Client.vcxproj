@@ -195,6 +195,7 @@
     <ClInclude Include="..\Header\DroneCamera.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\EffectManager.h" />
+    <ClInclude Include="..\Header\EnemyTurret.h" />
     <ClInclude Include="..\Header\GameButton.h" />
     <ClInclude Include="..\Header\GameMode.h" />
     <ClInclude Include="..\Header\Grass.h" />
@@ -215,6 +216,7 @@
     <ClInclude Include="..\Header\ResultUI.h" />
     <ClInclude Include="..\Header\Rush.h" />
     <ClInclude Include="..\Header\RushTank.h" />
+    <ClInclude Include="..\Header\ScoreBoard.h" />
     <ClInclude Include="..\Header\ShipBullet.h" />
     <ClInclude Include="..\Header\ShipCamera.h" />
     <ClInclude Include="..\Header\ShootSmoke.h" />
@@ -234,6 +236,7 @@
     <ClInclude Include="..\Header\TempOccupationScore.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestBox.h" />
+    <ClInclude Include="..\Header\Turret.h" />
     <ClInclude Include="..\Header\UI_Compass.h" />
     <ClInclude Include="..\Header\UI_FontMgr.h" />
     <ClInclude Include="..\Header\UI_Fuel.h" />
@@ -302,6 +305,7 @@
     <ClCompile Include="..\Code\DroneCamera.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\EffectManager.cpp" />
+    <ClCompile Include="..\Code\EnemyTurret.cpp" />
     <ClCompile Include="..\Code\GameButton.cpp" />
     <ClCompile Include="..\Code\GameMode.cpp" />
     <ClCompile Include="..\Code\Grass.cpp" />
@@ -322,6 +326,7 @@
     <ClCompile Include="..\Code\ResultUI.cpp" />
     <ClCompile Include="..\Code\Rush.cpp" />
     <ClCompile Include="..\Code\RushTank.cpp" />
+    <ClCompile Include="..\Code\ScoreBoard.cpp" />
     <ClCompile Include="..\Code\ShipBullet.cpp" />
     <ClCompile Include="..\Code\ShipCamera.cpp" />
     <ClCompile Include="..\Code\ShootSmoke.cpp" />
@@ -341,6 +346,7 @@
     <ClCompile Include="..\Code\TempOccupationScore.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestBox.cpp" />
+    <ClCompile Include="..\Code\Turret.cpp" />
     <ClCompile Include="..\Code\UI_Compass.cpp" />
     <ClCompile Include="..\Code\UI_FontMgr.cpp" />
     <ClCompile Include="..\Code\UI_Fuel.cpp" />

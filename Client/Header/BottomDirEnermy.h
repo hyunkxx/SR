@@ -90,6 +90,7 @@ private:
 	EData*				m_EData;
 	CCalculator*		m_pCalculatorCom = nullptr;
 private:
+	BULLET_ID Temp;
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
 	_bool m_bRightLocationCount = false

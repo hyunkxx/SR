@@ -65,7 +65,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 	case TANKTYPE::HUMVEE:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
-		TempBullet = 1;
+		Temp = BULLET_ID::MASHINE_BULLET;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.5f;
@@ -75,18 +75,18 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 50.f;
-		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
-		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
-		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
-		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
-		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
-		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_pTransformCom->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(0.7f, 0.7f, 0.7f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK);
-
+		Temp = BULLET_ID::SMALL_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -107,7 +107,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 	case TANKTYPE::MIDDLE_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK);
-
+		Temp = BULLET_ID::MIDDLE_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -128,7 +128,7 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 	case TANKTYPE::BIG_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK);
-
+		Temp = BULLET_ID::BIG_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -165,8 +165,6 @@ HRESULT CDefault_Ally::Ready_Object(void * pArg)
 
 	}
 	
-
-
 	//Ãæµ¹
 	m_stBody.fLen[x] = 1.5f;
 	m_stBody.fLen[y] = 2.f;
@@ -712,19 +710,11 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 				Pos += Dir* 3.f*fPosinDist;
 
-				if (m_fReloadTime > m_fReload &&TempBullet == 1)
+				if (m_fReloadTime > m_fReload )
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-						m_fReloadTime = 0.f;
-					}
-				}
-				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y),Temp);
 						m_fReloadTime = 0.f;
 					}
 				}
@@ -773,19 +763,11 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 				Pos += Dir* 3.f*fPosinDist;
 
-				if (m_fReloadTime > m_fReload &&TempBullet == 1)
+				if (m_fReloadTime > m_fReload)
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-						m_fReloadTime = 0.f;
-					}
-				}
-				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
 						m_fReloadTime = 0.f;
 					}
 				}
@@ -837,19 +819,11 @@ void CDefault_Ally::Detect(_float fTimeDelta)
 		D3DXVec3Normalize(&vLook, &vLook);
 		Pos += Dir* 3.f*fPosinDist;
 
-		if (m_fReloadTime > m_fReload &&TempBullet == 1)
+		if (m_fReloadTime > m_fReload )
 		{
 			if (abs(D3DXToDegree(Angle)) < 4.f)
 			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-				m_fReloadTime = 0.f;
-			}
-		}
-		else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-		{
-			if (abs(D3DXToDegree(Angle)) < 4.f)
-			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
 				m_fReloadTime = 0.f;
 			}
 		}

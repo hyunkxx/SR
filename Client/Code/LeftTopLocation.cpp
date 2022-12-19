@@ -74,7 +74,7 @@ _int CLeftTopLocation::Update_Object(const _float& fTimeDelta)
 		}
 		else
 		{
-			m_AllyOccupation += fTimeDelta*m_iAllyCount*30.f;
+			m_AllyOccupation += fTimeDelta*m_iAllyCount;
 		}
 	}
 	if (m_EnermyOccupation >= 100.f)

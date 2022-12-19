@@ -335,6 +335,15 @@
     <Filter Include="02. GameObject\04.Camera\14.AH_64A_EndCamera">
       <UniqueIdentifier>{c8737080-b5e1-47eb-9b6a-b2605aa4bacc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. Terrain\Location\OccupationScore\OccupationScoreBoard">
+      <UniqueIdentifier>{7b135300-36a8-4eb9-b9e1-4fa6f4a784a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\Turret">
+      <UniqueIdentifier>{d781976a-425e-4ccd-9a62-f3ef3893a357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\EnemyTurret">
+      <UniqueIdentifier>{674a61fa-9aea-4c63-a277-98b5e0d29b53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -613,6 +622,15 @@
     <ClInclude Include="..\Header\AH_64A_EndCamera.h">
       <Filter>02. GameObject\04.Camera\14.AH_64A_EndCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ScoreBoard.h">
+      <Filter>02. GameObject\03. Terrain\Location\OccupationScore\OccupationScoreBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EnemyTurret.h">
+      <Filter>02. GameObject\00. Tank\01. AI\EnemyTurret</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Turret.h">
+      <Filter>02. GameObject\00. Tank\01. AI\Turret</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -881,6 +899,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\AH_64A_EndCamera.cpp">
       <Filter>02. GameObject\04.Camera\14.AH_64A_EndCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ScoreBoard.cpp">
+      <Filter>02. GameObject\03. Terrain\Location\OccupationScore\OccupationScoreBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EnemyTurret.cpp">
+      <Filter>02. GameObject\00. Tank\01. AI\EnemyTurret</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Turret.cpp">
+      <Filter>02. GameObject\00. Tank\01. AI\Turret</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

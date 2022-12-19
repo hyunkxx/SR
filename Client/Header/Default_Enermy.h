@@ -88,7 +88,7 @@ private:
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;
-	
+	BULLET_ID Temp;
 	_bool m_bRightLocationCount = false
 		, m_bRightTopLocationCount = false
 		, m_bLeftLocationCount = false

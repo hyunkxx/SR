@@ -105,6 +105,7 @@ private:
 	_float Range = 0.f;
 	_float PreHp;
 	_float re = 0.f;
+	BULLET_ID Temp;
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

@@ -37,12 +37,17 @@ private:
 	CTransform*				m_pTransformLeftTopCom = nullptr;
 	CTransform*				m_pTransformRightTopCom = nullptr;
 
-
+	wstring m_strAllyText = L"";
+	wstring m_strEnemyText = L"";
 	_short					m_sLeftTop = 0, m_sLeft = 0, m_sRight = 0, m_sRightTop = 0;
 	CTexture*				m_pTextureCom = nullptr;
 private:
 	_matrix  m_matProj;
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_int m_iAllyCount = 0, m_iEnemyCount = 0;
+	_bool LeftTop = false, Right = false;
+	_float m_fAllyOccupationGage = 0.f, m_fEnemyOccupationGage = 0.f;
+	_float Time = 0.f;
 public:
 	static CTempOccupationScore*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static CTempOccupationScore*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);

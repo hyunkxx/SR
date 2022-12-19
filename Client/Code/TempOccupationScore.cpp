@@ -8,6 +8,7 @@
 #include"RightLocation.h"
 #include"RightTopLocation.h"
 #include "UI_Start.h"
+
 CTempOccupationScore::CTempOccupationScore(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -69,14 +70,31 @@ HRESULT CTempOccupationScore::Ready_Object(void * pArg)
 _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-
+	Time += fTimeDelta;
 	CManagement* Temp = CManagement::GetInstance();
 	CLayer*      Sour = Temp->Find_Layer(L"Environment");
 	CGameObject* Dest;
 	CLeftTopLocation* LLTTemp = dynamic_cast<CLeftTopLocation*>(Dest = Sour->Get_GameObject(L"LeftTopLocation"));
 	_float AllyOccupation = LLTTemp->Get_AllyOccupation();
 	_float EnermyOccupation = LLTTemp->Get_EnermyOccupation();
-
+	if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY && !LeftTop)
+	{
+		LeftTop = true;
+		m_iAllyCount += 1;
+		if (m_iEnemyCount > 1)
+		{
+			m_iEnemyCount -= 1;
+		}
+	}
+	else if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY && !LeftTop)
+	{
+		LeftTop = true;
+		m_iEnemyCount += 1;
+		if (m_iAllyCount > 1)
+		{
+			m_iAllyCount -= 1;
+		}
+	}
 	if (AllyOccupation > EnermyOccupation)
 	{
 		m_fSizeX = AllyOccupation;
@@ -113,6 +131,24 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CRightLocation* LRTemp = dynamic_cast<CRightLocation*>(Dest = Sour->Get_GameObject(L"RightLocation"));
 	AllyOccupation = LRTemp->Get_AllyOccupation();
 	EnermyOccupation = LRTemp->Get_EnermyOccupation();
+	if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY && !Right)
+	{
+		Right = true;
+		m_iAllyCount += 1;
+		if (m_iEnemyCount > 1)
+		{
+			m_iEnemyCount -= 1;
+		}
+	}
+	else if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY && !Right)
+	{
+		Right = true;
+		m_iEnemyCount += 1;
+		if (m_iAllyCount > 1)
+		{
+			m_iAllyCount -= 1;
+		}
+	}
 	if (AllyOccupation > EnermyOccupation)
 	{
 		m_fSizeX = AllyOccupation;
@@ -146,8 +182,16 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	m_pTransformRightTopCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
 	m_pTransformRightTopCom->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f);
 
-
-
+	if (m_iAllyCount >= 1)
+	{
+		m_fAllyOccupationGage += m_iAllyCount*fTimeDelta;
+	}
+	if (m_iEnemyCount >= 1)
+	{
+		m_fEnemyOccupationGage += m_iEnemyCount*fTimeDelta;
+	}
+	m_strAllyText = to_wstring((int)m_fAllyOccupationGage);
+	m_strEnemyText = to_wstring((int)m_fEnemyOccupationGage);
 
 	return OBJ_NOEVENT;
 }
@@ -181,13 +225,16 @@ void CTempOccupationScore::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sLeftTop);
 		m_pBufferLefttopCom->Render_Buffer();
+
+		_vec2 vPos = { 350.f, 10.f };
+		Render_Font(L"Font_Occupation", m_strAllyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+		vPos = { 430.f, 10.f };
+		Render_Font(L"Font_Occupation", m_strEnemyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
 		_matrix	ViewMatrix;
 		D3DXMatrixIdentity(&ViewMatrix);
 
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-
 	}
 
 

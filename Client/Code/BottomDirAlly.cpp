@@ -69,7 +69,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	case TANKTYPE::HUMVEE:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
-		TempBullet = 1;
+		Temp = BULLET_ID::MASHINE_BULLET;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.5f;
@@ -90,7 +90,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	case TANKTYPE::SMALL_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK);
-
+		Temp = BULLET_ID::SMALL_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -111,7 +111,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	case TANKTYPE::MIDDLE_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK);
-
+		Temp = BULLET_ID::MIDDLE_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -132,7 +132,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	case TANKTYPE::BIG_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK);
-
+		Temp = BULLET_ID::BIG_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -686,19 +686,11 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 				Pos += Dir* 3.f*fPosinDist;
 
-				if (m_fReloadTime > m_fReload &&TempBullet == 1)
+				if (m_fReloadTime > m_fReload )
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-						m_fReloadTime = 0.f;
-					}
-				}
-				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
 						m_fReloadTime = 0.f;
 					}
 				}
@@ -747,19 +739,11 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 				Pos += Dir* 3.f*fPosinDist;
 
-				if (m_fReloadTime > m_fReload &&TempBullet == 1)
+				if (m_fReloadTime > m_fReload )
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-						m_fReloadTime = 0.f;
-					}
-				}
-				else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
-					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
 						m_fReloadTime = 0.f;
 					}
 				}
@@ -812,19 +796,11 @@ void CBottomDirAlly::Detect(_float fTimeDelta)
 		D3DXVec3Normalize(&vLook, &vLook);
 		Pos += Dir* 3.f*fPosinDist;
 
-		if (m_fReloadTime > m_fReload &&TempBullet == 1)
+		if (m_fReloadTime > m_fReload)
 		{
 			if (abs(D3DXToDegree(Angle)) < 4.f)
 			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::MASHINE_BULLET);
-				m_fReloadTime = 0.f;
-			}
-		}
-		else if (m_fReloadTime > m_fReload &&TempBullet != 1)
-		{
-			if (abs(D3DXToDegree(Angle)) < 4.f)
-			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
 				m_fReloadTime = 0.f;
 			}
 		}
