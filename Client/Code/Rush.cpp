@@ -25,7 +25,8 @@
 #include "ShipCamera.h"
 #include "AH_64A_Camera.h"
 #include "AH_64A_AimCamera.h"
-
+//Enemy
+#include"StdEnemy.h"
 //UI
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
@@ -346,7 +347,38 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		static_cast<CShipBullet*>(pBullet)->Set_ID(BULLET_ID::SHIP_REAL_BULLET);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_REAL_BULLET);
 	}
+	//Enemy
 
+	for (_int i = 0; 8> i; i++)
+	{
+		_int tanktype = rand() % 4;
+		switch (tanktype)
+		{
+		case 0:
+			m_eData.TankType = TANKTYPE::HUMVEE;
+			break;
+		case 1:
+			m_eData.TankType = TANKTYPE::SMALL_TANK;
+			break;
+		case 2:
+			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
+			break;
+		case 3:
+			m_eData.TankType = TANKTYPE::BIG_TANK;
+			break;
+		default:
+			return NULL;
+			break;
+		}
+		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
+		m_eData.vPos.x = 160.f+i*10.f;
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z =10.f;
+
+		CGameObject* pEnermy = CStdEnemy::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
+	}
 
 
 	// Skill
@@ -440,4 +472,5 @@ void CRush::CameraChangeSetting()
 
 void CRush::Collison_Object(void)
 {
+	
 }

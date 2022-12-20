@@ -221,6 +221,7 @@
     <ClInclude Include="..\Header\ShipCamera.h" />
     <ClInclude Include="..\Header\ShootSmoke.h" />
     <ClInclude Include="..\Header\SmallTank.h" />
+    <ClInclude Include="..\Header\StdEnemy.h" />
     <ClInclude Include="..\Header\TankManager.h" />
     <ClInclude Include="..\Header\Player_Chatting.h" />
     <ClInclude Include="..\Header\Posin_UI.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="..\Code\ShipCamera.cpp" />
     <ClCompile Include="..\Code\ShootSmoke.cpp" />
     <ClCompile Include="..\Code\SmallTank.cpp" />
+    <ClCompile Include="..\Code\StdEnemy.cpp" />
     <ClCompile Include="..\Code\TankManager.cpp" />
     <ClCompile Include="..\Code\Player_Chatting.cpp" />
     <ClCompile Include="..\Code\Posin_UI.cpp" />

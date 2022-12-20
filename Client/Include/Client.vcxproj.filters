@@ -344,6 +344,9 @@
     <Filter Include="02. GameObject\00. Tank\01. AI\EnemyTurret">
       <UniqueIdentifier>{674a61fa-9aea-4c63-a277-98b5e0d29b53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\01. AI\StdEnemy">
+      <UniqueIdentifier>{40f5fbe6-f7d9-4c7e-b1b7-f8d03a156c85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -631,6 +634,9 @@
     <ClInclude Include="..\Header\Turret.h">
       <Filter>02. GameObject\00. Tank\01. AI\Turret</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\StdEnemy.h">
+      <Filter>02. GameObject\00. Tank\01. AI\StdEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -908,6 +914,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Turret.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StdEnemy.cpp">
+      <Filter>02. GameObject\00. Tank\01. AI\StdEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
