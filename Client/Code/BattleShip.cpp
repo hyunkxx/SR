@@ -297,23 +297,23 @@ HRESULT CBattleShip::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformPosin2, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Ship_Posin2_Transform", pComponent });
 
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Ham_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Ham_body", false);
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Ham_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Ham_head", false);
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Ham_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Ham_posin", false);
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 
-	pComponent = m_pHead2 = CVoxel::Create(m_pGraphicDev, L"Ham_head2");
+	pComponent = m_pHead2 = CVoxel::Create(m_pGraphicDev, L"Ham_head2", false);
 	NULL_CHECK_RETURN(m_pHead2, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelHead2", pComponent });
 
-	pComponent = m_pPosin2 = CVoxel::Create(m_pGraphicDev, L"Ham_posin2");
+	pComponent = m_pPosin2 = CVoxel::Create(m_pGraphicDev, L"Ham_posin2", false);
 	NULL_CHECK_RETURN(m_pPosin2, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin2", pComponent });
 

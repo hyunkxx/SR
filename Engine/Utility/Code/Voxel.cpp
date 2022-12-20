@@ -6,8 +6,9 @@
 
 USING(Engine)
 
-CVoxel::CVoxel(LPDIRECT3DDEVICE9 pDevice)
+CVoxel::CVoxel(LPDIRECT3DDEVICE9 pDevice, bool bCullMode)
 	: CComponent(pDevice)
+	, m_bCullMode(bCullMode)
 {
 	m_vecCube.reserve(50);
 }
@@ -114,9 +115,9 @@ void CVoxel::Return_Color(void)
 	}
 }
 
-CVoxel* CVoxel::Create(LPDIRECT3DDEVICE9 pDevice, wstring key)
+CVoxel* CVoxel::Create(LPDIRECT3DDEVICE9 pDevice, wstring key, bool bCullMode)
 {
-	CVoxel* pInstance = new CVoxel(pDevice);
+	CVoxel* pInstance = new CVoxel(pDevice, bCullMode);
 
 	if (FAILED(pInstance->Initalize(key)))
 	{
@@ -164,7 +165,7 @@ void CVoxel::Render(const _matrix* matParent)
 		_matrix matWorld = (*iter)->GetWorld() * (*matParent);
 
 		_vec3 pos = { matWorld._41, matWorld._42, matWorld._43 };
-		if (Utility::Cuilling(m_pGraphicDev, pos))
+		if (Utility::Cuilling(m_pGraphicDev, pos) && m_bCullMode)
 			continue;
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
