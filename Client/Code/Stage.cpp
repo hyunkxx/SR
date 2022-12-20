@@ -420,7 +420,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AH_64A", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
 
-	_vec3 vpos = { 580.f,0.f,600.f };
+	/*_vec3 vpos = { 580.f,0.f,600.f };
 	pGameObject = CEnemyTurret::Create(m_pGraphicDev, vpos);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EnemyTurret", pGameObject), E_FAIL);
@@ -439,7 +439,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CTurret::Create(m_pGraphicDev, vpos);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Turret2", pGameObject), E_FAIL);
-
+	*/
 	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
 		for (_int j = 0; j < 200; j++)
@@ -577,6 +577,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
 	//Ally
+	
 	for (_int i = 0; 5> i; i++)
 	{
 		_int tanktype = rand() % 4;
@@ -614,7 +615,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 	}
-	for (_int i = 0; 5 > i; i++)
+	/*for (_int i = 0; 5 > i; i++)
 	{
 		_int tanktype = rand() % 4;
 		switch (tanktype)
@@ -653,7 +654,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
-
+	*/
 	pGameObject = CCreateAi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CreateAi", pGameObject), E_FAIL);
@@ -1144,16 +1145,28 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
-						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
-
-					
-					else
+					switch (static_cast<CBullet*>(*iter)->Get_ID())
 					{
-						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(30.f);
-
-						// 플레이어 피격 사운드(포탄)
-						Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, CUI_Volume::s_fShotSound);
+					case BULLET_ID::ENEMY_MASHINE_BULLET:
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(20.f);
+					}
+					break;
+					case BULLET_ID::ENEMY_SMALL_CANNONBALL:
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(100.f);
+					}
+					break;
+					case BULLET_ID::ENEMY_MIDDLE_CANNONBALL:
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(200.f);
+					}
+					break;
+					case BULLET_ID::ENEMY_BIG_CANNONBALL:
+					{
+						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(400.f);
+					}
+					break;
 					}
 
 					if (dynamic_cast<CTankSet*>((*Dest).second)->Get_HP() <= 0)

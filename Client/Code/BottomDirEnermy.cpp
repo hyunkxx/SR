@@ -294,6 +294,58 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 		{
 			Detect(fTimeDelta);
 		}
+		_vec3 vBasePos = { 10.f + rand() % 11, 0.f, 10.f + rand() % 11 };
+		_vec3  vPos, vCol;
+		m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
+		vCol = vPos - vBasePos;
+		_float Dist = D3DXVec3Length(&vCol);
+		if (Dist < Range)
+		{
+			m_iAction = AIACTION::AIACTION_BATTLE;
+			_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+			m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+			Dir = vBasePos - vEHPos;
+
+			m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+
+			D3DXVec3Normalize(&vLook, &vLook);
+			D3DXVec3Normalize(&Dir, &Dir);
+
+			Left_RightCheck(Dir, vLook);
+			_float Dot = D3DXVec3Dot(&vLook, &Dir);
+			_float Angle = (float)acosf(Dot);
+			if (isnan(Angle))
+			{
+				Angle = 0;
+			}
+			if (LeftCheck == false)
+			{
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+			}
+			else
+			{
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+			}
+			m_pTransformHead->Get_Info(INFO_POS, &Pos);
+			m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+			Dir = vBasePos - Pos;
+			D3DXVec3Normalize(&Dir, &Dir);
+			D3DXVec3Normalize(&vLook, &vLook);
+			Pos += Dir* 3.f*fPosinDist;
+
+			if (m_fReloadTime > m_fReload)
+			{
+				if (abs(D3DXToDegree(Angle)) < 4.f)
+				{
+					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+					m_fReloadTime = 0.f;
+				}
+			}
+		}
+
+
 		Basic(fTimeDelta);
 
 		_vec3 vTrans;
@@ -485,9 +537,9 @@ void CBottomDirEnermy::StateCheck()
 		if (m_bLeftLocationCount == false)
 		{
 			m_bLeftLocationCount = true;
-			m_vPatrol.x = (float)(rand() % 45 + 45.f);
+			m_vPatrol.x = (float)(rand() % 25 + 35.f);
 			m_vPatrol.y = 0;
-			m_vPatrol.z = (float)(rand() % 45 + 45.f);
+			m_vPatrol.z = (float)(rand() % 25 + 35.f);
 		}
 		m_bRightTopLocationCount = false;
 		m_bRightLocationCount = false;
@@ -847,60 +899,7 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 		}
 	}
 
-	_vec3 vBasePos = { 10.f + rand() % 11, 0.f, 10.f + rand() % 11 };
-	_vec3  vPos, vCol;
-	m_pTransformCom->Get_Info(INFO::INFO_POS, &vPos);
-	vCol = vPos - vBasePos;
-	_float Dist = D3DXVec3Length(&vCol);
-	if (Dist < Range)
-	{
-		m_iAction = AIACTION::AIACTION_BATTLE;
-		_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
-		m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
-		Dir = vBasePos - vEHPos;
-
-		m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
-
-		D3DXVec3Normalize(&vLook, &vLook);
-		D3DXVec3Normalize(&Dir, &Dir);
-
-		Left_RightCheck(Dir, vLook);
-		_float Dot = D3DXVec3Dot(&vLook, &Dir);
-		_float Angle = (float)acosf(Dot);
-		if (isnan(Angle))
-		{
-			Angle = 0;
-		}
-		if (LeftCheck == false)
-		{
-			m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-		}
-		else
-		{
-			m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-		}
-		m_pTransformHead->Get_Info(INFO_POS, &Pos);
-		m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
-		Dir = vBasePos - Pos;
-		D3DXVec3Normalize(&Dir, &Dir);
-		D3DXVec3Normalize(&vLook, &vLook);
-		Pos += Dir* 3.f*fPosinDist;
-
-		if (m_fReloadTime > m_fReload)
-		{
-			if (abs(D3DXToDegree(Angle)) < 4.f)
-			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
-				m_fReloadTime = 0.f;
-			}
-		}
-		else
-		{
-			m_iAction = AIACTION::AIACTION_OCCOPATION;
-		}
-	}
+	
 }
 void CBottomDirEnermy::Set_DisCountLocation()
 {
@@ -1025,7 +1024,7 @@ void CBottomDirEnermy::Run(_float fTimeDelta)
 	}
 	else
 	{
-		fCurHp += 30.f*fTimeDelta;
+		fCurHp += 40.f*fTimeDelta;
 		if (fCurHp >= m_fMaxHp)
 		{
 			fCurHp = m_fMaxHp;

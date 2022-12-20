@@ -223,7 +223,7 @@ void CTurret::Detect(_float fTimeDelta)
 				{
 					if (abs(D3DXToDegree(Angle)) < 2.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::BIG_CANNONBALL);
 						m_fReloadTime = 0.f;
 					}
 				}
@@ -272,7 +272,7 @@ void CTurret::Detect(_float fTimeDelta)
 				{
 					if (abs(D3DXToDegree(Angle)) < 4.f)
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::CANNONBALL);
+						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::BIG_CANNONBALL);
 						m_fReloadTime = 0.f;
 					}
 				}

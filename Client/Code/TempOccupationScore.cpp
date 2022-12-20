@@ -79,22 +79,20 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CLeftTopLocation* LLTTemp = dynamic_cast<CLeftTopLocation*>(Dest = Sour->Get_GameObject(L"LeftTopLocation"));
 	_float AllyOccupation = LLTTemp->Get_AllyOccupation();
 	_float EnermyOccupation = LLTTemp->Get_EnermyOccupation();
-	if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY && !LeftTop)
+	if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY)
 	{
-		LeftTop = true;
-		m_iAllyCount += 1;
-		if (m_iEnemyCount > 1)
+		m_iLeftTopAllyCount = 1;
+		if (m_iLeftTopEnemyCount >= 1)
 		{
-			m_iEnemyCount -= 1;
+			m_iLeftTopEnemyCount = 0;
 		}
 	}
-	else if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY && !LeftTop)
+	else if (LLTTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY)
 	{
-		LeftTop = true;
-		m_iEnemyCount += 1;
-		if (m_iAllyCount > 1)
+		m_iLeftTopEnemyCount = 1;
+		if (m_iLeftTopAllyCount >= 1)
 		{
-			m_iAllyCount -= 1;
+			m_iLeftTopAllyCount = 0;
 		}
 	}
 	if (AllyOccupation > EnermyOccupation)
@@ -133,22 +131,20 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	CRightLocation* LRTemp = dynamic_cast<CRightLocation*>(Dest = Sour->Get_GameObject(L"RightLocation"));
 	AllyOccupation = LRTemp->Get_AllyOccupation();
 	EnermyOccupation = LRTemp->Get_EnermyOccupation();
-	if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY && !Right)
+	if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ALLY)
 	{
-		Right = true;
-		m_iAllyCount += 1;
-		if (m_iEnemyCount > 1)
+		m_iRightAllyCount = 1;
+		if (m_iRightEnemyCount >= 1)
 		{
-			m_iEnemyCount -= 1;
+			m_iRightEnemyCount = 0;
 		}
 	}
-	else if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY && !Right)
+	else if (LRTemp->Get_LocationState() == LOCATIONSTATE::STATE_ENERMY)
 	{
-		Right = true;
-		m_iEnemyCount += 1;
-		if (m_iAllyCount > 1)
+		m_iRightEnemyCount = 1;
+		if (m_iRightAllyCount >= 1)
 		{
-			m_iAllyCount -= 1;
+			m_iRightAllyCount = 0;
 		}
 	}
 	if (AllyOccupation > EnermyOccupation)
@@ -184,14 +180,10 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 	m_pTransformRightTopCom->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
 	m_pTransformRightTopCom->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f);
 
-	if (m_iAllyCount >= 1)
-	{
-		m_fAllyOccupationGage += m_iAllyCount * fTimeDelta;
-	}
-	if (m_iEnemyCount >= 1)
-	{
-		m_fEnemyOccupationGage += m_iEnemyCount * fTimeDelta;
-	}
+
+	m_fAllyOccupationGage += (m_iLeftTopAllyCount+ m_iRightAllyCount) * fTimeDelta;
+	m_fEnemyOccupationGage += (m_iRightEnemyCount+ m_iLeftTopEnemyCount) * fTimeDelta;
+
 	m_strAllyText = to_wstring((int)m_fAllyOccupationGage);
 	m_strEnemyText = to_wstring((int)m_fEnemyOccupationGage);
 

@@ -44,7 +44,7 @@ private:
 private:
 	_matrix  m_matProj;
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
-	_int m_iAllyCount = 0, m_iEnemyCount = 0;
+	_int m_iLeftTopAllyCount = 0, m_iLeftTopEnemyCount = 0, m_iRightAllyCount = 0, m_iRightEnemyCount = 0;
 	_bool LeftTop = false, Right = false;
 	_float m_fAllyOccupationGage = 0.f, m_fEnemyOccupationGage = 0.f;
 	_float Time = 0.f;
