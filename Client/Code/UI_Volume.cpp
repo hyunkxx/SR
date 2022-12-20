@@ -7,7 +7,7 @@
 #include "TankManager.h"
 #include "GameMode.h"
 
-_float CUI_Volume:: s_fAllSound;
+_float CUI_Volume::s_fAllSound;
 _float CUI_Volume::s_fShotSound;
 _float CUI_Volume::s_fBGMSound;
 
@@ -37,19 +37,19 @@ HRESULT CUI_Volume::Ready_Object()
 
 	/*for (_int i = 0; i < END_SOUND; ++i)
 	{
-		for (_int j = 0; j < VOLUME_END; ++j)
-		{
-			m_pButoonTexture[i][j] = nullptr;
-			m_pButtonTransform[i][j] = nullptr;
-		}
+	for (_int j = 0; j < VOLUME_END; ++j)
+	{
+	m_pButoonTexture[i][j] = nullptr;
+	m_pButtonTransform[i][j] = nullptr;
+	}
 	}*/
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-//	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
+	//	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 	for (_int i = 0; i < 7; ++i)
 	{
 		D3DXMatrixOrthoLH(&m_matProj[i], WINCX, WINCY, 0.f, 1.f);
 	}
-	
+
 	// 전체 창 
 	m_fScaleX = 200.f;
 	m_fScaleY = 200.f;
@@ -58,7 +58,7 @@ HRESULT CUI_Volume::Ready_Object()
 	m_fPosX = 400.f;
 	m_fPosY = 270.f;
 	m_fPosZ = 0.3f;
-		
+
 	// 단추
 	m_RatioSizeY = m_RatioSizeX = 16.f;
 	m_RatioSizeZ = 1.f;
@@ -69,7 +69,8 @@ HRESULT CUI_Volume::Ready_Object()
 	m_RatioY[BGM_SOUND] = 0.f;
 	m_RatioY[SHOT_SOUND] = PERCENTY * 15.f;
 	m_RatioZ = 0.1f;
-	
+
+	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
 	m_pTransform->Set_Scale(m_fScaleX, m_fScaleY, m_fScaleZ);
 	for (_int i = 0; i < 3; ++i)
 	{
@@ -84,7 +85,7 @@ HRESULT CUI_Volume::Ready_Object()
 	m_pButtonTransform[BGM_SOUND][VOLUME_UP]->Set_Scale(m_RatioSizeX, m_RatioSizeY, m_RatioSizeZ);
 	m_pButtonTransform[SHOT_SOUND][VOLUME_DOWN]->Set_Scale(m_RatioSizeX, m_RatioSizeY, m_RatioSizeZ);
 	m_pButtonTransform[SHOT_SOUND][VOLUME_UP]->Set_Scale(m_RatioSizeX, m_RatioSizeY, m_RatioSizeZ);
-*/
+	*/
 
 	lstrcpy(szVolumeOption, L"Volume Option");
 	lstrcpy(szALLVolumeSound, L"ALL Sound Volume");
@@ -92,7 +93,7 @@ HRESULT CUI_Volume::Ready_Object()
 	lstrcpy(szShotVolumeSound, L"Shot Sound Volume");
 	lstrcpy(szGameContinue, L"Game Continue");
 	lstrcpy(szGameEscape, L"Game Escape");
-	
+
 
 	CUI_Volume::s_fAllSound = 0.4f;
 	CUI_Volume::s_fShotSound = 0.4f;
@@ -113,7 +114,13 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 	{
 		if (Get_DIKeyState_Custom(DIK_F3) == KEY_STATE::TAP)
 		{
+
 			m_bShow = !m_bShow;
+
+			if (m_bShow)
+			{
+				PlaySound_SR(L"F3Sound.wav", UI_BUTTON_SOUND, CUI_Volume::s_fAllSound);
+			}
 
 			CGameMode::GetInstance()->m_bOnSoundMenu = m_bShow;
 
@@ -130,10 +137,9 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 			GetCursorPos(&ptMouse);
 			ScreenToClient(g_hWnd, &ptMouse);
 			Update_Pos();
-			Move_Pos();
+			Update_Move_Pos();
 			Sound_Volume_Control();
 		}
-
 		__super::Update_Object(fTimeDelta);
 	}
 	return 0;
@@ -157,12 +163,12 @@ void CUI_Volume::Render_Object(void)
 
 	if (m_bShow)
 	{
-		Render_Font(L"Font_Retro", szVolumeOption, &_vec2(m_fPosX - ( PERCENTX * 6.f) , m_fPosY - (PERCENTY * 30.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		Render_Font(L"Font_Retro", szVolumeOption, &_vec2(m_fPosX - (PERCENTX * 6.f), m_fPosY - (PERCENTY * 30.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		Render_Font(L"Font_Retro", szALLVolumeSound, &_vec2(m_fPosX - (PERCENTX * 22.f), m_fPosY - (PERCENTY * 17.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		Render_Font(L"Font_Retro", szStageVolumeSound, &_vec2(m_fPosX - (PERCENTX * 22.f), m_fPosY - (PERCENTY * 2.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		Render_Font(L"Font_Retro", szShotVolumeSound, &_vec2(m_fPosX - (PERCENTX * 22.f), m_fPosY + (PERCENTY * 13.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		Render_Font(L"Font_Retro", szGameContinue, &_vec2(m_fPosX - (PERCENTX * 22.f), m_fPosY + (PERCENTY * 26.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-		Render_Font(L"Font_Retro", szGameEscape, &_vec2(m_fPosX + (PERCENTX * 9.f ), m_fPosY + (PERCENTY * 26.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		Render_Font(L"Font_Retro", szGameEscape, &_vec2(m_fPosX + (PERCENTX * 9.f), m_fPosY + (PERCENTY * 26.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 		Render_Font(L"Font_Retro", (szAllSoundCount).c_str(), &_vec2(m_fPosX + (PERCENTX * 12.f), m_fPosY - (PERCENTY * 17.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		Render_Font(L"Font_Retro", (szBGMSoundCount).c_str(), &_vec2(m_fPosX + (PERCENTX * 12.f), m_fPosY - (PERCENTY * 2.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
@@ -218,26 +224,6 @@ CUI_Volume * CUI_Volume::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CUI_Volume::Move_Pos(void)
-{
-	// Move Pos Box
-	if (PtInRect(&rc[8], ptMouse))
-	{
-		if (Get_DIMouseState(DIM_LB))
-		{
-			_float fX, fY;
-
-			fX = m_fPosX - ptMouse.x;
-			fY = m_fPosY - ptMouse.y;
-
-			m_fPosX = (ptMouse.x - fX);
-			m_fPosY = (ptMouse.y + fY);
-		}
-	}
-
-
-}
-
 void CUI_Volume::Sound_Volume_Control(void)
 {
 
@@ -247,9 +233,6 @@ void CUI_Volume::Sound_Volume_Control(void)
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-
-			Engine::StopSound(VOLUEM_BUTTON);
-
 			s_fAllSound = s_fAllSound - 0.01f;
 
 			if (s_fAllSound <= 0.f)
@@ -259,15 +242,17 @@ void CUI_Volume::Sound_Volume_Control(void)
 
 			s_fBGMSound = s_fShotSound = s_fAllSound;
 			szShotSoundCount = szBGMSoundCount = szAllSoundCount = to_wstring(_int(s_fAllSound * 100.f));
+
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
 			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
-
 	}
 	if (PtInRect(&rc[1], ptMouse))
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-			Engine::StopSound(VOLUEM_BUTTON);
 			s_fAllSound = s_fAllSound + 0.01f;
 
 			if (s_fAllSound >= 1.f)
@@ -277,6 +262,10 @@ void CUI_Volume::Sound_Volume_Control(void)
 
 			s_fBGMSound = s_fShotSound = s_fAllSound;
 			szShotSoundCount = szBGMSoundCount = szAllSoundCount = to_wstring(_int(s_fAllSound * 100.f));
+
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
 			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
@@ -286,7 +275,6 @@ void CUI_Volume::Sound_Volume_Control(void)
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-			Engine::StopSound(VOLUEM_BUTTON);
 			s_fBGMSound = s_fBGMSound - 0.01f;
 
 			if (s_fBGMSound <= 0.f)
@@ -294,15 +282,16 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fBGMSound = 0.f;
 			}
 			szBGMSoundCount = to_wstring(_int(s_fBGMSound * 100.f));
-			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fBGMSound);
-
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
 	if (PtInRect(&rc[3], ptMouse))
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-			Engine::StopSound(VOLUEM_BUTTON);
 			s_fBGMSound = s_fBGMSound + 0.01f;
 
 			if (s_fBGMSound >= 1.f)
@@ -310,8 +299,10 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fBGMSound = 1.f;
 			}
 			szBGMSoundCount = to_wstring(_int(s_fBGMSound * 100.f));
-			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fBGMSound);
-
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
 
@@ -320,7 +311,6 @@ void CUI_Volume::Sound_Volume_Control(void)
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-			Engine::StopSound(VOLUEM_BUTTON);
 			s_fShotSound = s_fShotSound - 0.01f;
 
 			if (s_fShotSound <= 0.f)
@@ -328,15 +318,16 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fShotSound = 0.f;
 			}
 			szShotSoundCount = to_wstring(_int(s_fShotSound * 100.f));
-			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fShotSound);
-
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
 	if (PtInRect(&rc[5], ptMouse))
 	{
 		if (Get_DIMouseState(DIM_LB))
 		{
-			Engine::StopSound(VOLUEM_BUTTON);
 			s_fShotSound = s_fShotSound + 0.01f;
 
 			if (s_fShotSound >= 1.f)
@@ -344,8 +335,10 @@ void CUI_Volume::Sound_Volume_Control(void)
 				s_fShotSound = 1.f;
 			}
 			szShotSoundCount = to_wstring(_int(s_fShotSound * 100.f));
-			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fShotSound);
-
+		}
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
+			Engine::PlaySound_SR(L"message.wav", VOLUEM_BUTTON, s_fAllSound);
 		}
 	}
 	// Continue Box
@@ -368,6 +361,17 @@ void CUI_Volume::Sound_Volume_Control(void)
 		}
 	}
 
+	// move Position
+	if (PtInRect(&rc[8], ptMouse))
+	{
+		if (Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::TAP)
+		{
+			m_bMovePos = !m_bMovePos;
+
+			m_fMovePosY = (m_fPosY - ptMouse.y);
+
+		}
+	}
 }
 
 
@@ -393,27 +397,27 @@ HRESULT CUI_Volume::Add_Component(void)
 
 	for (_int i = 0; i < END_SOUND; ++i)
 	{
-		for (_int j = 0; j < VOLUME_END; ++j)
-		{
-			if (j == 0)
-			{
-				szVolumeUPDOWN = L"Proto_Volume_Down_Tex" + to_wstring(i);
-				szTransform = L"Proto_S_V_D_Transform" + to_wstring(i);
-			}
-			else if (j == 1)
-			{
-				szVolumeUPDOWN = L"Proto_Volume_Up_Tex" + to_wstring(i);
-				szTransform = L"Proto_S_V_U_Transform" + to_wstring(i);
-			}
+	for (_int j = 0; j < VOLUME_END; ++j)
+	{
+	if (j == 0)
+	{
+	szVolumeUPDOWN = L"Proto_Volume_Down_Tex" + to_wstring(i);
+	szTransform = L"Proto_S_V_D_Transform" + to_wstring(i);
+	}
+	else if (j == 1)
+	{
+	szVolumeUPDOWN = L"Proto_Volume_Up_Tex" + to_wstring(i);
+	szTransform = L"Proto_S_V_U_Transform" + to_wstring(i);
+	}
 
-			pComponent = m_pButoonTexture[i][j] = static_cast<CTexture*>(Clone_Prototype((szVolumeUPDOWN).c_str()));
-			NULL_CHECK_RETURN(m_pButoonTexture[i][j], E_FAIL);
-			m_mapComponent[ID_DYNAMIC].insert({((szVolumeUPDOWN).c_str()), pComponent });
+	pComponent = m_pButoonTexture[i][j] = static_cast<CTexture*>(Clone_Prototype((szVolumeUPDOWN).c_str()));
+	NULL_CHECK_RETURN(m_pButoonTexture[i][j], E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({((szVolumeUPDOWN).c_str()), pComponent });
 
-			pComponent = m_pButtonTransform[i][j] = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
-			NULL_CHECK_RETURN(m_pButtonTransform[i][j], E_FAIL);
-			m_mapComponent[ID_DYNAMIC].insert({((szTransform).c_str()), pComponent });
-		}
+	pComponent = m_pButtonTransform[i][j] = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pButtonTransform[i][j], E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({((szTransform).c_str()), pComponent });
+	}
 	}*/
 
 	pComponent = m_pButoonTexture[ALL_SOUND][VOLUME_DOWN] = static_cast<CTexture*>(Clone_Prototype(L"Proto_Volume_Down_Tex0"));
@@ -439,7 +443,6 @@ HRESULT CUI_Volume::Add_Component(void)
 	pComponent = m_pButoonTexture[SHOT_SOUND][VOLUME_UP] = static_cast<CTexture*>(Clone_Prototype(L"Proto_Volume_Up_Tex0"));
 	NULL_CHECK_RETURN(m_pButoonTexture[SHOT_SOUND][VOLUME_UP], E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Volume_Up_Tex2", pComponent });
-
 
 
 
@@ -483,12 +486,12 @@ void CUI_Volume::Free(void)
 		}
 	}
 	__super::Free();
-	
+
 }
 
 void CUI_Volume::Update_Pos(void)
 {
-	m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
+
 
 	m_pButtonTransform[ALL_SOUND][VOLUME_DOWN]->Set_Pos(m_fPosX + m_RatioX[VOLUME_DOWN] - (WINCX * 0.5f), (WINCY * 0.5f) - (m_fPosY - m_RatioY[ALL_SOUND]), m_fPosZ - m_RatioZ);
 	m_pButtonTransform[ALL_SOUND][VOLUME_UP]->Set_Pos(m_fPosX + m_RatioX[VOLUME_UP] - (WINCX * 0.5f), (WINCY * 0.5f) - (m_fPosY - m_RatioY[ALL_SOUND]), m_fPosZ - m_RatioZ);
@@ -500,35 +503,46 @@ void CUI_Volume::Update_Pos(void)
 	m_pButtonTransform[SHOT_SOUND][VOLUME_UP]->Set_Pos(m_fPosX + m_RatioX[VOLUME_UP] - (WINCX * 0.5f), (WINCY * 0.5f) - (m_fPosY )+ (m_RatioY[SHOT_SOUND]), m_fPosZ - m_RatioZ);*/
 
 
-	m_pButtonTransform[SHOT_SOUND][VOLUME_DOWN]->Set_Pos(m_fPosX + m_RatioX[VOLUME_DOWN] - (WINCX * 0.5f), (WINCY * 0.5f)  - m_fPosY - m_RatioY[SHOT_SOUND], m_fPosZ - m_RatioZ);
+	m_pButtonTransform[SHOT_SOUND][VOLUME_DOWN]->Set_Pos(m_fPosX + m_RatioX[VOLUME_DOWN] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY - m_RatioY[SHOT_SOUND], m_fPosZ - m_RatioZ);
 	m_pButtonTransform[SHOT_SOUND][VOLUME_UP]->Set_Pos(m_fPosX + m_RatioX[VOLUME_UP] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY - m_RatioY[SHOT_SOUND], m_fPosZ - m_RatioZ);
 
 
 	// all down
-	SetRect(&rc[0] , _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX)	, _int((m_fPosY - m_RatioY[ALL_SOUND]) - m_RatioSizeY) , _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX) , _int((m_fPosY - m_RatioY[ALL_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[0], _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX), _int((m_fPosY - m_RatioY[ALL_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX), _int((m_fPosY - m_RatioY[ALL_SOUND]) + m_RatioSizeY));
 
 	// all up
-	SetRect(&rc[1] , _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX) , _int((m_fPosY - m_RatioY[ALL_SOUND]) - m_RatioSizeY) 	, _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX) , _int((m_fPosY - m_RatioY[ALL_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[1], _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX), _int((m_fPosY - m_RatioY[ALL_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX), _int((m_fPosY - m_RatioY[ALL_SOUND]) + m_RatioSizeY));
 
 	// bgm down
-	SetRect(&rc[2] , _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX)	, _int((m_fPosY - m_RatioY[BGM_SOUND]) - m_RatioSizeY)	, _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX)	, _int((m_fPosY - m_RatioY[BGM_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[2], _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX), _int((m_fPosY - m_RatioY[BGM_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX), _int((m_fPosY - m_RatioY[BGM_SOUND]) + m_RatioSizeY));
 
 	// bgm up
-	SetRect(&rc[3] , _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX)	, _int((m_fPosY - m_RatioY[BGM_SOUND]) - m_RatioSizeY)	, _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX) , _int((m_fPosY - m_RatioY[BGM_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[3], _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX), _int((m_fPosY - m_RatioY[BGM_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX), _int((m_fPosY - m_RatioY[BGM_SOUND]) + m_RatioSizeY));
 
 	// shot down
-	SetRect(&rc[4] , _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX)	, _int((m_fPosY + m_RatioY[SHOT_SOUND]) - m_RatioSizeY) , _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX) , _int((m_fPosY + m_RatioY[SHOT_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[4], _int((m_fPosX + m_RatioX[VOLUME_DOWN]) - m_RatioSizeX), _int((m_fPosY + m_RatioY[SHOT_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_DOWN]) + m_RatioSizeX), _int((m_fPosY + m_RatioY[SHOT_SOUND]) + m_RatioSizeY));
 
 	//  shot up
-	SetRect(&rc[5] , _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX) , _int((m_fPosY + m_RatioY[SHOT_SOUND]) - m_RatioSizeY) , _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX) , _int((m_fPosY + m_RatioY[SHOT_SOUND]) + m_RatioSizeY));
+	SetRect(&rc[5], _int((m_fPosX + m_RatioX[VOLUME_UP]) - m_RatioSizeX), _int((m_fPosY + m_RatioY[SHOT_SOUND]) - m_RatioSizeY), _int((m_fPosX + m_RatioX[VOLUME_UP]) + m_RatioSizeX), _int((m_fPosY + m_RatioY[SHOT_SOUND]) + m_RatioSizeY));
 
 	// Continue Box
-	SetRect(&rc[6] , _int(m_fPosX - PERCENTX * 22.f) , _int(m_fPosY + PERCENTY * 26.f)	, _int(m_fPosX  - PERCENTX * 6.5f)	, _int(m_fPosY + PERCENTY * 31.f));
+	SetRect(&rc[6], _int(m_fPosX - PERCENTX * 22.f), _int(m_fPosY + PERCENTY * 26.f), _int(m_fPosX - PERCENTX * 6.5f), _int(m_fPosY + PERCENTY * 31.f));
 
 	// Escape Box
-	SetRect(&rc[7] , _int(m_fPosX + PERCENTX * 9.f) , _int(m_fPosY + PERCENTY * 26.f) , _int(m_fPosX + PERCENTX * 22.f) , _int(m_fPosY + PERCENTY * 31.f));
+	SetRect(&rc[7], _int(m_fPosX + PERCENTX * 9.f), _int(m_fPosY + PERCENTY * 26.f), _int(m_fPosX + PERCENTX * 22.f), _int(m_fPosY + PERCENTY * 31.f));
 
 	// move Box
-	SetRect(&rc[8] , _int(m_fPosX - PERCENTX * 6.f)	, _int(m_fPosY - PERCENTY * 30.f)	, _int(m_fPosX + PERCENTX * 9.f)	, _int(m_fPosY - PERCENTY * 25.f));
+	SetRect(&rc[8], _int(m_fPosX - PERCENTX * 6.f), _int(m_fPosY - PERCENTY * 30.f), _int(m_fPosX + PERCENTX * 9.f), _int(m_fPosY - PERCENTY * 25.f));
 
+}
+
+void CUI_Volume::Update_Move_Pos(void)
+{
+	if (m_bMovePos)
+	{
+		m_fPosX = _float(ptMouse.x);
+		m_fPosY = _float(ptMouse.y + m_fMovePosY);
+
+		m_pTransform->Set_Pos(m_fPosX - (WINCX * 0.5f), (WINCY * 0.5f) - m_fPosY, m_fPosZ);
+	}
 }

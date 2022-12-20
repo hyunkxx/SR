@@ -39,6 +39,7 @@
 #include "UI_Start.h"
 #include "UI_MiniMap.h"
 #include "UI_Speed.h"
+#include "UI_Rush_HP.h"
 //#include "UI_Fuel.h"
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
@@ -86,6 +87,7 @@ HRESULT CRush::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
 	CGameMode::GetInstance()->InitGameMode(500, 20000, 20000);
+	CUI_FontMgr::GetInstance()->Set_Rush_LifeCount(3);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -100,6 +102,9 @@ HRESULT CRush::Ready_Scene(void)
 _int CRush::Update_Scene(const _float& fTimeDelta)
 {
 	Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+
+	CUI_FontMgr::GetInstance()->Rush_Update_PlayTIme(fTimeDelta);
+	CUI_FontMgr::GetInstance()->Update_Score();
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
@@ -123,7 +128,9 @@ void CRush::LateUpdate_Scene(void)
 
 void CRush::Render_Scene(void)
 {
-
+	_tchar Introduce[64] = L"¿¾³¯²¨ º¹±¸\n³Ñ¹öÆÐµå + -";
+	Render_Font(L"Font_Retro", Introduce, &_vec2(20.f, 70.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+	CUI_FontMgr::GetInstance()->RUSH_RENDER();
 }
 
 CRush * CRush::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -138,6 +145,7 @@ CRush * CRush::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CRush::Free(void)
 {
+	CUI_FontMgr::GetInstance()->DestroyInstance();
 	Engine::StopAll();
 	__super::Free();
 }
@@ -436,6 +444,11 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+
+	pGameObject = CUI_Rush_HP::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rush_HP", pGameObject), E_FAIL);
 
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

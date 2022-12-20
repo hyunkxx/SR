@@ -244,6 +244,7 @@
     <ClInclude Include="..\Header\UI_Log_Back.h" />
     <ClInclude Include="..\Header\UI_MiniMap.h" />
     <ClInclude Include="..\Header\UI_Player_Hp.h" />
+    <ClInclude Include="..\Header\UI_Rush_HP.h" />
     <ClInclude Include="..\Header\UI_Speed.h" />
     <ClInclude Include="..\Header\UI_Start.h" />
     <ClInclude Include="..\Header\UI_Volume.h" />
@@ -355,6 +356,7 @@
     <ClCompile Include="..\Code\UI_Log_Back.cpp" />
     <ClCompile Include="..\Code\UI_MiniMap.cpp" />
     <ClCompile Include="..\Code\UI_Player_Hp.cpp" />
+    <ClCompile Include="..\Code\UI_Rush_HP.cpp" />
     <ClCompile Include="..\Code\UI_Speed.cpp" />
     <ClCompile Include="..\Code\UI_Start.cpp" />
     <ClCompile Include="..\Code\UI_Volume.cpp" />

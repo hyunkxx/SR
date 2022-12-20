@@ -49,6 +49,7 @@ private:
 	_float					m_fPosY;
 	_float					m_fPosZ;
 	_bool					m_bPosinOn = true;
+	_bool					m_bMetronome = false;
 public:
 
 	void				Set_ScaleX(const _float& fX) { m_fScaleX = fX; }
@@ -58,6 +59,8 @@ public:
 	void				Set_PosX(const _float& fX) { m_fPosX = fX; }
 	void				Set_PosY(const _float& fY) { m_fPosY = fY; }
 	void				Set_PosZ(const _float& fZ) { m_fPosZ = fZ; }
+
+	void				KeyInput(void);
 
 };
 

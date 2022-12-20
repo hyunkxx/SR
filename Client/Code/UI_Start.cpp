@@ -48,6 +48,11 @@ _int CUI_Start::Update_Object(const _float & fTimeDelta)
 	if (Get_DIKeyState_Custom(DIK_F7) == KEY_STATE::TAP)
 	{
 		m_bHelp = !m_bHelp;
+
+		if (m_bHelp)
+		{
+		PlaySound_SR(L"F3Sound.wav", UI_BUTTON_SOUND , CUI_Volume::s_fAllSound);
+		}
 	}
 
 	__super::Update_Object(fTimeDelta);

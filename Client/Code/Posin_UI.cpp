@@ -46,7 +46,7 @@ HRESULT CPosin_UI::Ready_Object(void)
 
 	m_szTankType = CUI_FontMgr::GetInstance()->Get_Tank_Name();
 
-	
+
 	return S_OK;
 }
 
@@ -54,10 +54,7 @@ HRESULT CPosin_UI::Ready_Object(void)
 _int CPosin_UI::Update_Object(const _float & fTimeDelta)
 {
 
-	if (Get_DIKeyState_Custom(DIK_F11) == KEY_STATE::TAP)
-	{
-		m_bPosinOn = !m_bPosinOn;
-	}
+	KeyInput();
 
 	__super::Update_Object(fTimeDelta);
 
@@ -83,23 +80,7 @@ void CPosin_UI::Render_Object(void)
 	}
 	else if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA && m_bPosinOn)
 	{
-		if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
-		{
-			m_fScaleX += 3.f;
-			m_fScaleY += 2.f;
 
-			if (m_fScaleX >= 550.f) { m_fScaleX = 550.f; }
-			if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
-
-		}
-		if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
-		{
-			m_fScaleX -= 3.f;
-			m_fScaleY -= 2.f;
-
-			if (m_fScaleX <= 400.f) { m_fScaleX = 400.f; }
-			if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
-		}
 
 		//	const TANK_STATE& tankData = CTankManager::GetInstance()->GetData((VEHICLE)m_iTankType);
 		CGameObject* pTank = Engine::Get_Object(L"GameLogic", L"PlayerVehicle");
@@ -197,4 +178,79 @@ HRESULT CPosin_UI::Add_Component(void)
 void CPosin_UI::Free(void)
 {
 	CGameObject::Free();
+}
+
+void CPosin_UI::KeyInput(void)
+{
+	if (Get_DIKeyState_Custom(DIK_F11) == KEY_STATE::TAP)
+	{
+		m_bPosinOn = !m_bPosinOn;
+	}
+
+	if (Get_DIKeyState_Custom(DIK_V) == KEY_STATE::TAP)
+	{
+		m_bMetronome = !m_bMetronome;
+	}
+
+	_float fSound = 1.f;
+
+	if (CUI_Volume::s_fAllSound == 0.f)
+	{
+		fSound = 0.f;
+	}
+	else if (CUI_Volume::s_fAllSound != 0.f)
+	{
+		fSound = 1.f;
+	}
+
+
+
+	if (m_bMetronome)
+	{
+		PlaySound_SR(L"Metronome.mp3", METRONOME_SOUND, fSound);
+	}
+	else if (!m_bMetronome)
+	{
+		StopSound(METRONOME_SOUND);
+	}
+
+
+	if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
+	{
+		m_fScaleX += 3.f;
+		m_fScaleY += 2.f;
+
+
+		PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
+
+		if (m_fScaleX >= 550.f)
+		{
+			m_fScaleX = 550.f;
+			StopSound(POSIN_ZOOM);
+		}
+		if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
+	}
+	else if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::AWAY)
+	{
+		StopSound(POSIN_ZOOM);
+	}
+
+	if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
+	{
+		m_fScaleX -= 3.f;
+		m_fScaleY -= 2.f;
+
+		PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
+
+		if (m_fScaleX <= 400.f)
+		{
+			m_fScaleX = 400.f;
+			StopSound(POSIN_ZOOM);
+		}
+		if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
+	}
+	else if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::AWAY)
+	{
+		StopSound(POSIN_ZOOM);
+	}
 }

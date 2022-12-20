@@ -27,7 +27,7 @@ public:
 
 
 	void				Update_Pos(void);
-	void				 Move_Pos(void);
+	void				Update_Move_Pos(void);
 	void				 Sound_Volume_Control(void);
 	_bool			Get_Volume_Show(void) { return m_bShow; }
 
@@ -39,14 +39,14 @@ private:
 
 	enum VOILUME_TYPE { VOLUME_DOWN, VOLUME_UP, VOLUME_END };
 	enum SOUND_VOLUME_TYPE { ALL_SOUND, BGM_SOUND, SHOT_SOUND, END_SOUND };
-	enum GAME_INOUT {GAME_CONTINUE , GAME_ESCAPE , GAME_INOUT_END};
+	enum GAME_INOUT { GAME_CONTINUE, GAME_ESCAPE, GAME_INOUT_END };
 
 	CRcTex*						m_pRcTex = nullptr;
 	CTexture*					m_pTexture = nullptr;
 	CTexture*					m_pButoonTexture[END_SOUND][VOLUME_END];
 	CTransform*				m_pTransform = nullptr;
 	CTransform*				m_pButtonTransform[END_SOUND][VOLUME_END];
-	
+
 
 	_matrix  m_matProj[7];
 private:
@@ -55,7 +55,7 @@ private:
 	RECT					rc[9];
 	POINT					ptMouse;
 
-	_float					m_fScaleX,	m_fScaleY,	m_fScaleZ;
+	_float					m_fScaleX, m_fScaleY, m_fScaleZ;
 	_float					m_fPosX, m_fPosY, m_fPosZ;
 
 	// 단추 키 _ 고정 크기 , _ 고정 위치(UP과 down은 x값만 다르고, 각 단추는 y값만 다름)
@@ -63,9 +63,15 @@ private:
 	_float					m_RatioX[VOLUME_END]; // Up or Down
 	_float					m_RatioY[END_SOUND];	 // All , BGM , SHOT
 	_float					m_RatioZ;
-	
+
 	//UI 창 보이기
 	_bool					m_bShow = false;
+
+	// ui창 옮기기
+	_bool					m_bMovePos = false;
+	_float					m_fMovePosY;
+
+
 
 	//
 	_tchar szVolumeOption[14];

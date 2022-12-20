@@ -347,6 +347,12 @@
     <Filter Include="02. GameObject\00. Tank\01. AI\StdEnemy">
       <UniqueIdentifier>{40f5fbe6-f7d9-4c7e-b1b7-f8d03a156c85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\000.Rush_UI">
+      <UniqueIdentifier>{a9d66ffe-cd34-416f-b7ba-8000ee7d5aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\000.Rush_UI\00.Rush_HP">
+      <UniqueIdentifier>{a7d11f51-50f2-41eb-bbab-5a57baae93a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -637,6 +643,9 @@
     <ClInclude Include="..\Header\StdEnemy.h">
       <Filter>02. GameObject\00. Tank\01. AI\StdEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UI_Rush_HP.h">
+      <Filter>02. GameObject\93.UI\000.Rush_UI\00.Rush_HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -917,6 +926,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\StdEnemy.cpp">
       <Filter>02. GameObject\00. Tank\01. AI\StdEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Rush_HP.cpp">
+      <Filter>02. GameObject\93.UI\000.Rush_UI\00.Rush_HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

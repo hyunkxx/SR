@@ -10,6 +10,7 @@
 #include "RightLocation.h"
 #include "RightTopLocation.h"
 #include "GameMode.h"
+#include "UI_Volume.h"
 
 CUI_MiniMap::CUI_MiniMap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -130,6 +131,31 @@ _int CUI_MiniMap::Update_Object(const _float & fTimeDelta)
 	//{
 	//	m_iBSite = 2;
 	//}
+
+	_float fSound = 0.02f;
+	
+	if (CUI_Volume::s_fAllSound == 0.f)
+	{
+		fSound = 0.f;
+	}
+	else if (CUI_Volume::s_fAllSound != 0.f)
+	{
+		fSound = 0.02f;
+	}
+
+	m_fTime += fTimeDelta;
+
+	if (m_fTime >= 1.f)
+	{
+		if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+		{
+			CGameObject* pPlayer = Get_Object(L"GameLogic", L"PlayerVehicle");
+			if (!(pPlayer->Get_Dead()))
+				PlaySound_SR(L"Rader2.mp3", RADER_SOUND, fSound);
+			m_fTime = 0.f;
+		}
+	}
+
 
 	__super::Update_Object(fTimeDelta);
 

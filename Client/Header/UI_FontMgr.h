@@ -8,6 +8,9 @@ private:
 	explicit CUI_FontMgr();
 	virtual ~CUI_FontMgr();
 
+	//	War 전용
+#pragma region
+
 public:
 	//function
 
@@ -134,6 +137,61 @@ private:
 	wstring		szColon = L":";
 	wstring		szPlayerName = L"";
 	wstring		szFullChat_Log = L"";
+
+#pragma endregion
+
+
+	// Rush 전용
+#pragma region
+public:
+
+	void Rush_Update_PlayTIme(const _float& fTimeDelta);
+
+
+
+	void Update_Score(void);
+	void Plus_Score(_int Plus_Score) { iRENDER_Score += Plus_Score; }
+	_int Get_Score(void) { return iRENDER_Score; }
+	//void Set_Score(_int Setting_Score) {	iRENDER_Score = Setting_Score;	}
+
+
+	// 목숨 갯수 셋팅
+	void Set_Rush_LifeCount(_int LifeCount) { iRush_LifeCount = LifeCount; }
+	_int Get_Rush_LifeCount(void) { return iRush_LifeCount; }
+	void Rush_Plus_Life(void) { iRush_LifeCount += 1; if (iRush_LifeCount >= 10) { iRush_LifeCount = 10; } }
+	void Rush_Minus_Life(void) { iRush_LifeCount -= 1; if (iRush_LifeCount <= 0) { iRush_LifeCount = 0; } }
+
+
+
+
+	// Rush 씬에서 렌더 돌리는 것.
+	void RUSH_RENDER(void);
+
+private:
+
+	// Rush -> 시간
+	_float fRush_PlayTIme = 0.f;
+	_float Rush_One_Sec = 1.f;
+	_int i_Rush_PlayTime = 0;
+	wstring szRushColon = L":";
+	wstring szRush_One_Sec;
+	wstring szRush_Ten_Sec;
+	wstring szRush_One_Min;
+	wstring szRush_Ten_Min;
+
+
+	// Rush -> 스코어
+	_int iRENDER_Score = 100;
+	wstring szScore;
+
+
+
+	// Rush -> Life Count
+	_int iRush_LifeCount;
+
+#pragma endregion
+
+
 
 };
 

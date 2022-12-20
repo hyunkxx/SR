@@ -76,6 +76,7 @@ private:
 
 
 	_bool					m_bPosinOn = true;
+	_float					m_fTime = 0.f;
 public:
 
 

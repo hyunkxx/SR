@@ -1138,14 +1138,10 @@ void CStage::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 
-				
 					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
-					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(10.f);
 
-						// 플레이어 피격사운드(총알)
-						Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, CUI_Volume::s_fShotSound);
-					}
+					
 					else
 					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(30.f);
@@ -1194,16 +1190,6 @@ void CStage::Collison_Object(void)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
 						{
-							if (fPlayer_obj_dist_Sound <= 75.f)
-							{
-								// 총알 피격 사운드
-								Engine::StopSound(HIT_SOUND);
-								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
-								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
-							}
-						}
-						else
-						{
 							// 포탄 피격 사운드
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
@@ -1249,16 +1235,6 @@ void CStage::Collison_Object(void)
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
-						{
-							if (fPlayer_obj_dist_Sound <= 75.f)
-							{
-								// 총알 피격 사운드
-								Engine::StopSound(HIT_SOUND);
-								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
-								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
-							}
-						}
-						else
 						{
 							// 포탄 피격 사운드
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
@@ -1387,16 +1363,6 @@ void CStage::Collison_Object(void)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
-							if (fPlayer_obj_dist_Sound <= 75.f)
-							{
-								// 총알 피격 사운드
-								Engine::StopSound(HIT_SOUND);
-								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
-								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
-							}
-						}
-						else
-						{
 							// 포탄 피격 사운드
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
@@ -1452,16 +1418,6 @@ void CStage::Collison_Object(void)
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
-						{
-							if (fPlayer_obj_dist_Sound <= 75.f)
-							{
-								// 총알 피격 사운드
-								Engine::StopSound(HIT_SOUND);
-								fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 75.f);
-								Engine::PlaySound_SR(Hit_Sound, HIT_SOUND, 1.f - fPlayer_obj_dist_Sound);
-							}
-						}
-						else
 						{
 							// 포탄 피격 사운드
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);

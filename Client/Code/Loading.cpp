@@ -90,6 +90,18 @@ _uint CLoading::Loading_ForStage(void)
 	Engine::Initalize();
 
 
+
+	// Rush
+#pragma region
+	// UI
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Rush_HP_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Rush_Life.png", TEX_NORMAL)), E_FAIL);
+
+
+
+
+#pragma endregion
+
+
 	// component
 
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_TerrainTex", Engine::CTerrainTex::Create(m_pGraphicDev)), E_FAIL);
