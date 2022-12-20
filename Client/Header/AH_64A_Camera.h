@@ -50,6 +50,9 @@ private:
 	_bool		m_vType = false;
 	_float		m_fTypeCount = 0.f;
 	_float		m_fCameraDist = -30.f;
+	_float		m_fYPlus = 40.f;
+
+	_bool		m_bReady = false;
 private:
 	virtual void Free(void) override;
 };

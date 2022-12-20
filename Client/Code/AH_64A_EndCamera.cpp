@@ -82,11 +82,11 @@ void CAH_64A_EndCamera::Mouse_Fix(void)
 void CAH_64A_EndCamera::Target_Renewal(const _float & fTimeDelta)
 {
 	_vec3 UserPos;
-	UserPos = Engine::Get_Camera(L"TankCamera")->Get_Eye();
+	UserPos = static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Get_Info();
 	UserPos += _vec3(10.f, 10.f, 10.f);
-	m_vPos.x = Get_Linear(m_vPos.x, UserPos.x, fTimeDelta);
-	m_vPos.y = Get_Linear(m_vPos.y, UserPos.y, fTimeDelta);
-	m_vPos.z = Get_Linear(m_vPos.z, UserPos.z, fTimeDelta);
+	_vec3 Dir = UserPos - m_AH_64A_Pos;
+	D3DXVec3Normalize(&Dir, &Dir);
+	m_vPos += Dir * 100.f * fTimeDelta;
 
 	m_vEye = m_vPos;
 
@@ -96,7 +96,7 @@ void CAH_64A_EndCamera::Target_Renewal(const _float & fTimeDelta)
 
 	m_vAt = m_AH_64A_Pos;
 
-	if (300.f > fDist)
+	if (400.f > fDist)
 	{
 		Engine::Camera_Change(L"TankCamera");
 		static_cast<CTankSet*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"))->Set_Rock(false);

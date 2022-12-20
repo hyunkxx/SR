@@ -35,6 +35,8 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 	play_Voice();
 
 
+	if(3.f <m_fDeadCount)
+		Engine::StopSound(AH_64A_SOUND);
 
 	if (8.f < m_fDeadCount)
 	{
@@ -81,12 +83,12 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 		Engine::StopSound(AH_64A_VOICE2);
 		Engine::PlaySound_SR(L"AH_64A_End.mp3", AH_64A_VOICE2, 0.5f);
 		static_cast<CAH_64A_EndCamera*>(Engine::Get_Camera())->Camera_Setting(m_vInfo[INFO_POS]);
-		m_bLock = true;
 		m_bDeadCounting = true;
+		m_bLock = true;
 		Engine::StopSound(AH_64A_SOUND);
 	}
 
-	m_fAccum += 200.f * fTimeDelta;
+	m_fAccum += 1500.f * fTimeDelta;
 	if (720.f <= m_fAccum)
 		m_fAccum = 0.f;
 
@@ -147,7 +149,7 @@ void CAH_64A::RenderGUI(void)
 
 void CAH_64A::Key_Input(const _float & fTimeDleta)
 {
-	if (!m_bLock)
+	if (m_bLock)
 		return;
 
 	if (Engine::Get_DIKeyState_Custom(DIK_W) == KEY_STATE::HOLD)
@@ -367,8 +369,9 @@ void CAH_64A::Start_AH_64A(void)
 	m_fScale = 1.f;
 	m_fDeadCount = 0.f;
 	m_bDead = false;
-	m_bLock = true;
+	m_bLock = false;
 	m_bAppear = true;
+	m_bDeadCounting = false;
 	m_vInfo[INFO_POS] = { 100.f, 50.f , -400.f };
 	m_vInfo[INFO_RIGHT] = { 10.f, 0.f , 0.f };
 	m_vInfo[INFO_UP] = { 0.f, 1.f , 0.f };
@@ -393,6 +396,7 @@ void CAH_64A::Start_AH_64A(void)
 	Engine::Camera_Change(L"AH_64A_Camera");
 	if (dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera")))
 	{
+		m_pTransformBody->Reset_Trans();
 		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Set_Target(m_pTransformBody);
 		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Camera_Setting(_vec3{ 200.f, 100.f , 0.f });
 		Engine::Get_Camera()->Shake_On();
@@ -448,7 +452,7 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXMatrixIdentity(&matWorld2);
 	D3DXMatrixScaling(&matScale2, m_fScale * 1.5f, m_fScale* 1.5f, m_fScale* 1.5f);
 
-	D3DXMatrixRotationY(&matRot2[ROT_Y], m_fAccum);
+	D3DXMatrixRotationY(&matRot2[ROT_Y], D3DXToRadian(m_fAccum));
 	D3DXMatrixTranslation(&matTrans2, 0, -(3 * m_fScale), -(2 * m_fScale));
 
 	matWorld2 = matScale2 * matRot2[ROT_Y] * matTrans2  * matWorld;
@@ -463,7 +467,7 @@ void CAH_64A::Set_Transform(const _float& fTimeDelta)
 	D3DXMatrixIdentity(&matWorld3);
 	D3DXMatrixScaling(&matScale3, m_fScale * 0.8f, m_fScale* 0.8f, m_fScale* 0.8f);
 
-	D3DXMatrixRotationX(&matRot3[ROT_X], m_fAccum);
+	D3DXMatrixRotationX(&matRot3[ROT_X], D3DXToRadian(m_fAccum));
 	D3DXMatrixTranslation(&matTrans3, -1.f * m_fScale, 1.f * m_fScale, -17.f* m_fScale);
 
 	matWorld3 = matScale3 * matRot3[ROT_X] * matTrans3  * matWorld;

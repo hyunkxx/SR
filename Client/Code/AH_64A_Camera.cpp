@@ -40,16 +40,27 @@ _int CAH_64A_Camera::Update_Object(const _float & fTimeDelta)
 	if(3.f < m_fShake_Power)
 		m_fShake_Power += fTimeDelta;
 
-	m_fTypeCount += fTimeDelta;
+	if (!m_bReady)
+	{
+		m_fTypeCount += fTimeDelta;
 
-	if (m_fTypeCount > 9.f)
-		m_vType = true;
+		if (m_fTypeCount > 9.f)
+			m_vType = true;
 
-	if (m_vType)
-		m_fCameraDist += 60.f *fTimeDelta;
+		if (m_vType)
+		{
+			m_fCameraDist += 60.f * fTimeDelta;
+			m_fYPlus -= 80.f * fTimeDelta;
+		}
 
-	if (m_fCameraDist >= 30.f)
-		m_fCameraDist = 30.f;
+		if (m_fYPlus < 0.f)
+			m_fYPlus = 0.f;
+
+		if (m_fCameraDist >= 30.f)
+			m_fCameraDist = 30.f;
+		if (m_fYPlus <= 0.f && m_fCameraDist >= 30.f)
+			m_bReady = true;
+	}
 
 	Mouse_Fix();
 	Camera_Shake(fTimeDelta);
@@ -68,6 +79,10 @@ void CAH_64A_Camera::Camera_Setting(_vec3 Target_Pos)
 {
 	m_vPos = Target_Pos;
 	m_bFix = true;
+	m_bReady = false;
+	m_vType = false;
+	m_fCameraDist = -30.f;
+	m_fYPlus = 40.f;
 	m_fShake_Power = 0.f;
 	m_fShake_Time = 3.f;
 	m_fTypeCount = 0.f;
@@ -103,46 +118,26 @@ void CAH_64A_Camera::Target_Renewal(const _float & fTimeDelta)
 	_vec3 UserPos, UserLook;
 
 
-	if (!m_vType)
-	{
-		m_pTarget_Trans->Get_Info(INFO_POS, &UserPos);
-		m_pTarget_Trans->Get_Info(INFO_LOOK, &UserLook);
+	m_pTarget_Trans->Get_Info(INFO_POS, &UserPos);
+	m_pTarget_Trans->Get_Info(INFO_LOOK, &UserLook);
 
-		m_vPos.x = Get_Linear(m_vPos.x, UserPos.x, fTimeDelta);
-		m_vPos.y = Get_Linear(m_vPos.y, UserPos.y, fTimeDelta);
-		m_vPos.z = Get_Linear(m_vPos.z, UserPos.z, fTimeDelta);
+	m_vPos.x = Get_Linear(m_vPos.x, UserPos.x, fTimeDelta);
+	m_vPos.y = Get_Linear(m_vPos.y, UserPos.y, fTimeDelta);
+	m_vPos.z = Get_Linear(m_vPos.z, UserPos.z, fTimeDelta);
 
-		_vec3 Plus = (-UserLook * m_fCameraDist);
-		Plus.y += 10.f;
-		m_vEye = m_vPos + Plus;
+	_vec3 Plus = (-UserLook * m_fCameraDist);
+	Plus.y += 10.f;
+	Plus.y += m_fYPlus;
+	m_vEye = m_vPos + Plus;
 
-		_matrix matCam;
-		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCam);
-		D3DXMatrixInverse(&matCam, 0, &matCam);
-		_vec3 camLook = { matCam._31,matCam._32 ,matCam._33 };
+	_matrix matCam;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCam);
+	D3DXMatrixInverse(&matCam, 0, &matCam);
+	_vec3 camLook = { matCam._31,matCam._32 ,matCam._33 };
 
-		m_vAt = UserPos;
-	}
-	else
-	{
-		m_pTarget_Trans->Get_Info(INFO_POS, &UserPos);
-		m_pTarget_Trans->Get_Info(INFO_LOOK, &UserLook);
+	m_vAt = UserPos;
 
-		m_vPos.x = Get_Linear(m_vPos.x, UserPos.x, fTimeDelta);
-		m_vPos.y = Get_Linear(m_vPos.y, UserPos.y, fTimeDelta);
-		m_vPos.z = Get_Linear(m_vPos.z, UserPos.z, fTimeDelta);
 
-		_vec3 Plus = (-UserLook * m_fCameraDist);
-		Plus.y += 10.f;
-		m_vEye = m_vPos + Plus;
-
-		_matrix matCam;
-		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCam);
-		D3DXMatrixInverse(&matCam, 0, &matCam);
-		_vec3 camLook = { matCam._31,matCam._32 ,matCam._33 };
-
-		m_vAt = UserPos;
-	}
 }
 
 CAH_64A_Camera * CAH_64A_Camera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pEye, const _vec3 * pAt, const _vec3 * pUp, const _float & fFov, const _float & fAspect, const _float & fNear, const _float & fFar)
