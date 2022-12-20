@@ -155,5 +155,15 @@ private:
 public:
 	void						 Update_UI(void);
 	void						 Update_Minimap(void);
+private:
+	/* Gold Text */
+	void TextUpdate(const float& fDeltaTime);
+	void TextRender();
+	/* Gold Text */
+	bool m_bTextUpdate = false;
+	float m_fTimer = 0.f;
+	const float m_fTimeOut = 4.f;
+	int m_nGold = 0;
+	_vec2 vTextPos{ 0,0 };
 };
 

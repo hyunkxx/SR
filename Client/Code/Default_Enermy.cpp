@@ -309,6 +309,8 @@ _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Update_OBB();
 
+	TextUpdate(fTimeDelta);
+
 	return OBJ_NOEVENT;
 }
 
@@ -370,6 +372,8 @@ void CDefault_Enermy::Render_Object(void)
 	{
 		if (CGameMode::GetInstance()->m_bGameEnd)
 			return;
+
+		TextRender();
 
 		_matrix OldViewMatrix, OldProjMatrix, Minimap_ViewMatrix;
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
@@ -1666,5 +1670,62 @@ void CDefault_Enermy::Update_Minimap(void)
 	m_pMinimap_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], m_fMinimap[POSZ]);
 
 
+}
+
+void CDefault_Enermy::TextUpdate(const float & fDeltaTime)
+{
+	if (!Deadtest)
+	{
+		m_bTextUpdate = false;
+		return;
+	}
+
+	if (!m_bTextUpdate)
+	{
+		m_bTextUpdate = true;
+		PlaySound_SR(L"KillLog.mp3", KILL_LOG_SOUND, 1.f);
+		vTextPos = { WINCX * 0.5f - 50, 450.f };
+	}
+
+	m_fTimer += fDeltaTime;
+
+	vTextPos.y -= 10.f * fDeltaTime;
+
+	switch (m_EData->TankType)
+	{
+	case TANKTYPE::HUMVEE:
+		m_nGold = 200;
+		break;
+	case TANKTYPE::SMALL_TANK:
+		m_nGold = 300;
+		break;
+	case TANKTYPE::MIDDLE_TANK:
+		m_nGold = 400;
+		break;
+	case TANKTYPE::BIG_TANK:
+		m_nGold = 500;
+		break;
+	case TANKTYPE::LONG_TANK:
+		m_nGold = 600;
+		break;
+	}
+
+	if (m_fTimer >= m_fTimeOut)
+	{
+		m_nGold = 0;
+		m_fTimer = 0.f;
+		m_bTextUpdate = false;
+	}
+}
+
+void CDefault_Enermy::TextRender()
+{
+	if (!m_bTextUpdate)
+		return;
+
+	_vec2 vGoldPos = { vTextPos.x, vTextPos.y + 30.f };
+	wstring strGold = L"+ " + to_wstring(m_nGold);
+	Render_Font(L"Font_Retro", L"Â÷·® ÆÄ±«", &vTextPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+	Render_Font(L"Font_Retro", strGold.c_str(), &vGoldPos, D3DCOLOR_ARGB(255, 60, 230, 210));
 }
 
