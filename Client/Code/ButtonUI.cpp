@@ -249,6 +249,11 @@ void CButtonUI::UpdateTransform()
 
 void CButtonUI::RenderButton()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
 
 	_matrix	ViewMatrix, OldProjection;
@@ -285,6 +290,9 @@ void CButtonUI::RenderButton()
 	}
 
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CButtonUI::BuyVehicle()

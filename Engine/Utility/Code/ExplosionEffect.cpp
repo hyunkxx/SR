@@ -31,7 +31,7 @@ CExplosionEffect::CExplosionEffect(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPos)
 
 	for (auto iter = m_vecEffect.begin(); iter != m_vecEffect.end(); ++iter)
 	{
-		(*iter)->SetScale(_vec3((float(rand() % 4 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f, (float(rand() % 3 + 1)) * 0.5f));
+		(*iter)->SetScale(_vec3((float(rand() % 4 + 1)) * 0.5f, (float(rand() % 4 + 1)) * 0.5f, (float(rand() % 4 + 1)) * 0.5f));
 		(*iter)->SetRotation({ (float)(rand() % 90) ,(float)(rand() % 90),(float)(rand() % 90) });
 	}
 }

@@ -214,6 +214,9 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 
 _int CDefault_Enermy::Update_Object(const _float& fTimeDelta)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return 0;
+
 	__super::Update_Object(fTimeDelta);
 	_vec3 vRulePos;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vRulePos);

@@ -4,6 +4,7 @@
 #include"Default_Ally.h"
 #include"BottomDirAlly.h"
 #include"EnermyMgr.h"
+#include "GameMode.h"
 
 CEnemyTurret::CEnemyTurret(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -61,6 +62,9 @@ HRESULT CEnemyTurret::Ready_Object(void * pArg)
 
 _int CEnemyTurret::Update_Object(const _float & fTimeDelta)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return 0;
+
 	__super::Update_Object(fTimeDelta);
 
 	m_fTime += fTimeDelta;

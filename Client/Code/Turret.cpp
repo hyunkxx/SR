@@ -5,6 +5,7 @@
 #include"Default_Enermy.h"
 #include"BottomDirEnermy.h"
 #include"EnermyMgr.h"
+#include "GameMode.h"
 
 CTurret::CTurret(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -62,6 +63,9 @@ HRESULT CTurret::Ready_Object(void * pArg)
 
 _int CTurret::Update_Object(const _float & fTimeDelta)
 {
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return 0;
+
 	__super::Update_Object(fTimeDelta);
 	m_fTime += fTimeDelta;
 	m_fReloadTime += fTimeDelta;

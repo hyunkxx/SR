@@ -65,5 +65,6 @@ private:
 
 
 	_float changeColor = 0.f;
+	bool m_bEndSound = false;
 };
 

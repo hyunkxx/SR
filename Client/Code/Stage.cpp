@@ -128,6 +128,12 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	CUI_FontMgr::GetInstance()->Update(fTimeDelta);
 
+	if (CGameMode::GetInstance()->m_bGameEnd && !m_bEndSound)
+	{
+		m_bEndSound = true;
+		Engine::PlaySound_SR(L"Tank_Died.wav", PLAYER_SHOT_M3_FIRE, 0.4f);
+	}
+
 	if (CGameMode::GetInstance()->m_bGameEnd
 		&& Get_DIKeyState_Custom(DIK_RETURN) == KEY_STATE::TAP)
 	{

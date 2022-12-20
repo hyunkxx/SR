@@ -197,12 +197,12 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 
 	if (!CGameMode::GetInstance()->m_bGameEnd)
 	{
-		if (m_fAllyOccupationGage >= 10)
+		if (m_fAllyOccupationGage >= 200)
 		{
 			CGameMode::GetInstance()->m_fBaseCurHP[1] = 0.f;
 			CGameMode::GetInstance()->Win();
 		}
-		else if (m_fEnemyOccupationGage >= 10)
+		else if (m_fEnemyOccupationGage >= 200)
 		{
 			CGameMode::GetInstance()->m_fBaseCurHP[0] = 0.f;
 			CGameMode::GetInstance()->Lose();
