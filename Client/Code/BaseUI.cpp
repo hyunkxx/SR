@@ -46,7 +46,7 @@ HRESULT CBaseUI::Ready_Object(void)
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	m_fScaleX = 150.f;
-	m_fScaleY = 25.f;
+	m_fScaleY = 17.f;
 	m_fScaleZ = 0.01f;
 
 	m_fPosX = WINCX * 0.5f;
