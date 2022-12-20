@@ -114,7 +114,7 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
-		Range = 85.f;
+		Range = 150.f;
 		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
@@ -147,6 +147,11 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 	m_stHead.fLen[x] = 1.f;
 	m_stHead.fLen[y] = 1.f;
 	m_stHead.fLen[z] = 1.9f;
+
+
+	m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(180.f));
+	m_pTransformHead->Rotation(ROTATION::ROT_Y, D3DXToRadian(180.f));
+	m_pTransformPosin->Rotation(ROTATION::ROT_Y, D3DXToRadian(180.f));
 
 	__super::Ready_Object();
 	return S_OK;
@@ -258,12 +263,12 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		if (LeftCheck == false)
 		{
 			//m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 1.5f);
 		}
 		else
 		{
 			//m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 1.5f);
 		}
 		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
 		m_pTransformPosin->Get_Info(INFO_LOOK, &vLook);
@@ -271,10 +276,11 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		D3DXVec3Normalize(&Dir, &Dir);
 		D3DXVec3Normalize(&vLook, &vLook);
 		Pos += Dir* 3.f*fPosinDist;
+
 		if (m_fReloadTime > m_fReload)
-		{		
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_MASHINE_BULLET);
-				m_fReloadTime = 0.f;		
+		{	
+			Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
+			m_fReloadTime = 0.f;
 		}
 	}
 }
@@ -352,15 +358,15 @@ HRESULT CStdEnemy::Add_Component(void)
 	}
 	else if (m_EData->TankType == TANKTYPE::BIG_TANK)
 	{
-		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Big_enemy_body");
+		pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"M1_enemy_body");
 		NULL_CHECK_RETURN(m_pBody, E_FAIL);
 		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelBody", pComponent });
 
-		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Big_enemy_head");
+		pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"M1_enemy_head");
 		NULL_CHECK_RETURN(m_pHead, E_FAIL);
 		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_EVoxelHead", pComponent });
 
-		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Big_enemy_posin");
+		pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"M1_enemy_posin");
 		NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 	}

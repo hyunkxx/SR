@@ -289,6 +289,8 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	pGameObject = CRushTank::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	_vec3 vPos = { 150.f,0.f,0.f };
+	static_cast<CRushTank*>(pGameObject)->Move_Info(vPos);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerVehicle", pGameObject), E_FAIL);
 
 	pGameObject = CBomber::Create(m_pGraphicDev);
@@ -355,39 +357,34 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		static_cast<CShipBullet*>(pBullet)->Set_ID(BULLET_ID::SHIP_REAL_BULLET);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::SHIP_REAL_BULLET);
 	}
-	//Enemy
 
-	for (_int i = 0; 8> i; i++)
+	//Enemy
+	for (_int i = 0; 4> i; i++)
 	{
-		_int tanktype = rand() % 4;
-		switch (tanktype)
-		{
-		case 0:
-			m_eData.TankType = TANKTYPE::HUMVEE;
-			break;
-		case 1:
-			m_eData.TankType = TANKTYPE::SMALL_TANK;
-			break;
-		case 2:
-			m_eData.TankType = TANKTYPE::MIDDLE_TANK;
-			break;
-		case 3:
-			m_eData.TankType = TANKTYPE::BIG_TANK;
-			break;
-		default:
-			return NULL;
-			break;
-		}
+		m_eData.TankType = TANKTYPE::BIG_TANK;
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
-		m_eData.vPos.x = 160.f+i*10.f;
+		m_eData.vPos.x = 140.f;
 		m_eData.vPos.y = 0;
-		m_eData.vPos.z =10.f;
+		m_eData.vPos.z = 150.f + i * 20.f;
 
 		CGameObject* pEnermy = CStdEnemy::Create(m_pGraphicDev, &m_eData);
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
 
+	for (_int i = 0; 4> i; i++)
+	{
+		m_eData.TankType = TANKTYPE::BIG_TANK;
+		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
+		m_eData.vPos.x = 160.f;
+		m_eData.vPos.y = 0;
+		m_eData.vPos.z = 150.f + i * 20.f;
+
+		CGameObject* pEnermy = CStdEnemy::Create(m_pGraphicDev, &m_eData);
+		NULL_CHECK_RETURN(pEnermy, E_FAIL);
+		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
+	}
+	
 
 	// Skill
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);

@@ -199,17 +199,17 @@ HRESULT CRushTank::Ready_Object(void)
 	m_pTransformHead->Reset_Trans();
 	m_pTransformPosin->Reset_Trans();
 
-	m_stInfo.fAccel_Ad = 20.f;
-	m_stInfo.fAccel_Back = 10.f;
+	m_stInfo.fAccel_Ad = 5.f;
+	m_stInfo.fAccel_Back = 3.f;
 
 	//최고속도 제한
-	m_stInfo.fAccel_top_speed = 40.f;
-	m_stInfo.fBack_top_speed = 30.f;
+	m_stInfo.fAccel_top_speed = 15.f;
+	m_stInfo.fBack_top_speed = -7.5f;
 
 	m_stInfo.fPosinDist = 5.f * m_fScale;
 	m_stInfo.fReload = 1.5f;
 	m_stInfo.fReloadTime = 1.5f;
-	m_stInfo.iCannonSpeed = 500;
+	m_stInfo.iCannonSpeed = 800;
 	m_fScale = 1.2f;
 	m_stInfo.RotSpeed = 40.f;
 
