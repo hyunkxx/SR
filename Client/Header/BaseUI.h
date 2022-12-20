@@ -47,11 +47,13 @@ private: /* UI value */
 	bool m_bUpdateTransform;
 
 	CRcTex*		m_pRcTex = nullptr;
+	CRcTex*		m_pRcTex2 = nullptr;
 
 	CTexture*	m_pBack = nullptr;
 	CTexture*	m_pFront = nullptr;
 
 	CTransform*	m_pTransform = nullptr;
+	CTransform*	m_pTransform2 = nullptr;
 
 	_matrix  m_matProj;
 

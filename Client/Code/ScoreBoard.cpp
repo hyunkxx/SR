@@ -28,7 +28,7 @@ HRESULT CScoreBoard::Ready_Object(void)
 	m_fY = 25.f;
 
 	m_pTransform->Set_Scale(m_fSizeX*0.5f, m_fSizeY*0.5f, 1.f);
-	m_pTransform->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f);
+	m_pTransform->Set_Pos(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.5f);
 
 
 	return S_OK;
@@ -56,17 +56,38 @@ void CScoreBoard::LateUpdate_Object(void)
 
 void CScoreBoard::Render_Object(void)
 {
-	
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
-		_matrix	ViewMatrix;
-		D3DXMatrixIdentity(&ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
+	_matrix	ViewMatrix;
+	D3DXMatrixIdentity(&ViewMatrix);
 
-		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-		m_pTexture->Set_Texture();
-		m_pRcTex->Render_Buffer();
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	m_pTexture->Set_Texture();
+	m_pRcTex->Render_Buffer();
 
-		
+
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+	//
+	//_matrix	ViewMatrix, OldProjection, OldView;
+	//D3DXMatrixIdentity(&ViewMatrix);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjection);
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldView);
+
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+
+	//m_pTexture->Set_Texture();
+	//m_pRcTex->Render_Buffer();
+
+	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldView);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
+
+
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CScoreBoard::Free(void)
@@ -96,7 +117,6 @@ HRESULT CScoreBoard::Add_Component(void)
 	pComponent = m_pRcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
-
 
 	//Transform
 	pComponent = m_pTransform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));

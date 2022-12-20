@@ -8,6 +8,7 @@
 #include"RightLocation.h"
 #include"RightTopLocation.h"
 #include "UI_Start.h"
+#include "GameMode.h"
 
 CTempOccupationScore::CTempOccupationScore(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -207,6 +208,9 @@ void CTempOccupationScore::Render_Object(void)
 {
 	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
+
+	if (CGameMode::GetInstance()->m_bGameEnd)
+		return;
 
 	if (!showF1Win)
 	{
