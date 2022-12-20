@@ -103,7 +103,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 10000, 2000);
+	CGameMode::GetInstance()->InitGameMode(500, 10000, 100000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -171,6 +171,13 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+	wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
+	wstring strText = L"GOLD";
+	_vec2 vGoldPos = { WINCX - (strGold.size() * 13) - 50.f  , 50.f };
+	Render_Font(L"Font_Retro", strGold.c_str(), &vGoldPos, D3DCOLOR_RGBA(255, 255, 255, 255));
+	vGoldPos = { (float)(WINCX - 50.f)  , 50.f };
+	Render_Font(L"Font_Retro", strText.c_str(), &vGoldPos, D3DCOLOR_RGBA(255, 255, 0, 255));
+
 	if (CGameMode::GetInstance()->m_bGameEnd)
 		return;
 

@@ -22,6 +22,17 @@ public:
 
 	bool UseMenu() { return m_bOnSelectButton || m_bOnCreateButton || m_bOnSoundMenu; };
 	bool VictoryCheck();
+
+	void Win()
+	{
+		m_bGameEnd = true;
+		m_eGameResult = GAME_RESULT::WIN;
+	};
+	void Lose()
+	{
+		m_bGameEnd = true;
+		m_eGameResult = GAME_RESULT::LOSE;
+	};
 public:
 	EData eData = {}; //AI 생성용
 
@@ -53,7 +64,7 @@ public:
 
 	_int	m_nGold[(UINT)TYPE::MAX];		// 재화
 	_int	m_nPoint[(UINT)TYPE::MAX];		// 승점 포인트
-	_int	m_nVictoryPoint;
+	_int	m_nVictoryPoint = 0;
 
 	_float	m_fBaseCurHP[(UINT)TYPE::MAX];	// 기지 현재체력
 	_float	m_fBaseMaxHP[(UINT)TYPE::MAX];	// 기지 최대체력

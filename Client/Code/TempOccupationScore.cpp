@@ -10,6 +10,7 @@
 #include "UI_Start.h"
 #include "GameMode.h"
 
+
 CTempOccupationScore::CTempOccupationScore(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -185,14 +186,28 @@ _int CTempOccupationScore::Update_Object(const _float& fTimeDelta)
 
 	if (m_iAllyCount >= 1)
 	{
-		m_fAllyOccupationGage += m_iAllyCount*fTimeDelta;
+		m_fAllyOccupationGage += m_iAllyCount * fTimeDelta;
 	}
 	if (m_iEnemyCount >= 1)
 	{
-		m_fEnemyOccupationGage += m_iEnemyCount*fTimeDelta;
+		m_fEnemyOccupationGage += m_iEnemyCount * fTimeDelta;
 	}
 	m_strAllyText = to_wstring((int)m_fAllyOccupationGage);
 	m_strEnemyText = to_wstring((int)m_fEnemyOccupationGage);
+
+	if (!CGameMode::GetInstance()->m_bGameEnd)
+	{
+		if (m_fAllyOccupationGage >= 10)
+		{
+			CGameMode::GetInstance()->m_fBaseCurHP[1] = 0.f;
+			CGameMode::GetInstance()->Win();
+		}
+		else if (m_fEnemyOccupationGage >= 10)
+		{
+			CGameMode::GetInstance()->m_fBaseCurHP[0] = 0.f;
+			CGameMode::GetInstance()->Lose();
+		}
+	}
 
 	return OBJ_NOEVENT;
 }

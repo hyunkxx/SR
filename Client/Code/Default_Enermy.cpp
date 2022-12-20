@@ -74,6 +74,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	{
 	case TANKTYPE::HUMVEE:
 	{
+		m_EData->TankType = TANKTYPE::HUMVEE;
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
 		Temp = BULLET_ID::ENEMY_MASHINE_BULLET;
 		m_fMaxHp = data.fMaxHP;
@@ -98,6 +99,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	}
 	case TANKTYPE::SMALL_TANK:
 	{
+		m_EData->TankType = TANKTYPE::SMALL_TANK;
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK);
 		Temp = BULLET_ID::ENEMY_SMALL_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
@@ -122,6 +124,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	}
 	case TANKTYPE::MIDDLE_TANK:
 	{
+		m_EData->TankType = TANKTYPE::MIDDLE_TANK;
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK);
 		Temp = BULLET_ID::ENEMY_MIDDLE_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
@@ -146,6 +149,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	}
 	case TANKTYPE::BIG_TANK:
 	{
+		m_EData->TankType = TANKTYPE::BIG_TANK;
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK);
 		Temp = BULLET_ID::ENEMY_BIG_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
@@ -170,6 +174,7 @@ HRESULT CDefault_Enermy::Ready_Object(void * pArg)
 	}
 	case TANKTYPE::LONG_TANK:
 	{
+		m_EData->TankType = TANKTYPE::LONG_TANK;
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::LONG_TANK);
 
 		m_fMaxHp = data.fMaxHP;
@@ -1691,7 +1696,7 @@ void CDefault_Enermy::TextUpdate(const float & fDeltaTime)
 
 	vTextPos.y -= 10.f * fDeltaTime;
 
-	switch (m_EData->TankType)
+	switch (Get_Type())
 	{
 	case TANKTYPE::HUMVEE:
 		m_nGold = 200;

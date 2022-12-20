@@ -472,5 +472,33 @@ void CRush::CameraChangeSetting()
 
 void CRush::Collison_Object(void)
 {
-	
+	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
+	CLayer* pGameLogic = Get_Layer(L"GameLogic");
+	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
+	{
+
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+
+			if ((*iter)->Get_Dead())
+				continue;
+
+			CBullet* pBullet = dynamic_cast<CBullet*>(*iter);
+			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
+			{
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(Dest->second)->Get_Info(), (*iter)->Get_Dist(), Dest->second->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
+				{
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+				}
+			}
+
+		}
+	}
 }

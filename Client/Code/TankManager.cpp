@@ -112,7 +112,7 @@ void CTankManager::InitalizeData()
 	tankData[(UINT)VEHICLE::SMALL_TANK].iCannonSpeed = 400;
 
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].strName = L"TE6E4";
-	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 200.f;
+	tankData[(UINT)VEHICLE::MIDDLE_TANK].fDamage = 300.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fMaxHP = 1000.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fCurHP = 1000.f;
 	tankData[(UINT)VEHICLE::MIDDLE_TANK].fSpeed = 0.f;;
