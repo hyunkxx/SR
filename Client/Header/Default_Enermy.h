@@ -56,6 +56,7 @@ public:
 	void Dead_Motion(const _float & fTimeDelta);
 public:
 	//에너미에서 사용하는 함수
+	TANKTYPE Get_Type() { return TTYPE; }
 	void Basic(_float fTimeDelta);
 	void Occupation(_float fTimeDelta);
 	void Wait(_float fTimeDelta);
@@ -110,10 +111,12 @@ private:
 	_bool bLeft;
 	_bool CreateCheck = false;
 	_float re = 0.f;
+	_float RuleTime = 0.f;
 	_bool DeadMotionCheck = false;
 	_int m_iMotionCount = 0;
 	_float fAccum = 0.f;
 	_bool   Deadtest = false;
+	TANKTYPE TTYPE = MAX;
 	//탱크 정보
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

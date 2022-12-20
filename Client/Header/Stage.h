@@ -24,6 +24,7 @@ private:
 	HRESULT				Ready_LightInfo(void);
 private:
 	void				CameraChangeSetting();
+	void  GoldUpdate(LOCATIONSTATE _Team, TANKTYPE _TType);
 private:
 	virtual		void		Collison_Object(void);
 public:

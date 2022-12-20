@@ -43,7 +43,7 @@ public:
 	_bool Get_LeftLocation() { return m_bLeftLocationCount; }
 	_bool Get_RightTopLocation() { return m_bRightTopLocationCount; }
 	_bool Get_LeftTopLocation() { return m_bLeftTopLocationCount; }
-
+	TANKTYPE Get_Type() { return TTYPE; }
 	_int Get_LocationCheck() { return m_iLocationCheck; }
 	void  Set_LocationCheck(_int _Check) { m_iLocationCheck = _Check; }
 	void  Set_Action(_int _action) { m_iAction = _action; }
@@ -92,6 +92,8 @@ private:
 	_bool bLeft = false;
 	_bool m_bTest = false;
 	BULLET_ID Temp;
+	_float RuleTime = 0.f;
+	TANKTYPE TTYPE = MAX;
 private:
 	_int  m_iLocationState;
 	_int  m_iAction = AIACTION::AIACTION_END;

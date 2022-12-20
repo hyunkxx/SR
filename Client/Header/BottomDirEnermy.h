@@ -72,6 +72,7 @@ public:
 	_float Dist(CTransform* _Target);
 	void		ObjectCol(_bool m_Left);
 	void		ColObject(_float fTimeDelta);
+	TANKTYPE Get_Type() { return TTYPE; }
 private:
 	HRESULT		Add_Component(void);
 
@@ -113,6 +114,7 @@ private:
 	_float PreDist = 0.f;
 	_bool m_bOcne = false;
 	_float PreHp = 0.f;
+	_float RuleTime = 0.f;
 	_bool m_bTest;
 	_bool bLeft;
 	_float re = 0.f;
@@ -121,6 +123,7 @@ private:
 	_int m_iMotionCount = 0;
 	_float fAccum = 0.f;
 	_bool   Deadtest = false;
+	TANKTYPE TTYPE = MAX;
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;

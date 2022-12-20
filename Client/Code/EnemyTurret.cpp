@@ -62,6 +62,7 @@ HRESULT CEnemyTurret::Ready_Object(void * pArg)
 _int CEnemyTurret::Update_Object(const _float & fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
+
 	m_fTime += fTimeDelta;
 	m_fReloadTime += fTimeDelta;
 	if (m_Action != AIACTION::AIACTION_BATTLE)
@@ -316,7 +317,7 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 			{
 				if (abs(D3DXToDegree(Angle)) < 2.f)
 				{
-					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_MASHINE_BULLET);
+					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_BIG_CANNONBALL);
 					m_fReloadTime = 0.f;
 				}
 			}
@@ -364,7 +365,7 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 		{
 			if (abs(D3DXToDegree(Angle)) < 2.f)
 			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_MASHINE_BULLET);
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_BIG_CANNONBALL);
 				m_fReloadTime = 0.f;
 			}
 		}

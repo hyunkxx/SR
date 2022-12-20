@@ -63,13 +63,13 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	m_EData = (EData*)pArg;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	TTYPE = m_EData->TankType;
 	switch (m_EData->TankType)
 	{
 	case TANKTYPE::HUMVEE:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE);
-		Temp = BULLET_ID::MASHINE_BULLET;
+		Temp = BULLET_ID::ENEMY_MASHINE_BULLET;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.5f;
@@ -79,18 +79,21 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
 		Range = 50.f;
-		m_pTransformCom->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
-		m_pTransformHead->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
-		m_pTransformPosin->Set_Scale(0.7f, 0.7f, 0.7f);
-		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*0.7f, m_EData->vPos.z);
+		m_pTransformCom->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.f, m_EData->vPos.z);
+		m_stBody.fLen[x] = 2.5f;
+		m_stBody.fLen[y] = 4.f;
+		m_stBody.fLen[z] = 4.5f;
 		break;
 	}
 	case TANKTYPE::SMALL_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK);
-		Temp = BULLET_ID::SMALL_CANNONBALL;
+		Temp = BULLET_ID::ENEMY_SMALL_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -106,12 +109,15 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_stBody.fLen[x] = 2.5f;
+		m_stBody.fLen[y] = 4.f;
+		m_stBody.fLen[z] = 4.5f;
 		break;
 	}
 	case TANKTYPE::MIDDLE_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK);
-		Temp = BULLET_ID::MIDDLE_CANNONBALL;
+		Temp = BULLET_ID::ENEMY_MIDDLE_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -127,12 +133,15 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
 		m_pTransformPosin->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f, m_EData->vPos.z);
+		m_stBody.fLen[x] = 3.f;
+		m_stBody.fLen[y] = 4.f;
+		m_stBody.fLen[z] = 5.f;
 		break;
 	}
 	case TANKTYPE::BIG_TANK:
 	{
 		const TANK_STATE& data = CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK);
-		Temp = BULLET_ID::BIG_CANNONBALL;
+		Temp = BULLET_ID::ENEMY_BIG_CANNONBALL;
 		m_fMaxHp = data.fMaxHP;
 		fCurHp = data.fCurHP;
 		fAccel_top_speed = data.fAccel_top_speed*0.8f;
@@ -148,6 +157,9 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_stBody.fLen[x] = 5.f;
+		m_stBody.fLen[y] = 6.f;
+		m_stBody.fLen[z] = 8.f;
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -175,14 +187,7 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 	UI_fScaleY = 0.2f;
 	UI_fScaleZ = 1.f;
 
-	//Ãæµ¹
-	m_stBody.fLen[x] = 1.5f;
-	m_stBody.fLen[y] = 2.f;
-	m_stBody.fLen[z] = 2.5f;
 
-	m_stHead.fLen[x] = 1.f;
-	m_stHead.fLen[y] = 1.f;
-	m_stHead.fLen[z] = 1.9f;
 
 
 	// UI_Minimap
@@ -200,6 +205,20 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 _int CBottomDirAlly::Update_Object(const _float& fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
+	_vec3 vRulePos;
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vRulePos);
+	if (vRulePos.x > VTXCNTX*VTXCNTZ*VTXITV
+		|| 0 > vRulePos.x
+		|| 0 > vRulePos.z
+		|| vRulePos.z > VTXCNTX*VTXCNTZ*VTXITV
+		)
+	{
+		RuleTime += fTimeDelta;
+	}
+	if (RuleTime >= 8.f)
+	{
+		DeadMotionCheck = true;
+	}
 	if (!m_bDead&&DeadMotionCheck)
 	{
 		Dead_Motion(fTimeDelta);

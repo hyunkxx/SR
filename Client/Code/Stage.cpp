@@ -875,6 +875,49 @@ void CStage::CameraChangeSetting()
 {
 }
 
+
+
+void CStage::GoldUpdate(LOCATIONSTATE _Team, TANKTYPE _TType)
+{
+
+		if (_Team == LOCATIONSTATE::STATE_ALLY)
+		{
+			switch (_TType)
+			{
+			case TANKTYPE::HUMVEE:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ALLY)] += 200;
+				break;
+			case TANKTYPE::SMALL_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ALLY)] += 300;
+				break;
+			case TANKTYPE::MIDDLE_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ALLY)] += 400;
+				break;
+			case TANKTYPE::BIG_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ALLY)] += 500;
+				break;
+			}
+		}
+		else
+		{
+			switch (_TType)
+			{
+			case TANKTYPE::HUMVEE:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] += 200;
+				break;
+			case TANKTYPE::SMALL_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] += 300;
+				break;
+			case TANKTYPE::MIDDLE_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] += 400;
+				break;
+			case TANKTYPE::BIG_TANK:
+				CGameMode::GetInstance()->m_nGold[(UINT)(CGameMode::TYPE::ENEMY)] += 500;
+				break;
+			}
+		}
+}
+
 void CStage::Collison_Object(void)
 {
 	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
@@ -1001,7 +1044,7 @@ void CStage::Collison_Object(void)
 		}
 	}
 	// Àû±º ÃÑ¾Ë
-	for (_int i = 5; BULLET_ID::MASHINE_BULLET > i; i++)
+	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 	{
 
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
@@ -1359,6 +1402,8 @@ void CStage::Collison_Object(void)
 						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DeadMotionPlay();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
 						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+						TANKTYPE TType = static_cast<CDefault_Enermy*>(*iters)->Get_Type();
+						GoldUpdate(LOCATIONSTATE::STATE_ALLY, TType);
 					}
 					continue;
 				}
@@ -1422,6 +1467,8 @@ void CStage::Collison_Object(void)
 						(*iters)->Set_Dead(true);
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+						TANKTYPE TType = static_cast<CBottomDirEnermy*>(*iters)->Get_Type();
+						GoldUpdate(LOCATIONSTATE::STATE_ALLY, TType);
 					}
 					continue;
 				}
@@ -1777,7 +1824,7 @@ void CStage::Collison_Object(void)
 	CGameObject* pPlayer = pGameLogic->Get_GameObject(L"PlayerVehicle");
 
 	// À¯Àú¶û AI °£ Ãæµ¹Ã³¸®
-	for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
+	/*for (auto& iters = DAlly.begin(); iters < DAlly.end(); ++iters)
 	{
 		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))
 			continue;
@@ -1827,7 +1874,7 @@ void CStage::Collison_Object(void)
 				dynamic_cast<CBottomDirAlly*>(*iters)->ObjectCol(false);
 			}
 		}
-	}
+	}*/
 	for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
 	{
 		if (!dynamic_cast<ICollisionable*>(pPlayer) || !dynamic_cast<ICollisionable*>(*iters))

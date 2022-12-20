@@ -53,7 +53,7 @@ public:
 	void Set_DisCountLocation();
 
 public:
-
+	TANKTYPE Get_Type() { return TTYPE; }
 	void Basic(_float fTimeDelta);
 	void Occupation(_float fTimeDelta);
 	void Wait(_float fTimeDelta);
@@ -106,6 +106,8 @@ private:
 	_float PreHp;
 	_float re = 0.f;
 	BULLET_ID Temp;
+	_float RuleTime = 0.f;
+	TANKTYPE TTYPE = MAX;
 	//≈ ≈© ¡§∫∏
 	_float m_fMaxHp, fCurHp, fAccel_top_speed, RotSpped, fPosinDist;
 	_float m_fReloadTime, m_fReload;
