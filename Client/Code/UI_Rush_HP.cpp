@@ -76,22 +76,22 @@ HRESULT CUI_Rush_HP::Ready_Object(void)
 
 _int CUI_Rush_HP::Update_Object(const _float & fTimeDelta)
 {
-	m_LifeCount = CUI_FontMgr::GetInstance()->Get_Rush_LifeCount();
+	//m_LifeCount = CUI_FontMgr::GetInstance()->Get_Rush_LifeCount();
 
-	Key_Input(fTimeDelta);
+	//Key_Input(fTimeDelta);
 
-	Update_Life_Count();
+	//Update_Life_Count();
 
-	__super::Update_Object(fTimeDelta);
+	//__super::Update_Object(fTimeDelta);
 
 	return OBJ_NOEVENT;
 }
 
 void CUI_Rush_HP::LateUpdate_Object(void)
 {
-	__super::LateUpdate_Object();
-	
-	Add_RenderGroup(RENDER_UI, this);
+	//__super::LateUpdate_Object();
+	//
+	//Add_RenderGroup(RENDER_UI, this);
 	
 }
 
