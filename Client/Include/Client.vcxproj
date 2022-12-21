@@ -188,6 +188,7 @@
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\BossCamera.h" />
     <ClInclude Include="..\Header\BossHitPoint.h" />
+    <ClInclude Include="..\Header\BossHP.h" />
     <ClInclude Include="..\Header\BossSkill.h" />
     <ClInclude Include="..\Header\Boss_Bomber.h" />
     <ClInclude Include="..\Header\Boss_Bullet.h" />
@@ -311,6 +312,7 @@
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\BossCamera.cpp" />
     <ClCompile Include="..\Code\BossHitPoint.cpp" />
+    <ClCompile Include="..\Code\BossHP.cpp" />
     <ClCompile Include="..\Code\BossSkill.cpp" />
     <ClCompile Include="..\Code\Boss_Bomber.cpp" />
     <ClCompile Include="..\Code\Boss_Bullet.cpp" />

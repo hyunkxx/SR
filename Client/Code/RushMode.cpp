@@ -16,7 +16,6 @@ CRushMode::CRushMode()
 	, m_eResult(GAME_RESULT::NONE)
 	, m_nPoint(500)
 {
-
 }
 
 CRushMode::~CRushMode()
@@ -27,6 +26,8 @@ CRushMode::~CRushMode()
 void CRushMode::Initalize(const float & fBossHP, const float & fPlayerHP)
 {
 	m_bGameEnd = false;
+	m_bBossBegin = false;
+
 	m_eResult = GAME_RESULT::NONE;
 
 	m_fBossCurHP = fBossHP;

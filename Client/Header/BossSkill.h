@@ -50,7 +50,8 @@ private:
 	_vec3 vDir;
 	_vec3 vPos, vLook;
 	_vec3 vTargetPos;
-	//CComponent* m_pBossTransform = nullptr;
+
+	CTransform* m_pBossTransform = nullptr;
 	CTransform* m_pPlayerTransform = nullptr;
 
 	CVoxel*		m_pBody = nullptr;

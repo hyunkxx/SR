@@ -108,7 +108,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 10000, 100000);
+	CGameMode::GetInstance()->InitGameMode(500, 30000, 100000);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -122,6 +122,17 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
+	if (CGameMode::GetInstance()->m_bBaseAttack)
+	{
+		m_fTimer += fTimeDelta;
+
+		if (m_fTimer >= m_fTimeOut)
+		{
+			m_fTimer = 0.f;
+			CGameMode::GetInstance()->m_bBaseAttack = false;
+		}
+	}
+
 	Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 	Engine::PlaySound_SR(L"BattleEffect.mp3", STAGE_EFFECT, CUI_Volume::s_fBGMSound * 0.2f);
 
@@ -216,10 +227,10 @@ void CStage::Render_Scene(void)
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		// 스테이지 제한 시간
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(WINCX_HALF - 22.f, PERCENTY+50.f), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(WINCX_HALF - 10.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(WINCX_HALF + 15.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(WINCX_HALF + 30.f, PERCENTY+ 50.f), CUI_FontMgr::GetInstance()->Get_Black());
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(15, PERCENTY + 35.f), D3DCOLOR_RGBA(51,51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(30, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(45, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(60, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
 
 		// 팀 킬 카운트								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
@@ -1133,6 +1144,11 @@ void CStage::Collison_Object(void)
 						switch (eType)
 						{
 						case CBuilding::TYPE::BASE_ALLY:
+							if (!CGameMode::GetInstance()->m_bBaseAttack)
+							{
+								PlaySound_SR(L"base_attack.mp3", LOGO_SOUND, 1.f);
+								CGameMode::GetInstance()->m_bBaseAttack = true;
+							}
 							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 100.f;
 							break;
 						case CBuilding::TYPE::BASE_ENEMY:
@@ -1160,6 +1176,11 @@ void CStage::Collison_Object(void)
 						switch (eType)
 						{
 						case CBuilding::TYPE::BASE_ALLY:
+							if (!CGameMode::GetInstance()->m_bBaseAttack)
+							{
+								PlaySound_SR(L"base_attack.mp3", LOGO_SOUND, 1.f);
+								CGameMode::GetInstance()->m_bBaseAttack = true;
+							}
 							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 500.f;
 							break;
 						case CBuilding::TYPE::BASE_ENEMY:
@@ -1422,6 +1443,11 @@ void CStage::Collison_Object(void)
 						switch (eType)
 						{
 						case CBuilding::TYPE::BASE_ALLY:
+							if (!CGameMode::GetInstance()->m_bBaseAttack)
+							{
+								PlaySound_SR(L"base_attack.mp3", LOGO_SOUND, 1.f);
+								CGameMode::GetInstance()->m_bBaseAttack = true;
+							}
 							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 100.f;
 							break;
 						case CBuilding::TYPE::BASE_ENEMY:
@@ -1449,6 +1475,11 @@ void CStage::Collison_Object(void)
 						switch (eType)
 						{
 						case CBuilding::TYPE::BASE_ALLY:
+							if (!CGameMode::GetInstance()->m_bBaseAttack)
+							{
+								PlaySound_SR(L"base_attack.mp3", LOGO_SOUND, 1.f);
+								CGameMode::GetInstance()->m_bBaseAttack = true;
+							}
 							CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 500.f;
 							break;
 						case CBuilding::TYPE::BASE_ENEMY:

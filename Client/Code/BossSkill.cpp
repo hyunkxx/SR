@@ -2,6 +2,7 @@
 #include "..\Header\BossSkill.h"
 
 #include "Export_Function.h"
+#include "RushMode.h"
 
 CBossSkill * CBossSkill::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -31,12 +32,15 @@ CBossSkill::~CBossSkill()
 
 _int CBossSkill::Update_Object(const _float & fTimeDelta)
 {
+	m_pPlayerTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	m_pBossTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"Boss", L"Proto_TransformBody", ID_DYNAMIC));
+
+	if (!CRushMode::GetInstance()->m_bBossBegin)
+		return 0;
+
 	_int iExit = CGameObject::Update_Object(fTimeDelta);
 
-	m_pPlayerTransform = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
-
 	/* 플레이어, 보스탱크 */
-	//Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC);
 
 	m_fCoolTimer += fTimeDelta;
 
@@ -45,7 +49,11 @@ _int CBossSkill::Update_Object(const _float & fTimeDelta)
 		m_fCoolTimer = 0.f;
 		m_bSkillOn = true;
 
-		vPos = { 50.f, 0.f, 300.f };
+		//_vec3 vBossPos;
+		m_pBossTransform->Get_Info(INFO_POS, &vPos);
+
+		//vPos = { vBossPos.x, 0.f, vBossPos.y };
+		vPos.y = 0.f;
 		m_pTransform->Set_Pos(vPos.x, vPos.y + 25.f, vPos.z);
 
 		m_pPlayerTransform->Get_Info(INFO_POS, &vTargetPos);
@@ -238,7 +246,7 @@ void CBossSkill::RotationWing(const float & fDeltaTime)
 
 void CBossSkill::RotationBody()
 {
-	m_pTransform->Get_Info(INFO_POS, &vPos);
+	m_pBossTransform->Get_Info(INFO_POS, &vPos);
 	m_pPlayerTransform->Get_Info(INFO_POS, &vTargetPos);
 
 	vPos.y = 0.f;

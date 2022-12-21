@@ -219,6 +219,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	/* BaseUI */
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_back", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseBackground.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_black_back", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BlackBackGround.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_yellow_back", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/YellowBackGround.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_ally_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseAllyFront.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"base_enemy_front", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/BaseUI/BaseEnemyFront.png", TEX_NORMAL)), E_FAIL);
 

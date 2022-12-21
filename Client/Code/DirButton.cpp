@@ -301,6 +301,7 @@ void CDirButton::CreateVehicle()
 		{
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 200;
+			PlaySound_SR(L"tankvoice.mp3", LOGO_SOUND, 1.f);
 		}
 		else
 		{
@@ -312,6 +313,7 @@ void CDirButton::CreateVehicle()
 		{
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 800;
+			PlaySound_SR(L"tankvoice.mp3", LOGO_SOUND, 1.f);
 		}
 		else
 		{
@@ -323,6 +325,7 @@ void CDirButton::CreateVehicle()
 		{
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 1500;
+			PlaySound_SR(L"tankvoice.mp3", LOGO_SOUND, 1.f);
 		}
 		else
 		{
@@ -334,6 +337,7 @@ void CDirButton::CreateVehicle()
 		{
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2500;
+			PlaySound_SR(L"goodday.mp3", LOGO_SOUND, 1.f);
 		}
 		else
 		{
@@ -345,6 +349,7 @@ void CDirButton::CreateVehicle()
 		{
 			hasGold = true;
 			CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY] -= 2300;
+			PlaySound_SR(L"goodday.mp3", LOGO_SOUND, 1.f);
 		}
 		else
 		{

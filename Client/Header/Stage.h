@@ -70,5 +70,8 @@ private:
 public:
 	// AI_Sound
 	static _int iSoundNum;
+private:
+	float m_fTimer = 0.f;
+	const float m_fTimeOut = 5.f;
 };
 

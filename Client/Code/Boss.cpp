@@ -9,6 +9,7 @@
 #include "Boss_Bullet.h"
 #include "Boss_Bomber.h"
 #include "RedCarpet.h"
+#include "RushMode.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -172,7 +173,10 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	}
 	////////////////////Pattern_01////////////////////////////////
 	if (m_bPattern_1 && 1 == m_iAppearCount)
+	{
 		Pattern_01(fTimeDelta);
+		CRushMode::GetInstance()->m_bBossBegin = true;
+	}
 	// 여기까지 보스 등장 무빙
 	//////////////////////////////////////////////////////////////
 
@@ -459,7 +463,7 @@ void CBoss::Pattern_05(const _float & fTimeDelta)
 		m_fBoomberTime = 0.f;
 		if (4 < m_iBoomber_Count)
 		{
-			m_iBoomber_Count = 0.f;
+			m_iBoomber_Count = 0;
 			m_bPattern_5 = false;
 			m_fPattern_5Count = 0.f;
 		}

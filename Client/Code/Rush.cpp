@@ -77,6 +77,8 @@
 
 #include "BossSkill.h"
 #include "WarningUI.h"
+#include "RushMode.h"
+#include "BossHP.h"
 
 CRush::CRush(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -88,6 +90,8 @@ CRush::~CRush()
 
 HRESULT CRush::Ready_Scene(void)
 {
+	ShowCursor(false);
+
 	float Start = 80.f;
 	float End = 300.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
@@ -98,8 +102,9 @@ HRESULT CRush::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
-	CGameMode::GetInstance()->InitGameMode(500, 20000, 20000);
 	//CUI_FontMgr::GetInstance()->Set_Rush_LifeCount(3);
+	CRushMode::GetInstance()->Initalize(4000.f, 2000.f);
+
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
@@ -116,9 +121,6 @@ _int CRush::Update_Scene(const _float& fTimeDelta)
 	__super::Update_Scene(fTimeDelta);
 
 	//Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
-
-	CUI_FontMgr::GetInstance()->Rush_Update_PlayTIme(fTimeDelta);
-	CUI_FontMgr::GetInstance()->Update_Score();
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
@@ -235,7 +237,7 @@ HRESULT CRush::Ready_Layer_Environment(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"BossApearCamera", pCameraObject), E_FAIL);
 
 
-	for (int i = 0; i < 120; i++)
+	for (int i = 0; i < 300; i++)
 	{
 		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS1);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -245,7 +247,7 @@ HRESULT CRush::Ready_Layer_Environment(const _tchar* pLayerTag)
 		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
 	}
 
-	for (int i = 0; i < 120; i++)
+	for (int i = 0; i < 300; i++)
 	{
 		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS2);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -537,6 +539,10 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Hit_Point", pGameObject), E_FAIL);
 
+	pGameObject = CBossHP::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_HP", pGameObject), E_FAIL);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;
 }
@@ -662,7 +668,7 @@ void CRush::Collison_Object(void)
 
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(pBoss)->Get_OBB()))
 				{
-					(*iter)->Set_Dead(true);
+					/*(*iter)->Set_Dead(true);
 
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
@@ -671,7 +677,7 @@ void CRush::Collison_Object(void)
 					{
 						dynamic_cast<CStdEnemy*>(pBoss)->Set_DeadMotionPlay();
 					}
-					continue;
+					continue;*/
 				}
 
 			}

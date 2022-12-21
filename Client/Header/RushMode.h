@@ -19,6 +19,7 @@ public:
 	void Initalize(const float& fBossHP, const float& fPlayerHP);
 public:
 	bool m_bGameEnd;
+	bool m_bBossBegin;
 	GAME_RESULT m_eResult;
 
 	float m_fBossCurHP;

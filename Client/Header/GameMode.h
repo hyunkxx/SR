@@ -58,6 +58,8 @@ public:
 
 	bool m_bOnTrigger = false;
 
+	bool m_bBaseAttack = false;
+
 	GAME_RESULT m_eGameResult;
 	_vec3	m_AllyBasePosition = { 0.f, 0.f, 0.f };
 	_vec3	m_EnemyBasePosition = { 0.f,0.f,0.f };

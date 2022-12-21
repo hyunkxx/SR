@@ -374,6 +374,12 @@
     <Filter Include="02. GameObject\03. Terrain\Location\Bside">
       <UniqueIdentifier>{72bac852-05e0-44d4-a171-393a868fa614}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\BossHP">
+      <UniqueIdentifier>{be72e0d8-9a76-4c17-b1f8-29556de171a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\BossSkill">
+      <UniqueIdentifier>{d833e778-a4c4-449b-b0a1-973418e6fa2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -688,6 +694,19 @@
     <ClInclude Include="..\Header\Bside.h">
       <Filter>02. GameObject\03. Terrain\Location\Bside</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RedCarpet.h" />
+    <ClInclude Include="..\Header\BossHP.h">
+      <Filter>02. GameObject\00. Tank\Boss\BossHP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossSkill.h">
+      <Filter>02. GameObject\00. Tank\Boss\BossSkill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RushMode.h">
+      <Filter>03. GameSystem\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WarningUI.h">
+      <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -992,6 +1011,19 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bside.cpp">
       <Filter>02. GameObject\03. Terrain\Location\Bside</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RedCarpet.cpp" />
+    <ClCompile Include="..\Code\BossHP.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\BossHP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossSkill.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\BossSkill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RushMode.cpp">
+      <Filter>03. GameSystem\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WarningUI.cpp">
+      <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
