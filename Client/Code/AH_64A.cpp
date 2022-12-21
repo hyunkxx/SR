@@ -26,8 +26,6 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 		return 0;
-	if (m_bDeadCounting)
-		m_fDeadCount += fTimeDelta;
 
 	m_fReloadTime += fTimeDelta;
 	m_fPlayCount += fTimeDelta;
@@ -110,6 +108,15 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 	else
 	{
 		Key_Input(fTimeDelta);
+	}
+
+	if (m_bDeadCounting)
+	{
+		m_fDeadCount += fTimeDelta;
+		_vec3 Dir = m_vInfo[INFO_LOOK];
+		Dir.y = 0.f;
+		D3DXVec3Normalize(&Dir, &Dir);
+		m_pTransformBody->Move_Pos(&(Dir * 100.f *fTimeDelta));
 	}
 
 	Set_Transform(fTimeDelta);
@@ -293,9 +300,9 @@ void CAH_64A::Key_Input(const _float & fTimeDleta)
 			Engine::StopSound(PLAYER_SHOT_SOUND1);
 
 			if (m_In_Sound)
-				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound / 3.f);
+				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, 0.8f / 3.f);
 			else
-				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, CUI_Volume::s_fShotSound);
+				Engine::PlaySound_SR(L"SE_TN81_PURGE_00.wav", PLAYER_SHOT_SOUND1, 0.8f);
 
 			CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::AH_64A_EFFECT);
 			pObject->Set_Dead(false);
@@ -392,13 +399,14 @@ void CAH_64A::Start_AH_64A(void)
 	Engine::StopSound(AH_64A_VOICE3);
 
 
+
 	Engine::PlaySound_SR(L"AH_64A_START_2.mp3", AH_64A_VOICE2, 1.f);
 	Engine::Camera_Change(L"AH_64A_Camera");
 	if (dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera")))
 	{
 		m_pTransformBody->Reset_Trans();
 		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Set_Target(m_pTransformBody);
-		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Camera_Setting(_vec3{ 200.f, 100.f , 0.f });
+		dynamic_cast<CAH_64A_Camera*>(Engine::Get_Camera(L"AH_64A_Camera"))->Camera_Setting(_vec3{ 400.f, 100.f , 0.f });
 		Engine::Get_Camera()->Shake_On();
 	}
 }

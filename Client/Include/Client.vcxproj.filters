@@ -365,6 +365,9 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Skill_Damage_UI\00.AH_64A_Aim_UI">
       <UniqueIdentifier>{1ea0acb4-3975-4ab5-af66-cc098bb23215}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04.Camera\15.BossApearCamera">
+      <UniqueIdentifier>{1757e587-be66-4c40-bcea-977d176066f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -670,6 +673,9 @@
     <ClInclude Include="..\Header\Boss_Bomber.h">
       <Filter>02. GameObject\00. Tank\Boss\Boss_Bomber</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossCamera.h">
+      <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -965,6 +971,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Boss_Bomber.cpp">
       <Filter>02. GameObject\00. Tank\Boss\Boss_Bomber</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossCamera.cpp">
+      <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

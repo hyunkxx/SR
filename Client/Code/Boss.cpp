@@ -30,10 +30,10 @@ _int CBoss::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if(m_bDeadEvent)
+	if (m_bDeadEvent)
 		Dead_Motion(fTimeDelta);
-	
-	if(m_bAppear)
+
+	if (m_bAppear)
 		m_fShootCount += fTimeDelta;
 
 	if (m_bAppear)
@@ -52,11 +52,11 @@ _int CBoss::Update_Object(const _float & fTimeDelta)
 	Pattern(fTimeDelta);
 
 
-	if(m_bAppear && m_bHeadMove)
+	if (m_bAppear && m_bHeadMove)
 		Head_Spin(fTimeDelta);
 
 	Sound_Setting(fTimeDelta);
-	
+
 
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Update_OBB();
@@ -77,7 +77,7 @@ void CBoss::Render_Object(void)
 		m_pBody->Change_Color_Dead();
 		m_pPosin->Change_Color_Dead();
 	}
-		
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformBody->Get_WorldMatrix());
 	m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
 
@@ -114,7 +114,7 @@ void CBoss::Move_Info(_vec3 _Info)
 void CBoss::Update_OBB(void)
 {
 	_vec3 Pos, Right, Up, Look;
-	
+
 	m_pTransformBody->Get_Info(INFO_POS, &m_stBody.vPos);
 	m_pTransformBody->Get_Info(INFO_RIGHT, &m_stBody.vDir[x]);
 	m_pTransformBody->Get_Info(INFO_UP, &m_stBody.vDir[y]);
@@ -134,14 +134,19 @@ void CBoss::Update_OBB(void)
 
 void CBoss::Appear(void)
 {
+
+
 	Engine::Get_Camera()->Set_Fov(D3DXToRadian(80.f));
 	Engine::StopSound(BOSS_BGM);
 	Engine::StopSound(BOSS_ENGINE_SOUND);
 	Engine::PlaySound_SR(L"Boss_Engine.mp3", BOSS_ENGINE_SOUND, 1.f);
 	Engine::PlayBGM(L"Boss_BGM.mp3", BOSS_BGM);
-	Posin_Setting(_vec3(100.f, 6.f * m_fScale, 400.f));
-	Head_Setting(_vec3(100.f, 6.f* m_fScale, 400.f));
-	Body_Setting(_vec3(100.f, 6.f* m_fScale, 400.f));
+	Posin_Setting(_vec3(100.f, 5.5f * m_fScale, 600.f));
+	Head_Setting(_vec3(100.f, 5.5f* m_fScale, 600.f));
+	Body_Setting(_vec3(100.f, 5.5f* m_fScale, 600.f));
+
+	Engine::Camera_Change(L"BossApearCamera");
+	Engine::Get_Camera()->Camera_Setting(_vec3(100.f, 0.f, 600.f));
 }
 
 void CBoss::Pattern(const _float & fTimeDelta)
@@ -155,7 +160,7 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	else
 		return;
 
-	if (150.f <= PlayerPos.z && 0 == m_iAppearCount)
+	if (200.f <= PlayerPos.z && 0 == m_iAppearCount)
 		m_bAppear = true;
 
 	if (m_bAppear && 0 == m_iAppearCount)
@@ -225,7 +230,8 @@ void CBoss::Pattern(const _float & fTimeDelta)
 			m_fShootCount = 0.f;
 			m_bPattern_4 = true;
 			static_cast<CBossHitPoint*>(Engine::Get_Object(L"UI", L"Boss_Hit_Point"))->Hit_Point_Set(m_vHitPoint, 5.f);
-
+			Engine::StopSound(BOSS_RUSH1_SOUND);
+			Engine::PlaySound_SR(L"Boss_Shoot.mp3", BOSS_RUSH1_SOUND, 1.f);
 		}
 		else
 		{
@@ -264,10 +270,11 @@ void CBoss::Pattern_01(const _float & fTimeDelta)
 
 	Move_Pos(vDir);
 
-	if (200.f >= vPos.z)
+	if (400.f >= vPos.z)
 	{
 		m_bPattern_1 = false;
-		m_bPattern_2 = true;
+		m_bPattern_2 = false;
+		m_bPattern_3 = true;
 	}
 }
 
@@ -381,7 +388,7 @@ void CBoss::Pattern_04(const _float & fTimeDelta)
 	{
 		m_fShootCount = 0.f;
 		Engine::StopSound(BOSS_SHOOT_SOUND);
-		Engine::PlaySound_SR(L"Shoot_Bullet.wav", BOSS_SHOOT_SOUND,1.f);
+		Engine::PlaySound_SR(L"Shoot_Bullet.wav", BOSS_SHOOT_SOUND, 1.f);
 		Shoot_Bullet(BULLET_ID::BOSS_BULLET);
 		m_bPattern_2 = true;
 		m_bHeadMove = true;
@@ -511,24 +518,24 @@ HRESULT CBoss::Ready_Object(void)
 	m_stInfo.fReload = 1.5f;
 	m_stInfo.fReloadTime = 1.5f;
 	m_stInfo.iCannonSpeed = 500;
-	
+
 	m_stInfo.RotSpeed = 40.f;
 
 	m_stBody.fLen[x] = 2.5f  * m_fScale;
 	m_stBody.fLen[y] = 4.f  * m_fScale;
 	m_stBody.fLen[z] = 4.5f * m_fScale;
 
-	Posin_Setting(_vec3(300.f, 6.f * m_fScale, 400.f));
-	Head_Setting(_vec3(300.f, 6.f* m_fScale, 400.f));
-	Body_Setting(_vec3(300.f, 6.f* m_fScale, 400.f));
-	
+	Posin_Setting(_vec3(300.f, 6.f * m_fScale, 600.f));
+	Head_Setting(_vec3(300.f, 6.f* m_fScale, 600.f));
+	Body_Setting(_vec3(300.f, 6.f* m_fScale, 600.f));
+
 	Rotation_Body(ROT_Y, 180.f);
 	Rotation_Head(ROT_Y, 180.f);
 	Rotation_Posin(ROT_Y, 180.f);
 
 	Update_OBB();
 
-	
+
 
 	CGameObject::Ready_Object();
 
@@ -542,21 +549,21 @@ void CBoss::Sound_Setting(const _float & fTimeDelta)
 
 void CBoss::Shoot_Bullet(BULLET_ID eID)
 {
-	_vec3 Pos, Dir , NewDir;
+	_vec3 Pos, Dir, NewDir;
 
 	m_pTransformPosin->Get_Info(INFO_POS, &Pos);
 	Pos.y += 8.f  * m_fScale;
 	Dir = m_vHitPoint - Pos;
-	NewDir  = Dir;
+	NewDir = Dir;
 	NewDir.y - 0.f;
 	D3DXVec3Normalize(&Dir, &Dir);
 	D3DXVec3Normalize(&NewDir, &NewDir);
 	_float RadianX = acosf(D3DXVec3Dot(&Dir, &NewDir));
 
 	Pos += Dir * m_stInfo.fPosinDist * m_fScale;
-	CGameObject* pBullet = Engine::Reuse_Object(Pos, Dir,500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
+	CGameObject* pBullet = Engine::Reuse_Object(Pos, Dir, 500.f, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), eID);
 	static_cast<CBoss_Bullet*>(pBullet)->Bullet_Setting(Pos, Dir, 500.f, RadianX, m_pTransformPosin->Get_Angle(ROT_Y));
-	
+
 	m_stInfo.fReloadTime = 0.f;
 
 }
@@ -680,9 +687,9 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 		m_pTransformHead->Rotation(ROT_Y, D3DXToRadian(20.f *fTimeDelta));
 		m_pTransformPosin->Rotation(ROT_Y, D3DXToRadian(20.f*fTimeDelta));
 	}
-/////////////////////////////////상하 회전/////////////////////////////////////
+	/////////////////////////////////상하 회전/////////////////////////////////////
 
-	_vec3 PosinLook , vPosinPos;
+	_vec3 PosinLook, vPosinPos;
 	m_pTransformPosin->Get_Info(INFO_LOOK, &PosinLook);
 	m_pTransformPosin->Get_Info(INFO_POS, &vPosinPos);
 
@@ -691,7 +698,7 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 
 	_vec3 ExPosinLook = PosinLook;
 	_vec3 EXDir = Dir;
-	
+
 	ExPosinLook.y = 0.f;
 	EXDir.y = 0.f;
 	D3DXVec3Normalize(&PosinLook, &PosinLook);
@@ -704,7 +711,7 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 	_float Radian = DirRadian - PosinRadian;
 
 
-		if(abs(Radian) >= D3DXToRadian(1.f))
+	if (abs(Radian) >= D3DXToRadian(1.f))
 	{
 		if (0 <= Radian)
 			m_pTransformPosin->Rotation(ROT_X, D3DXToRadian(10.f * fTimeDelta));

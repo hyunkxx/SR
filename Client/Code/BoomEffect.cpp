@@ -46,9 +46,8 @@ _int CBoomEffect::Update_Object(const _float & fTimeDelta)
 	if (m_fFrame == 0)
 	{
 		m_bCollision = true;
-		_float fShootSound = 1.f;
 		Engine::StopSound(PLAYER_SHOT_SOUND1);
-		Engine::PlaySound_SR(L"Boom_Sound.wav", PLAYER_SHOT_SOUND1, fShootSound);
+		Engine::PlaySound_SR(L"Boom_Sound.wav", PLAYER_SHOT_SOUND1, 1.f);
 
 	}
 	m_fFrame += 12.f * fTimeDelta;

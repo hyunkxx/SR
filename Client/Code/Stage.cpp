@@ -1174,16 +1174,19 @@ void CStage::Collison_Object(void)
 					case BULLET_ID::ENEMY_SMALL_CANNONBALL:
 					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(100.f);
+						Engine::Get_Camera()->Shake_On();
 					}
 					break;
 					case BULLET_ID::ENEMY_MIDDLE_CANNONBALL:
 					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(200.f);
+						Engine::Get_Camera()->Shake_On();
 					}
 					break;
 					case BULLET_ID::ENEMY_BIG_CANNONBALL:
 					{
 						dynamic_cast<CTankSet*>((*Dest).second)->Minus_HP(400.f);
+						Engine::Get_Camera()->Shake_On();
 					}
 					break;
 					}
@@ -1230,12 +1233,37 @@ void CStage::Collison_Object(void)
 						{
 							// Æ÷Åº ÇÇ°Ý »ç¿îµå
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(SAMLL_HIT_SOUND1);
+							Engine::PlaySound_SR(L"SMALL_HIT.wav", SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(MIDDLE_HIT_SOUND1);
+							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(BIG_HIT_SOUND1);
+							Engine::PlaySound_SR(L"BIG_HIT.wav", BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 					}
 
 					if (dynamic_cast<CDefault_Ally*>(*iters)->GetHp() <= 0)
 					{
+						if (fPlayer_obj_dist_Sound <= 100.f)
+						{
+							Engine::StopSound(TANK_DEAD_SOUND1);
+							Engine::PlaySound_SR(L"Tank_Died.wav", TANK_DEAD_SOUND1, 0.5f);
+						}
+
 						(*iters)->Set_Dead(true);
 						dynamic_cast<CDefault_Ally*>(*iters)->Set_DisCountLocation();
 					}
@@ -1276,12 +1304,36 @@ void CStage::Collison_Object(void)
 						{
 							// Æ÷Åº ÇÇ°Ý »ç¿îµå
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(SAMLL_HIT_SOUND1);
+							Engine::PlaySound_SR(L"SMALL_HIT.wav", SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(MIDDLE_HIT_SOUND1);
+							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(BIG_HIT_SOUND1);
+							Engine::PlaySound_SR(L"BIG_HIT.wav", BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 					}
 
 					if (dynamic_cast<CBottomDirAlly*>(*iters)->GetHp() <= 0)
 					{
+						if (fPlayer_obj_dist_Sound <= 100.f)
+						{
+							Engine::StopSound(TANK_DEAD_SOUND1);
+							Engine::PlaySound_SR(L"Tank_Died.wav", TANK_DEAD_SOUND1, 0.5f);
+						}
 						(*iters)->Set_Dead(true);
 						dynamic_cast<CBottomDirAlly*>(*iters)->Set_DisCountLocation();
 					}
@@ -1318,6 +1370,7 @@ void CStage::Collison_Object(void)
 
 				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(Dest->second)->Get_OBB()))
 				{
+
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 
 					if (i == BULLET_ID::MASHINE_BULLET)
@@ -1403,13 +1456,38 @@ void CStage::Collison_Object(void)
 						{
 							// Æ÷Åº ÇÇ°Ý »ç¿îµå
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_SAMLL_HIT_SOUND1);
+							Engine::PlaySound_SR(L"SMALL_HIT.wav", ENEMY_SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_MIDDLE_HIT_SOUND1);
+							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", ENEMY_MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
+							Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 					}
 
 
 					if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
 					{
+						if (fPlayer_obj_dist_Sound <= 100.f)
+						{
+							Engine::StopSound(ENEMY_TANK_DEAD_SOUND1);
+							Engine::PlaySound_SR(L"Tank_Died.wav", ENEMY_TANK_DEAD_SOUND1, 0.5f);
+						}
+
 						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DeadMotionPlay();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
 						dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
@@ -1455,16 +1533,42 @@ void CStage::Collison_Object(void)
 					// ¼Ò¸® °Å¸®Á¦ÇÑ
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
+
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
 							// Æ÷Åº ÇÇ°Ý »ç¿îµå
 							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_SAMLL_HIT_SOUND1);
+							Engine::PlaySound_SR(L"SMALL_HIT.wav", ENEMY_SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_MIDDLE_HIT_SOUND1);
+							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", ENEMY_MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+						}
+						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						{
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
+							Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 					}
 
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 					{
+						if (fPlayer_obj_dist_Sound <= 100.f)
+						{
+							Engine::StopSound(ENEMY_TANK_DEAD_SOUND1);
+							Engine::PlaySound_SR(L"Tank_Died.wav", ENEMY_TANK_DEAD_SOUND1, 0.5f);
+						}
+
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DeadMotionPlay();
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â

@@ -348,7 +348,8 @@ void CTankSet::Dead_Motion(const _float & fTimeDelta)
 	if (m_bDeadTime == 0)
 	{
 		m_bRock = true;
-		m_stInfo.fAccum = 0.f;	Engine::StopSound(PLAYER_SHOT_SOUND1);
+		m_stInfo.fAccum = 0.f;
+		Engine::StopSound(PLAYER_SHOT_SOUND1);
 		Engine::PlaySound_SR(L"Tank_Died.wav", PLAYER_SHOT_SOUND1, 0.5f);
 		CGameObject* m_pEffectManager = Engine::Get_Object(L"Environment_Object", L"EffectManager");
 		static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, Pos);

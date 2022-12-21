@@ -21,6 +21,7 @@
 #include "BossHitPoint.h"
 #include "Boss_Bullet.h"
 #include "Boss_Bomber.h"
+#include "BossCamera.h"
 
 //camera
 #include "DynamicCamera.h"
@@ -219,6 +220,15 @@ HRESULT CRush::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"ShipCamera", pCameraObject), E_FAIL);
+
+	pCameraObject = CBossCamera::Create(m_pGraphicDev,
+		&_vec3(0.f, 2.f, -5.f),
+		&_vec3(0.f, 1.f, 1.f),
+		&_vec3(0.f, 1.f, 0.f));
+
+	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Add_Camera(L"BossApearCamera", pCameraObject), E_FAIL);
+
 
 	for (int i = 0; i < 120; i++)
 	{
