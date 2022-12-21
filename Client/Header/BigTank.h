@@ -32,7 +32,7 @@ private:
 	CTransform*			m_pTransHitPoint = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
-public:
+private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);
 	void		Head_Spin(const _float& fTimeDelta);

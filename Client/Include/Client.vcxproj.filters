@@ -353,6 +353,15 @@
     <Filter Include="02. GameObject\93.UI\000.Rush_UI\00.Rush_HP">
       <UniqueIdentifier>{a7d11f51-50f2-41eb-bbab-5a57baae93a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss">
+      <UniqueIdentifier>{ad5e5a58-0911-408a-b45d-893c537299f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\Bullet">
+      <UniqueIdentifier>{9965f4f2-9b60-45f1-8d23-ba98d1de0481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\HitPoint">
+      <UniqueIdentifier>{67d0bd81-9061-4ade-b38b-02d18f10353d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -646,6 +655,15 @@
     <ClInclude Include="..\Header\UI_Rush_HP.h">
       <Filter>02. GameObject\93.UI\000.Rush_UI\00.Rush_HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Boss.h">
+      <Filter>02. GameObject\00. Tank\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Boss_Bullet.h">
+      <Filter>02. GameObject\00. Tank\Boss\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossHitPoint.h">
+      <Filter>02. GameObject\00. Tank\Boss\HitPoint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -929,6 +947,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Rush_HP.cpp">
       <Filter>02. GameObject\93.UI\000.Rush_UI\00.Rush_HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. GameObject\00. Tank\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss_Bullet.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossHitPoint.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\HitPoint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -137,6 +137,7 @@ void CBoomEffect::Collision_Object(void)
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
 	CGameObject* m_pEffectManager = Engine::Get_Object(L"Environment_Object", L"EffectManager");
+	CGameObject* pPlayer = Engine::Get_Object(L"GameLogic", L"PlayerVehicle");
 
 	for (auto& iters = DEnemy.begin(); iters < DEnemy.end(); ++iters)
 	{
@@ -147,13 +148,17 @@ void CBoomEffect::Collision_Object(void)
 		{
 			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
 
-			dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
-			if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
+			if (dynamic_cast<CDefault_Enermy*>(*iters))
 			{
-				(*iters)->Set_Dead(true);
-				dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
-				dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+				dynamic_cast<CDefault_Enermy*>(*iters)->Minus_HP_UI(1000.f);
+				if (dynamic_cast<CDefault_Enermy*>(*iters)->GetHp() <= 0)
+				{
+					(*iters)->Set_Dead(true);
+					dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+					dynamic_cast<CDefault_Enermy*>(*iters)->Set_DisCountLocation();
+				}
 			}
+
 		}
 	}
 	for (auto& iters = BDEnemy.begin(); iters < BDEnemy.end(); ++iters)
@@ -166,13 +171,35 @@ void CBoomEffect::Collision_Object(void)
 		{
 			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(*iters)->Get_Info());
 
-			dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(1000.f);
-			if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
+			if (dynamic_cast<CBottomDirEnermy*>(*iters))
 			{
-				(*iters)->Set_Dead(true);
-				dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
-				dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+				dynamic_cast<CBottomDirEnermy*>(*iters)->Minus_HP_UI(1000.f);
+				if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
+				{
+					(*iters)->Set_Dead(true);
+					dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
+					dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
+				}
 			}
+
+		}
+	}
+	if (dynamic_cast<ICollisionable*>(pPlayer))
+	{
+		if (Engine::Sphere_Collision(m_vPos, dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), 30.f, pPlayer->Get_Dist()))
+		{
+
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, dynamic_cast<ICollisionable*>(pPlayer)->Get_Info());
+
+			if (dynamic_cast<CTankSet*>(pPlayer))
+			{
+				dynamic_cast<CTankSet*>(pPlayer)->Minus_HP(1000.f);
+				if (dynamic_cast<CTankSet*>(pPlayer)->Get_HP() <= 0)
+				{
+					dynamic_cast<CTankSet*>(pPlayer)->Set_Dead(true);
+				}
+			}
+
 		}
 	}
 

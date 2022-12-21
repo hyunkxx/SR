@@ -22,7 +22,7 @@ public:
 	static CExplosionEffect*	Create(LPDIRECT3DDEVICE9 pGraphicDevice, _vec3 vPosition);
 	void SetColor(D3DXCOLOR color[]);
 private:
-	float m_fSpeed = 40.f;
+	float m_fSpeed = 50.f;
 	vector<_vec3> m_vecDir;
 };
 

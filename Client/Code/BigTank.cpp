@@ -252,7 +252,7 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
 		{
-			m_bPosinShake = true;
+			//m_bPosinShake = true;
 			Shoot_Bullet(BULLET_ID::BIG_CANNONBALL);
 			m_bReLoad = false;
 		}

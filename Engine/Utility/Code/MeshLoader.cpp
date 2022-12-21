@@ -78,6 +78,12 @@ void CMeshLoader::Initalize()
 	LoadMesh(L"M1_enemy_head.bin", L"M1_enemy_head");
 	LoadMesh(L"M1_enemy_posin.bin", L"M1_enemy_posin");
 
+	//Boss
+	LoadMesh(L"Boss_body.bin", L"Boss_body");
+	LoadMesh(L"Boss_head.bin", L"Boss_head");
+	LoadMesh(L"Boss_posin.bin", L"Boss_posin");
+
+
 	//Turret
 	LoadMesh(L"Turret_body.bin", L"Turret_body");
 	LoadMesh(L"Turret_head.bin", L"Turret_head");

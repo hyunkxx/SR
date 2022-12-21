@@ -15,6 +15,12 @@
 #include "BattleShip.h"
 #include "ShipBullet.h"
 #include "AH_64A.h"
+
+//Boss
+#include "Boss.h"
+#include "BossHitPoint.h"
+#include "Boss_Bullet.h"
+
 //camera
 #include "DynamicCamera.h"
 #include "StaticCamera.h"
@@ -307,6 +313,11 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AH_64A", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
 
+	pGameObject = CBoss::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss", pGameObject), E_FAIL);
+
+
 	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
 		for (_int j = 0; j < 200; j++)
@@ -350,6 +361,13 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pBullet, E_FAIL);
 		Engine::Bullet_Supply(pBullet, BULLET_ID::BOOM_BULLET);
 	}
+	for (_int i = 0; 5 > i; i++)
+	{
+		CGameObject* pBullet = CBoss_Bullet::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pBullet, E_FAIL);
+		Engine::Bullet_Supply(pBullet, BULLET_ID::BOSS_BULLET);
+	}
+
 	for (_int i = 0; 10 > i; i++)
 	{
 		CGameObject* pBullet = CShipBullet::Create(m_pGraphicDev);
@@ -423,6 +441,7 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Effect_Supply(pGameObject, EFFECT_ID::AH_64A_EFFECT);
 	}
 
+
 	for (_int i = 0; 10 > i; i++)
 	{
 		pGameObject = CShootSmoke::Create(m_pGraphicDev);
@@ -454,6 +473,10 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CAim_UI_Pers::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aim_UI_Pers", pGameObject), E_FAIL);
+
+	pGameObject = CBossHitPoint::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Hit_Point", pGameObject), E_FAIL);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;

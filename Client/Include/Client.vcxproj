@@ -184,6 +184,9 @@
     <ClInclude Include="..\Header\BoomCamera.h" />
     <ClInclude Include="..\Header\BoomEffect.h" />
     <ClInclude Include="..\Header\Boom_Support.h" />
+    <ClInclude Include="..\Header\Boss.h" />
+    <ClInclude Include="..\Header\BossHitPoint.h" />
+    <ClInclude Include="..\Header\Boss_Bullet.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h" />
     <ClInclude Include="..\Header\BottomDirEnermy.h" />
     <ClInclude Include="..\Header\Building.h" />
@@ -296,6 +299,9 @@
     <ClCompile Include="..\Code\BoomCamera.cpp" />
     <ClCompile Include="..\Code\BoomEffect.cpp" />
     <ClCompile Include="..\Code\Boom_Support.cpp" />
+    <ClCompile Include="..\Code\Boss.cpp" />
+    <ClCompile Include="..\Code\BossHitPoint.cpp" />
+    <ClCompile Include="..\Code\Boss_Bullet.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp" />
     <ClCompile Include="..\Code\BottomDirEnermy.cpp" />
     <ClCompile Include="..\Code\Building.cpp" />
