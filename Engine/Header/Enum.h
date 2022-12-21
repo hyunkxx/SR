@@ -74,6 +74,8 @@ namespace Engine
 	};
 
 	enum OBB_ID { x, y, z, OBB_END };
+
+	enum GOD_COLOR { RED, ORANGE, YELLOW, GREEN, BLUE, DEEP_BLUE, PURPLE, GOD_COLOR_END };
 }
 
 #endif // Enum_h__

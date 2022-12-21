@@ -374,6 +374,9 @@
     <Filter Include="02. GameObject\10. BossSkill">
       <UniqueIdentifier>{1e3e5c48-4651-4e62-8941-9545cc749783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\Boss_RedCarpet">
+      <UniqueIdentifier>{8b3ed48b-1365-4a9a-b0b6-5dcdc21ca196}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -691,6 +694,9 @@
     <ClInclude Include="..\Header\BossSkill.h">
       <Filter>02. GameObject\10. BossSkill</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RedCarpet.h">
+      <Filter>02. GameObject\00. Tank\Boss\Boss_RedCarpet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -998,6 +1004,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossSkill.cpp">
       <Filter>02. GameObject\10. BossSkill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RedCarpet.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\Boss_RedCarpet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

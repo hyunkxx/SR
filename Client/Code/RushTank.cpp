@@ -41,6 +41,14 @@ _int CRushTank::Update_Object(const _float & fTimeDelta)
 		Sound_Setting(fTimeDelta);
 	}
 
+	if (m_bGodMode)
+	{
+		m_fGodCount += (20.f *fTimeDelta);
+
+		if (7 < m_fGodCount)
+			m_fGodCount = 0.f;
+	}
+
 	m_stInfo.fReloadTime += fTimeDelta;
 	m_fDT = fTimeDelta;
 
@@ -81,6 +89,13 @@ void CRushTank::Render_Object(void)
 			m_pBody->Change_Color_Dead();
 			m_pPosin->Change_Color_Dead();
 		}
+		else if (m_bGodMode)
+		{
+			m_pHead->God_Mode((_int)m_fGodCount);
+			m_pBody->God_Mode((_int)m_fGodCount);
+			m_pPosin->God_Mode((_int)m_fGodCount);
+		}
+
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformBody->Get_WorldMatrix());
 		m_pHead->Render(m_pTransformHead->Get_WorldMatrix());
 
@@ -89,7 +104,7 @@ void CRushTank::Render_Object(void)
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 		m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
-		if (m_bDead)
+		if (m_bDead || m_bGodMode)
 		{
 			m_pHead->Return_Color();
 			m_pBody->Return_Color();
@@ -321,6 +336,25 @@ void CRushTank::Key_Input(const _float & fTimeDelta)
 
 	if (!m_bRock)
 	{
+		// 임시 무적모드
+
+		if (Get_DIKeyState_Custom(DIK_0) == KEY_STATE::TAP)
+		{
+			if (!m_bGodMode)
+			{
+				Engine::StopAll();
+				Engine::PlaySound_SR(L"God_Mode_Sound.mp3", BOSS_BGM, 1.f);
+				m_bGodMode = true;
+			}
+			else
+			{
+				Engine::StopSound(BOSS_BGM);
+				Engine::PlayBGM(L"Boss_BGM.mp3", BOSS_BGM);
+				m_bGodMode = false;
+				m_fGodCount = 0.f;
+			}
+		}
+
 		//임시 사망 키 
 		if (Get_DIKeyState_Custom(DIK_M) == KEY_STATE::TAP)
 		{

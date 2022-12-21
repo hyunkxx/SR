@@ -22,6 +22,7 @@
 #include "Boss_Bullet.h"
 #include "Boss_Bomber.h"
 #include "BossCamera.h"
+#include "RedCarpet.h"
 
 //camera
 #include "DynamicCamera.h"
@@ -182,6 +183,7 @@ HRESULT CRush::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pCameraObject, E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Add_Camera(L"TankCamera", pCameraObject), E_FAIL);
 	Engine::Camera_Change(L"TankCamera");
+	Engine::Get_Camera()->Set_Lock(false);
 
 	pCameraObject = CStaticCamera::Create(m_pGraphicDev,
 		&_vec3(0.f, 20.f, -5.f),
@@ -356,6 +358,11 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber5", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+
+	pGameObject = CRedCarpet::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RedCarpet", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
 
 	for (_int i = 0; BOOM_BULLET > i; i++)
@@ -552,6 +559,10 @@ void CRush::Collison_Object(void)
 	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
 	CLayer* pGameLogic = Get_Layer(L"GameLogic");
 	vector<CGameObject*> StdEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
+	
+	CGameObject* pPlayer = Get_Object(L"GameLogic", L"PlayerVehicle");
+	CGameObject* pBoss = Get_Object(L"GameLogic", L"Boss");
+
 	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 	{
 
@@ -619,4 +630,16 @@ void CRush::Collison_Object(void)
 			}
 		}
 	}
+	// 유저랑 충돌 몰아 놓기 무적상태 체크 후 충돌처리
+	if (static_cast<CRushTank*>(pPlayer)->Get_God_Mode())
+		return;
+
+	if (Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), dynamic_cast<ICollisionable*>(pBoss)->Get_Info(), (pPlayer)->Get_Dist(), pBoss->Get_Dist()))
+	{
+		
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB(), dynamic_cast<ICollisionable*>(pBoss)->Get_OBB()))
+			pPlayer->Set_Dead(true);
+	}
+
 }
