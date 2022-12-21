@@ -344,7 +344,7 @@ void CBoss::Pattern_03(const _float & fTimeDelta)
 
 		RadianDot -= RadianBoss;
 
-		if (abs(RadianDot) < D3DXToRadian(5.f) && !m_bPattern_3)
+		if (abs(RadianDot) < D3DXToRadian(5.f) && !m_bPattern_4)
 		{
 			m_fRushCount = 0.f;
 			m_vRushDist = { 0.f,0.f ,0.f };

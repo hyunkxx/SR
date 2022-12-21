@@ -48,7 +48,7 @@ void CTerrain::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 }
 
 void CTerrain::Render_Object(void)

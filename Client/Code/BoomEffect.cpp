@@ -72,12 +72,13 @@ _int CBoomEffect::Update_Object(const _float & fTimeDelta)
 
 void CBoomEffect::LateUpdate_Object(void)
 {
-	if (m_bDead)
-	{
-		Engine::Get_Camera()->Set_Rock(false);
-		return;
-	}
-	Engine::Get_Camera()->Set_Rock(true);
+	//if (m_bDead)
+	//{
+	//	Engine::Get_Camera()->Set_Rock(false);
+	//	return;
+	//}
+
+	//Engine::Get_Camera()->Set_Rock(true);
 
 	if (!dynamic_cast<CDroneCamera*>(Engine::Get_Camera()))
 		__super::LateUpdate_Object();
@@ -116,14 +117,20 @@ void CBoomEffect::Render_Object(void)
 	if (m_bDead)
 		return;
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pTextureCom->Set_Texture(_ulong(m_fFrame));
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CBoomEffect::Collision_Object(void)

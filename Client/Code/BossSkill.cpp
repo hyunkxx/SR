@@ -205,7 +205,7 @@ HRESULT CBossSkill::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformTail, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Tail_Transform", pComponent });
 
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"AH_64A_body", false);
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"AH_64A_enemy_body", false);
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelBody", pComponent });
 
