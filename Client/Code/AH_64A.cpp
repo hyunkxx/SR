@@ -85,6 +85,16 @@ _int CAH_64A::Update_Object(const _float & fTimeDelta)
 		m_bLock = true;
 		Engine::StopSound(AH_64A_SOUND);
 	}
+	else if (Get_DIKeyState_Custom(DIK_ESCAPE) == KEY_STATE::TAP)
+	{
+		Engine::Camera_Change(L"AH_64A_EndCamera");
+		Engine::StopSound(AH_64A_VOICE2);
+		Engine::PlaySound_SR(L"AH_64A_End.mp3", AH_64A_VOICE2, 0.5f);
+		static_cast<CAH_64A_EndCamera*>(Engine::Get_Camera())->Camera_Setting(m_vInfo[INFO_POS]);
+		m_bDeadCounting = true;
+		m_bLock = true;
+		Engine::StopSound(AH_64A_SOUND);
+	}
 
 	m_fAccum += 1500.f * fTimeDelta;
 	if (720.f <= m_fAccum)
