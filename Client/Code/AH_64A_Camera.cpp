@@ -83,8 +83,8 @@ void CAH_64A_Camera::Camera_Setting(_vec3 Target_Pos)
 	m_bFix = true;
 	m_bReady = false;
 	m_vType = false;
-	m_fCameraDist = 30.f;
-	m_fYPlus = 40.f;
+	m_fCameraDist = 20.f;
+	m_fYPlus = 20.f;
 	m_fShake_Power = 0.f;
 	m_fShake_Time = 3.f;
 	m_fTypeCount = 0.f;
