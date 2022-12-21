@@ -213,7 +213,7 @@ void CTempOccupationScore::LateUpdate_Object(void)
 
 void CTempOccupationScore::Render_Object(void)
 {
-	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+	/*CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
 	if (CGameMode::GetInstance()->m_bGameEnd)
@@ -247,7 +247,7 @@ void CTempOccupationScore::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 	}
-
+	*/
 
 }
 

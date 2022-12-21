@@ -39,9 +39,9 @@ private:
 private:
 	_float m_fTime = 0.f;
 	_bool  m_bTurn = false;
-	_float Range = 70.f;
+	_float Range = 90.f;
 	_bool LeftCheck;
-	_float m_fReloadTime = 0.f, m_fReload = 0.5f, fPosinDist = 3.f, m_iCannonSpeed = 200.f;
+	_float m_fReloadTime = 0.f, m_fReload = 0.5f, fPosinDist = 3.f, m_iCannonSpeed = 400.f;
 	_vec3* vPos = {};
 	AIACTION m_Action = AIACTION::AIACTION_END;
 public:

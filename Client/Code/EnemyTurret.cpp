@@ -205,13 +205,13 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 					}
 					if (LeftCheck == false)
 					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 					}
 					else
 					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
 					}
 					m_pTransformHead->Get_Info(INFO_POS, &Pos);
 					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
@@ -254,13 +254,13 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 					}
 					if (LeftCheck == false)
 					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*2.f);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 					}
 					else
 					{
-						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
-						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*2.f);
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta*4.f);
 					}
 					m_pTransformHead->Get_Info(INFO_POS, &Pos);
 					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
@@ -303,8 +303,8 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 			}
 			if (LeftCheck == false)
 			{
-				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+				m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
+				m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta*4.f);
 			}
 			else
 			{
@@ -319,11 +319,10 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 			Pos += Dir* 3.f*fPosinDist;
 			if (m_fReloadTime > m_fReload)
 			{
-				if (abs(D3DXToDegree(Angle)) < 2.f)
-				{
+			
 					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_BIG_CANNONBALL);
 					m_fReloadTime = 0.f;
-				}
+				
 			}
 		}
 	}
@@ -367,11 +366,10 @@ void CEnemyTurret::Detect(_float fTimeDelta)
 		Pos += Dir* 3.f*fPosinDist;
 		if (m_fReloadTime > m_fReload)
 		{
-			if (abs(D3DXToDegree(Angle)) < 2.f)
-			{
+		
 				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_BIG_CANNONBALL);
 				m_fReloadTime = 0.f;
-			}
+			
 		}
 	}
 }

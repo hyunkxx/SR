@@ -955,7 +955,6 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 			}
 		}
 	}
-
 }
 void CDefault_Enermy::Set_DisCountLocation()
 {

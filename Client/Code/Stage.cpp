@@ -34,6 +34,8 @@
 #include"Turret.h"
 #include"EnemyTurret.h"
 #include"ScoreBoard.h"
+#include"Aside.h"
+#include"Bside.h"
 // ui
 #include "Posin_UI.h"
 #include "Player_Chatting.h"
@@ -426,7 +428,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AH_64A", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
 
-	/*_vec3 vpos = { 580.f,0.f,600.f };
+	_vec3 vpos = { 580.f,0.f,600.f };
 	pGameObject = CEnemyTurret::Create(m_pGraphicDev, vpos);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"EnemyTurret", pGameObject), E_FAIL);
@@ -445,7 +447,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CTurret::Create(m_pGraphicDev, vpos);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Turret2", pGameObject), E_FAIL);
-	*/
+	
 	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
 		for (_int j = 0; j < 200; j++)
@@ -732,9 +734,17 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Occuopation", pGameObject), E_FAIL);
 
+	pGameObject = CAside::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Aside", pGameObject), E_FAIL);
+
 	pGameObject = CScoreBoard::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ScoreBoard", pGameObject), E_FAIL);
+
+	pGameObject = CBside::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Bside", pGameObject), E_FAIL);
 
 
 	pGameObject = CPlayer_Chatting::Create(m_pGraphicDev);

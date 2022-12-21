@@ -301,12 +301,12 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		}
 		if (LeftCheck == false)
 		{
-			//m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta* 1.5f);
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 1.5f);
 		}
 		else
 		{
-			//m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta* 1.5f);
 			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 1.5f);
 		}
 		m_pTransformPosin->Get_Info(INFO_POS, &Pos);

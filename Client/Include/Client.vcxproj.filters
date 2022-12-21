@@ -368,6 +368,12 @@
     <Filter Include="02. GameObject\04.Camera\15.BossApearCamera">
       <UniqueIdentifier>{1757e587-be66-4c40-bcea-977d176066f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. Terrain\Location\Aside">
+      <UniqueIdentifier>{74c8be7c-a7b9-4ed2-952c-b8e22e4e6af4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\03. Terrain\Location\Bside">
+      <UniqueIdentifier>{72bac852-05e0-44d4-a171-393a868fa614}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -676,6 +682,12 @@
     <ClInclude Include="..\Header\BossCamera.h">
       <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Aside.h">
+      <Filter>02. GameObject\03. Terrain\Location\Aside</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bside.h">
+      <Filter>02. GameObject\03. Terrain\Location\Bside</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -974,6 +986,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossCamera.cpp">
       <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Aside.cpp">
+      <Filter>02. GameObject\03. Terrain\Location\Aside</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bside.cpp">
+      <Filter>02. GameObject\03. Terrain\Location\Bside</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
