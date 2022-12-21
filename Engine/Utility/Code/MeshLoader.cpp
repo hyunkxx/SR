@@ -97,6 +97,7 @@ void CMeshLoader::Initalize()
 
 	//AH_64A
 	LoadMesh(L"AH_64A_body.bin", L"AH_64A_body");
+	LoadMesh(L"AH_64A_enemy_body.bin", L"AH_64A_enemy_body");
 	LoadMesh(L"AH_64A_head.bin", L"AH_64A_head");
 	LoadMesh(L"AH_64A_object.bin", L"AH_64A_object");
 

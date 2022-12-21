@@ -577,6 +577,25 @@ void CRush::Collison_Object(void)
 	CGameObject* pPlayer = Get_Object(L"GameLogic", L"PlayerVehicle");
 	CGameObject* pBoss = Get_Object(L"GameLogic", L"Boss");
 
+	for (_int i = 0; BULLET_ID::BULLET_END > i; i++)
+	{
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+			if ((*iter)->Get_Dead())
+				continue;
+
+			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
+			{
+				_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+
+				if (vPos.y <= 0.5f)
+				{
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
+				}
+			}
+		}
+	}
+
 	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 	{
 
@@ -599,7 +618,6 @@ void CRush::Collison_Object(void)
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
 				}
 			}
-
 		}
 	}
 
