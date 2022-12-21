@@ -79,6 +79,7 @@
 #include "GameMode.h"
 #include "ModeSelectMenu.h"
 
+#include "WarningUI.h"
 _int CStage::iSoundNum = 49;
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -95,7 +96,7 @@ HRESULT CStage::Ready_Scene(void)
 	ShowCursor(false);
 
 	float Start = 10.f;
-	float End = 300.f;
+	float End = 200.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 240, 210, 0));
 	//m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 255, 255, 0));
@@ -723,6 +724,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CWarningUI::Create(m_pGraphicDev, CWarningUI::MODE::RUSH);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"warning_ui", pGameObject), E_FAIL);
 
 	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

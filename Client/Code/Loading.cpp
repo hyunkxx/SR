@@ -235,6 +235,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Grass", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Grass2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass2.png", TEX_NORMAL)), E_FAIL);
 
+	/* Warning */
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"warning", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/warning.png", TEX_NORMAL)), E_FAIL);
 
 	lstrcpy(m_szString, L"Complete");
 

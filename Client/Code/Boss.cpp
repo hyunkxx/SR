@@ -555,7 +555,7 @@ void CBoss::Shoot_Bullet(BULLET_ID eID)
 	Pos.y += 8.f  * m_fScale;
 	Dir = m_vHitPoint - Pos;
 	NewDir = Dir;
-	NewDir.y - 0.f;
+	NewDir.y = 0.f;
 	D3DXVec3Normalize(&Dir, &Dir);
 	D3DXVec3Normalize(&NewDir, &NewDir);
 	_float RadianX = acosf(D3DXVec3Dot(&Dir, &NewDir));

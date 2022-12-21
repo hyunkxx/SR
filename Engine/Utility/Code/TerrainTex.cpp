@@ -78,7 +78,7 @@ HRESULT Engine::CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dw
 
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 
-			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 10.f, _float(i) / (dwCntZ - 1)  * 10.f };
+			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 30.f, _float(i) / (dwCntZ - 1)  * 30.f };
 		}
 	}
 

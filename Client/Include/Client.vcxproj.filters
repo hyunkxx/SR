@@ -368,6 +368,12 @@
     <Filter Include="02. GameObject\04.Camera\15.BossApearCamera">
       <UniqueIdentifier>{1757e587-be66-4c40-bcea-977d176066f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\14. WarningUI">
+      <UniqueIdentifier>{fd996f50-d1d3-419b-8fbe-69fbfd0a7a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10. BossSkill">
+      <UniqueIdentifier>{1e3e5c48-4651-4e62-8941-9545cc749783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -676,6 +682,15 @@
     <ClInclude Include="..\Header\BossCamera.h">
       <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RushMode.h">
+      <Filter>03. GameSystem\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WarningUI.h">
+      <Filter>02. GameObject\93.UI\14. WarningUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossSkill.h">
+      <Filter>02. GameObject\10. BossSkill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -974,6 +989,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossCamera.cpp">
       <Filter>02. GameObject\04.Camera\15.BossApearCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RushMode.cpp">
+      <Filter>03. GameSystem\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WarningUI.cpp">
+      <Filter>02. GameObject\93.UI\14. WarningUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossSkill.cpp">
+      <Filter>02. GameObject\10. BossSkill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

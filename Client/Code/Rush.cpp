@@ -73,6 +73,8 @@
 #include "TankManager.h"
 #include "GameMode.h"
 
+#include "BossSkill.h"
+#include "WarningUI.h"
 
 CRush::CRush(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -109,7 +111,9 @@ HRESULT CRush::Ready_Scene(void)
 
 _int CRush::Update_Scene(const _float& fTimeDelta)
 {
-	Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+	__super::Update_Scene(fTimeDelta);
+
+	//Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
 
 	CUI_FontMgr::GetInstance()->Rush_Update_PlayTIme(fTimeDelta);
 	CUI_FontMgr::GetInstance()->Update_Score();
@@ -118,8 +122,6 @@ _int CRush::Update_Scene(const _float& fTimeDelta)
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
 	Engine::Update_EnermyMgr(fTimeDelta);
 	Engine::Update_CameraMgr(fTimeDelta);
-
-	__super::Update_Scene(fTimeDelta);
 
 	return S_OK;
 }
@@ -303,12 +305,15 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-
 	pGameObject = CRushTank::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerVehicle", pGameObject), E_FAIL);
 	_vec3 vPos = { 150.f,0.f,0.f };
 	static_cast<CRushTank*>(pGameObject)->Move_Info(vPos);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerVehicle", pGameObject), E_FAIL);
+
+	pGameObject = CBossSkill::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BossSkill", pGameObject), E_FAIL);
 
 	pGameObject = CBomber::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -500,6 +505,10 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	//pGameObject = CUI_Rush_HP::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rush_HP", pGameObject), E_FAIL);
+
+	pGameObject = CWarningUI::Create(m_pGraphicDev, CWarningUI::MODE::RUSH);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"warning_ui", pGameObject), E_FAIL);
 
 	pGameObject = CAim_UI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

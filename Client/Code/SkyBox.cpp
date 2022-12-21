@@ -22,7 +22,7 @@ HRESULT CSkyBox::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale(300.f, 100.f, 300.f);
+	m_pTransformCom->Set_Scale(400.f, 100.f, 400.f);
 
 	return S_OK;
 }
@@ -36,7 +36,6 @@ _int CSkyBox::Update_Object(const _float& fTimeDelta)
 
 	D3DXMatrixInverse(&matView, NULL, &matView);
 	m_pTransformCom->Set_Pos(matView._41, matView._42, matView._43);
-
 
 	Add_RenderGroup(RENDER_PRIORITY, this);
 
