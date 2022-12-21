@@ -571,7 +571,7 @@ void CRush::Collison_Object(void)
 	CGameObject* pPlayer = Get_Object(L"GameLogic", L"PlayerVehicle");
 	CGameObject* pBoss = Get_Object(L"GameLogic", L"Boss");
 
-	//for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
+	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 	{
 
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
