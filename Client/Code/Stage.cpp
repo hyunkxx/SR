@@ -1446,7 +1446,7 @@ void CStage::Collison_Object(void)
 
 					if (dynamic_cast<CBottomDirEnermy*>(*iters)->GetHp() <= 0)
 					{
-						(*iters)->Set_Dead(true);
+						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DeadMotionPlay();
 						dynamic_cast<CBottomDirEnermy*>(*iters)->Set_DisCountLocation();
 						dynamic_cast<CCreateAi*>(TempCreateAi)->Set_FieldCount(1);//Á×À»¶§ ³¢¿öÆÈ±â
 						TANKTYPE TType = static_cast<CBottomDirEnermy*>(*iters)->Get_Type();

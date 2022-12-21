@@ -59,7 +59,7 @@ public:
 	void    Set_Count(_int _Count) { m_iCount += _Count; }
 	void Run(_float fTimeDelta);
 	_bool Get_CreateCheck(void) { return CreateCheck; }
-	void Dead_Motion(const _float & fTimeDelta);
+	void Dead_Motion(const _float & fTimeDelta); 
 	void Set_CreateCheck(_bool _true) { CreateCheck = _true; }
 public:
 	//에너미에서 사용하는 함수
@@ -72,6 +72,7 @@ public:
 	_float Dist(CTransform* _Target);
 	void		ObjectCol(_bool m_Left);
 	void		ColObject(_float fTimeDelta);
+	void  Set_DeadMotionPlay() { Deadtest = true; }
 	TANKTYPE Get_Type() { return TTYPE; }
 private:
 	HRESULT		Add_Component(void);

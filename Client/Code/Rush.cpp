@@ -402,7 +402,7 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
-	
+
 
 	// Skill
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);
@@ -507,6 +507,7 @@ void CRush::Collison_Object(void)
 {
 	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
 	CLayer* pGameLogic = Get_Layer(L"GameLogic");
+	vector<CGameObject*> StdEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 	{
 
@@ -515,8 +516,6 @@ void CRush::Collison_Object(void)
 
 			if ((*iter)->Get_Dead())
 				continue;
-
-			CBullet* pBullet = dynamic_cast<CBullet*>(*iter);
 			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -532,6 +531,48 @@ void CRush::Collison_Object(void)
 				}
 			}
 
+		}
+	}
+
+
+	for (_int i = 5; BULLET_ID::BOOM_BULLET > i; i++)
+	{
+		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
+		{
+			if ((*iter)->Get_Dead())
+				continue;
+			for (auto& iters = StdEnemy.begin(); iters < StdEnemy.end(); ++iters)
+			{
+
+				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(*iters))
+					continue;
+
+				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(*iters)->Get_Info(), (*iter)->Get_Dist(), (*iters)->Get_Dist()))
+					continue;
+
+				if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(*iters)->Get_OBB()))
+				{
+					(*iter)->Set_Dead(true);
+
+					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+
+					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
+						dynamic_cast<CStdEnemy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::SMALL_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
+						dynamic_cast<CStdEnemy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::MIDDLE_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
+						dynamic_cast<CStdEnemy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::BIG_TANK).fDamage);
+					else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
+						dynamic_cast<CStdEnemy*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
+
+					if (dynamic_cast<CStdEnemy*>(*iters)->GetHp() <= 0)
+					{
+						dynamic_cast<CStdEnemy*>(*iters)->Set_DeadMotionPlay();
+					}
+					continue;
+				}
+			}
 		}
 	}
 }

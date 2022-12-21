@@ -224,7 +224,7 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 	{
 		DeadMotionCheck = true;
 	}
-	if (!m_bDead&&DeadMotionCheck)
+	if (DeadMotionCheck)
 	{
 		Dead_Motion(fTimeDelta);
 	}
@@ -375,10 +375,9 @@ void CBottomDirEnermy::LateUpdate_Object(void)
 	{
 		m_iAction = AIACTION::AIACTION_RUN;
 	}
-	if (m_bDead && !Deadtest)
+	if (Deadtest)
 	{
-		Deadtest = true;
-		m_bDead = false;
+
 		DeadMotionCheck = true;
 		m_stBody.fLen[x] = 0.f;
 		m_stBody.fLen[y] = 0.f;
@@ -387,7 +386,6 @@ void CBottomDirEnermy::LateUpdate_Object(void)
 		m_stHead.fLen[x] = 0.f;
 		m_stHead.fLen[y] = 0.f;
 		m_stHead.fLen[z] = 0.f;
-
 	}
 
 

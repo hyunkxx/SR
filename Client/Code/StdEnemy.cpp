@@ -160,8 +160,21 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 _int CStdEnemy::Update_Object(const _float & fTimeDelta)
 {
 	__super::Update_Object(fTimeDelta);
-	m_fReloadTime += fTimeDelta;
-	Detect(fTimeDelta);
+	if (DeadMotionCheck)
+	{
+		Dead_Motion(fTimeDelta);
+	}
+	else
+	{
+		m_fReloadTime += fTimeDelta;
+		Detect(fTimeDelta);
+	}
+	if (m_bDeadTime >= 3.f)
+	{
+		DeadMotionCheck = false;
+		m_bDead = true;
+
+	}
 	Update_OBB();
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -172,10 +185,29 @@ void CStdEnemy::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 
+	if (Deadtest)
+	{
+
+		DeadMotionCheck = true;
+		m_stBody.fLen[x] = 0.f;
+		m_stBody.fLen[y] = 0.f;
+		m_stBody.fLen[z] = 0.f;
+
+		m_stHead.fLen[x] = 0.f;
+		m_stHead.fLen[y] = 0.f;
+		m_stHead.fLen[z] = 0.f;
+	}
+
 }
 
 void CStdEnemy::Render_Object(void)
 {
+	if (DeadMotionCheck)
+	{
+		m_pHead->Change_Color_Dead();
+		m_pBody->Change_Color_Dead();
+		m_pPosin->Change_Color_Dead();
+	}
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pHead->Render(m_pTransformCom->Get_WorldMatrix());
 
@@ -184,6 +216,13 @@ void CStdEnemy::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformPosin->Get_WorldMatrix());
 	m_pPosin->Render(m_pTransformPosin->Get_WorldMatrix());
+
+	if (DeadMotionCheck)
+	{
+		m_pHead->Return_Color();
+		m_pBody->Return_Color();
+		m_pPosin->Return_Color();
+	}
 }
 
 OBB * CStdEnemy::Get_OBB(void)
@@ -278,7 +317,7 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		Pos += Dir* 3.f*fPosinDist;
 
 		if (m_fReloadTime > m_fReload)
-		{	
+		{
 			Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
 			m_fReloadTime = 0.f;
 		}
@@ -401,6 +440,33 @@ HRESULT CStdEnemy::Add_Component(void)
 
 
 	return S_OK;
+}
+
+void CStdEnemy::Dead_Motion(const _float & fTimeDelta)
+{
+	_vec3 Pos;
+	m_pTransformCom->Get_Info(INFO_POS, &Pos);
+	m_bDeadTime += fTimeDelta;
+	fAccum += fTimeDelta;
+	if (0.4f < Pos.y && 0 == m_iMotionCount)
+	{
+
+		_float x = 5.f * fTimeDelta;
+		_float y = (100.f * fTimeDelta) - (0.5f * 9.8f * fAccum*fAccum);
+		_vec3 Move = { x , y ,0.f };
+		m_pTransformCom->Move_Pos(&Move);
+		m_pTransformPosin->Move_Pos(&Move);
+		m_pTransformCom->Rotation(ROT_X, 500 * fTimeDelta);
+		m_pTransformPosin->Rotation(ROT_X, 500 * fTimeDelta);
+	}
+
+	else
+	{
+		m_iMotionCount++;
+		Pos.y = 0.8f;
+		m_pTransformCom->Set_Pos(Pos.x, Pos.y, Pos.z);
+		m_pTransformPosin->Set_Pos(Pos.x, Pos.y, Pos.z);
+	}
 }
 
 CStdEnemy * CStdEnemy::Create(LPDIRECT3DDEVICE9 pGraphicDev)
