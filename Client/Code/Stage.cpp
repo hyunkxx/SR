@@ -645,7 +645,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ALLY);
 	}
-	/*for (_int i = 0; 5 > i; i++)
+	for (_int i = 0; 5 > i; i++)
 	{
 		_int tanktype = rand() % 4;
 		switch (tanktype)
@@ -687,7 +687,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_BDALLY);
 	}
-	*/
+	
 	pGameObject = CCreateAi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CreateAi", pGameObject), E_FAIL);

@@ -213,14 +213,14 @@ void CTempOccupationScore::LateUpdate_Object(void)
 
 void CTempOccupationScore::Render_Object(void)
 {
-	/*CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
+	CGameObject* pHelpWin = Engine::Get_Object(L"UI", L"Start_UI");
 	_bool showF1Win = static_cast<CUI_Start*>(pHelpWin)->Get_HelpWin();
 
 	if (CGameMode::GetInstance()->m_bGameEnd)
 		return;
 
 	if (!showF1Win)
-	{
+	{/*
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sLeft);
 		m_pBufferLeftCom->Render_Buffer();
@@ -236,7 +236,7 @@ void CTempOccupationScore::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformLeftTopCom->Get_WorldMatrix());
 		m_pTextureCom->Set_Texture(m_sLeftTop);
 		m_pBufferLefttopCom->Render_Buffer();
-
+		*/
 		_vec2 vPos = { 350.f, 10.f };
 		Render_Font(L"Font_Occupation", m_strAllyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
 		vPos = { 430.f, 10.f };
@@ -247,7 +247,7 @@ void CTempOccupationScore::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 	}
-	*/
+	
 
 }
 
