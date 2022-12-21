@@ -22,6 +22,7 @@ public://Component
 
 	void SetColor(D3DXCOLOR color);
 	void	Change_Color_Dead(void);
+	void	God_Mode(_int i);
 	void	Return_Color(void);
 public:
 	static CVoxel*		Create(LPDIRECT3DDEVICE9 pDevice, wstring key, bool bCullMode = true);

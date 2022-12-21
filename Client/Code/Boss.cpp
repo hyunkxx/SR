@@ -8,6 +8,7 @@
 #include "BossHitPoint.h"
 #include "Boss_Bullet.h"
 #include "Boss_Bomber.h"
+#include "RedCarpet.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -246,7 +247,7 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	}
 
 	//////////////////////////////////////////////////////////////
-	if (50.f < m_fPattern_5Count)
+	if (40.f < m_fPattern_5Count)
 	{
 		m_fPattern_5Count = 0.f;
 		m_bPattern_5 = true;
@@ -339,7 +340,7 @@ void CBoss::Pattern_03(const _float & fTimeDelta)
 
 		RadianDot -= RadianBoss;
 
-		if (abs(RadianDot) < D3DXToRadian(5.f))
+		if (abs(RadianDot) < D3DXToRadian(5.f) && !m_bPattern_3)
 		{
 			m_fRushCount = 0.f;
 			m_vRushDist = { 0.f,0.f ,0.f };
@@ -347,6 +348,7 @@ void CBoss::Pattern_03(const _float & fTimeDelta)
 			m_bHeadMove = false;
 			Engine::StopSound(BOSS_RUSH1_SOUND);
 			Engine::PlaySound_SR(L"Boss_Rush_1.wav", BOSS_RUSH1_SOUND, 1.f);
+			static_cast<CRedCarpet*>(Engine::Get_Object(L"GameLogic", L"RedCarpet"))->Set_Carpet(m_pTransformBody, &m_stBody);
 		}
 		else
 			Body_Spin(fTimeDelta);
@@ -400,7 +402,7 @@ void CBoss::Pattern_05(const _float & fTimeDelta)
 {
 	m_fBoomberTime += fTimeDelta;
 
-	if (5.f < m_fBoomberTime)
+	if (3.f < m_fBoomberTime)
 	{
 		CGameObject* pBomeber = nullptr;
 		_vec3  Pos;
@@ -457,6 +459,7 @@ void CBoss::Pattern_05(const _float & fTimeDelta)
 		m_fBoomberTime = 0.f;
 		if (4 < m_iBoomber_Count)
 		{
+			m_iBoomber_Count = 0.f;
 			m_bPattern_5 = false;
 			m_fPattern_5Count = 0.f;
 		}
@@ -521,9 +524,9 @@ HRESULT CBoss::Ready_Object(void)
 
 	m_stInfo.RotSpeed = 40.f;
 
-	m_stBody.fLen[x] = 2.5f  * m_fScale;
-	m_stBody.fLen[y] = 4.f  * m_fScale;
-	m_stBody.fLen[z] = 4.5f * m_fScale;
+	m_stBody.fLen[x] = 12.f  * m_fScale;
+	m_stBody.fLen[y] = 8.f  * m_fScale;
+	m_stBody.fLen[z] = 10.f * m_fScale;
 
 	Posin_Setting(_vec3(300.f, 6.f * m_fScale, 600.f));
 	Head_Setting(_vec3(300.f, 6.f* m_fScale, 600.f));
@@ -555,7 +558,7 @@ void CBoss::Shoot_Bullet(BULLET_ID eID)
 	Pos.y += 8.f  * m_fScale;
 	Dir = m_vHitPoint - Pos;
 	NewDir = Dir;
-	NewDir.y - 0.f;
+	NewDir.y = 0.f;
 	D3DXVec3Normalize(&Dir, &Dir);
 	D3DXVec3Normalize(&NewDir, &NewDir);
 	_float RadianX = acosf(D3DXVec3Dot(&Dir, &NewDir));

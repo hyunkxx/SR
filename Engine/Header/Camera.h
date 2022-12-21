@@ -33,6 +33,8 @@ public:
 	_vec3	Get_Eye(void) { return m_vEye; }
 	void		Set_Fov(_float Fov) { m_bFovSet = true; m_fSetFov = Fov; }
 	void		Fov_Setting(const _float& fTimeDelta);
+	void		Set_Lock(_bool Lock) { m_bSeeLock = Lock; }
+	_bool		Get_Lock(void) { return m_bSeeLock; }
 public:
 	_float Get_Linear(_float a, _float b, _float Alpha)
 	{
@@ -58,6 +60,8 @@ protected:
 	_bool		m_bRock = false;
 	_bool		m_bFovSet = false;
 	_float		m_fSetFov = 60.f;
+
+	_bool		m_bSeeLock = true;
 protected:
 	virtual void		Free(void);
 private:

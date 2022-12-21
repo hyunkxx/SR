@@ -50,7 +50,7 @@ protected:
 	_float				m_fStrike_Count = 0.f;
 	_float				m_fVolume = 1.f;
 
-	_int				m_iSoundType = 0.f;
+	_int				m_iSoundType = 0;
 	_float				m_fSoundCheckTime = 0.f;
 };
 

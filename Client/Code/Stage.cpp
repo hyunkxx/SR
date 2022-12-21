@@ -81,6 +81,7 @@
 #include "GameMode.h"
 #include "ModeSelectMenu.h"
 
+#include "WarningUI.h"
 _int CStage::iSoundNum = 49;
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
@@ -97,7 +98,7 @@ HRESULT CStage::Ready_Scene(void)
 	ShowCursor(false);
 
 	float Start = 10.f;
-	float End = 300.f;
+	float End = 200.f;
 	m_pGraphicDev->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 240, 210, 0));
 	//m_pGraphicDev->SetRenderState(D3DRS_FOGCOLOR, D3DCOLOR_RGBA(255, 255, 255, 0));
@@ -726,6 +727,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
+	pGameObject = CWarningUI::Create(m_pGraphicDev, CWarningUI::MODE::RUSH);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"warning_ui", pGameObject), E_FAIL);
+
 	pGameObject = CUI_Player_Hp::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Hp2", pGameObject), E_FAIL);
@@ -969,6 +974,7 @@ void CStage::Collison_Object(void)
 	_vec3 vPlayerPos;
 	pPlayerpos->Get_Info(INFO::INFO_POS, &vPlayerPos);
 	
+	_vec3 CameraPos = Engine::Get_Camera()->Get_Eye();
 	// 도탄 사운드
 	_tchar Hit_Sound[32] = L"도탄.mp3";
 	_tchar HitShell_Sound[32] = L"포탄도탄2.mp3";
@@ -1235,32 +1241,32 @@ void CStage::Collison_Object(void)
 						dynamic_cast<CDefault_Ally*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
 					// 소리 거리
-					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 소리 거리제한
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
 						{
 							// 포탄 피격 사운드
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(SAMLL_HIT_SOUND1);
 							Engine::PlaySound_SR(L"SMALL_HIT.wav", SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(MIDDLE_HIT_SOUND1);
 							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(BIG_HIT_SOUND1);
 							Engine::PlaySound_SR(L"BIG_HIT.wav", BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
@@ -1306,32 +1312,32 @@ void CStage::Collison_Object(void)
 						dynamic_cast<CBottomDirAlly*>(*iters)->Minus_HP_UI(CTankManager::GetInstance()->GetData(VEHICLE::HUMVEE).fDamage);
 
 					// 소리 거리
-					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 소리 거리제한
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MASHINE_BULLET)
 						{
 							// 포탄 피격 사운드
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_SMALL_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(SAMLL_HIT_SOUND1);
 							Engine::PlaySound_SR(L"SMALL_HIT.wav", SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_MIDDLE_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(MIDDLE_HIT_SOUND1);
 							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::ENEMY_BIG_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(BIG_HIT_SOUND1);
 							Engine::PlaySound_SR(L"BIG_HIT.wav", BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
@@ -1458,32 +1464,32 @@ void CStage::Collison_Object(void)
 					}
 
 					// 소리 거리
-					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 소리 거리제한
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
 							// 포탄 피격 사운드
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_SAMLL_HIT_SOUND1);
 							Engine::PlaySound_SR(L"SMALL_HIT.wav", ENEMY_SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_MIDDLE_HIT_SOUND1);
 							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", ENEMY_MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
 							Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
@@ -1539,7 +1545,7 @@ void CStage::Collison_Object(void)
 						
 
 					// 소리 거리
-					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - vPlayerPos.x) * (vPos.x - vPlayerPos.x)) + ((vPos.z - vPlayerPos.z) * (vPos.z - vPlayerPos.z)));
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 소리 거리제한
 					if (fPlayer_obj_dist_Sound <= 100.f)
 					{
@@ -1547,25 +1553,25 @@ void CStage::Collison_Object(void)
 						if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MASHINE_BULLET)
 						{
 							// 포탄 피격 사운드
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(HIT_SHELL_SUOND);
 							Engine::PlaySound_SR(HitShell_Sound, HIT_SHELL_SUOND, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::SMALL_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_SAMLL_HIT_SOUND1);
 							Engine::PlaySound_SR(L"SMALL_HIT.wav", ENEMY_SAMLL_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::MIDDLE_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_MIDDLE_HIT_SOUND1);
 							Engine::PlaySound_SR(L"MIDDLE_HIT.wav", ENEMY_MIDDLE_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}
 						else if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
 						{
-							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 100.f);
+							fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 130.f);
 							Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
 							Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
 						}

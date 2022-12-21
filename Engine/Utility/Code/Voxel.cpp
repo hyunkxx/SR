@@ -101,6 +101,46 @@ void CVoxel::Change_Color_Dead(void)
 	}
 }
 
+void CVoxel::God_Mode(_int i)
+{
+	D3DXCOLOR God_Color = {};
+
+	if ((GOD_COLOR)i == RED)
+	{
+		God_Color = { 1.f, 0.f, 0.f,0.f };
+	}
+	else if ((GOD_COLOR)i == ORANGE)
+	{
+		God_Color = { 1.f, 0.5f, 0.f,0.f };
+	}
+	else if ((GOD_COLOR)i == YELLOW)
+	{
+		God_Color = { 1.f, 1.f, 0.f,0.f };
+	}
+	else if ((GOD_COLOR)i == GREEN)
+	{
+		God_Color = { 0.f, 1.f, 0.f,0.f };
+	}
+	else if ((GOD_COLOR)i == BLUE)
+	{
+		God_Color = { 0.f, 0.f, 1.f,0.f };
+	}
+	else if ((GOD_COLOR)i == DEEP_BLUE)
+	{
+		God_Color = { 0.f, 0.f, 0.5f,0.f };
+	}
+	else if ((GOD_COLOR)i == PURPLE)
+	{
+		God_Color = { 0.5f, 0.f, 0.1f,0.f };
+	}
+
+	auto iter = m_vecCube.begin();
+	for (; iter != m_vecCube.end(); ++iter)
+	{
+		(*iter)->SetColor(God_Color);
+	}
+}
+
 void CVoxel::Return_Color(void)
 {
 	auto& iter = m_vecColorSet.begin();

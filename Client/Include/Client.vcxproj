@@ -188,6 +188,7 @@
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\BossCamera.h" />
     <ClInclude Include="..\Header\BossHitPoint.h" />
+    <ClInclude Include="..\Header\BossSkill.h" />
     <ClInclude Include="..\Header\Boss_Bomber.h" />
     <ClInclude Include="..\Header\Boss_Bullet.h" />
     <ClInclude Include="..\Header\BottomDirAlly.h" />
@@ -220,8 +221,10 @@
     <ClInclude Include="..\Header\ModeSelectMenu.h" />
     <ClInclude Include="..\Header\MoonWalkCamera.h" />
     <ClInclude Include="..\Header\ObjectMesh.h" />
+    <ClInclude Include="..\Header\RedCarpet.h" />
     <ClInclude Include="..\Header\ResultUI.h" />
     <ClInclude Include="..\Header\Rush.h" />
+    <ClInclude Include="..\Header\RushMode.h" />
     <ClInclude Include="..\Header\RushTank.h" />
     <ClInclude Include="..\Header\ScoreBoard.h" />
     <ClInclude Include="..\Header\ShipBullet.h" />
@@ -257,6 +260,7 @@
     <ClInclude Include="..\Header\UI_Volume.h" />
     <ClInclude Include="..\Header\UI_World_Bubble.h" />
     <ClInclude Include="..\Header\VehicleInfoUI.h" />
+    <ClInclude Include="..\Header\WarningUI.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -307,6 +311,7 @@
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\BossCamera.cpp" />
     <ClCompile Include="..\Code\BossHitPoint.cpp" />
+    <ClCompile Include="..\Code\BossSkill.cpp" />
     <ClCompile Include="..\Code\Boss_Bomber.cpp" />
     <ClCompile Include="..\Code\Boss_Bullet.cpp" />
     <ClCompile Include="..\Code\BottomDirAlly.cpp" />
@@ -339,8 +344,10 @@
     <ClCompile Include="..\Code\ModeSelectMenu.cpp" />
     <ClCompile Include="..\Code\MoonWalkCamera.cpp" />
     <ClCompile Include="..\Code\ObjectMesh.cpp" />
+    <ClCompile Include="..\Code\RedCarpet.cpp" />
     <ClCompile Include="..\Code\ResultUI.cpp" />
     <ClCompile Include="..\Code\Rush.cpp" />
+    <ClCompile Include="..\Code\RushMode.cpp" />
     <ClCompile Include="..\Code\RushTank.cpp" />
     <ClCompile Include="..\Code\ScoreBoard.cpp" />
     <ClCompile Include="..\Code\ShipBullet.cpp" />
@@ -376,6 +383,7 @@
     <ClCompile Include="..\Code\UI_Volume.cpp" />
     <ClCompile Include="..\Code\UI_World_Bubble.cpp" />
     <ClCompile Include="..\Code\VehicleInfoUI.cpp" />
+    <ClCompile Include="..\Code\WarningUI.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

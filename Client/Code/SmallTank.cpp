@@ -202,10 +202,10 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 
 		if (Get_DIKeyState_Custom(DIK_3) == KEY_STATE::TAP)
 		{
-			if (CGameMode::GetInstance()->m_nGold[0] <= 500.f)
+			if (CGameMode::GetInstance()->m_nGold[0] <= 500)
 				return;
 
-			CGameMode::GetInstance()->m_nGold[0] -= 500.f;
+			CGameMode::GetInstance()->m_nGold[0] -= 500;
 
 			CTankManager::GetInstance()->MouseLBTLock(true);
 
@@ -219,10 +219,10 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 		}
 		if (Get_DIKeyState_Custom(DIK_4) == KEY_STATE::TAP)
 		{
-			if (CGameMode::GetInstance()->m_nGold[0] <= 500.f)
+			if (CGameMode::GetInstance()->m_nGold[0] <= 500)
 				return;
 
-			CGameMode::GetInstance()->m_nGold[0] -= 500.f;
+			CGameMode::GetInstance()->m_nGold[0] -= 500;
 
 			m_bStart = false;
 			m_fEngineCount = 0.f;
@@ -233,10 +233,10 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 		}
 		if (Get_DIKeyState_Custom(DIK_5) == KEY_STATE::TAP)
 		{
-			if (CGameMode::GetInstance()->m_nGold[0] <= 500.f)
+			if (CGameMode::GetInstance()->m_nGold[0] <= 500)
 				return;
 
-			CGameMode::GetInstance()->m_nGold[0] -= 500.f;
+			CGameMode::GetInstance()->m_nGold[0] -= 500;
 
 			m_bRock = true;
 			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();

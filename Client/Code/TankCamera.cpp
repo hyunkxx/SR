@@ -132,13 +132,17 @@ void CTankCamera::Camera_Setting(_vec3 Target_Pos)
 	CGameObject* pObject = Engine::Reuse_Effect(EFFECT_ID::BOOMER_BOOM_SMOKE);
 	static_cast<CBoomEffect*>(pObject)->Set_Dead(false);
 	static_cast<CBoomEffect*>(pObject)->Set_Pos(Target_Pos);
-	Target_Pos.y = 0.f;
-	Target_Pos -= m_vEye;
-	D3DXVec3Normalize(&Target_Pos, &Target_Pos);
-	m_vLook.x = Target_Pos.x;
-	m_vLook.z = Target_Pos.z;
 
-	m_vAt = m_vEye + m_vLook;;
+	if (m_bSeeLock)
+	{
+		Target_Pos.y = 0.f;
+		Target_Pos -= m_vEye;
+		D3DXVec3Normalize(&Target_Pos, &Target_Pos);
+		m_vLook.x = Target_Pos.x;
+		m_vLook.z = Target_Pos.z;
+
+		m_vAt = m_vEye + m_vLook;;
+	}
 }
 
 CTankCamera * CTankCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pEye, const _vec3 * pAt, const _vec3 * pUp, const _float & fFov, const _float & fAspect, const _float & fNear, const _float & fFar)

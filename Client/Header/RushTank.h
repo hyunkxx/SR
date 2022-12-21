@@ -71,11 +71,13 @@ public:
 	void				Set_Rock(_bool Rock) { m_bRock = Rock; }
 
 	const Tank_State Get_TankInfo(void) { return  m_stInfo; }
+	_bool				Get_God_Mode(void) { return m_bGodMode; }
+private:
 
 	CTransform*			m_pTransformBody = nullptr;
 	CTransform*			m_pTransformHead = nullptr;
 	CTransform*			m_pTransformPosin = nullptr;
-private:
+
 	CCalculator*		m_pCalculatorCom = nullptr;
 
 	Tank_State			m_stInfo;
@@ -100,6 +102,9 @@ private:
 	_vec3				m_fHitPos;
 	//
 	_int				m_iMotionCount = 0;
+
+	_bool				m_bGodMode = false;
+	_float				m_fGodCount = 0.f;
 public:
 	virtual void Free(void) override;
 	static CRushTank* Create(LPDIRECT3DDEVICE9 pGraphicDev);

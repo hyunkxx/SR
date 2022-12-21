@@ -71,16 +71,16 @@ HRESULT CRcCol::Ready_Buffer(void)
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0); // 3인자 : 버텍스 버퍼의 원소 중 첫번째 주소 값을 추출
 												// 위쪽 
 	pVertex[0].vPos = { -1.f, 1.f, 0.f };
-	pVertex[0].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[0].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 0.5f);
 
 	pVertex[1].vPos = { 1.f, 1.f, 0.f };
-	pVertex[1].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[1].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 0.5f);
 
 	pVertex[2].vPos = { 1.f, -1.f, 0.f };
-	pVertex[2].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
+	pVertex[2].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 0.5f);
 
 	pVertex[3].vPos = { -1.f, -1.f, 0.f };
-	pVertex[3].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[3].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 0.5f);
 
 	m_pVB->Unlock();
 
