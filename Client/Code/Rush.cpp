@@ -20,6 +20,7 @@
 #include "Boss.h"
 #include "BossHitPoint.h"
 #include "Boss_Bullet.h"
+#include "Boss_Bomber.h"
 
 //camera
 #include "DynamicCamera.h"
@@ -317,6 +318,30 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss", pGameObject), E_FAIL);
 
+	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber1", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+	
+	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber2", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+
+	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber3", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+
+	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber4", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+
+	pGameObject = CBoss_Bomber::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Boss_Bomber5", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
 
 	for (_int i = 0; BOOM_BULLET > i; i++)
 	{
@@ -355,7 +380,7 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		Engine::Bullet_Supply(pBullet, BULLET_ID::SMOKE_BULLET);
 	}
 
-	for (_int i = 0; 5 > i; i++)
+	for (_int i = 0; 10 > i; i++)
 	{
 		CGameObject* pBullet = CBoom_Bullet::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pBullet, E_FAIL);

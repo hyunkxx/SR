@@ -7,6 +7,7 @@
 #include "EffectManager.h"
 #include "BossHitPoint.h"
 #include "Boss_Bullet.h"
+#include "Boss_Bomber.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -35,14 +36,21 @@ _int CBoss::Update_Object(const _float & fTimeDelta)
 	if(m_bAppear)
 		m_fShootCount += fTimeDelta;
 
-	
+	if (m_bAppear)
+		m_fPattern_3Count += fTimeDelta;
+
+	if (m_bAppear && !m_bPattern_5)
+		m_fPattern_5Count += fTimeDelta;
+
+	if (!m_bPattern_4)
+		Export_Hit_Point();
+
 	m_pTransformBody->Set_Scale(1.5f * m_fScale, m_fScale, 1.5f * m_fScale);
 	m_pTransformHead->Set_Scale(1.5f * m_fScale, m_fScale, 1.5f * m_fScale);
 	m_pTransformPosin->Set_Scale(1.5f * m_fScale, m_fScale, 1.5f * m_fScale);
 
 	Pattern(fTimeDelta);
-	if(!m_bPattern_4)
-		Export_Hit_Point();
+
 
 	if(m_bAppear && m_bHeadMove)
 		Head_Spin(fTimeDelta);
@@ -126,8 +134,11 @@ void CBoss::Update_OBB(void)
 
 void CBoss::Appear(void)
 {
+	Engine::Get_Camera()->Set_Fov(D3DXToRadian(80.f));
 	Engine::StopSound(BOSS_BGM);
-	Engine::PlayBGM(L"Boss_BGM.mp3",BOSS_BGM);
+	Engine::StopSound(BOSS_ENGINE_SOUND);
+	Engine::PlaySound_SR(L"Boss_Engine.mp3", BOSS_ENGINE_SOUND, 1.f);
+	Engine::PlayBGM(L"Boss_BGM.mp3", BOSS_BGM);
 	Posin_Setting(_vec3(100.f, 6.f * m_fScale, 400.f));
 	Head_Setting(_vec3(100.f, 6.f* m_fScale, 400.f));
 	Body_Setting(_vec3(100.f, 6.f* m_fScale, 400.f));
@@ -157,23 +168,89 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	if (m_bPattern_1 && 1 == m_iAppearCount)
 		Pattern_01(fTimeDelta);
 	// 여기까지 보스 등장 무빙
-	/////////////////////Pattern_04///////////////////////////////
-	// 대포 발사
-	if (10.f <= m_fShootCount)
+	//////////////////////////////////////////////////////////////
+
+	if (m_bPattern_2)
 	{
-		m_fShootCount = 0.f;
-		m_bPattern_4 = true;
-		static_cast<CBossHitPoint*>(Engine::Get_Object(L"UI", L"Boss_Hit_Point"))->Hit_Point_Set(m_vHitPoint,5.f);
+		Pattern_02(fTimeDelta);
+	}
+	//////////////////////////////////////////////////////////////
+	if (30.f < m_fPattern_3Count)
+	{
+		m_bPattern_2 = false;
+		m_bPattern_3 = true;
 	}
 
+	if (m_bPattern_3 && !m_bPattern_4)
+	{
+		Pattern_03(fTimeDelta);
+
+	}
+	/////////////////////Pattern_04///////////////////////////////
+	// 대포 발사
+	if (20.f <= m_fShootCount)
+	{
+		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+		_vec3 BossPos, BossLook;
+		_vec3 PlayerPos;
+		_vec3 Right(1.0f, 0.f, 0.f);
+		if (pPlayerTransCom)
+			pPlayerTransCom->Get_Info(INFO_POS, &PlayerPos);
+		else
+			return;
+
+		m_pTransformBody->Get_Info(INFO_POS, &BossPos);
+		m_pTransformHead->Get_Info(INFO_LOOK, &BossLook);
+
+		_vec3 vLook = PlayerPos - BossPos;
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&BossLook, &BossLook);
+
+		_float	fLookDot = D3DXVec3Dot(&vLook, &Right);
+		_float	fBossLookDot = D3DXVec3Dot(&BossLook, &Right);
+
+		_float RadianDot = acosf(fLookDot);
+		_float RadianBoss = acosf(fBossLookDot);
+
+
+		if (Right.z > vLook.z)
+			RadianDot *= -1;
+
+		if (Right.z > BossLook.z)
+			RadianBoss *= -1;
+
+		RadianDot -= RadianBoss;
+		if (RadianDot <= D3DXToRadian(1.f) && RadianDot >= D3DXToRadian(-1.f))
+		{
+			m_fShootCount = 0.f;
+			m_bPattern_4 = true;
+			static_cast<CBossHitPoint*>(Engine::Get_Object(L"UI", L"Boss_Hit_Point"))->Hit_Point_Set(m_vHitPoint, 5.f);
+
+		}
+		else
+		{
+			Head_Spin(fTimeDelta);
+		}
+	}
 	if (m_bPattern_4)
 	{
 		m_bHeadMove = false;
+		m_bPattern_2 = false;
 		Pattern_04(fTimeDelta);
 	}
 
-
-
+	//////////////////////////////////////////////////////////////
+	if (50.f < m_fPattern_5Count)
+	{
+		m_fPattern_5Count = 0.f;
+		m_bPattern_5 = true;
+		Engine::StopSound(BOSS_SIREN_SOUND);
+		Engine::PlaySound_SR(L"Boss_Bomber_Siren.mp3", BOSS_SIREN_SOUND, 1.f);
+	}
+	if (m_bPattern_5)
+	{
+		Pattern_05(fTimeDelta);
+	}
 }
 
 void CBoss::Pattern_01(const _float & fTimeDelta)
@@ -192,15 +269,110 @@ void CBoss::Pattern_01(const _float & fTimeDelta)
 		m_bPattern_1 = false;
 		m_bPattern_2 = true;
 	}
-
 }
 
 void CBoss::Pattern_02(const _float & fTimeDelta)
 {
+	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	_vec3 PlayerPos;
+	pPlayerTransCom->Get_Info(INFO_POS, &PlayerPos);
+	_vec3 vBossPos;
+	_vec3 vBossLook;
+	m_pTransformBody->Get_Info(INFO_POS, &vBossPos);
+	m_pTransformBody->Get_Info(INFO_LOOK, &vBossLook);
+	D3DXVec3Normalize(&vBossLook, &vBossLook);
+	PlayerPos.y = 0.f;
+	vBossPos.y = 0.f;
+	_vec3 vDist = PlayerPos - vBossPos;
+	_float fDist = sqrtf((vDist.x*vDist.x) + (vDist.z *vDist.z));
+
+	if (200.f > fDist)
+	{
+		Body_Spin(fTimeDelta);
+		Move_Pos(-vBossLook * 20.f * fTimeDelta);
+	}
+	else if (250.f < fDist)
+	{
+		Body_Spin(fTimeDelta);
+		Move_Pos(vBossLook * 20.f * fTimeDelta);
+	}
 }
 
 void CBoss::Pattern_03(const _float & fTimeDelta)
 {
+	if (!m_bPattern_Type)
+	{
+		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+		_vec3 BossPos, BossLook;
+		_vec3 PlayerPos;
+		_vec3 Right(1.0f, 0.f, 0.f);
+
+		if (pPlayerTransCom)
+			pPlayerTransCom->Get_Info(INFO_POS, &PlayerPos);
+		else
+			return;
+
+		m_pTransformBody->Get_Info(INFO_POS, &BossPos);
+		m_pTransformBody->Get_Info(INFO_LOOK, &BossLook);
+
+		_vec3 vLook = PlayerPos - BossPos;
+		D3DXVec3Normalize(&vLook, &vLook);
+		D3DXVec3Normalize(&BossLook, &BossLook);
+
+		_float	fLookDot = D3DXVec3Dot(&vLook, &Right);
+		_float	fBossLookDot = D3DXVec3Dot(&BossLook, &Right);
+
+		_float RadianDot = acosf(fLookDot);
+		_float RadianBoss = acosf(fBossLookDot);
+		if (Right.z > vLook.z)
+			RadianDot *= -1;
+
+		if (Right.z > BossLook.z)
+			RadianBoss *= -1;
+
+		RadianDot -= RadianBoss;
+
+		if (abs(RadianDot) < D3DXToRadian(5.f))
+		{
+			m_fRushCount = 0.f;
+			m_vRushDist = { 0.f,0.f ,0.f };
+			m_bPattern_Type = true;
+			m_bHeadMove = false;
+			Engine::StopSound(BOSS_RUSH1_SOUND);
+			Engine::PlaySound_SR(L"Boss_Rush_1.wav", BOSS_RUSH1_SOUND, 1.f);
+		}
+		else
+			Body_Spin(fTimeDelta);
+	}
+	else
+	{
+		m_fRushCount += fTimeDelta;
+
+		if (3.f < m_fRushCount && 3.05f > m_fRushCount)
+		{
+			Engine::StopSound(BOSS_RUSH2_SOUND);
+			Engine::PlaySound_SR(L"Boss_Rush_2.wav", BOSS_RUSH2_SOUND, 1.f);
+			Engine::Get_Camera()->Shake_On();
+		}
+		if (3.f < m_fRushCount)
+		{
+			_vec3  BossLook;
+			m_pTransformBody->Get_Info(INFO_LOOK, &BossLook);
+			D3DXVec3Normalize(&BossLook, &BossLook);
+
+			m_vRushDist += BossLook * m_fRushSpeed * fTimeDelta;
+			Move_Pos(BossLook * m_fRushSpeed * fTimeDelta);
+
+			if (400.f <= sqrtf((m_vRushDist.x*m_vRushDist.x) + (m_vRushDist.z*m_vRushDist.z)))
+			{
+				m_bPattern_3 = false;
+				m_fPattern_3Count = 0.f;
+				m_bPattern_Type = false;
+				m_bHeadMove = true;
+				m_bPattern_2 = true;
+			}
+		}
+	}
 }
 
 void CBoss::Pattern_04(const _float & fTimeDelta)
@@ -211,8 +383,76 @@ void CBoss::Pattern_04(const _float & fTimeDelta)
 		Engine::StopSound(BOSS_SHOOT_SOUND);
 		Engine::PlaySound_SR(L"Shoot_Bullet.wav", BOSS_SHOOT_SOUND,1.f);
 		Shoot_Bullet(BULLET_ID::BOSS_BULLET);
-		m_bPattern_4 = false;
+		m_bPattern_2 = true;
 		m_bHeadMove = true;
+		m_bPattern_4 = false;
+	}
+}
+
+void CBoss::Pattern_05(const _float & fTimeDelta)
+{
+	m_fBoomberTime += fTimeDelta;
+
+	if (5.f < m_fBoomberTime)
+	{
+		CGameObject* pBomeber = nullptr;
+		_vec3  Pos;
+		static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC))->Get_Info(INFO_POS, &Pos);
+
+		if (m_iBoomber_Count == 0)
+		{
+
+			pBomeber = Engine::Get_Object(L"GameLogic", L"Boss_Bomber1");
+
+			_vec3 Start = { -100.f , 80.f, -100.f };
+			static_cast<CBoss_Bomber*>(pBomeber)->Strike(Start, Pos, 0);
+			pBomeber->Set_Dead(false);
+
+		}
+		else if (m_iBoomber_Count == 1)
+		{
+			pBomeber = Engine::Get_Object(L"GameLogic", L"Boss_Bomber2");
+
+			_vec3 Start = { 1000.f , 80.f, -100.f };
+			static_cast<CBoss_Bomber*>(pBomeber)->Strike(Start, Pos, 1);
+			pBomeber->Set_Dead(false);
+
+		}
+		else if (m_iBoomber_Count == 2)
+		{
+			pBomeber = Engine::Get_Object(L"GameLogic", L"Boss_Bomber3");
+
+			_vec3 Start = { -100.f , 80.f, 500.f };
+			static_cast<CBoss_Bomber*>(pBomeber)->Strike(Start, Pos, 2);
+			pBomeber->Set_Dead(false);
+
+		}
+		else if (m_iBoomber_Count == 3)
+		{
+			pBomeber = Engine::Get_Object(L"GameLogic", L"Boss_Bomber4");
+
+			_vec3 Start = { 500.f , 80.f, 1000.f };
+			static_cast<CBoss_Bomber*>(pBomeber)->Strike(Start, Pos, 3);
+			pBomeber->Set_Dead(false);
+
+		}
+		else if (m_iBoomber_Count == 4)
+		{
+			pBomeber = Engine::Get_Object(L"GameLogic", L"Boss_Bomber5");
+
+			_vec3 Start = { 1000.f , 80.f, 100.f };
+			static_cast<CBoss_Bomber*>(pBomeber)->Strike(Start, Pos, 4);
+			pBomeber->Set_Dead(false);
+
+		}
+
+		m_iBoomber_Count++;
+		m_fBoomberTime = 0.f;
+		if (4 < m_iBoomber_Count)
+		{
+			m_bPattern_5 = false;
+			m_fPattern_5Count = 0.f;
+		}
 	}
 }
 
@@ -235,15 +475,15 @@ HRESULT CBoss::Add_Component(void)
 
 	// 
 	/* Voxel Mesh */
-	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Boss_body");
+	pComponent = m_pBody = CVoxel::Create(m_pGraphicDev, L"Boss_body", false);
 	NULL_CHECK_RETURN(m_pBody, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelBody", pComponent });
 
-	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Boss_head");
+	pComponent = m_pHead = CVoxel::Create(m_pGraphicDev, L"Boss_head", false);
 	NULL_CHECK_RETURN(m_pHead, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelHead", pComponent });
 
-	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Boss_posin");
+	pComponent = m_pPosin = CVoxel::Create(m_pGraphicDev, L"Boss_posin", false);
 	NULL_CHECK_RETURN(m_pPosin, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 
@@ -403,7 +643,7 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 		RadianBoss *= -1;
 
 	RadianDot -= RadianBoss;
-	if (RadianDot <= 0.01f && RadianDot >= -0.01f)
+	if (RadianDot <= D3DXToRadian(1.f) && RadianDot >= D3DXToRadian(-1.f))
 		return;
 
 	if (BossLook.z > 0.f && BossLook.x > 0.f
@@ -446,6 +686,7 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 	m_pTransformPosin->Get_Info(INFO_LOOK, &PosinLook);
 	m_pTransformPosin->Get_Info(INFO_POS, &vPosinPos);
 
+	vPosinPos.y += 5.f * m_fScale;
 	_vec3 Dir = PlayerPos - vPosinPos;
 
 	_vec3 ExPosinLook = PosinLook;
@@ -453,7 +694,6 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 	
 	ExPosinLook.y = 0.f;
 	EXDir.y = 0.f;
-
 	D3DXVec3Normalize(&PosinLook, &PosinLook);
 	D3DXVec3Normalize(&Dir, &Dir);
 	D3DXVec3Normalize(&ExPosinLook, &ExPosinLook);
@@ -472,6 +712,71 @@ void CBoss::Head_Spin(const _float & fTimeDelta)
 			m_pTransformPosin->Rotation(ROT_X, D3DXToRadian(-10.f * fTimeDelta));
 	}
 
+}
+
+void CBoss::Body_Spin(const _float & fTimeDelta)
+{
+	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	_vec3 BossPos, BossLook;
+	_vec3 PlayerPos;
+	_vec3 Right(1.0f, 0.f, 0.f);
+	if (pPlayerTransCom)
+		pPlayerTransCom->Get_Info(INFO_POS, &PlayerPos);
+	else
+		return;
+
+	m_pTransformBody->Get_Info(INFO_POS, &BossPos);
+	m_pTransformBody->Get_Info(INFO_LOOK, &BossLook);
+
+	_vec3 vLook = PlayerPos - BossPos;
+	D3DXVec3Normalize(&vLook, &vLook);
+	D3DXVec3Normalize(&BossLook, &BossLook);
+
+	_float	fLookDot = D3DXVec3Dot(&vLook, &Right);
+	_float	fBossLookDot = D3DXVec3Dot(&BossLook, &Right);
+
+	_float RadianDot = acosf(fLookDot);
+	_float RadianBoss = acosf(fBossLookDot);
+
+
+	if (Right.z > vLook.z)
+		RadianDot *= -1;
+
+	if (Right.z > BossLook.z)
+		RadianBoss *= -1;
+
+	RadianDot -= RadianBoss;
+	if (RadianDot <= 0.01f && RadianDot >= -0.01f)
+		return;
+
+	if (BossLook.z > 0.f && BossLook.x > 0.f
+		&&vLook.z < 0.f && vLook.x > 0.f)
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(40.f*fTimeDelta));
+	}
+	else if (BossLook.z  < 0.f && BossLook.x > 0.f
+		&&vLook.z > 0.f && vLook.x > 0.f)
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(-40.f*fTimeDelta));
+	}
+	if (BossLook.z > 0.f && BossLook.x < 0.f
+		&&vLook.z < 0.f && vLook.x < 0.f)
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(-40.f*fTimeDelta));
+	}
+	else if (BossLook.z  < 0.f && BossLook.x < 0.f
+		&&vLook.z > 0.f && vLook.x < 0.f)
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(40.f*fTimeDelta));
+	}
+	else if (RadianDot > 0)
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(-40.f*fTimeDelta));
+	}
+	else
+	{
+		m_pTransformBody->Rotation(ROT_Y, D3DXToRadian(40.f*fTimeDelta));
+	}
 }
 
 void CBoss::Move_Pos(_vec3 Move)

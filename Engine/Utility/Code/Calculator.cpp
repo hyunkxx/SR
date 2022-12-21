@@ -110,24 +110,24 @@ _vec3 Engine::CCalculator::Picking_OnTerrain(HWND hWnd, const CTerrainTex* pTerr
 
 	_float		fU, fV, fDist;
 
-	if (D3DXIntersectTri(&_vec3(1500.f, 0.f, 1500.f),
-		&_vec3(1500.f, 0.f, 0.1f),
-		&_vec3(0.1f, 0.f, 1500.f),
+	if (D3DXIntersectTri(&_vec3(5000.f, 0.f, 5000.f),
+		&_vec3(5000.f, 0.f, 0.1f),
+		&_vec3(0.1f, 0.f, 5000.f),
 		&vRayPos, &vRayDir, &fU, &fV, &fDist))
 	{
-		return _vec3((1500.f + 0.1f - 1500.f) * fV,
+		return _vec3((5000.f + 0.1f - 5000.f) * fV,
 			0.f,
-			(1500.f + 0.1f - 1500.f)* fU);
+			(5000.f + 0.1f - 5000.f)* fU);
 	}
 
 	if (D3DXIntersectTri(&_vec3(0.1f, 0.f, 0.1f),
-		&_vec3(0.1f, 0.f, 1500.f),
-		&_vec3(1500.f, 0.f, 0.1f),
+		&_vec3(0.1f, 0.f, 5000.f),
+		&_vec3(5000.f, 0.f, 0.1f),
 		&vRayPos, &vRayDir, &fU, &fV, &fDist))
 	{
-		return _vec3((0.1f + 1500.f - 0.1f)* fV,
+		return _vec3((0.1f + 5000.f - 0.1f)* fV,
 			0.f,
-			(0.1f + 1500.f - 0.1f) * fU);
+			(0.1f + 5000.f - 0.1f) * fU);
 
 	}
 	return _vec3(0.f, 0.f, 0.f);

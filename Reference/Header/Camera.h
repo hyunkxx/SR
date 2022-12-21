@@ -31,6 +31,8 @@ public:
 			m_fAccum = 0.f;
 	}
 	_vec3	Get_Eye(void) { return m_vEye; }
+	void		Set_Fov(_float Fov) { m_bFovSet = true; m_fSetFov = Fov; }
+	void		Fov_Setting(const _float& fTimeDelta);
 public:
 	_float Get_Linear(_float a, _float b, _float Alpha)
 	{
@@ -54,6 +56,8 @@ protected:
 	_float		m_fShake_Power = 0.f;
 	_float		m_fShake_Time = 0.f;
 	_bool		m_bRock = false;
+	_bool		m_bFovSet = false;
+	_float		m_fSetFov = 60.f;
 protected:
 	virtual void		Free(void);
 private:

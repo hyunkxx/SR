@@ -362,6 +362,9 @@
     <Filter Include="02. GameObject\00. Tank\Boss\HitPoint">
       <UniqueIdentifier>{67d0bd81-9061-4ade-b38b-02d18f10353d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. Tank\Boss\Boss_Bomber">
+      <UniqueIdentifier>{53547d0b-4658-4f07-8632-68c377189b2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -664,6 +667,9 @@
     <ClInclude Include="..\Header\BossHitPoint.h">
       <Filter>02. GameObject\00. Tank\Boss\HitPoint</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Boss_Bomber.h">
+      <Filter>02. GameObject\00. Tank\Boss\Boss_Bomber</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -956,6 +962,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossHitPoint.cpp">
       <Filter>02. GameObject\00. Tank\Boss\HitPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss_Bomber.cpp">
+      <Filter>02. GameObject\00. Tank\Boss\Boss_Bomber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

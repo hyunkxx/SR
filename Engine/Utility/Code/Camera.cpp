@@ -32,6 +32,8 @@ HRESULT CCamera::Ready_Object(void)
 
 _int CCamera::Update_Object(const _float& fTimeDelta)
 {
+	Fov_Setting(fTimeDelta);
+
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
@@ -74,6 +76,27 @@ void CCamera::Camera_Shake(const _float & fTimeDelta)
 	{
 		m_fAccum = 0.f;
 		m_bShake = false;
+	}
+}
+
+void CCamera::Fov_Setting(const _float & fTimeDelta)
+{
+	if (m_bFovSet)
+	{
+		_float Angle = m_fSetFov - m_fFov;
+		if (D3DXToRadian(1.f)< abs(Angle))
+		{
+			if (D3DXToRadian(0.f) < Angle)
+			{
+				m_fFov += D3DXToRadian(5.f * fTimeDelta);
+			}
+			else
+			{
+				m_fFov -= D3DXToRadian(5.f * fTimeDelta);
+			}
+		}
+		else
+			m_bFovSet = false;
 	}
 }
 
