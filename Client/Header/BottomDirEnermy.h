@@ -153,7 +153,13 @@ private:
 	CTransform*		m_pMinimap_Transform = nullptr;
 	_float					m_fMinimap[TRANSFORM_FLOAT_END];
 
+	// Shot_Sound
+	CGameObject* pPlayerTank = nullptr;
+	_bool				m_bSoundOn = false;
+	_float				m_fSoundSize = 0.f;
+
 public:
+	void						 Update_Shot_Sound(void);
 	void						 Update_UI(void);
 	void						 Update_Minimap(void);
 private:

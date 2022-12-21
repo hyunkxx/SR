@@ -139,7 +139,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Up_Tex1", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Up1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Down_Tex2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Down1.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Volume_Up_Tex2", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Botton_Up1.png", TEX_NORMAL)), E_FAIL);
+
+	// F1
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Start_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/shutter door1.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Slider_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Fuel3.png", TEX_NORMAL)), E_FAIL);
 
 	// Aim camera UI
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Posin_UI.png", TEX_NORMAL)), E_FAIL);

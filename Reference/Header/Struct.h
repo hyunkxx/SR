@@ -143,6 +143,7 @@ typedef struct TAG_OBB
 
 typedef struct EnermyData
 {
+	_int SoundType;
 	_vec3 vPos;
 	OBJID eID;
 	TANKTYPE TankType;

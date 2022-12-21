@@ -245,18 +245,6 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\02.Game_Start_UI">
       <UniqueIdentifier>{0d14e78e-2813-4168-8717-7664f3029bc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Item_UI">
-      <UniqueIdentifier>{0e847c98-8fd8-456b-9908-b3587e4d7ba4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Item_UI\00.Speed_Item_UI">
-      <UniqueIdentifier>{1ea0acb4-3975-4ab5-af66-cc098bb23215}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Item_UI\01.Power_Item_UI">
-      <UniqueIdentifier>{e8018326-8b59-43d9-be3a-767fc3dffdf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Item_UI\02.Amor_Item_UI">
-      <UniqueIdentifier>{7be58390-f223-49e4-941c-a5d0f582b638}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\05.INFO_UI">
       <UniqueIdentifier>{4e4b2674-bfba-438a-9392-9f71cb2bb4dd}</UniqueIdentifier>
     </Filter>
@@ -364,6 +352,18 @@
     </Filter>
     <Filter Include="02. GameObject\00. Tank\Boss\Boss_Bomber">
       <UniqueIdentifier>{53547d0b-4658-4f07-8632-68c377189b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Skill_Damage_UI">
+      <UniqueIdentifier>{0e847c98-8fd8-456b-9908-b3587e4d7ba4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Skill_Damage_UI\01.Power_Item_UI">
+      <UniqueIdentifier>{e8018326-8b59-43d9-be3a-767fc3dffdf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Skill_Damage_UI\02.Amor_Item_UI">
+      <UniqueIdentifier>{7be58390-f223-49e4-941c-a5d0f582b638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\93.UI\02.Stage_UI\04.Skill_Damage_UI\00.AH_64A_Aim_UI">
+      <UniqueIdentifier>{1ea0acb4-3975-4ab5-af66-cc098bb23215}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

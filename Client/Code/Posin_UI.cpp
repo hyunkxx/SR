@@ -214,43 +214,45 @@ void CPosin_UI::KeyInput(void)
 		StopSound(METRONOME_SOUND);
 	}
 
-
-	if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
+	if (Engine::Get_Camera_ID() == CAMERA_ID::AIM_CAMERA && m_bPosinOn)
 	{
-		m_fScaleX += 3.f;
-		m_fScaleY += 2.f;
-
-
-		PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
-
-		if (m_fScaleX >= 550.f)
+		if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::HOLD)
 		{
-			m_fScaleX = 550.f;
+			m_fScaleX += 3.f;
+			m_fScaleY += 2.f;
+
+
+			PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
+
+			if (m_fScaleX >= 550.f)
+			{
+				m_fScaleX = 550.f;
+				StopSound(POSIN_ZOOM);
+			}
+			if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
+		}
+		else if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::AWAY)
+		{
 			StopSound(POSIN_ZOOM);
 		}
-		if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
-	}
-	else if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::AWAY)
-	{
-		StopSound(POSIN_ZOOM);
-	}
 
-	if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
-	{
-		m_fScaleX -= 3.f;
-		m_fScaleY -= 2.f;
-
-		PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
-
-		if (m_fScaleX <= 400.f)
+		if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)
 		{
-			m_fScaleX = 400.f;
+			m_fScaleX -= 3.f;
+			m_fScaleY -= 2.f;
+
+			PlaySound_SR(L"LastLastZoom.mp3", POSIN_ZOOM, fSound);
+
+			if (m_fScaleX <= 400.f)
+			{
+				m_fScaleX = 400.f;
+				StopSound(POSIN_ZOOM);
+			}
+			if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
+		}
+		else if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::AWAY)
+		{
 			StopSound(POSIN_ZOOM);
 		}
-		if (m_fScaleY <= 350.f) { m_fScaleY = 350.f; }
-	}
-	else if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::AWAY)
-	{
-		StopSound(POSIN_ZOOM);
 	}
 }

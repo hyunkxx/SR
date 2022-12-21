@@ -6,6 +6,8 @@
 #include "AimCamera.h"
 #include "TankManager.h"
 #include "GameMode.h"
+#include "UI_Start.h"
+
 
 _float CUI_Volume::s_fAllSound;
 _float CUI_Volume::s_fShotSound;
@@ -112,15 +114,19 @@ _int CUI_Volume::Update_Object(const _float & fTimeDelta)
 
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
 	{
+		CGameObject* pStart_UI_On = Engine::Get_Object(L"UI", L"Start_UI");
+		if (static_cast<CUI_Start*>(pStart_UI_On)->Get_HelpWin())
+			return 0;
+
+
 		if (Get_DIKeyState_Custom(DIK_F3) == KEY_STATE::TAP)
 		{
 
 			m_bShow = !m_bShow;
 
-			if (m_bShow)
-			{
-				PlaySound_SR(L"F3Sound.wav", UI_BUTTON_SOUND, CUI_Volume::s_fAllSound);
-			}
+
+			PlaySound_SR(L"F3Sound.wav", UI_BUTTON_SOUND, CUI_Volume::s_fAllSound);
+
 
 			CGameMode::GetInstance()->m_bOnSoundMenu = m_bShow;
 

@@ -210,6 +210,7 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 		return 0;
 
 	__super::Update_Object(fTimeDelta);
+	Update_Shot_Sound();
 	_vec3 vRulePos;
 	m_pTransformCom->Get_Info(INFO::INFO_POS, &vRulePos);
 	if (vRulePos.x > VTXCNTX*VTXCNTZ*VTXITV
@@ -340,6 +341,17 @@ _int CBottomDirEnermy::Update_Object(const _float& fTimeDelta)
 				if (abs(D3DXToDegree(Angle)) < 4.f)
 				{
 					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+					if (m_bSoundOn)
+					{
+						if (m_EData->TankType == TANKTYPE::HUMVEE)
+						{
+							PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+						else
+						{
+							PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+					}
 					m_fReloadTime = 0.f;
 				}
 			}
@@ -728,6 +740,17 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 						if (abs(D3DXToDegree(Angle)) < 4.f)
 						{
 							Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+							if (m_bSoundOn)
+							{
+								if (m_EData->TankType == TANKTYPE::HUMVEE)
+								{
+									PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+								else
+								{
+									PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+							}
 							m_fReloadTime = 0.f;
 						}
 					}
@@ -782,6 +805,17 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 						if (abs(D3DXToDegree(Angle)) < 4.f)
 						{
 							Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+							if (m_bSoundOn)
+							{
+								if (m_EData->TankType == TANKTYPE::HUMVEE)
+								{
+									PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+								else
+								{
+									PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+							}
 							m_fReloadTime = 0.f;
 						}
 					}
@@ -834,6 +868,17 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 				if (abs(D3DXToDegree(Angle)) < 4.f)
 				{
 					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+					if (m_bSoundOn)
+					{
+						if (m_EData->TankType == TANKTYPE::HUMVEE)
+						{
+							PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+						else
+						{
+							PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+					}
 					m_fReloadTime = 0.f;
 				}
 			}
@@ -887,6 +932,17 @@ void CBottomDirEnermy::Detect(_float fTimeDelta)
 				if (abs(D3DXToDegree(Angle)) < 4.f)
 				{
 					Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+					if (m_bSoundOn)
+					{
+						if (m_EData->TankType == TANKTYPE::HUMVEE)
+						{
+							PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+						else
+						{
+							PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+						}
+					}
 					m_fReloadTime = 0.f;
 				}
 			}
@@ -984,6 +1040,17 @@ void CBottomDirEnermy::Run(_float fTimeDelta)
 			if (abs(D3DXToDegree(Angle)) < 4.f)
 			{
 				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+				if (m_bSoundOn)
+				{
+					if (m_EData->TankType == TANKTYPE::HUMVEE)
+					{
+						PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+					}
+					else
+					{
+						PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+					}
+				}
 				m_fReloadTime = 0.f;
 			}
 		}
@@ -1582,6 +1649,29 @@ HRESULT CBottomDirEnermy::Add_Component(void)
 void CBottomDirEnermy::Free(void)
 {
 	CGameObject::Free();
+}
+
+void CBottomDirEnermy::Update_Shot_Sound(void)
+{
+	CTransform* pPlayerpos = static_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
+	_vec3 vPlayerPos, vThisTank;
+	pPlayerpos->Get_Info(INFO::INFO_POS, &vPlayerPos);
+
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vThisTank);
+
+
+	_float fPlayer_This_Dist = sqrtf(((vThisTank.x - vPlayerPos.x) * (vThisTank.x - vPlayerPos.x)) + ((vThisTank.z - vPlayerPos.z) * (vThisTank.z - vPlayerPos.z)));
+
+	if (fPlayer_This_Dist <= 100.f)
+	{
+		m_bSoundOn = true;
+	}
+	else if (fPlayer_This_Dist > 100.f)
+	{
+		m_bSoundOn = false;
+	}
+
+	m_fSoundSize = 1.f - (fPlayer_This_Dist / 100.f);
 }
 
 void CBottomDirEnermy::Update_UI(void)

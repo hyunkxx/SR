@@ -79,6 +79,8 @@
 #include "GameMode.h"
 #include "ModeSelectMenu.h"
 
+_int CStage::iSoundNum = 49;
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
 }
@@ -177,6 +179,10 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+	CGameObject* pStart_UI_On = Engine::Get_Object(L"UI", L"Start_UI");
+	if (static_cast<CUI_Start*>(pStart_UI_On)->Get_HelpWin())
+		return;
+
 	wstring strGold = to_wstring(CGameMode::GetInstance()->m_nGold[(UINT)CGameMode::TYPE::ALLY]);
 	wstring strText = L"GOLD";
 	_vec2 vGoldPos = { WINCX - (strGold.size() * 13) - 50.f  , 50.f };
@@ -530,6 +536,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			return NULL;
 			break;
 		}
+		iSoundNum = iSoundNum + 1;
+
+		m_eData.SoundType = iSoundNum;
+
 		m_eData.eID = OBJID::OBJID_BDENERMY;
 		m_eData.vPos.x = (float)(VTXITV*VTXCNTX - rand() % 130 - 20.f);
 		m_eData.vPos.y = 0;
@@ -567,6 +577,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			return NULL;
 			break;
 		}
+		iSoundNum = iSoundNum + 1;
+
+		m_eData.SoundType = iSoundNum;
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
 		m_eData.vPos.x = (float)(VTXITV*VTXCNTX - rand() % 110 - 40.f);
 		m_eData.vPos.y = 0;
@@ -609,6 +622,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			return NULL;
 			break;
 		}
+		iSoundNum = iSoundNum + 1;
+
+		m_eData.SoundType = iSoundNum;
 		m_eData.eID = OBJID::OBJID_DEFAULT_ALLY;
 		m_eData.vPos.z = (float)(rand() % 150);
 		CGameObject* pEnermy = CDefault_Ally::Create(m_pGraphicDev, &m_eData);
@@ -647,6 +663,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 			return NULL;
 			break;
 		}
+		iSoundNum = iSoundNum + 1;
+
+		m_eData.SoundType = iSoundNum;
 		m_eData.eID = OBJID::OBJID_BDALLY;
 		m_eData.vPos.x = (float)(rand() % 150);
 

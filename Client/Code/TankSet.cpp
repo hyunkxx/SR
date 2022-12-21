@@ -45,7 +45,7 @@ void CTankSet::LateUpdate_Object(void)
 
 void CTankSet::Render_Object(void)
 {
-	if ((Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA) && !m_bDead)
+	if (((Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA)) && !m_bDead)
 	{
 		if (CGameMode::GetInstance()->UseMenu() || CGameMode::GetInstance()->m_bGameEnd)
 			return;

@@ -66,5 +66,9 @@ private:
 
 	_float changeColor = 0.f;
 	bool m_bEndSound = false;
+
+public:
+	// AI_Sound
+	static _int iSoundNum;
 };
 
