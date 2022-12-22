@@ -10,6 +10,7 @@
 #include "AH_64A.h"
 #include "TankCamera.h"
 #include "AimCamera.h"
+#include "RushMode.h"
 
 CRushTank::CRushTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -24,6 +25,7 @@ CRushTank::CRushTank(const CRushTank & rhs)
 
 CRushTank::~CRushTank()
 {
+	
 }
 
 _int CRushTank::Update_Object(const _float & fTimeDelta)
@@ -196,9 +198,9 @@ HRESULT CRushTank::Add_Component(void)
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_VoxelPosin", pComponent });
 
 	/* 동현 세팅 발사위치는 어디? */
-	Posin_Setting(_vec3(50.f, 2.f, 50.f));
-	Head_Setting(_vec3(50.f, 2.f, 50.f));
-	Body_Setting(_vec3(50.f, 2.f, 50.f));
+	Posin_Setting(_vec3(50.f, 1.f, 50.f));
+	Head_Setting(_vec3(50.f, 1.f, 50.f));
+	Body_Setting(_vec3(50.f, 1.f, 50.f));
 
 	return S_OK;
 
@@ -213,8 +215,8 @@ HRESULT CRushTank::Ready_Object(void)
 	m_pTransformHead->Reset_Trans();
 	m_pTransformPosin->Reset_Trans();
 
-	m_stInfo.fAccel_Ad = 5.f;
-	m_stInfo.fAccel_Back = 3.f;
+	m_stInfo.fAccel_Ad = 8.f;
+	m_stInfo.fAccel_Back = 4.f;
 
 	//최고속도 제한
 	m_stInfo.fAccel_top_speed = 15.f;
@@ -227,14 +229,16 @@ HRESULT CRushTank::Ready_Object(void)
 	m_fScale = 1.2f;
 	m_stInfo.RotSpeed = 40.f;
 
-	m_stInfo.fLowAngle = D3DXToRadian(10.f);
 	m_stInfo.TopAngle = D3DXToRadian(-20.f);
+	m_stInfo.fLowAngle = D3DXToRadian(5.f);
 
 	m_stBody.fLen[x] = 2.5f  * m_fScale;
 	m_stBody.fLen[y] = 4.f  * m_fScale;
 	m_stBody.fLen[z] = 4.5f * m_fScale;
 
 	CGameObject::Ready_Object();
+
+	m_pTransformPosin->Rotation(ROTATION::ROT_X, D3DXToRadian(0.f));
 
 	return S_OK;
 }

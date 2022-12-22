@@ -707,6 +707,9 @@
     <ClInclude Include="..\Header\WarningUI.h">
       <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RushQuest.h">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1024,6 +1027,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\WarningUI.cpp">
       <Filter>02. GameObject\93.UI\12. BaseUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RushQuest.cpp">
+      <Filter>02. GameObject\93.UI\13 Buttons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

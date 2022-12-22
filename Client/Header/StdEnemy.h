@@ -68,4 +68,5 @@ public:
 	static CStdEnemy*		Create(LPDIRECT3DDEVICE9 pGraphicDev, void* pArg);
 private:
 	virtual void Free(void) override;
+	bool m_bDeadCountAdd = false;
 };

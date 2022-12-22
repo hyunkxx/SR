@@ -227,10 +227,10 @@ void CStage::Render_Scene(void)
 	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA || Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
 	{
 		// 스테이지 제한 시간
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(15, PERCENTY + 35.f), D3DCOLOR_RGBA(51,51, 51, 255));
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(30, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(45, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
-		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(60, PERCENTY+ 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_MIn(), &_vec2(15, PERCENTY + 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_Colon(), &_vec2(30, PERCENTY + 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_TenSec(), &_vec2(45, PERCENTY + 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
+		Render_Font(L"Font_Retro", CUI_FontMgr::GetInstance()->Get_Time_OneSec(), &_vec2(60, PERCENTY + 35.f), D3DCOLOR_RGBA(51, 51, 51, 255));
 
 		// 팀 킬 카운트								
 		//Render_Font(L"Font_AnSang4", CUI_FontMgr::GetInstance()->Get_BlueTeam_Kill(), &_vec2(_float(WINCX) - PERCENTX * 4.f, PERCENTY), CUI_FontMgr::GetInstance()->Get_Hecks_B());
@@ -266,7 +266,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	for (int i = 0; i < 120; i++)
+	for (int i = 0; i < 400; i++)
 	{
 		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS1);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -276,7 +276,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
 	}
 
-	for (int i = 0; i < 120; i++)
+	for (int i = 0; i < 400; i++)
 	{
 		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS2);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -286,6 +286,15 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
 	}
 
+	for (int i = 0; i < 200; i++)
+	{
+		pGameObject = CGrass::Create(m_pGraphicDev, CGrass::TYPE::GRASS3);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(
+			static_cast<CGrass*>(pGameObject)->GetID().c_str(), pGameObject), E_FAIL);
+		_vec3 vPos = { (float)(rand() % 700 - 100), (float)(rand() % 3), (float)(rand() % 700 - 100) };
+		static_cast<CGrass*>(pGameObject)->SetTransform(vPos, 30.f * i);
+	}
 	// CTerrain
 	pGameObject = CTerrain::Create(m_pGraphicDev, CTerrain::TYPE::SAND);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

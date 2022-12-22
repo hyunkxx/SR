@@ -25,8 +25,10 @@ CRushMode::~CRushMode()
 
 void CRushMode::Initalize(const float & fBossHP, const float & fPlayerHP)
 {
+	m_nDeadCount = 0;
 	m_bGameEnd = false;
 	m_bBossBegin = false;
+	m_bBossReady = false;
 
 	m_eResult = GAME_RESULT::NONE;
 

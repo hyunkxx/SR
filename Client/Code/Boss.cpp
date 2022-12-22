@@ -10,6 +10,7 @@
 #include "Boss_Bomber.h"
 #include "RedCarpet.h"
 #include "RushMode.h"
+#include "RushTank.h"
 
 CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -59,7 +60,6 @@ _int CBoss::Update_Object(const _float & fTimeDelta)
 
 	Sound_Setting(fTimeDelta);
 
-
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Update_OBB();
 	return __super::Update_Object(fTimeDelta);
@@ -73,6 +73,9 @@ void CBoss::LateUpdate_Object(void)
 
 void CBoss::Render_Object(void)
 {
+	if (!CRushMode::GetInstance()->m_bBossReady)
+		return;
+
 	if (m_bDead)
 	{
 		m_pHead->Change_Color_Dead();
@@ -153,17 +156,23 @@ void CBoss::Appear(void)
 
 void CBoss::Pattern(const _float & fTimeDelta)
 {
+	CGameObject* pPlayer = dynamic_cast<CGameObject*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	_vec3 PlayerPos;
-
+	_vec3 newPos = { 200.f, 0.f, 200.f };
 	///////////////////////Appear////////////////////////////////////
 	if (pPlayerTransCom)
+	{
 		pPlayerTransCom->Get_Info(INFO_POS, &PlayerPos);
+	}
 	else
 		return;
 
-	if (200.f <= PlayerPos.z && 0 == m_iAppearCount)
+	if (CRushMode::GetInstance()->m_bBossReady && 0 == m_iAppearCount)
+	{
 		m_bAppear = true;
+		static_cast<CRushTank*>(pPlayer)->Move_Info(newPos);
+	}
 
 	if (m_bAppear && 0 == m_iAppearCount)
 	{

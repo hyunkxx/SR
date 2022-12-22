@@ -2,6 +2,7 @@
 #include "..\Header\StdEnemy.h"
 #include "Export_Function.h"
 #include"TankManager.h"
+#include "RushMode.h"
 CStdEnemy::CStdEnemy(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -116,11 +117,11 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 		m_iCannonSpeed = 500.f;
 		Range = 130.f;
 		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
-		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 1.f*1.2f, m_EData->vPos.z);
 		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
-		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 1.f*1.2f, m_EData->vPos.z);
 		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
-		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 1.f*1.2f, m_EData->vPos.z);
 
 		m_stBody.fLen[x] = 5.f;
 		m_stBody.fLen[y] = 6.f;
@@ -158,6 +159,16 @@ _int CStdEnemy::Update_Object(const _float & fTimeDelta)
 	__super::Update_Object(fTimeDelta);
 	if (DeadMotionCheck)
 	{
+		if (!m_bDeadCountAdd)
+		{
+			CRushMode::GetInstance()->m_nDeadCount++;
+			if (CRushMode::GetInstance()->m_nDeadCount >= 15)
+			{
+				CRushMode::GetInstance()->m_bBossReady = true;
+			}
+			m_bDeadCountAdd = true;
+		}
+
 		Dead_Motion(fTimeDelta);
 	}
 	else
@@ -165,6 +176,7 @@ _int CStdEnemy::Update_Object(const _float & fTimeDelta)
 		m_fReloadTime += fTimeDelta;
 		Detect(fTimeDelta);
 	}
+
 	if (m_bDeadTime >= 3.f)
 	{
 		DeadMotionCheck = false;

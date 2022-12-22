@@ -12,7 +12,7 @@ END
 class CGrass : public Engine::CGameObject
 {
 public:
-	enum class TYPE { GRASS1, GRASS2 };
+	enum class TYPE { GRASS1, GRASS2, GRASS3 };
 private:
 	explicit CGrass(LPDIRECT3DDEVICE9 pGraphicDev, TYPE eType);
 	explicit CGrass(const CGrass& rhs);

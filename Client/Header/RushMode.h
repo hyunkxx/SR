@@ -20,6 +20,9 @@ public:
 public:
 	bool m_bGameEnd;
 	bool m_bBossBegin;
+	bool m_bBossReady;
+	int m_nDeadCount;
+
 	GAME_RESULT m_eResult;
 
 	float m_fBossCurHP;

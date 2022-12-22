@@ -174,6 +174,12 @@ HRESULT CBottomDirAlly::Ready_Object(void * pArg)
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
 		m_iCannonSpeed = data.iCannonSpeed;
+		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
+		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		break;
 	}
 	default:

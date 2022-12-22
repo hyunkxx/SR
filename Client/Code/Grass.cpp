@@ -68,6 +68,15 @@ HRESULT CGrass::Ready_Object(void)
 		m_fPosY = 0.f;
 		m_fPosZ = 0.f;
 		break;
+	case CGrass::TYPE::GRASS3:
+		m_fScaleX = 5.f;
+		m_fScaleY = 5.f;
+		m_fScaleZ = 1.f;
+
+		m_fPosX = 0.f;
+		m_fPosY = 0.f;
+		m_fPosZ = 0.f;
+		break;
 	default:
 		break;
 	}
@@ -139,6 +148,11 @@ HRESULT CGrass::Add_Component(void)
 		break;
 	case CGrass::TYPE::GRASS2:
 		pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Grass2"));
+		NULL_CHECK_RETURN(m_pTexture, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].insert({ L"texture_non", pComponent });
+		break;
+	case CGrass::TYPE::GRASS3:
+		pComponent = m_pTexture = static_cast<CTexture*>(Clone_Prototype(L"Grass3"));
 		NULL_CHECK_RETURN(m_pTexture, E_FAIL);
 		m_mapComponent[ID_DYNAMIC].insert({ L"texture_non", pComponent });
 		break;
