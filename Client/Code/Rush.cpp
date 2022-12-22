@@ -734,6 +734,7 @@ void CRush::Collison_Object(void)
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+					Engine::Get_Camera()->Shake_On();
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 家府 芭府力茄
 					if (fPlayer_obj_dist_Sound <= 150.f)
