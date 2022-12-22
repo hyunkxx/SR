@@ -113,14 +113,18 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
-		m_iCannonSpeed = data.iCannonSpeed;
-		Range = 150.f;
+		m_iCannonSpeed = 500.f;
+		Range = 130.f;
 		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformCom->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		m_pTransformHead->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformHead->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
 		m_pTransformPosin->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformPosin->Set_Pos(m_EData->vPos.x, 2.f*1.2f, m_EData->vPos.z);
+
+		m_stBody.fLen[x] = 5.f;
+		m_stBody.fLen[y] = 6.f;
+		m_stBody.fLen[z] = 8.f;
 		break;
 	}
 	case TANKTYPE::LONG_TANK:
@@ -139,14 +143,6 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 		break;
 
 	}
-
-	m_stBody.fLen[x] = 1.5f;
-	m_stBody.fLen[y] = 2.f;
-	m_stBody.fLen[z] = 2.5f;
-
-	m_stHead.fLen[x] = 1.f;
-	m_stHead.fLen[y] = 1.f;
-	m_stHead.fLen[z] = 1.9f;
 
 
 	m_pTransformCom->Rotation(ROTATION::ROT_Y, D3DXToRadian(180.f));
@@ -301,13 +297,13 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		}
 		if (LeftCheck == false)
 		{
-			m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta* 1.5f);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 1.5f);
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta* 5.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta * 5.f);
 		}
 		else
 		{
-			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta* 1.5f);
-			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 1.5f);
+			m_pTransformCom->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta* 5.f);
+			m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta * 5.f);
 		}
 		m_pTransformPosin->Get_Info(INFO_POS, &Pos);
 		m_pTransformPosin->Get_Info(INFO_LOOK, &vLook);
@@ -315,11 +311,15 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		D3DXVec3Normalize(&Dir, &Dir);
 		D3DXVec3Normalize(&vLook, &vLook);
 		Pos += Dir* 3.f*fPosinDist;
-
+		Pos.y += 1.f;
 		if (m_fReloadTime > m_fReload)
 		{
-			Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
-			m_fReloadTime = 0.f;
+			if (fabs(Angle) < 4.f)
+			{
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
+				m_fReloadTime = 0.f;
+
+			}
 		}
 	}
 }
