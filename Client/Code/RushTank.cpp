@@ -236,10 +236,13 @@ HRESULT CRushTank::Ready_Object(void)
 	m_stBody.fLen[x] = 2.5f  * m_fScale;
 	m_stBody.fLen[y] = 4.f  * m_fScale;
 	m_stBody.fLen[z] = 4.5f * m_fScale;
+	
+	Engine::StopSound(PLAYER_MOVE_SOUND2);
+	Engine::PlaySound_SR(L"Rush_Tank_Engine.mp3", PLAYER_MOVE_SOUND2, 0.3f);
 
 	CGameObject::Ready_Object();
 
-	m_pTransformPosin->Rotation(ROTATION::ROT_X,);
+	m_pTransformPosin->Rotation(ROTATION::ROT_X,D3DXToRadian(0.f));
 
 	return S_OK;
 }

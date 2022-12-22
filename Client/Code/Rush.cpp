@@ -107,6 +107,8 @@ HRESULT CRush::Ready_Scene(void)
 	//CUI_FontMgr::GetInstance()->Set_Rush_LifeCount(3);
 	CRushMode::GetInstance()->Initalize(4000.f, 2000.f);
 
+	Engine::PlaySound_SR(L"forest.mp3", STAGE_SOUND, 1.f);
+	Engine::PlaySound_SR(L"Birds.mp3", STAGE_EFFECT, 1.f);
 
 	Engine::StopSound(SELECT_MENU_BGM);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);

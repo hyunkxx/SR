@@ -142,7 +142,7 @@ void CBoss::Appear(void)
 
 
 	Engine::Get_Camera()->Set_Fov(D3DXToRadian(80.f));
-	Engine::StopSound(BOSS_BGM);
+	Engine::StopAll();
 	Engine::StopSound(BOSS_ENGINE_SOUND);
 	Engine::PlaySound_SR(L"Boss_Engine.mp3", BOSS_ENGINE_SOUND, 1.f);
 	Engine::PlayBGM(L"Boss_BGM.mp3", BOSS_BGM);
