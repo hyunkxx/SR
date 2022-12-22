@@ -643,6 +643,10 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 	CTransform*		pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	if (pPlayerTransform == nullptr)
 		return;
+	CManagement* Manage	= CManagement::GetInstance();
+	CLayer*      Layer= Manage->Find_Layer(L"GameLogic");
+	CGameObject* Player = Layer->Get_GameObject(L"PlayerVehicle");
+
 	vector<CGameObject*>Temps = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ALLY);
 	vector<CGameObject*>Sours = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDALLY);
 	_float fPreAllyCol = 3000.f;
@@ -830,127 +834,133 @@ void CDefault_Enermy::Detect(_float fTimeDelta)
 			}
 			else if (fPlayerCol <= Range)
 			{
-				m_iAction = AIACTION::AIACTION_BATTLE;
-				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
-				pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
-				m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
-
-				Dir = TargetPos - vEHPos;
-
-				m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
-				D3DXVec3Normalize(&vLook, &vLook);
-				D3DXVec3Normalize(&Dir, &Dir);
-
-				Left_RightCheck(Dir, vLook);
-
-				_float Dot = D3DXVec3Dot(&vLook, &Dir);
-				_float Angle = (float)acosf(Dot);
-				if (isnan(Angle))
+				if (!Player->Get_Dead())
 				{
-					Angle = 0;
-				}
-				if (LeftCheck == false)
-				{
-					m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-					m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-				}
-				else
-				{
-					m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-					m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-				}
-				m_pTransformHead->Get_Info(INFO_POS, &Pos);
-				m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
-				Dir = TargetPos - Pos;
-				D3DXVec3Normalize(&Dir, &Dir);
-				D3DXVec3Normalize(&vLook, &vLook);
-				Pos += Dir* 3.f*fPosinDist;
-				if (m_fReloadTime > m_fReload)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
+					m_iAction = AIACTION::AIACTION_BATTLE;
+					_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+					pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
+					m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+
+					Dir = TargetPos - vEHPos;
+
+					m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+					D3DXVec3Normalize(&vLook, &vLook);
+					D3DXVec3Normalize(&Dir, &Dir);
+
+					Left_RightCheck(Dir, vLook);
+
+					_float Dot = D3DXVec3Dot(&vLook, &Dir);
+					_float Angle = (float)acosf(Dot);
+					if (isnan(Angle))
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
-						if (m_bSoundOn)
-						{
-							if (m_EData->TankType == TANKTYPE::HUMVEE)
-							{
-								PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
-							}
-							else
-							{
-								PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
-							}
-						}
-						m_fReloadTime = 0.f;
+						Angle = 0;
 					}
-				}
-				else
-				{
-					m_iAction = AIACTION::AIACTION_OCCOPATION;
+					if (LeftCheck == false)
+					{
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+					}
+					else
+					{
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+					}
+					m_pTransformHead->Get_Info(INFO_POS, &Pos);
+					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+					Dir = TargetPos - Pos;
+					D3DXVec3Normalize(&Dir, &Dir);
+					D3DXVec3Normalize(&vLook, &vLook);
+					Pos += Dir* 3.f*fPosinDist;
+					if (m_fReloadTime > m_fReload)
+					{
+						if (abs(D3DXToDegree(Angle)) < 4.f)
+						{
+							Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+							if (m_bSoundOn)
+							{
+								if (m_EData->TankType == TANKTYPE::HUMVEE)
+								{
+									PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+								else
+								{
+									PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+							}
+							m_fReloadTime = 0.f;
+						}
+					}
+					else
+					{
+						m_iAction = AIACTION::AIACTION_OCCOPATION;
+					}
 				}
 			}
 		}
 		else
 		{
-			if (fPlayerCol <= Range)
+			if (!Player->Get_Dead())
 			{
-				m_iAction = AIACTION::AIACTION_BATTLE;
-				_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
-				pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
-				m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
-
-				Dir = TargetPos - vEHPos;
-
-				m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
-				D3DXVec3Normalize(&vLook, &vLook);
-				D3DXVec3Normalize(&Dir, &Dir);
-
-				Left_RightCheck(Dir, vLook);
-
-				_float Dot = D3DXVec3Dot(&vLook, &Dir);
-				_float Angle = (float)acosf(Dot);
-				if (isnan(Angle))
+				if (fPlayerCol <= Range)
 				{
-					Angle = 0;
-				}
-				if (LeftCheck == false)
-				{
-					m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-					m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
-				}
-				else
-				{
-					m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-					m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
-				}
-				m_pTransformHead->Get_Info(INFO_POS, &Pos);
-				m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
-				Dir = TargetPos - Pos;
-				D3DXVec3Normalize(&Dir, &Dir);
-				D3DXVec3Normalize(&vLook, &vLook);
-				Pos += Dir* 3.f*fPosinDist;
-				if (m_fReloadTime > m_fReload)
-				{
-					if (abs(D3DXToDegree(Angle)) < 4.f)
+					m_iAction = AIACTION::AIACTION_BATTLE;
+					_vec3 Pos, Dir, vLook, vEHPos, TargetPos;
+					pPlayerTransform->Get_Info(INFO::INFO_POS, &TargetPos);
+					m_pTransformHead->Get_Info(INFO::INFO_POS, &vEHPos);
+
+					Dir = TargetPos - vEHPos;
+
+					m_pTransformHead->Get_Info(INFO::INFO_LOOK, &vLook);
+					D3DXVec3Normalize(&vLook, &vLook);
+					D3DXVec3Normalize(&Dir, &Dir);
+
+					Left_RightCheck(Dir, vLook);
+
+					_float Dot = D3DXVec3Dot(&vLook, &Dir);
+					_float Angle = (float)acosf(Dot);
+					if (isnan(Angle))
 					{
-						Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
-						if (m_bSoundOn)
-						{
-							if (m_EData->TankType == TANKTYPE::HUMVEE)
-							{
-								PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
-							}
-							else
-							{
-								PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
-							}
-						}
-						m_fReloadTime = 0.f;
+						Angle = 0;
 					}
-				}
-				else
-				{
-					m_iAction = AIACTION::AIACTION_OCCOPATION;
+					if (LeftCheck == false)
+					{
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, -Angle*fTimeDelta);
+					}
+					else
+					{
+						m_pTransformHead->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+						m_pTransformPosin->Rotation(ROTATION::ROT_Y, Angle*fTimeDelta);
+					}
+					m_pTransformHead->Get_Info(INFO_POS, &Pos);
+					m_pTransformHead->Get_Info(INFO_LOOK, &vLook);
+					Dir = TargetPos - Pos;
+					D3DXVec3Normalize(&Dir, &Dir);
+					D3DXVec3Normalize(&vLook, &vLook);
+					Pos += Dir* 3.f*fPosinDist;
+					if (m_fReloadTime > m_fReload)
+					{
+						if (abs(D3DXToDegree(Angle)) < 4.f)
+						{
+							Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), Temp);
+							if (m_bSoundOn)
+							{
+								if (m_EData->TankType == TANKTYPE::HUMVEE)
+								{
+									PlaySound_SR(L"MACHINEGUN_FIRE.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+								else
+								{
+									PlaySound_SR(L"Shoot_Fire.wav", (SoundType)(m_EData->SoundType), m_fSoundSize);
+								}
+							}
+							m_fReloadTime = 0.f;
+						}
+					}
+					else
+					{
+						m_iAction = AIACTION::AIACTION_OCCOPATION;
+					}
 				}
 			}
 		}

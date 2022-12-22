@@ -189,12 +189,8 @@ _int CBside::Update_Object(const _float& fTimeDelta)
 		_float Temp = sqrtf(2) *fabs(ResultY);
 
 		m_pTransformCom->Set_Scale(1.f, Temp, 1.f);
-		if (ResultY<0)
-		{
-			m_pTransformCom->Set_Pos((m_fX - ResultY) - WINCX * 0.5f, -(m_fY - ResultY) + WINCY * 0.5f, 0.5f);
-		}
-		else
-			m_pTransformCom->Set_Pos((m_fX + ResultY) - WINCX * 0.5f, -(m_fY + ResultY) + WINCY * 0.5f, 0.5f);
+	
+		m_pTransformCom->Set_Pos((m_fX + ResultY) - WINCX * 0.5f, -(m_fY + ResultY) + WINCY * 0.5f, 0.5f);
 		if (!Check)
 		{
 			m_iCount += 1;
@@ -211,11 +207,7 @@ _int CBside::Update_Object(const _float& fTimeDelta)
 		_float Temp = sqrtf(2) *fabs(ResultY);
 
 		m_pTransformRight->Set_Scale(1.f, Temp, 1.f);
-		if (ResultY<0)
-		{
-			m_pTransformCom->Set_Pos((m_fX = ResultY) - WINCX * 0.5f, -(m_fY - ResultY) + WINCY * 0.5f, 0.5f);
-		}
-		else
+	
 			m_pTransformRight->Set_Pos((m_fX - ResultY) - WINCX * 0.5f, -(m_fY + ResultY) + WINCY * 0.5f, 0.5f);
 		if (!Check)
 		{
@@ -233,11 +225,7 @@ _int CBside::Update_Object(const _float& fTimeDelta)
 		_float Temp = sqrtf(2) *fabs(ResultY);
 
 		m_pTransformBottom->Set_Scale(1.f, Temp, 1.f);
-		if (ResultY<0)
-		{
-			m_pTransformCom->Set_Pos((m_fX + ResultY) - WINCX * 0.5f, -(m_fY + ResultY) + WINCY * 0.5f, 0.5f);
-		}
-		else
+	
 			m_pTransformBottom->Set_Pos((m_fX - ResultY) - WINCX * 0.5f, -(m_fY - ResultY) + WINCY * 0.5f, 0.5f);
 		if (!Check)
 		{
@@ -255,11 +243,7 @@ _int CBside::Update_Object(const _float& fTimeDelta)
 
 		m_pTransformLeft->Set_Scale(1.f, Temp, 1.f);
 
-		if (ResultY<0)
-		{
-			m_pTransformCom->Set_Pos((m_fX - ResultY) - WINCX * 0.5f, -(m_fY + ResultY) + WINCY * 0.5f, 0.5f);
-		}
-		else
+	
 			m_pTransformLeft->Set_Pos((m_fX + ResultY) - WINCX * 0.5f, -(m_fY - ResultY) + WINCY * 0.5f, 0.5f);
 		if (!Check)
 		{

@@ -87,7 +87,7 @@ void CCreateAi::Produce(_float fTimeDelta)
 	if (m_CoolTime >= 3.f)
 	{
 		Random = 0;
-		if (Field >= 5)
+		if (Field >= 7)
 		{
 			if (!Check)
 			{

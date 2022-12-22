@@ -122,6 +122,14 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
+	if (Get_DIKeyState_Custom(DIK_K) == KEY_STATE::TAP)
+	{
+		CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ALLY] -= 10000000.f;
+	}
+	if (Get_DIKeyState_Custom(DIK_J) == KEY_STATE::TAP)
+	{
+		CGameMode::GetInstance()->m_fBaseCurHP[(UINT)CGameMode::TYPE::ENEMY] -= 10000000.f;
+	}
 	if (CGameMode::GetInstance()->m_bBaseAttack)
 	{
 		m_fTimer += fTimeDelta;
