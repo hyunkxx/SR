@@ -54,6 +54,7 @@
 #include "Aim_UI.h"
 #include "Aim_UI_Pers.h"
 #include"TempOccupationScore.h"
+#include "Sakamoto.h"
 
 // effect skill
 #include "ShootEffect.h"
@@ -541,6 +542,11 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"rush_quest", pGameObject), E_FAIL);
 
+	pGameObject = CSakamoto::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sakamoto", pGameObject), E_FAIL);
+	pGameObject->Set_Dead(true);
+
 	m_umapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;
 }
@@ -571,7 +577,7 @@ void CRush::Collison_Object(void)
 	CLayer* pEnvironment_Object = Get_Layer(L"Environment_Object");
 	CLayer* pGameLogic = Get_Layer(L"GameLogic");
 	vector<CGameObject*> StdEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
-	
+	_vec3 CameraPos = Engine::Get_Camera()->Get_Eye();
 	CGameObject* pPlayer = Get_Object(L"GameLogic", L"PlayerVehicle");
 	CGameObject* pBoss = Get_Object(L"GameLogic", L"Boss");
 
@@ -619,7 +625,7 @@ void CRush::Collison_Object(void)
 	}
 
 	// 利苞 蜡历 醚舅 面倒贸府
-	for (_int i = 5; BULLET_ID::BOOM_BULLET > i; i++)
+	for (_int i = 5; BULLET_ID::AH_64A_BULLET > i; i++)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 		{
@@ -647,6 +653,16 @@ void CRush::Collison_Object(void)
 					if (static_cast<CBullet*>(*iter)->Get_ID() == BULLET_ID::BIG_CANNONBALL)
 						dynamic_cast<CStdEnemy*>(*iters)->Minus_HP_UI(1000.f);
 
+
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
+					// 家府 芭府力茄
+					if (fPlayer_obj_dist_Sound <= 150.f)
+					{
+						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 200.f);
+						Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
+						Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+
+					}
 					if (dynamic_cast<CStdEnemy*>(*iters)->GetHp() <= 0)
 					{
 						dynamic_cast<CStdEnemy*>(*iters)->Set_DeadMotionPlay();
@@ -665,7 +681,7 @@ void CRush::Collison_Object(void)
 	if (pBoss)
 	{
 		// 蜡历 醚舅苞 焊胶 面倒贸府
-		for (_int i = 5; BULLET_ID::BOOM_BULLET > i; i++)
+		for (_int i = 5; BULLET_ID::AH_64A_BULLET > i; i++)
 		{
 			for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 			{
@@ -715,6 +731,16 @@ void CRush::Collison_Object(void)
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
+					// 家府 芭府力茄
+					if (fPlayer_obj_dist_Sound <= 150.f)
+					{
+						fPlayer_obj_dist_Sound = (fPlayer_obj_dist_Sound / 200.f);
+						Engine::StopSound(ENEMY_BIG_HIT_SOUND1);
+						Engine::PlaySound_SR(L"BIG_HIT.wav", ENEMY_BIG_HIT_SOUND1, 1.f - fPlayer_obj_dist_Sound);
+
+					}				
+				
 				}
 
 			}

@@ -11,6 +11,7 @@
 #include "TankCamera.h"
 #include "AimCamera.h"
 #include "RushMode.h"
+#include "Sakamoto.h"
 
 CRushTank::CRushTank(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -238,7 +239,7 @@ HRESULT CRushTank::Ready_Object(void)
 
 	CGameObject::Ready_Object();
 
-	m_pTransformPosin->Rotation(ROTATION::ROT_X, D3DXToRadian(0.f));
+	m_pTransformPosin->Rotation(ROTATION::ROT_X,);
 
 	return S_OK;
 }
@@ -346,8 +347,9 @@ void CRushTank::Key_Input(const _float & fTimeDelta)
 		{
 			if (!m_bGodMode)
 			{
+				Engine::Get_Camera()->Set_Fov(D3DXToRadian(90.f));
 				Engine::StopAll();
-				Engine::PlaySound_SR(L"God_Mode_Sound.mp3", BOSS_BGM, 1.f);
+				static_cast<CSakamoto*>(Engine::Get_Object(L"UI", L"Sakamoto"))->Set_Sakamoto();
 				m_bGodMode = true;
 			}
 			else

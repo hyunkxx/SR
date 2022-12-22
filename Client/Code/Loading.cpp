@@ -148,6 +148,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Posin_UI_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Posin_UI.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_UI_Compass_Tex", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Compass.png", TEX_NORMAL)), E_FAIL);
 
+	//Sakamoto
+	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_Sakamoto", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/Sakamoto.png", TEX_NORMAL)), E_FAIL);
+
 	// Stage UI
 	// Á¡·É
 	FAILED_CHECK_RETURN(Engine::Ready_Prototype(L"Proto_OccupationColor", Engine::CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Ui/OccupationColor_%d.png", TEX_NORMAL, 3)), E_FAIL);

@@ -377,6 +377,9 @@
     <Filter Include="02. GameObject\00. Tank\Boss\BossSkill">
       <UniqueIdentifier>{d833e778-a4c4-449b-b0a1-973418e6fa2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\93.UI\14.Sakamoto">
+      <UniqueIdentifier>{4eb3cb20-3312-428d-99b0-e662f879e8e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\MainApp.h">
@@ -704,6 +707,9 @@
     <ClInclude Include="..\Header\RushQuest.h">
       <Filter>02. GameObject\93.UI\13 Buttons</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Sakamoto.h">
+      <Filter>02. GameObject\93.UI\14.Sakamoto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1021,6 +1027,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RushQuest.cpp">
       <Filter>02. GameObject\93.UI\13 Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Sakamoto.cpp">
+      <Filter>02. GameObject\93.UI\14.Sakamoto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
