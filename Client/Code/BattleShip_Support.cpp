@@ -32,6 +32,12 @@ HRESULT CBattleShip_Support::Ready_Object(void)
 	m_fScale = 5.f;
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 
+	// UI_Minimap
+	D3DXMatrixOrthoLH(&UI_Minimap_matProj, WINCX, WINCY, 0.f, 1.f);
+	m_fMinimap[SCALEX] = m_fMinimap[SCALEY] = 4.f;
+	m_fMinimap[SCALEZ] = 1.f;
+	m_pMinimap_Transform->Set_Scale(m_fMinimap[SCALEX], m_fMinimap[SCALEY], m_fMinimap[SCALEZ]);
+	
 	return S_OK;
 }
 
@@ -132,6 +138,11 @@ _int CBattleShip_Support::Update_Object(const _float & fTimeDelta)
 
 
 	Key_Input(fTimeDelta);
+
+
+	Update_Minimap();
+
+
 	Add_RenderGroup(RENDER_ALPHA, this);
 	return __super::Update_Object(fTimeDelta);
 }
@@ -162,6 +173,23 @@ void CBattleShip_Support::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom_Copy[i]->Get_WorldMatrix());
 		m_pTextureCom_Copy[i]->Set_Texture();
 		m_pBufferCom_Copy[i]->Render_Buffer();
+	}
+
+	// Minimap UI
+	if (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA)
+	{
+		_matrix OldViewMatrix, OldProjMatrix;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pMinimap_Transform->Get_WorldMatrix());
+		_matrix	Minimap_ViewMatrix;
+		D3DXMatrixIdentity(&Minimap_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &Minimap_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &UI_Minimap_matProj);
+		m_pMinimap_Texure->Set_Texture(0);
+		m_pMinimap_RcTex->Render_Buffer();
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 	}
 }
 
@@ -312,6 +340,22 @@ HRESULT CBattleShip_Support::Add_Component(void)
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+	//MiniMap UI
+	pComponent = m_pMinimap_RcTex = static_cast<CRcTex*>(Clone_Prototype(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pMinimap_RcTex, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pMinimap_Texure = static_cast<CTexture*>(Clone_Prototype(L"Proto_Minimap_ShipBoom_Tex"));
+	NULL_CHECK_RETURN(m_pMinimap_Texure, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Minimap_ShipBoom_Tex", pComponent });
+
+	pComponent = m_pMinimap_Transform = static_cast<CTransform*>(Clone_Prototype(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pMinimap_Transform, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform_Minimap_ShipBoom", pComponent });
+
+
+
 	return S_OK;
 }
 
@@ -329,5 +373,47 @@ CBattleShip_Support * CBattleShip_Support::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBattleShip_Support::Free(void)
 {
+	Safe_Release(m_pMinimap_RcTex);
+	Safe_Release(m_pMinimap_Texure);
+	Safe_Release(m_pMinimap_Transform);
 	__super::Free();
+}
+
+
+void CBattleShip_Support::Update_Minimap(void)
+{
+
+
+	_vec3 vTankPos;
+
+	m_pTransformCom->Get_Info(INFO::INFO_POS, &vTankPos);
+
+	_float fX_Percent = (roundf(vTankPos.x) / 635.f);
+	_float fZ_Percent = (roundf(vTankPos.z) / 635.f);
+
+	if (fX_Percent <= 0.f)
+	{
+		fX_Percent = 0.f;
+	}
+	else if (fX_Percent >= 1.f)
+	{
+		fX_Percent = 1.f;
+	}
+
+	if (fZ_Percent <= 0.f)
+	{
+		fZ_Percent = 0.f;
+	}
+	else if (fZ_Percent >= 1.f)
+	{
+		fZ_Percent = 1.f;
+	}
+
+	m_fMinimap[POSX] = 640.f + roundf(160.f * fX_Percent);
+	m_fMinimap[POSY] = 600.f - roundf(115.f * fZ_Percent);
+	m_fMinimap[POSZ] = 0.03f;
+
+	// Minimap _ Pos
+	m_pMinimap_Transform->Set_Pos(m_fMinimap[POSX] - (WINCX * 0.5f), (WINCY * 0.5f) - m_fMinimap[POSY], m_fMinimap[POSZ]);
+
 }

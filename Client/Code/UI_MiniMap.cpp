@@ -175,7 +175,7 @@ void CUI_MiniMap::Render_Object(void)
 	if (CGameMode::GetInstance()->m_bGameEnd)
 		return;
 
-	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA))
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA))
 	{
 		_matrix OldViewMatrix, OldProjMatrix;
 		_matrix	ViewMatrix;

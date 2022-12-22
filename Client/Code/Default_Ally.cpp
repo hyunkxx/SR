@@ -419,7 +419,7 @@ void CDefault_Ally::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	// Minimap UI
-	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA))
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::DRONE_CAMERA))
 	{
 		if (CGameMode::GetInstance()->m_bGameEnd)
 			return;

@@ -114,7 +114,7 @@ HRESULT CStdEnemy::Ready_Object(void * pArg)
 		fPosinDist = data.fPosinDist;
 		m_fReloadTime = data.fReloadTime;
 		m_fReload = data.fReload;
-		m_iCannonSpeed = 500.f;
+		m_iCannonSpeed = 500;
 		Range = 130.f;
 		m_pTransformCom->Set_Scale(1.2f, 1.2f, 1.2f);
 		m_pTransformCom->Set_Pos(m_EData->vPos.x, 1.f*1.2f, m_EData->vPos.z);

@@ -40,6 +40,13 @@ public:
 	static CBoom_Support*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:
 	virtual void Free(void) override;
-
+	// Minimap UI
+	_matrix            UI_Minimap_matProj;
+	CRcTex*            m_pMinimap_RcTex = nullptr;
+	CTexture*         m_pMinimap_Texure = nullptr;
+	CTransform*      m_pMinimap_Transform = nullptr;
+	_float               m_fMinimap[TRANSFORM_FLOAT_END];
+public:
+	void					Update_Minimap(void);
 };
 

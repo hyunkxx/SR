@@ -459,7 +459,7 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	{
 		m_eData.TankType = TANKTYPE::BIG_TANK;
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
-		m_eData.vPos.x = (rand() % 300) + 200;
+		m_eData.vPos.x = _float((rand() % 300) + 200);
 		m_eData.vPos.y = 0;
 		m_eData.vPos.z = (rand() % 200) + 200.f;
 
