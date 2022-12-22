@@ -41,7 +41,7 @@ private:
 	void		Expect_Hit_Point(const _float& fTimeDelta);
 	_vec3		PickUp_OnTerrain(void);
 	void		Camera_Change(void);
-
+	void		Shoot_Smoke(void);
 private:
 	_float		m_fPosinAccum = 0.f;
 	_bool		m_bPosinShake = false;

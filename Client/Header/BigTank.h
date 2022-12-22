@@ -42,7 +42,7 @@ private:
 	_vec3		PickUp_OnTerrain(void);
 	void		Camera_Change(void);
 	void		Posin_Shake(const _float& fTimeDelta);
-
+	void		Shoot_Smoke(void);
 private:
 	_float		m_fPosinAccum = 0.f;
 	_bool		m_bPosinShake = false;

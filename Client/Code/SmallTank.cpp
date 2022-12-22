@@ -242,6 +242,10 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
 		}
 
+		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+			Shoot_Smoke();
+
+
 		if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()
 			&& m_stInfo.fReloadTime > m_stInfo.fReload)
@@ -580,6 +584,42 @@ void CSmallTank::Posin_Shake(const _float & fTimeDelta)
 			m_pTransformHead->Set_Pos(Pos.x, Pos2.y, Pos.z);
 			m_pTransformPosin->Set_Pos(Pos.x, Pos2.y, Pos.z);
 		}
+	}
+}
+
+void CSmallTank::Shoot_Smoke(void)
+{
+	_vec3 Pos, Dir, UP, Right, Look;
+
+	for (int i = 0; 5 > i; i++)
+	{
+		m_pTransformBody->Get_Info(INFO_POS, &Pos);
+		m_pTransformBody->Get_Info(INFO_LOOK, &Look);
+		m_pTransformBody->Get_Info(INFO_RIGHT, &Right);
+		if (0 == i)
+		{
+			Dir = Look;
+		}
+		else if (1 == i)
+		{
+			Dir = Look + Right / 2;
+		}
+		else if (2 == i)
+		{
+			Dir = Look + Right;
+		}
+		else if (3 == i)
+		{
+			Dir = Look - Right / 2;
+		}
+		else if (4 == i)
+		{
+			Dir = Look - Right;
+		}
+		Pos.y += 2.f * m_fScale;
+		D3DXVec3Normalize(&Dir, &Dir);
+		Pos += Dir * m_stInfo.fPosinDist * m_fScale;
+		Engine::Reuse_Object(Pos, Dir, (float)m_stInfo.iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::SMOKE_BULLET);
 	}
 }
 

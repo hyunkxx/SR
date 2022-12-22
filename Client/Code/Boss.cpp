@@ -251,7 +251,7 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	}
 
 	//////////////////////////////////////////////////////////////
-	if (40.f < m_fPattern_5Count)
+	if (30.f < m_fPattern_5Count)
 	{
 		m_fPattern_5Count = 0.f;
 		m_bPattern_5 = true;
