@@ -708,6 +708,7 @@ void CRush::Collison_Object(void)
 					if (CRushMode::GetInstance()->m_fBossCurHP <= 0)
 					{
 						dynamic_cast<CBoss*>(pBoss)->Set_Dead(true);
+						dynamic_cast<CBoss*>(pBoss)->Set_Dead_Motion();
 					}
 					continue;
 				}

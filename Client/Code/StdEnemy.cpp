@@ -324,11 +324,21 @@ void CStdEnemy::Detect(_float fTimeDelta)
 		D3DXVec3Normalize(&vLook, &vLook);
 		Pos += Dir* 3.f*fPosinDist;
 		Pos.y += 1.f;
-		if (m_fReloadTime > m_fReload)
+
+		_vec3 Right(0.f, 0.f, 1.f);
+
+		_float	fLookDot = acosf(D3DXVec3Dot(&vLook, &Right));
+		
+		if (Right.x > vLook.x)
+			fLookDot *= -1;
+
+		_float fAngle = fLookDot - m_pTransformPosin->Get_Angle(ROT_Y);
+
+		if (m_fReloadTime > m_fReload && abs(fAngle) < D3DXToRadian(5.f))
 		{
 			if (fabs(Angle) < 4.f)
 			{
-				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, m_pTransformPosin->Get_Angle(ROT_X), m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
+				Engine::Reuse_Object(Pos, Dir, (_float)m_iCannonSpeed, fLookDot, m_pTransformPosin->Get_Angle(ROT_Y), BULLET_ID::ENEMY_CANNONBALL);
 				m_fReloadTime = 0.f;
 
 			}

@@ -34,6 +34,12 @@ _int CRushTank::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		Dead_Motion(fTimeDelta);
+		if (Engine::Get_DIKeyState_Custom(DIK_Z) == KEY_STATE::TAP)
+		{
+			// 여기에 체력 셋팅 다시 해주면 됨
+			CRushMode::GetInstance()->m_fPlayerCurHP = CRushMode::GetInstance()->m_fBossMaxHP;
+			Re_Start();
+		}
 	}
 	else
 	{
@@ -834,4 +840,16 @@ CRushTank * CRushTank::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+void CRushTank::Re_Start(void)
+{
+	m_pTransformBody->Reset_Trans();
+	m_pTransformHead->Reset_Trans();
+	m_pTransformPosin->Reset_Trans();
+	Posin_Setting(_vec3(250.f, 2.f, 200.f));
+	Head_Setting(_vec3(250.f, 2.f, 200.f));
+	Body_Setting(_vec3(250.f, 2.f, 200.f));
+	m_bDead = false;
+	m_bRock = false;
 }

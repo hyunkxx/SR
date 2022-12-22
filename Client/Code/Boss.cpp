@@ -31,7 +31,12 @@ CBoss::~CBoss()
 _int CBoss::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
+	{
+		if (m_bDeadMotion)
+			Dead_Motion(fTimeDelta);
+
 		return OBJ_DEAD;
+	}
 
 	if (m_bDeadEvent)
 		Dead_Motion(fTimeDelta);
@@ -73,7 +78,7 @@ void CBoss::LateUpdate_Object(void)
 
 void CBoss::Render_Object(void)
 {
-	if (!CRushMode::GetInstance()->m_bBossReady)
+	if (!CRushMode::GetInstance()->m_bBossReady && !m_bDeadMotion)
 		return;
 
 	if (m_bDead)

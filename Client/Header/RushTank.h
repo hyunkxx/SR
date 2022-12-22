@@ -41,7 +41,7 @@ private:
 	void				Body_Setting(const _vec3& _SetPos);
 
 	virtual void		Dead_Motion(const _float& fTimeDelta);
-
+	void				Re_Start(void);
 public:
 	void		Key_Input(const _float& fTimeDelta);
 	void		SetUp_OnTerrain(void);

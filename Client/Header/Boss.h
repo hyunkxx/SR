@@ -51,13 +51,12 @@ private:
 	void				Head_Spin(const _float& fTimeDelta);
 	void				Body_Spin(const _float& fTimeDelta);
 	void				Move_Pos(_vec3 Move);
-
 	void				Export_Hit_Point(void);
 public:
 	void				Rotation_Body(ROTATION eID, _float fAngle);
 	void				Rotation_Head(ROTATION eID, _float fAngle);
 	void				Rotation_Posin(ROTATION eID, _float fAngle);
-
+	void				Set_Dead_Motion(void) { m_bDeadMotion = true; }
 private:
 	CTransform*			m_pTransformBody = nullptr;
 	CTransform*			m_pTransformHead = nullptr;
@@ -98,6 +97,8 @@ private:
 	_int				m_iBoomber_Count = 0;
 
 	_float				m_fRushSpeed = 200.f;
+
+	_bool				m_bDeadMotion = false;
 public:
 	virtual void Free(void) override;
 	static CBoss* Create(LPDIRECT3DDEVICE9 pGraphicDev);
