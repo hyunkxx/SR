@@ -243,9 +243,12 @@ void CMiddleTank::Key_Input(const _float & fTimeDelta)
 			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
 		}
 
-		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
-			Shoot_Smoke();
 
+		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+		{
+			m_bSmoke = true;
+			Shoot_Smoke();
+		}
 
 		if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD
 			&& !CTankManager::GetInstance()->IsLock()

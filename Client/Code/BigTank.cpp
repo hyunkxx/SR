@@ -240,8 +240,12 @@ void CBigTank::Key_Input(const _float & fTimeDelta)
 			static_cast<CAH_64A*>(Engine::Get_Object(L"GameLogic", L"AH_64A"))->Start_AH_64A();
 		}
 
+
 		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+		{
+			m_bSmoke = true;
 			Shoot_Smoke();
+		}
 
 
 		if (Get_DIKeyState_Custom(DIK_G) == KEY_STATE::TAP)

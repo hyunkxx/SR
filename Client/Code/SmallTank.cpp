@@ -243,7 +243,11 @@ void CSmallTank::Key_Input(const _float & fTimeDelta)
 		}
 
 		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+		{
+			m_bSmoke = true;
 			Shoot_Smoke();
+		}
+			
 
 
 		if (Engine::Get_DIMouseState_Custom(DIM_LB) == KEY_STATE::HOLD

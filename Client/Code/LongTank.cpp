@@ -268,8 +268,12 @@ void CLongTank::Key_Input(const _float & fTimeDelta)
 			m_bReLoad = false;
 		}
 
+
 		if (Get_DIKeyState_Custom(DIK_Q) == KEY_STATE::TAP)
+		{
+			m_bSmoke = true;
 			Shoot_Smoke();
+		}
 
 		if (Get_DIKeyState_Custom(DIK_D) == KEY_STATE::HOLD)
 			Rotation_Body(ROT_Y, (_float)m_stInfo.RotSpeed * fTimeDelta);

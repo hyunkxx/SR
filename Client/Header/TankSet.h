@@ -58,7 +58,7 @@ public:
 	void				Set_Rock(_bool Rock) { m_bRock = Rock; }
 
 	const Tank_State Get_TankInfo(void) { return  m_stInfo; }
-
+	_bool				Get_Smoke(void) { return m_bSmoke; }
 protected:
 	CTransform*			m_pTransformBody = nullptr;
 	CTransform*			m_pTransformHead = nullptr;
@@ -107,8 +107,9 @@ protected:
 	CTransform*      m_pRader_Transform = nullptr;
 	_float               m_fRader;
 
-
-
+	_bool			m_bSmoke = false; 
+	_float			m_fSmokeTime = 10.f;
+	_float			m_fSmokeCount = 0.f;
 public:
 	_float Get_HP(void) { return m_stInfo.fCurHP; }
 	void Minus_HP(_float minus) { m_stInfo.fCurHP -= minus; }

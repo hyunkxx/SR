@@ -24,6 +24,15 @@ CTankSet::~CTankSet()
 
 _int CTankSet::Update_Object(const _float & fTimeDelta)
 {
+	if (m_bSmoke)
+	{
+		m_fSmokeCount += fTimeDelta;
+		if (m_fSmokeTime <= m_fSmokeCount)
+		{
+			m_bSmoke = false;
+			m_fSmokeCount = 0.f;
+		}
+	}
 	m_stInfo.fReloadTime += fTimeDelta;
 	m_fDT = fTimeDelta;
 
