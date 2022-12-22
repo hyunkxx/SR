@@ -84,9 +84,13 @@ void CTankSet::Render_Object(void)
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &UI_Minimap_matProj);
 		m_pMinimap_Texure->Set_Texture(0);
 		m_pMinimap_RcTex->Render_Buffer();
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
 		// Rader UI
-
+		_matrix OriginViewMatrix, OriginProjMatrix;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &OriginViewMatrix);
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OriginProjMatrix);
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pRader_Transform->Get_WorldMatrix());
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &Minimap_ViewMatrix);
@@ -94,8 +98,9 @@ void CTankSet::Render_Object(void)
 		m_pRader_Texure->Set_Texture(0);
 		m_pRader_RcTex->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &OriginViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OriginProjMatrix);
+
 	}
 }
 

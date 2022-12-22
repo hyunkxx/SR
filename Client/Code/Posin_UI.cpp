@@ -194,14 +194,14 @@ void CPosin_UI::KeyInput(void)
 
 	_float fSound = 1.f;
 
-	if (CUI_Volume::s_fAllSound == 0.f)
-	{
-		fSound = 0.f;
-	}
-	else if (CUI_Volume::s_fAllSound != 0.f)
-	{
-		fSound = 1.f;
-	}
+	//if (CUI_Volume::s_fAllSound == 0.f)
+	//{
+	//	fSound = 0.f;
+	//}
+	//else if (CUI_Volume::s_fAllSound != 0.f)
+	//{
+	//	fSound = 1.f;
+	//}
 
 
 
@@ -230,10 +230,6 @@ void CPosin_UI::KeyInput(void)
 				StopSound(POSIN_ZOOM);
 			}
 			if (m_fScaleY >= 450.f) { m_fScaleY = 450.f; }
-		}
-		else if (Get_DIKeyState_Custom(DIK_1) == KEY_STATE::AWAY)
-		{
-			StopSound(POSIN_ZOOM);
 		}
 
 		if (Get_DIKeyState_Custom(DIK_2) == KEY_STATE::HOLD)

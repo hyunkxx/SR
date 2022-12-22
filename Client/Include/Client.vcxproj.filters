@@ -233,9 +233,6 @@
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\00.HP">
       <UniqueIdentifier>{f909f861-75b1-4803-9c11-5d666b56fe40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel">
-      <UniqueIdentifier>{5d5ecb7f-bc9e-4dbf-bbc1-0f813b867cc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed">
       <UniqueIdentifier>{1949959f-569d-4adb-a361-62a35380be80}</UniqueIdentifier>
     </Filter>
@@ -580,9 +577,6 @@
     <ClInclude Include="..\Header\GameMode.h">
       <Filter>03. GameSystem\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_Fuel.h">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_Speed.h">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>
     </ClInclude>
@@ -900,9 +894,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\GameMode.cpp">
       <Filter>03. GameSystem\GameMode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_Fuel.cpp">
-      <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\01.UI_Fuel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Speed.cpp">
       <Filter>02. GameObject\93.UI\02.Stage_UI\00.Player_UI\02.UI_Speed</Filter>

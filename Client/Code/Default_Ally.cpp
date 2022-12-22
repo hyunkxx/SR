@@ -419,7 +419,7 @@ void CDefault_Ally::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	// Minimap UI
-	if (Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA)
+	if ((Engine::Get_Camera_ID() == CAMERA_ID::TANK_CAMERA) || (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA))
 	{
 		if (CGameMode::GetInstance()->m_bGameEnd)
 			return;
@@ -1470,7 +1470,18 @@ void CDefault_Ally::Update_UI(void)
 
 		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
 	}
+	else if (Engine::Get_Camera_ID() == CAMERA_ID::AH_64A_CAMERA)
+	{
+		UI_fScaleY = 0.6f;
 
+		m_pTransformHP_UI->Set_Scale(UI_fScaleX, UI_fScaleY, UI_fScaleZ);
+
+		m_pTransformCom->Get_Info(INFO_POS, &vTankPos);
+
+		vUI_HPF = { vTankPos.x, vTankPos.y + 6.f, vTankPos.z + 3.f };
+
+		Engine::Get_Camera()->Get_GraphicDev()->GetTransform(D3DTS_VIEW, &UI_matViewF);
+	}
 	memset(&UI_matViewF._41, 0, sizeof(_vec3));
 
 	D3DXMatrixInverse(&UI_matViewF, 0, &UI_matViewF);

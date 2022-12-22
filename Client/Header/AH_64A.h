@@ -3,6 +3,8 @@
 #include "Voxel.h"
 
 BEGIN(Engine)
+class CRcTex;
+class CTexture;
 class CTransform;
 END
 
@@ -78,6 +80,14 @@ private:
 public:
 	static CAH_64A* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
+
+	// Minimap UI
+	_matrix            UI_Minimap_matProj;
+	CRcTex*            m_pMinimap_RcTex = nullptr;
+	CTexture*         m_pMinimap_Texure = nullptr;
+	CTransform*      m_pMinimap_Transform = nullptr;
+	_float               m_fMinimap[TRANSFORM_FLOAT_END];
+	void					Update_Minimap(void);
 
 };
 

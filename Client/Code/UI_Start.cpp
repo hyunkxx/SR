@@ -202,9 +202,9 @@ void CUI_Start::Key_input(void)
 		{
 			m_fSliderPosY += 20.f;
 
-			if (m_fSliderPosY >= 500.f)
+			if (m_fSliderPosY >= 540.f)
 			{
-				m_fSliderPosY = 500.f;
+				m_fSliderPosY = 540.f;
 			}
 
 			m_fFontPosY -= 50.f;
@@ -331,22 +331,22 @@ void CUI_Start::UI_Render_Font(void)
 
 		if (i == NUM_HELP)
 		{
-			Render_Font(L"Font_Retro1", (m_szDescription[i]).c_str(), &_vec2(200, fY - 20.f), D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
+			Render_Font(L"Font_RetroMiddle", (m_szDescription[i]).c_str(), &_vec2(200, fY - 20.f), D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 			continue;
 		}
 		else if (i == NUM_UI || i == NUM_BASE || i == NUM_SKILL || i == NUM_M55 || i == NUM_AH_64A)
 		{
-			Render_Font(L"Font_Retro1", (m_szDescription[i]).c_str(), &_vec2(150.f, fY), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
+			Render_Font(L"Font_RetroMiddle", (m_szDescription[i]).c_str(), &_vec2(150.f, fY), D3DXCOLOR(1.f, 0.f, 0.f, 1.f));
 			continue;
 		}
 		else if (i == NUM_1 || i == NUM_2)
 		{
-			Render_Font(L"Font_Retro1", (m_szDescription[i]).c_str(), &_vec2(100.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
-			Render_Font(L"Font_Retro1", (m_szDescription_Field[i]).c_str(), &_vec2(300.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+			Render_Font(L"Font_RetroMiddle", (m_szDescription[i]).c_str(), &_vec2(100.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+			Render_Font(L"Font_RetroMiddle", (m_szDescription_Field[i]).c_str(), &_vec2(300.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 			continue;
 		}
 
-		Render_Font(L"Font_Retro1", (m_szDescription[i]).c_str(), &_vec2(50.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
-		Render_Font(L"Font_Retro1", (m_szDescription_Field[i]).c_str(), &_vec2(300.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_RetroMiddle", (m_szDescription[i]).c_str(), &_vec2(50.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Render_Font(L"Font_RetroMiddle", (m_szDescription_Field[i]).c_str(), &_vec2(300.f, fY), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 	}
 }

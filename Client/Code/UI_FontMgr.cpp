@@ -44,6 +44,22 @@ void CUI_FontMgr::Time_Font_UI_Update(const _float & fTimeDelta)
 		}
 	}
 
+	if (iPlayTime <= 0)
+	{
+		// 플레이어 패배.
+
+
+
+	}
+
+
+
+
+
+
+
+
+
 	_int iMin = (iPlayTime / 60);
 	errno_t iCheck_TM = _itow_s(iMin, m_szTime_min, sizeof(m_szTime_min) / sizeof(m_szTime_min[0]), 10);
 
