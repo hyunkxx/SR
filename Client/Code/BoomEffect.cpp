@@ -9,7 +9,8 @@
 #include "BottomDirEnermy.h"
 #include "Default_Ally.h"
 #include "CreateAi.h"
-
+#include "RushTank.h"
+#include "RushMode.h"
 #include "EffectManager.h"
 CBoomEffect::CBoomEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -138,7 +139,6 @@ void CBoomEffect::Collision_Object(void)
 	if (!m_bCollision)
 		return;
 
-
 	CGameObject* TempCreateAi = Engine::Get_Object(L"GameLogic", L"CreateAi");
 	vector<CGameObject*> DEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_DEFAULT_ENERMY);
 	vector<CGameObject*> BDEnemy = CEnermyMgr::GetInstance()->Get_mIEnermy(OBJID::OBJID_BDENERMY);
@@ -206,6 +206,14 @@ void CBoomEffect::Collision_Object(void)
 				}
 			}
 
+			else if (dynamic_cast<CRushTank*>(pPlayer))
+			{
+				CRushMode::GetInstance()->m_fPlayerCurHP -= 1000.f;
+				if (CRushMode::GetInstance()->m_fPlayerCurHP <= 0.f)
+				{
+					static_cast<CRushTank*>(pPlayer)->Set_Dead(true);
+				}
+			}
 		}
 	}
 

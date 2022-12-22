@@ -81,6 +81,8 @@
 #include "RushMode.h"
 #include "BossHP.h"
 #include "RushQuest.h"
+#include "RushTankHP.h"
+#include "ResultUI.h"
 
 CRush::CRush(LPDIRECT3DDEVICE9 pGraphicDev) : CScene(pGraphicDev)
 {
@@ -105,7 +107,7 @@ HRESULT CRush::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_RANGEFOGENABLE, FALSE);
 
 	//CUI_FontMgr::GetInstance()->Set_Rush_LifeCount(3);
-	CRushMode::GetInstance()->Initalize(4000.f, 2000.f);
+	CRushMode::GetInstance()->Initalize(20000.f, 20000.f);
 
 	Engine::PlaySound_SR(L"forest.mp3", STAGE_SOUND, 1.f);
 	Engine::PlaySound_SR(L"Birds.mp3", STAGE_EFFECT, 1.f);
@@ -125,6 +127,15 @@ _int CRush::Update_Scene(const _float& fTimeDelta)
 	__super::Update_Scene(fTimeDelta);
 
 	//Engine::PlaySound_SR(L"BattleBGM.mp3", STAGE_SOUND, CUI_Volume::s_fBGMSound);
+
+	if (CRushMode::GetInstance()->m_fPlayerCurHP <= 0.f)
+	{
+		CRushMode::GetInstance()->m_eResult = CRushMode::GAME_RESULT::LOSE;
+	}
+	else if (CRushMode::GetInstance()->m_fBossCurHP <= 0.f)
+	{
+		CRushMode::GetInstance()->m_eResult = CRushMode::GAME_RESULT::WIN;
+	}
 
 	Engine::Update_BulletMgr(fTimeDelta);
 	Engine::Update_CSP_EffectMgr(fTimeDelta);
@@ -444,7 +455,7 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	}
 
 	//Enemy
-	for (_int i = 0; 15> i; i++)
+	for (_int i = 0; 8> i; i++)
 	{
 		m_eData.TankType = TANKTYPE::BIG_TANK;
 		m_eData.eID = OBJID::OBJID_DEFAULT_ENERMY;
@@ -456,7 +467,6 @@ HRESULT CRush::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pEnermy, E_FAIL);
 		Engine::Enermy_Add(pEnermy, OBJID::OBJID_DEFAULT_ENERMY);
 	}
-
 
 	// Skill
 	pGameObject = CBoom_Support::Create(m_pGraphicDev);
@@ -520,6 +530,10 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rush_HP", pGameObject), E_FAIL);
 
+	pGameObject = CResultUI::Create(m_pGraphicDev, CResultUI::MODE::RUSH);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"result_ui", pGameObject), E_FAIL);
+
 	pGameObject = CWarningUI::Create(m_pGraphicDev, CWarningUI::MODE::RUSH);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"warning_ui", pGameObject), E_FAIL);
@@ -548,6 +562,10 @@ HRESULT CRush::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sakamoto", pGameObject), E_FAIL);
 	pGameObject->Set_Dead(true);
+
+	pGameObject = CRushTankHP::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_HP", pGameObject), E_FAIL);
 
 	m_umapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;
@@ -606,9 +624,9 @@ void CRush::Collison_Object(void)
 	{
 		for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 		{
-
 			if ((*iter)->Get_Dead())
 				continue;
+
 			for (auto& Dest = pGameLogic->Get_mapObject()->begin(); pGameLogic->Get_mapObject()->end() != Dest; Dest++)
 			{
 				if (!dynamic_cast<ICollisionable*>(*iter) || !dynamic_cast<ICollisionable*>(Dest->second))
@@ -669,15 +687,10 @@ void CRush::Collison_Object(void)
 					{
 						dynamic_cast<CStdEnemy*>(*iters)->Set_DeadMotionPlay();
 					}
-
-					continue;
 				}
 			}
 		}
 	}
-
-
-
 
 	// 보스 충돌처리 여기 몰아넣기
 	if (pBoss)
@@ -687,6 +700,13 @@ void CRush::Collison_Object(void)
 		{
 			for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 			{
+			/*	_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+				if (vPos.y < 0.5f)
+				{
+					(*iter)->Set_Dead(true);
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+				}*/
+
 				if ((*iter)->Get_Dead())
 					continue;
 
@@ -703,7 +723,7 @@ void CRush::Collison_Object(void)
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::EXPLOSION, vPos);
 
-					CRushMode::GetInstance()->m_fBossCurHP -= 200.f;
+					CRushMode::GetInstance()->m_fBossCurHP -= 1000.f;
 
 					if (CRushMode::GetInstance()->m_fBossCurHP <= 0)
 					{
@@ -719,13 +739,17 @@ void CRush::Collison_Object(void)
 	// 유저랑 충돌 몰아 놓기 무적상태 체크 후 충돌처리
 	if (!static_cast<CRushTank*>(pPlayer)->Get_God_Mode())
 	{
-
 		// 유저랑 적 총알 충돌처리
 		for (_int i = 0; BULLET_ID::MASHINE_BULLET > i; i++)
 		{
-
 			for (auto& iter = (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->begin(); iter != (CBulletMgr::GetInstance()->Get_Bullet_List((BULLET_ID)i))->end(); iter++)
 			{
+			/*	_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+				if (vPos.y < 0.5f)
+				{
+					(*iter)->Set_Dead(true);
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+				}*/
 
 				if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), (*iter)->Get_Dist(), pPlayer->Get_Dist()))
 					continue;
@@ -734,6 +758,8 @@ void CRush::Collison_Object(void)
 				{
 					_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+					static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+
 					Engine::Get_Camera()->Shake_On();
 					_float fPlayer_obj_dist_Sound = sqrtf(((vPos.x - CameraPos.x) * (vPos.x - CameraPos.x)) + ((vPos.z - CameraPos.z) * (vPos.z - CameraPos.z)));
 					// 소리 거리제한
@@ -745,6 +771,11 @@ void CRush::Collison_Object(void)
 
 					}				
 				
+					CRushMode::GetInstance()->m_fPlayerCurHP -= 1000.f;
+					if (CRushMode::GetInstance()->m_fPlayerCurHP <= 0)
+					{
+						dynamic_cast<CRushTank*>(pPlayer)->Set_Dead(true);
+					}
 				}
 
 			}
@@ -762,6 +793,37 @@ void CRush::Collison_Object(void)
 		}
 	}
 
+	for (auto iter = CBulletMgr::GetInstance()->Get_Bullet_List(BULLET_ID::AH_64A_BULLET)->begin(); iter != CBulletMgr::GetInstance()->Get_Bullet_List(BULLET_ID::AH_64A_BULLET)->end(); iter++)
+	{
+		_vec3 vPos = dynamic_cast<CBullet*>(*iter)->Get_OBB()->vPos;
 
+		if (vPos.y <= 0.5f)
+		{
+			vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::GROUND, vPos);
+			(*iter)->Set_Dead(true);
+		}
+
+		if (!Engine::Sphere_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_Info(), dynamic_cast<ICollisionable*>(pPlayer)->Get_Info(), (*iter)->Get_Dist(), pPlayer->Get_Dist()))
+			continue;
+
+		if (Engine::OBB_Collision(dynamic_cast<ICollisionable*>(*iter)->Get_OBB(), dynamic_cast<ICollisionable*>(pPlayer)->Get_OBB()))
+		{
+			_vec3 vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+
+			(*iter)->Set_Dead(true);
+
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::FIRE, vPos);
+			vPos = static_cast<CBullet*>(*iter)->Get_OBB()->vPos;
+			static_cast<CEffectManager*>(m_pEffectManager)->GetEffectPool()->UseEffect(CEffectPool::EFFECT_TYPE::BULLET, vPos);
+
+			CRushMode::GetInstance()->m_fPlayerCurHP -= 200.f;
+
+			if (CRushMode::GetInstance()->m_fPlayerCurHP <= 0)
+			{
+				dynamic_cast<CRushTank*>(pPlayer)->Set_Dead(true);
+			}
+		}
+	}
 
 }

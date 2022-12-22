@@ -23,7 +23,7 @@ public:
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
 
-
+	void				SetPosition(const _vec3& vPos);
 	virtual const _vec3	Get_Info(void)override;
 	virtual	void		Move_Info(_vec3 _Info)override;
 	virtual			void		RenderGUI(void)override {}

@@ -228,6 +228,7 @@
     <ClInclude Include="..\Header\RushMode.h" />
     <ClInclude Include="..\Header\RushQuest.h" />
     <ClInclude Include="..\Header\RushTank.h" />
+    <ClInclude Include="..\Header\RushTankHP.h" />
     <ClInclude Include="..\Header\Sakamoto.h" />
     <ClInclude Include="..\Header\ScoreBoard.h" />
     <ClInclude Include="..\Header\ShipBullet.h" />
@@ -353,6 +354,7 @@
     <ClCompile Include="..\Code\RushMode.cpp" />
     <ClCompile Include="..\Code\RushQuest.cpp" />
     <ClCompile Include="..\Code\RushTank.cpp" />
+    <ClCompile Include="..\Code\RushTankHP.cpp" />
     <ClCompile Include="..\Code\Sakamoto.cpp" />
     <ClCompile Include="..\Code\ScoreBoard.cpp" />
     <ClCompile Include="..\Code\ShipBullet.cpp" />

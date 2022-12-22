@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameObject.h"
 
 BEGIN(Engine)
@@ -9,16 +10,14 @@ class CTexture;
 
 END
 
-class CResultUI : public Engine::CGameObject
+class CRushTankHP : public CGameObject
 {
 public:
-	enum class MODE { WAR, RUSH };
-private:
-	explicit CResultUI(LPDIRECT3DDEVICE9 pGraphicDev, MODE eType = MODE::WAR);
-	explicit CResultUI(const CResultUI& rhs);
-	virtual ~CResultUI();
+	explicit CRushTankHP(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRushTankHP(const CRushTankHP& rhs);
+	virtual ~CRushTankHP();
 public:
-	static CResultUI*	Create(LPDIRECT3DDEVICE9 pGraphicDev, MODE eType = MODE::WAR);
+	static CRushTankHP*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int Update_Object(const _float& fTimeDelta)override;
@@ -37,26 +36,18 @@ public:
 	void Set_PosX(const _float& fX) { m_fPosX = fX; m_bUpdateTransform = true; }
 	void Set_PosY(const _float& fY) { m_fPosY = fY; m_bUpdateTransform = true; }
 	void Set_PosZ(const _float& fZ) { m_fPosZ = fZ; m_bUpdateTransform = true; }
-public:
 private:
-	void KeyInput();
-	void UpdateTransform();
-	void SetWinText(const _float& fDeltaTime);
-	void SetLoseText(const _float& fDeltaTime);
-	void RenderButton();
-private: /* UI value */
-	MODE m_eType;
-	float m_fSmoothStart = 0.f;
-	float m_fHideTimer = 0.f;
-
-	bool m_bHideText = false;
-
-	bool m_bUpdateTransform;
-
 	CRcTex*		m_pRcTex = nullptr;
 
-	CTexture*	m_pNonClickTexture = nullptr;
-	CTransform*	m_pTransform = nullptr;
+	CTexture*	m_pBack = nullptr;
+	CTexture*	m_pBackBlack = nullptr;
+	CTexture*	m_pBackYellow = nullptr;
+	CTexture*	m_pFront = nullptr;
+
+	CTransform*	m_pBackTransform = nullptr;
+	CTransform*	m_pBackBlackTransform = nullptr;
+	CTransform*	m_pBackYellowTransform = nullptr;
+	CTransform*	m_pFrontTransform = nullptr;
 
 	_matrix  m_matProj;
 
@@ -64,29 +55,16 @@ private: /* UI value */
 	_float	m_fScaleY;
 	_float	m_fScaleZ;
 
+	_float m_fLerpX;
+	_float m_fLerpPosX;
+
 	_float	m_fPosX;
 	_float	m_fPosY;
 	_float	m_fPosZ;
 
 	_int	iRotaion;
 private:
-	const _float m_fOriginY = -100.f;
-	const _float m_fDeltaY = +110.f;
-private:
-	bool m_bShow;
-private:
-	_int	m_nTitleCount = 0;
-	_int	m_nTextCount = 0;
-
-	_float	m_fTitleTimer = 0.f;
-	_float	m_fTextTimer = 0.f;
-
-	wstring m_strText[4];
-	wstring m_strLose[4];
-	wstring m_strBuff;
-
-	wstring m_strCreateText = L"";
-	wstring m_strDestroyText = L"";
-	wstring m_strKillText = L"";
+	bool m_bUpdateTransform;
+	float curPer = 0.f;
 };
 

@@ -8,7 +8,7 @@
 
 CMainApp::CMainApp()
 	: m_pGraphicDev(nullptr)
-{
+{ 
 }
 
 CMainApp::~CMainApp()
@@ -29,6 +29,16 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
+	if (Get_DIKeyState_Custom(DIK_F1) == KEY_STATE::TAP)
+	{
+		ShowCursor(true);
+	}
+
+	if (Get_DIKeyState_Custom(DIK_F2) == KEY_STATE::TAP)
+	{
+		ShowCursor(false);
+	}
+
 	SetUp_InputDev();
 	Update_InputDev();
 

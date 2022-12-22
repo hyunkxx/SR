@@ -164,7 +164,7 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	CGameObject* pPlayer = dynamic_cast<CGameObject*>(Engine::Get_Object(L"GameLogic", L"PlayerVehicle"));
 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"GameLogic", L"PlayerVehicle", L"Proto_TransformBody", ID_DYNAMIC));
 	_vec3 PlayerPos;
-	_vec3 newPos = { 200.f, 0.f, 200.f };
+	_vec3 newPos = { 100.f, 0.f, 200.f };
 	///////////////////////Appear////////////////////////////////////
 	if (pPlayerTransCom)
 	{
@@ -176,7 +176,7 @@ void CBoss::Pattern(const _float & fTimeDelta)
 	if (CRushMode::GetInstance()->m_bBossReady && 0 == m_iAppearCount)
 	{
 		m_bAppear = true;
-		static_cast<CRushTank*>(pPlayer)->Move_Info(newPos);
+		static_cast<CRushTank*>(pPlayer)->SetPosition(newPos);
 	}
 
 	if (m_bAppear && 0 == m_iAppearCount)

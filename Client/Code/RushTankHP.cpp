@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Header\BossHP.h"
+#include "..\Header\RushTankHP.h"
 
 #include "Export_Function.h"
 #include "TankSet.h"
@@ -8,42 +8,42 @@
 #include "Utility.h"
 #include "RushMode.h"
 
-CBossHP::CBossHP(LPDIRECT3DDEVICE9 pGraphicDev)
+CRushTankHP::CRushTankHP(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 }
 
-CBossHP::CBossHP(const CBossHP& rhs)
+CRushTankHP::CRushTankHP(const CRushTankHP& rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
 
-CBossHP::~CBossHP()
+CRushTankHP::~CRushTankHP()
 {
 }
 
-CBossHP* CBossHP::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRushTankHP* CRushTankHP::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CBossHP*	pInstance = new CBossHP(pGraphicDev);
+	CRushTankHP*	pInstance = new CRushTankHP(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{
-		MSG_BOX("CBossHP Create Failed");
+		MSG_BOX("CRushTankHP Create Failed");
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-HRESULT CBossHP::Ready_Object(void)
+HRESULT CRushTankHP::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	m_fPosX = WINCX * 0.5f;
-	m_fPosY = 10.f;
+	m_fPosY = WINCY - 10.f;
 	m_fPosZ = 0.0f;
 
 	m_fScaleX = 400.f;
@@ -54,7 +54,7 @@ HRESULT CBossHP::Ready_Object(void)
 
 	m_fScaleX = 395.f;
 	m_fScaleY = 5.f;
-	m_fScaleZ = 0.01f;
+	m_fScaleZ = 0.1f;
 
 	m_fLerpX = 395.f;
 	m_fLerpPosX = m_fPosX;
@@ -71,22 +71,19 @@ HRESULT CBossHP::Ready_Object(void)
 	return S_OK;
 }
 
-_int CBossHP::Update_Object(const _float & fTimeDelta)
+_int CRushTankHP::Update_Object(const _float & fTimeDelta)
 {
-	if (!CRushMode::GetInstance()->m_bBossBegin)
-		return 0;
-
 	if (Get_DIKeyState_Custom(DIK_F8) == KEY_STATE::TAP)
 	{
-		CRushMode::GetInstance()->m_fBossCurHP += 500.f;
+		CRushMode::GetInstance()->m_fPlayerCurHP += 500.f;
 	}
 
 	if (Get_DIKeyState_Custom(DIK_F7) == KEY_STATE::TAP)
 	{
-		CRushMode::GetInstance()->m_fBossCurHP -= 500.f;
+		CRushMode::GetInstance()->m_fPlayerCurHP -= 500.f;
 	}
 
-	curPer = (CRushMode::GetInstance()->m_fBossCurHP / CRushMode::GetInstance()->m_fBossMaxHP)  * 395.f;
+	curPer = (CRushMode::GetInstance()->m_fPlayerCurHP / CRushMode::GetInstance()->m_fPlayerMaxHP)  * 395.f;
 
 	float fScaleX = Utility::Lerp(m_fLerpX, curPer, fTimeDelta);
 
@@ -114,12 +111,12 @@ _int CBossHP::Update_Object(const _float & fTimeDelta)
 	return 0;
 }
 
-void CBossHP::LateUpdate_Object(void)
+void CRushTankHP::LateUpdate_Object(void)
 {
 	__super::LateUpdate_Object();
 }
 
-void CBossHP::Render_Object(void)
+void CRushTankHP::Render_Object(void)
 {
 	_matrix	ViewMatrix, OldProjection, OldView;
 	D3DXMatrixIdentity(&ViewMatrix);
@@ -149,12 +146,12 @@ void CBossHP::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjection);
 }
 
-void CBossHP::Free(void)
+void CRushTankHP::Free(void)
 {
 	__super::Free();
 }
 
-HRESULT CBossHP::Add_Component(void)
+HRESULT CRushTankHP::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
@@ -190,7 +187,7 @@ HRESULT CBossHP::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBackYellow, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"back_yellow", pComponent });
 
-	pComponent = m_pFront = static_cast<CTexture*>(Clone_Prototype(L"base_enemy_front"));
+	pComponent = m_pFront = static_cast<CTexture*>(Clone_Prototype(L"Proto_World_Hp_Tex"));
 	NULL_CHECK_RETURN(m_pFront, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"front", pComponent });
 

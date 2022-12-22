@@ -34,11 +34,15 @@ _int CRushTank::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		Dead_Motion(fTimeDelta);
-		if (Engine::Get_DIKeyState_Custom(DIK_Z) == KEY_STATE::TAP)
+
+		if (CRushMode::GetInstance()->m_eResult == CRushMode::GAME_RESULT::LOSE)
 		{
-			// 여기에 체력 셋팅 다시 해주면 됨
-			CRushMode::GetInstance()->m_fPlayerCurHP = CRushMode::GetInstance()->m_fBossMaxHP;
-			Re_Start();
+			if (Engine::Get_DIKeyState_Custom(DIK_Z) == KEY_STATE::TAP)
+			{
+				// 여기에 체력 셋팅 다시 해주면 됨
+				CRushMode::GetInstance()->m_fPlayerCurHP = CRushMode::GetInstance()->m_fBossMaxHP;
+				Re_Start();
+			}
 		}
 	}
 	else
@@ -223,10 +227,10 @@ HRESULT CRushTank::Ready_Object(void)
 	m_pTransformPosin->Reset_Trans();
 
 	m_stInfo.fAccel_Ad = 8.f;
-	m_stInfo.fAccel_Back = 4.f;
+	m_stInfo.fAccel_Back = 6.f;
 
 	//최고속도 제한
-	m_stInfo.fAccel_top_speed = 15.f;
+	m_stInfo.fAccel_top_speed = 20.f;
 	m_stInfo.fBack_top_speed = -7.5f;
 
 	m_stInfo.fPosinDist = 5.f * m_fScale;
@@ -256,6 +260,14 @@ HRESULT CRushTank::Ready_Object(void)
 void CRushTank::Sound_Setting(const _float & fTimeDelta)
 {
 }
+
+void CRushTank::SetPosition(const _vec3 & vPos)
+{
+	m_pTransformBody->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransformHead->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransformPosin->Set_Pos(vPos.x, vPos.y, vPos.z);
+}
+
 
 void CRushTank::Shoot_Bullet(BULLET_ID eID)
 {

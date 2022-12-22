@@ -162,7 +162,7 @@ _int CStdEnemy::Update_Object(const _float & fTimeDelta)
 		if (!m_bDeadCountAdd)
 		{
 			CRushMode::GetInstance()->m_nDeadCount++;
-			if (CRushMode::GetInstance()->m_nDeadCount >= 15)
+			if (CRushMode::GetInstance()->m_nDeadCount >= 8)
 			{
 				CRushMode::GetInstance()->m_bBossReady = true;
 			}

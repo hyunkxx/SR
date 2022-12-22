@@ -710,6 +710,9 @@
     <ClInclude Include="..\Header\Sakamoto.h">
       <Filter>02. GameObject\93.UI\14.Sakamoto</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RushTankHP.h">
+      <Filter>02. GameObject\00. Tank\RushTank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\MainApp.cpp">
@@ -1030,6 +1033,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Sakamoto.cpp">
       <Filter>02. GameObject\93.UI\14.Sakamoto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RushTankHP.cpp">
+      <Filter>02. GameObject\00. Tank\RushTank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

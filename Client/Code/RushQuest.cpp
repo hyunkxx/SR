@@ -78,12 +78,12 @@ void CRushQuest::LateUpdate_Object(void)
 
 void CRushQuest::Render_Object(void)
 {
-	if(CRushMode::GetInstance()->m_nDeadCount >= 15)
+	if(CRushMode::GetInstance()->m_nDeadCount >= 8)
 		return;
 	
 	wstring strQuestTitle = L"미션 목표";
 	wstring strQuest1 = L"적을 모두 섬멸하세요";
-	wstring strQuest2 = L"처치한 적 " + to_wstring(CRushMode::GetInstance()->m_nDeadCount) + L" / " + to_wstring(m_nMaxCount);
+	wstring strQuest2 = L"처치한 적 " + to_wstring(CRushMode::GetInstance()->m_nDeadCount) + L" / " + to_wstring(8);
 	_vec2 vPos = { 10.f , 0.f };
 	Engine::Render_Font(L"Font_Retro_slim", strQuestTitle.c_str(), &vPos, D3DCOLOR_RGBA(255, 255, 0, 255));
 	vPos = { 10.f,  25.f };

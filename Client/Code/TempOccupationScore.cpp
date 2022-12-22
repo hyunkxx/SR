@@ -238,9 +238,9 @@ void CTempOccupationScore::Render_Object(void)
 		m_pBufferLefttopCom->Render_Buffer();
 		*/
 		_vec2 vPos = { 350.f, 10.f };
-		Render_Font(L"Font_Occupation", m_strAllyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Render_Font(L"Font_Retro", m_strAllyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
 		vPos = { 430.f, 10.f };
-		Render_Font(L"Font_Occupation", m_strEnemyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
+		Render_Font(L"Font_Retro", m_strEnemyText.c_str(), &vPos, D3DCOLOR_ARGB(255, 255, 255, 255));
 		_matrix	ViewMatrix;
 		D3DXMatrixIdentity(&ViewMatrix);
 
